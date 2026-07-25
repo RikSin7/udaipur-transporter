@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  vehicle: CollectionEntry<'vehicles'>;
+}
+
+const { vehicle } = Astro.props;
+const { title, passengers, luggage, amenities, imageNote, summary } = vehicle.data;
+---
+
+<div class="bg-surface-card border border-brand-100 rounded-xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between">
+  
+  <div class="p-6">
+    {/* Actual/Representative Image Note */}
+    <div class="flex justify-between items-start mb-3">
+      <span class="text-[11px] font-medium text-typography-muted bg-brand-100 px-2 py-0.5 rounded">
+        📷 {imageNote}
+      </span>
+    </div>
+
+    <h3 class="font-serif text-xl font-bold text-brand-900 mb-2">
+      <a href={`/vehicles/${vehicle.id}/`} class="hover:text-accent transition-colors">{title}</a>
+    </h3>
+    
+    <p class="text-typography-muted text-sm mb-6 leading-relaxed">
+      {summary}
+    </p>
+
+    {/* Capacity Guidance Specs */}
+    <div class="grid grid-cols-2 gap-2 py-3 border-y border-brand-100/80 mb-4 bg-surface-alt/30 rounded-lg px-3 text-xs font-medium text-brand-900">
+      <div class="flex items-center gap-1.5">
+        <span>👥</span> Max {passengers} Passengers
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span>🧳</span> Up to {luggage} Bags
+      </div>
+    </div>
+
+    {/* Key Amenities */}
+    <div class="flex flex-wrap gap-1.5 mb-2">
+      {amenities.slice(0, 3).map(item => (
+        <span class="text-[11px] bg-surface-alt text-typography-muted px-2 py-1 rounded-md border border-brand-100/60">
+          ✓ {item}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="px-6 py-4 bg-surface-alt/50 border-t border-brand-100/60 flex items-center justify-between">
+    <a href={`/vehicles/${vehicle.id}/`} class="text-sm font-semibold text-brand-900 hover:text-accent transition-colors">
+      View Capacity &rarr;
+    </a>
+    <a 
+      href={`/enquiry/?vehicle=${encodeURIComponent(title)}`} 
+      class="text-xs font-bold uppercase tracking-wider bg-accent hover:bg-accent-hover text-white px-3.5 py-2 rounded-lg transition-all"
+    >
+      Select Vehicle
+    </a>
+  </div>
+
+</div>

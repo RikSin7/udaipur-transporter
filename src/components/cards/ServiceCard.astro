@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  service: CollectionEntry<'services'>;
+}
+
+const { service } = Astro.props;
+const { title, summary, pricing } = service.data;
+
+// Show price label only if approved, else "Ask for Price"
+const priceLabel = pricing?.shortLabel || "Ask for Price";
+const hasApprovedPrice = !!pricing?.shortLabel;
+---
+
+<div class="bg-surface-card border border-brand-100 rounded-xl overflow-hidden shadow-sm hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+  
+  {/* Card Header & Content */}
+  <div class="p-6">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <span class="text-xs font-semibold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-full">
+        {service.data.category}
+      </span>
+      <span class={`text-sm font-bold ${hasApprovedPrice ? 'text-brand-900 font-serif' : 'text-typography-muted italic'}`}>
+        {priceLabel}
+      </span>
+    </div>
+
+    <h3 class="font-serif text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
+      <a href={`/services/${service.id}/`}>{title}</a>
+    </h3>
+
+    <p class="text-typography-muted text-sm leading-relaxed mb-6">
+      {summary}
+    </p>
+  </div>
+
+  {/* Card Actions */}
+  <div class="px-6 py-4 bg-surface-alt/50 border-t border-brand-100/60 flex items-center justify-between gap-4">
+    <a 
+      href={`/services/${service.id}/`} 
+      class="text-sm font-semibold text-brand-900 hover:text-accent transition-colors flex items-center gap-1"
+    >
+      Service Details &rarr;
+    </a>
+    <a 
+      href={`/enquiry/?service=${encodeURIComponent(title)}`} 
+      class="text-xs font-bold uppercase tracking-wider bg-brand-900 hover:bg-brand-800 text-white px-3.5 py-2 rounded-lg transition-all"
+    >
+      Enquire Now
+    </a>
+  </div>
+
+</div>

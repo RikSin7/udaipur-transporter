@@ -1,6 +1,29 @@
 @import "tailwindcss";
+@import "@fontsource/playfair-display";
 @import "@fontsource/poppins";
 
 @theme {
+  /* Fonts */
   --font-sans: "Poppins", "ui-sans-serif", "system-ui", sans-serif;
+  --font-serif: "Playfair Display", "ui-serif", Georgia, serif;
+  --font-heading: var(--font-serif); /* Alias for headings if preferred */
+
+  /* Colors: Brand (Midnight Navy) */
+  --color-brand-100: #E8ECF2; /* Subtle backgrounds */
+  --color-brand-800: #2C4167; /* Hover states, borders */
+  --color-brand-900: #1A2B4C; /* Headers, Primary Text */
+
+  /* Colors: Accent (Vintage Gold) */
+  --color-accent-light: #F4EAD8;   /* Faint Gold (Highlight backgrounds) */
+  --color-accent-DEFAULT: #C89B55; /* Vintage Gold (Primary CTAs, Icons, Prices) */
+  --color-accent-hover: #B38A4B;   /* Darker Gold (Hover states) */
+
+  /* Colors: Surface */
+  --color-surface-DEFAULT: #FAFAFA; /* Main page background (Ivory/Pearl) */
+  --color-surface-card: #FFFFFF;    /* White for cards */
+  --color-surface-alt: #F5F3E9;     /* Warm Sandstone (Alternate section backgrounds) */
+
+  /* Colors: Typography */
+  --color-typography-main: #222222;  /* Charcoal (Body text) */
+  --color-typography-muted: #555555; /* Gray (Secondary text, metadata) */
 }

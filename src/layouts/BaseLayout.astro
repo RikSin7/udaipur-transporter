@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+import Footer from "../components/layout/Footer.astro";
+import StickyContactBar from "../components/layout/StickyContactBar.astro";
+import Header from "../components/layout/Header.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "Udaipur Royal Transporter | Private Taxi & Car Rental",
+  description = "Reliable, straightforward private transport from Udaipur. Airport transfers, sightseeing tours, outstation taxis, and tempo travellers.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body
+    class="bg-surface text-typography-main font-sans min-h-screen flex flex-col selection:bg-accent selection:text-white"
+  >
+    <Header slot="header" />
+
+    {/* Main Content Area */}
+    <main class="grow pb-16 md:pb-0">
+      <slot />
+    </main>
+
+    {/* Smart Auto-Querying Footer */}
+    <Footer />
+
+    {/* Mobile Sticky Contact Bar */}
+    <StickyContactBar />
+  </body>
+</html>

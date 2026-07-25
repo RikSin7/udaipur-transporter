@@ -1,0 +1,211 @@
+---
+interface Props {
+  defaultService?: string;
+  defaultVehicle?: string;
+  priceLabel?: string;
+}
+
+const { 
+  defaultService = "", 
+  defaultVehicle = "", 
+  priceLabel = "" 
+} = Astro.props;
+
+const currentUrl = Astro.url.pathname;
+---
+
+<form 
+  name="travel-enquiry" 
+  method="POST" 
+  data-netlify="true" 
+  class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-premium space-y-6"
+>
+  {/* Hidden/read-only context fields */}
+  <input type="hidden" name="form-name" value="travel-enquiry" />
+  <input type="hidden" name="sourcePage" value={currentUrl} />
+  {priceLabel && <input type="hidden" name="priceLabel" value={priceLabel} />}
+
+  <div class="border-b border-brand-100 pb-4 mb-6">
+    <h3 class="font-serif text-2xl font-bold text-brand-900">Send Travel Request</h3>
+    <p class="text-sm text-typography-muted mt-1">
+      Fill out this short form. The transport provider will review your route and contact you directly to confirm rates and vehicle availability.
+    </p>
+  </div>
+
+  {/* Row 1: Contact Details */}
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div>
+      <label for="name" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Full Name <span class="text-red-500">*</span>
+      </label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        required 
+        placeholder="e.g. Rajesh Kumar" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+    <div>
+      <label for="phone" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Mobile / WhatsApp Number <span class="text-red-500">*</span>
+      </label>
+      <input 
+        type="tel" 
+        id="phone" 
+        name="phone" 
+        required 
+        placeholder="+91 98765 43210" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+  </div>
+
+  {/* Row 2: Service & Vehicle Selection */}
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div>
+      <label for="service" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Required Service / Transfer
+      </label>
+      <input 
+        type="text" 
+        id="service" 
+        name="service" 
+        value={defaultService} 
+        placeholder="e.g. Udaipur Airport Transfer or Local Sightseeing" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium"
+      />
+    </div>
+    <div>
+      <label for="vehicle" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Vehicle Preference
+      </label>
+      <input 
+        type="text" 
+        id="vehicle" 
+        name="vehicle" 
+        value={defaultVehicle} 
+        placeholder="e.g. Sedan, SUV, or Tempo Traveller" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium"
+      />
+    </div>
+  </div>
+
+  {/* Row 3: Travel Schedule & Locations */}
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div>
+      <label for="travelDate" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Travel Date <span class="text-red-500">*</span>
+      </label>
+      <input 
+        type="date" 
+        id="travelDate" 
+        name="travelDate" 
+        required 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+    <div>
+      <label for="pickup" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Pickup Location <span class="text-red-500">*</span>
+      </label>
+      <input 
+        type="text" 
+        id="pickup" 
+        name="pickup" 
+        required 
+        placeholder="e.g. Udaipur Airport / City Palace Hotel" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+    <div>
+      <label for="drop" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Drop / Service Requirement <span class="text-red-500">*</span>
+      </label>
+      <input 
+        type="text" 
+        id="drop" 
+        name="drop" 
+        required 
+        placeholder="e.g. Hotel drop or 8 Hrs Sightseeing" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+  </div>
+
+  {/* Row 4: Passengers & Luggage */}
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+    <div>
+      <label for="adults" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Adults <span class="text-red-500">*</span>
+      </label>
+      <input 
+        type="number" 
+        id="adults" 
+        name="adults" 
+        min="1" 
+        value="2"  
+        required 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+    <div>
+      <label for="children" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Children
+      </label>
+      <input 
+        type="number" 
+        id="children" 
+        name="children" 
+        min="0" 
+        value="0" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+    <div class="col-span-2 sm:col-span-1">
+      <label for="bags" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Luggage Bags
+      </label>
+      <input 
+        type="number" 
+        id="bags" 
+        name="bags" 
+        min="0" 
+        placeholder="e.g. 3" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+  </div>
+
+  {/* Row 5: Additional Notes */}
+  <div>
+    <label for="message" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+      Special Instructions / Flight or Train Number
+    </label>
+    <textarea 
+      id="message" 
+      name="message" 
+      rows="3" 
+      placeholder="Provide flight/train details for station transfers, or list specific sightseeing stops you prefer..." 
+      class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+    ></textarea>
+  </div>
+
+  {/* Consent & Submit */}
+  <div class="pt-2">
+    <label class="flex items-start gap-3 cursor-pointer mb-6 text-xs text-typography-muted">
+      <input type="checkbox" required class="mt-0.5 rounded border-brand-100 text-accent focus:ring-accent" />
+      <span>
+        I agree to be contacted via Phone, Email, or WhatsApp regarding this travel inquiry. I understand this form is a request for contact and does not automatically confirm a reservation.
+      </span>
+    </label>
+
+    <button 
+      type="submit" 
+      class="w-full sm:w-auto bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-base tracking-wide flex items-center justify-center gap-2"
+    >
+      <span>✈️</span> Submit Travel Enquiry
+    </button>
+  </div>
+</form>

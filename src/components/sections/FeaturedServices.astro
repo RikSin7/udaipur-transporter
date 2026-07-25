@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ServiceCard from '../cards/ServiceCard.astro';
+
+interface Props {
+  featuredServices: CollectionEntry<'services'>[];
+}
+
+const { featuredServices } = Astro.props;
+---
+
+<section class="py-16 lg:py-24 bg-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 mb-3">
+          Our Transport Services
+        </h2>
+        <p class="text-typography-muted text-base max-w-2xl">
+          Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey.
+        </p>
+      </div>
+      <a href="/services/" class="mt-4 md:mt-0 text-brand-900 hover:text-accent font-semibold text-sm flex items-center gap-1 transition-colors">
+        View All Services &rarr;
+      </a>
+    </div>
+
+    {featuredServices.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredServices.map((service: any) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    ) : (
+      <div class="bg-surface-alt border border-brand-100 rounded-xl p-8 text-center text-typography-muted">
+        <p class="italic">No services published yet. Add markdown files to <code>src/content/services/</code> to populate this section.</p>
+      </div>
+    )}
+
+  </div>
+</section>

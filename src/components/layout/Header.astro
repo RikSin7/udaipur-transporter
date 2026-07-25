@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import { getWhatsAppUrl } from '../../utils/helpers';
+import { IconBrandWhatsapp, IconPhoneCall } from '@tabler/icons-astro';
+
+// Fetch singleton business settings
+const settingsEntries = await getCollection('settings').catch(() => []);
+const site = settingsEntries[0]?.data || {
+  companyName: "Udaipur Royal Transporter",
+  phone: "+91 98765 43210",
+  whatsapp: "919876543210",
+};
+
+const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
+const whatsappUrl = getWhatsAppUrl(site.whatsapp);
+
+// Primary Navigation
+const navLinks = [
+  { label: "Services", href: "/services/" },
+  { label: "Vehicles", href: "/vehicles/" },
+  { label: "About", href: "/about/" },
+  { label: "Blog", href: "/blog/" },
+  { label: "Contact", href: "/contact/" },
+];
+---
+
+<header class="bg-brand-900 text-white sticky top-0 z-40 border-b border-brand-800 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      {/* 1. Brand Identity */}
+      <a href="/" class="flex flex-col group">
+        <span class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white group-hover:text-accent transition-colors">
+          {site.companyName}
+        </span>
+        <span class="text-[10px] text-accent uppercase tracking-widest font-sans font-semibold">
+          Private Taxi & Car Rental
+        </span>
+      </a>
+
+      {/* 2. Primary Navigation (Desktop) */}
+      <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+        {navLinks.map(link => (
+          <a href={link.href} class="hover:text-accent transition-colors py-2">
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      {/* 3. Primary Actions (Desktop: Phone, WhatsApp, Enquiry CTA) */}
+      <div class="hidden xl:flex items-center space-x-4">
+        <a 
+          href={callUrl} 
+          class="text-sm font-semibold text-brand-100 hover:text-accent transition-colors flex items-center gap-1.5 px-2 py-1"
+          aria-label="Call Business Phone"
+        >
+          <IconPhoneCall stroke={2} /> {site.phone}
+        </a>
+        
+        <a 
+          href={whatsappUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+        >
+          <IconBrandWhatsapp stroke={2} />
+        </a>
+
+        <a 
+          href="/enquiry/" 
+          class="bg-accent hover:bg-accent-hover text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-all shadow-sm active:scale-95 tracking-wide"
+        >
+          Send Enquiry
+        </a>
+      </div>
+
+      {/* Medium Desktop / Tablet Fallback (Hides text phone to save space) */}
+      <div class="hidden md:flex xl:hidden items-center space-x-3">
+        <a href={callUrl} class="bg-brand-800 p-2.5 rounded-lg text-white hover:text-accent" title="Call Now">
+          <IconPhoneCall stroke="2" />
+        </a>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="bg-emerald-600 p-2.5 rounded-lg text-white" title="WhatsApp">
+          <IconBrandWhatsapp stroke="2" />
+        </a>
+        <a href="/enquiry/" class="bg-accent hover:bg-accent-hover text-white font-bold px-4 py-2 rounded-lg text-xs">Enquire</a>
+      </div>
+
+      {/* Mobile Menu & Quick Enquiry Trigger */}
+      <div class="flex items-center lg:hidden gap-2.5">
+        <a 
+          href="/enquiry/" 
+          class="bg-accent text-white text-xs font-bold px-3 py-2 rounded-md tracking-wide uppercase"
+        >
+          Enquire
+        </a>
+        <button 
+          id="mobile-menu-btn" 
+          type="button" 
+          class="text-brand-100 p-2 rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
+          aria-label="Toggle Navigation Menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  {/* Mobile Dropdown Menu */}
+  <div id="mobile-menu" class="hidden lg:hidden bg-brand-800 border-t border-brand-800 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
+    <nav class="flex flex-col space-y-1">
+      {navLinks.map(link => (
+        <a href={link.href} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-brand-900 hover:text-accent transition-colors">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    
+    <div class="pt-4 border-t border-brand-900 grid grid-cols-2 gap-2">
+      <a href={callUrl} class="text-center py-2.5 bg-brand-900 rounded-lg text-sm font-semibold text-white flex items-center justify-center gap-1.5 shadow-sm">
+        <IconPhoneCall stroke={2} /> Call Us
+      </a>
+        <a 
+          href={whatsappUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+        >
+          <IconBrandWhatsapp stroke={2} />
+        </a>
+
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+    openIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+</script>
