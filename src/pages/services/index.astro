@@ -6,7 +6,6 @@ import { sortPublishedByOrder, getWhatsAppUrl } from '../../utils/helpers';
 
 // 1. Fetch singleton business settings
 const settingsEntries = await getCollection('settings').catch(() => []);
-console.log(settingsEntries)
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",

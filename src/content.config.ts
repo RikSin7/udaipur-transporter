@@ -72,10 +72,34 @@ const blogCollection = defineCollection({
     }),
 });
 
+const aboutCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/about" }),
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    storyHeading: z.string(),
+    image: image().optional(),
+    imageCaption: z.string().default("Verified Local Identity"),
+    promisesHeading: z.string(),
+    promises: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      desc: z.string(),
+    })),
+    coverageHeading: z.string(),
+    coverageSubtitle: z.string(),
+    coverageAreas: z.array(z.object({
+      title: z.string(),
+      desc: z.string(),
+    })),
+  }),
+});
+
 export const collections = {
     'services': servicesCollection,
     'vehicles': vehiclesCollection,
     'settings': settingsCollection,
     'faqs': faqsCollection,
     'blog': blogCollection,
+    'about': aboutCollection,
 };

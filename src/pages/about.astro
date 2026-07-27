@@ -1,0 +1,249 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import { getWhatsAppUrl } from '../utils/helpers';
+
+// 1. Fetch Singleton Business Settings
+const settingsEntries = await getCollection('settings').catch(() => []);
+const site = settingsEntries[0]?.data || {
+  companyName: "Udaipur Royal Transporter",
+  phone: "+91 98765 43210",
+  whatsapp: "919876543210",
+  serviceArea: "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes"
+};
+
+// 2. Fetch Singleton About Page Content
+const aboutEntries = await getCollection('about').catch(() => []);
+const aboutEntry = aboutEntries[0];
+
+// Fallback if about.md is missing during initial setup
+if (!aboutEntry) {
+  throw new Error("Missing src/content/about/about.md file. Please create it to render the About page.");
+}
+
+const { 
+  title, 
+  subtitle, 
+  storyHeading, 
+  imageCaption, 
+  promisesHeading, 
+  promises, 
+  coverageHeading, 
+  coverageSubtitle, 
+  coverageAreas 
+} = aboutEntry.data;
+
+// 3. Render Markdown paragraphs (<Content />)
+const { Content } = await render(aboutEntry);
+
+const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, "About Us / General Enquiry", Astro.url.href);
+---
+
+<BaseLayout 
+  title={`About Our Service | ${site.companyName}`}
+  description={subtitle}
+>
+  <Header slot="header" />
+
+  {/* 1. HERO BANNER */}
+  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+          Our Identity & Approach
+        </span>
+        <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+          {title}
+        </h1>
+        <p class="text-brand-100/90 text-lg font-light leading-relaxed">
+          {subtitle}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* 2. BUSINESS STORY & SERVICE APPROACH */}
+  <section class="py-16 lg:py-24 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        {/* Left Column: Rendered Markdown Story */}
+        <div class="lg:col-span-7 space-y-6">
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 leading-tight">
+            {storyHeading}
+          </h2>
+          
+          {/* Dynamically renders paragraphs typed into Decap CMS */}
+          <div class="prose prose-lg max-w-none prose-p:text-typography-muted prose-strong:text-brand-900 prose-p:leading-relaxed space-y-4">
+            <Content />
+          </div>
+
+          <div class="pt-4 flex flex-wrap items-center gap-4">
+            <a 
+              href="/enquiry/" 
+              class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3.5 rounded-xl text-sm transition-all shadow-sm active:scale-95"
+            >
+              Send Travel Enquiry
+            </a>
+            <a 
+              href={whatsappUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3.5 rounded-xl text-sm transition-all shadow-sm flex items-center gap-2 active:scale-95"
+            >
+              <span>💬</span> Chat With Us
+            </a>
+          </div>
+        </div>
+
+        {/* Right Column: Business Image & Proof */}
+        <div class="lg:col-span-5">
+          <div class="bg-surface-card border-2 border-brand-100 rounded-2xl p-6 sm:p-8 shadow-premium relative">
+            <div class="aspect-w-16 aspect-h-12 bg-brand-800 rounded-xl overflow-hidden mb-6 flex items-center justify-center p-8 text-center text-white">
+              <div>
+                <span class="text-4xl block mb-2">🏛️</span>
+                <span class="font-serif text-lg font-bold block">{site.companyName}</span>
+                <span class="text-xs text-brand-100/70 block mt-1">Udaipur, Rajasthan, India</span>
+                <span class="inline-block mt-3 bg-accent text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded">
+                  📷 {imageCaption}
+                </span>
+              </div>
+            </div>
+
+            <div class="space-y-3 border-t border-brand-100 pt-6 text-xs text-typography-muted">
+              <div class="flex items-start gap-2.5">
+                <span class="text-accent font-bold text-sm">📍</span>
+                <div>
+                  <strong class="text-brand-900 block font-semibold">Operating Base:</strong>
+                  <span>Udaipur City, Rajasthan 313001</span>
+                </div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="text-accent font-bold text-sm">🕒</span>
+                <div>
+                  <strong class="text-brand-900 block font-semibold">Communication Hours:</strong>
+                  <span>7 Days a Week — Quick Response via WhatsApp & Phone</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {/* 3. APPROVED TRUST FACTS (Dynamically Mapped from CMS) */}
+  <section class="py-16 lg:py-24 bg-surface-alt/50 border-y border-brand-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 mb-3">
+          {promisesHeading}
+        </h2>
+        <p class="text-typography-muted text-base">
+          We do not rely on inflated marketing claims. Our reputation is built on straightforward commitments to every traveller.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {promises.map(promise => (
+          <div class="bg-surface-card border border-brand-100 p-6 rounded-xl shadow-sm hover:-translate-y-1 duration-300 transition-all">
+            <div class="w-10 h-10 bg-brand-100 text-brand-900 rounded-lg flex items-center justify-center font-bold text-lg mb-4">
+              {promise.icon}
+            </div>
+            <h3 class="font-serif text-lg font-bold text-brand-900 mb-2">{promise.title}</h3>
+            <p class="text-xs text-typography-muted leading-relaxed">{promise.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 4. SERVICE AREA COVERAGE (Dynamically Mapped from CMS) */}
+  <section class="py-16 bg-brand-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-bold uppercase tracking-widest text-accent mb-2 block">
+        Where We Operate
+      </span>
+      <h2 class="font-serif text-3xl font-bold text-white mb-6">
+        {coverageHeading}
+      </h2>
+      <p class="text-brand-100/80 text-sm sm:text-base max-w-2xl mx-auto mb-10 leading-relaxed">
+        {coverageSubtitle}
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto text-left">
+        {coverageAreas.map(area => (
+          <div class="bg-brand-800/60 border hover:-translate-y-1 duration-300 transition-all border-brand-800 p-5 rounded-xl">
+            <strong class="block text-accent text-sm font-serif mb-1.5">{area.title}</strong>
+            <span class="text-xs text-brand-100/70 leading-relaxed block">{area.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 5. MANDATORY CROSS-LINKS */}
+  <section class="py-16 lg:py-24 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="font-serif text-3xl font-bold text-brand-900 mb-2">
+          Explore Our Service Details
+        </h2>
+        <p class="text-sm text-typography-muted">
+          Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <a href="/services/" class="bg-surface-card border border-brand-100 p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-accent/40 transition-all group flex flex-col justify-between">
+          <div>
+            <span class="text-3xl block mb-4">🚗</span>
+            <h3 class="font-serif text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
+              Transport Catalogue
+            </h3>
+            <p class="text-xs text-typography-muted leading-relaxed mb-6">
+              Browse our approved service categories, including airport transfers, local car hire with driver, and outstation Rajasthan tours.
+            </p>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent flex items-center gap-1">
+            View All Services &rarr;
+          </span>
+        </a>
+
+        <a href="/reviews/" class="bg-surface-card border border-brand-100 p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-accent/40 transition-all group flex flex-col justify-between">
+          <div>
+            <span class="text-3xl block mb-4">⭐</span>
+            <h3 class="font-serif text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
+              Customer Reviews
+            </h3>
+            <p class="text-xs text-typography-muted leading-relaxed mb-6">
+              Read verified feedback from families, couples, and international tourists who have travelled across Udaipur and Rajasthan with our drivers.
+            </p>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent flex items-center gap-1">
+            Read Real Feedback &rarr;
+          </span>
+        </a>
+
+        <a href="/contact/" class="bg-surface-card border border-brand-100 p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-accent/40 transition-all group flex flex-col justify-between">
+          <div>
+            <span class="text-3xl block mb-4">📞</span>
+            <h3 class="font-serif text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
+              Contact & Support
+            </h3>
+            <p class="text-xs text-typography-muted leading-relaxed mb-6">
+              Find our phone numbers, WhatsApp details, operating hours, and location information to get in touch with our team immediately.
+            </p>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent flex items-center gap-1">
+            Get In Touch &rarr;
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
