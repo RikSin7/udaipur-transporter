@@ -6,15 +6,42 @@ const servicesCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/services" }),
   schema: ({ image }) => z.object({
     title: z.string(),
-    category: z.enum(["Transfers", "Local Travel", "Outstation Travel", "Group and Event Travel", "Additional", "Group"]),
+    category: z.enum([
+      "Transfers", 
+      "Local Travel", 
+      "Outstation Travel", 
+      "Group and Event Travel", 
+      "Additional"
+    ]),
     summary: z.string().max(160, "Keep summary under 160 characters for SEO cards"),
-    image: image().optional(),
-    sortOrder: z.number().default(10),
+    image: image().optional(), 
+    sortOrder: z.number().default(10), 
     published: z.boolean().default(true),
+
+    // 1. Who This Is For (Text-only pills)
+    whoIsThisFor: z.array(z.string()).optional(),
+
+    // 2. What's Covered (2x2 Grid with Title & Description)
+    whatsCovered: z.array(z.object({
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+
+    // 3. Suitable Vehicles (Links to vehicle IDs like 'sedan', 'suv', 'tempo-traveller')
+    suitableVehicles: z.array(z.string()).optional(),
+
+    // 4. Service-Specific FAQs
+    faqs: z.array(z.object({
+      question: z.string(),
+      answer: z.string(),
+    })).optional(),
+
+    // 5. Approved Tariff & Pricing Rules
     pricing: z.object({
-      shortLabel: z.string().optional(), // e.g., "From ₹1,500"
-      amount: z.string().optional(),     // e.g., "₹1,500 - ₹2,200"
-      unit: z.string().optional(),       // e.g., "Per Trip" or "8 Hrs / 80 Km"
+      amount: z.string().optional(), // e.g., "₹899"
+      shortLabel: z.string().optional(), // e.g., "onwards, per trip"
+      unit: z.string().optional(), // e.g., "Airport to city, sedan"
+      lastUpdated: z.string().optional(), // e.g., "Jul 2026"
       inclusions: z.array(z.string()).optional(),
       exclusions: z.array(z.string()).optional(),
       notes: z.string().optional(),

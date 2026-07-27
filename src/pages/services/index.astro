@@ -1,8 +1,20 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
 import ServiceCard from '../../components/cards/ServiceCard.astro';
-import { sortPublishedByOrder, getWhatsAppUrl } from '../../utils/helpers';
+import FaqSection from '../../components/sections/FaqSection.astro';
+import { sortPublishedByOrder } from '../../utils/helpers';
+import { 
+  IconPlane, 
+  IconMapPin, 
+  IconCompass, 
+  IconUsers, 
+  IconPlus, 
+  IconCar, 
+  IconFileText, 
+  IconArrowRight 
+} from '@tabler/icons-astro';
 
 // 1. Fetch singleton business settings
 const settingsEntries = await getCollection('settings').catch(() => []);
@@ -12,90 +24,148 @@ const site = settingsEntries[0]?.data || {
   whatsapp: "919876543210",
 };
 
-// 2. Fetch all services and sort by sortOrder ascending
+// 2. Fetch all published services and sort ascending by order
 const allServices = await getCollection('services').catch(() => []);
-const publishedServices = sortPublishedByOrder(allServices);
+const publishedServices = sortPublishedByOrder(allServices.filter(s => s.data.published));
 
-// 3. Define the strict category hierarchy
+// 3. Define category metadata with subtitles and JSX icon references
+const categoryMetadata: Record<string, { subtitle: string; icon: any }> = {
+  "Transfers": {
+    subtitle: "Airport, railway and point-to-point private transfers across Udaipur.",
+    icon: IconPlane
+  },
+  "Local Travel": {
+    subtitle: "Flexible hourly car rentals and full-day old city sightseeing itineraries.",
+    icon: IconMapPin
+  },
+  "Outstation Travel": {
+    subtitle: "Multi-day highway road trips and one-way taxi drops across Rajasthan.",
+    icon: IconCompass
+  },
+  "Group and Event Travel": {
+    subtitle: "Spacious tempo travellers and coordinated fleet logistics for weddings and groups.",
+    icon: IconUsers
+  },
+  "Additional": {
+    subtitle: "Custom logistical solutions and specialized corporate transport requests.",
+    icon: IconPlus
+  }
+};
+
 const categoryOrder = [
   "Transfers", 
   "Local Travel", 
   "Outstation Travel", 
   "Group and Event Travel", 
-  "Additional",
-  "Group"
+  "Additional"
 ] as const;
 
-// 4. Group services by category (skips categories that have 0 published services)
+// 4. Group services by category (skips categories with 0 published services)
 const groupedServices = categoryOrder
   .map(category => ({
     category,
+    slug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    metadata: categoryMetadata[category] || { subtitle: "Private transportation services.", icon: IconCar },
     services: publishedServices.filter(s => s.data.category === category)
   }))
   .filter(group => group.services.length > 0);
-
-const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
-const whatsappUrl = getWhatsAppUrl(site.whatsapp, "Transport Services Catalogue", Astro.url.href);
 ---
 
 <BaseLayout 
   title={`Our Transport Services | ${site.companyName}`}
   description="Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."
 >
+  <Header slot="header" />
+
   {/* 1. HERO BANNER */}
   <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
         <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
-          Owner-Approved Catalogue
+           Our Services
         </span>
         <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
-          Private Udaipur Transport Services
+          Private transport for every kind of Udaipur trip
         </h1>
-        <p class="text-brand-100/90 text-lg font-light leading-relaxed">
-          We provide straightforward, reliable private transportation across Udaipur and Rajasthan. Browse our service categories below. Every service includes transparent pricing rules and direct local driver coordination.
+        <p class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed">
+          Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price.
         </p>
       </div>
     </div>
   </section>
 
-  {/* 2. CATEGORISED SERVICE LISTINGS */}
-  <section class="py-16 lg:py-24 bg-surface">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-20">
+  {/* 2. FLOATING TAB BAR NAVIGATION (Reference Image 1) */}
+  <div class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none">
+    <div class="max-w-5xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto">
+      {groupedServices.map((group, idx) => (
+        <a 
+          href={`#${group.slug}`}
+          class={`shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 ${
+            idx === 0 
+              ? "bg-brand-900 text-white shadow-sm" 
+              : "bg-surface-alt/60 text-brand-900 hover:bg-brand-100/80 hover:text-brand-900"
+          }`}
+        >
+          <span>{group.category}</span>
+          <span class={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${idx === 0 ? "bg-brand-800 text-accent" : "bg-brand-100/80 text-brand-900"}`}>
+            {group.services.length}
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  {/* 3. CATEGORISED SERVICE LISTINGS */}
+  <section class="pt-16 pb-16 lg:pt-20 lg:pb-24 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 lg:space-y-24">
       
       {groupedServices.length > 0 ? (
-        groupedServices.map(group => (
-          <div class="border-b border-brand-100/80 pb-16 last:border-b-0 last:pb-0">
-            {/* Category Header */}
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
-              <div>
-                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">
-                  {group.category}
-                </h2>
-                <span class="inline-block w-12 h-1 bg-accent rounded-full mt-2"></span>
+        groupedServices.map(group => {
+          const IconComponent = group.metadata.icon;
+          return (
+            /* scroll-mt-32 prevents sticky headers and tab bars from covering titles */
+            <div id={group.slug} class="scroll-mt-32 border-b border-brand-100/80 pb-16 last:border-b-0 last:pb-0">
+              
+              {/* Category Header with Icon Badge & Subtitle Paragraph */}
+              <div class="mb-10">
+                <div class="flex items-center gap-3.5 mb-1">
+                  <div class="w-10 h-10 rounded-xl bg-brand-900 text-accent flex items-center justify-center shrink-0 shadow-sm">
+                    <IconComponent size={20} stroke={2} />
+                  </div>
+                  <h2 class="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-brand-900 tracking-tight">
+                    {group.category}
+                  </h2>
+                </div>
+                
+                <p class="text-sm sm:text-base text-typography-muted font-normal max-w-2xl leading-relaxed pl-13 sm:pl-13">
+                  {group.metadata.subtitle}
+                </p>
+                
+                {/* Elegant Half-Underline Separator */}
+                <div class="mt-4 border-b border-brand-100/80 w-full"></div>
               </div>
-              <p class="text-sm text-typography-muted mt-2 md:mt-0 font-medium">
-                Showing {group.services.length} available {group.services.length === 1 ? 'service' : 'services'}
-              </p>
-            </div>
 
-            {/* Category Cards Grid */}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {group.services.map(service => (
-                <ServiceCard service={service} />
-              ))}
+              {/* Category Cards Grid */}
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {group.services.map(service => (
+                  <ServiceCard service={service} />
+                ))}
+              </div>
+
             </div>
-          </div>
-        ))
+          );
+        })
       ) : (
         /* Empty State Fallback */
         <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
-          <div class="text-3xl mb-3">🚗</div>
+          <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mx-auto mb-4">
+            <IconCar size={24} stroke={2} />
+          </div>
           <h3 class="font-serif text-xl font-bold text-brand-900 mb-2">No Services Published Yet</h3>
           <p class="text-sm text-typography-muted mb-6">
             Our content administrators are currently updating the transport catalogue. Please check back soon or contact us directly for immediate travel bookings.
           </p>
-          <a href="/enquiry/" class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block">
+          <a href="/enquiry/" class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block shadow-sm">
             Send General Inquiry
           </a>
         </div>
@@ -104,40 +174,85 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp, "Transport Services Catalogue"
     </div>
   </section>
 
-  {/* 3. FLEET CROSS-LINK & GENERAL ENQUIRY BANNER */}
-  <section class="py-16 bg-surface-alt/70 border-t border-brand-100">
+  {/* 4. COMPARE VEHICLES & DIRECT SERVICE ENQUIRY BANNER (Reference Image 2) */}
+  <section class="py-12 bg-surface border-t border-brand-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-brand-900 text-white rounded-2xl p-8 sm:p-12 shadow-premium flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
         
-        <div class="max-w-2xl text-center lg:text-left">
-          <span class="text-xs font-bold uppercase tracking-widest text-accent mb-2 block">
-            Custom Requirements?
-          </span>
-          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mb-3">
-            Need a Specific Vehicle or Custom Rajasthan Itinerary?
-          </h2>
-          <p class="text-brand-100/80 text-sm sm:text-base leading-relaxed">
-            If you do not see your exact travel route listed above, we can tailor a multi-day trip or allocate specific vehicles like Tempo Travellers and SUVs. View our fleet capacity or request a custom quote.
-          </p>
-        </div>
+        {/* Left Card: Compare Vehicles (Light Surface Theme) */}
+        <a 
+          href="/vehicles/" 
+          class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-premium transition-all duration-300 flex items-center justify-between gap-6 group"
+        >
+          <div class="flex items-start gap-4 sm:gap-5 min-w-0">
+            <div class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 shrink-0 group-hover:scale-105 transition-transform">
+              <IconCar size={24} stroke={2} />
+            </div>
+            <div class="min-w-0">
+              <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-1">
+                Compare our vehicles
+              </h3>
+              <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
+                Seats, luggage guidance and amenities for each category.
+              </p>
+            </div>
+          </div>
+          <div class="text-brand-900 group-hover:text-accent shrink-0 transition-transform group-hover:translate-x-1">
+            <IconArrowRight size={20} stroke={2} />
+          </div>
+        </a>
 
-        <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto shrink-0">
-          <a 
-            href="/vehicles/" 
-            class="bg-brand-800 hover:bg-brand-700 text-white font-bold px-6 py-4 rounded-xl text-sm text-center transition-all border border-brand-100/20"
-          >
-            Explore Vehicle Fleet &rarr;
-          </a>
-          <a 
-            href="/enquiry/" 
-            class="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-4 rounded-xl text-sm text-center transition-all shadow-md active:scale-95"
-          >
-            Send Travel Request
-          </a>
-        </div>
+        {/* Right Card: Not Sure Which Service? (Dark Royal Theme) */}
+        <a 
+          href="/enquiry/" 
+          class="bg-brand-900 border border-brand-800 rounded-2xl p-6 sm:p-8 shadow-premium hover:bg-brand-800 transition-all duration-300 flex items-center justify-between gap-6 group"
+        >
+          <div class="flex items-start gap-4 sm:gap-5 min-w-0">
+            <div class="w-12 h-12 rounded-xl bg-brand-800 border border-brand-700 flex items-center justify-center text-accent shrink-0 group-hover:scale-105 transition-transform">
+              <IconFileText size={24} stroke={2} />
+            </div>
+            <div class="min-w-0">
+              <h3 class="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-accent transition-colors mb-1">
+                Not sure which service?
+              </h3>
+              <p class="text-xs sm:text-sm text-brand-100/80 leading-relaxed">
+                Send us your plan — we'll suggest the right service and reply directly.
+              </p>
+            </div>
+          </div>
+          <div class="text-accent shrink-0 transition-transform group-hover:translate-x-1">
+            <IconArrowRight size={20} stroke={2} />
+          </div>
+        </a>
 
       </div>
     </div>
   </section>
 
+  {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
+  <FaqSection />
+
+  {/* 6. MANDATORY PRD SERVICE GUIDANCE DISCLAIMER */}
+  <section class="py-12 bg-surface-alt/50 border-t border-brand-100/80">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
+        Each service above is available in and around Udaipur, from airport and railway transfers to sightseeing, nearby day use and outstation travel across Rajasthan. Coverage and example trips are described within each service page as guidance, not as separate booking pages. Where a price is confirmed it is shown with its terms; otherwise please ask us for a quote.
+      </p>
+    </div>
+  </section>
+
 </BaseLayout>
+
+{/* Hide Scrollbar for Horizontal Mobile Tab Bar */}
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

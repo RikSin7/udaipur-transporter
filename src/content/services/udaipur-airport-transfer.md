@@ -1,24 +1,55 @@
 ---
-title: "Udaipur Airport Transfer Taxi Service"
-category: "Group"
-summary: "Direct, shared Maharana Pratap Airport (Dabok) cab transfers to Udaipur lakeside hotels and city residences with flight tracking."
+title: "Udaipur Airport Transfer"
+category: "Transfers"
+summary: "Reliable, flight-aware airport pickup and drop service from Maharana Pratap (Dabok) Airport to your hotel in Udaipur city."
 image: "../../assets/images/services/udaipur-transfer.jpg"
 sortOrder: 1
 published: true
+
+whoIsThisFor:
+  - "Families & couples"
+  - "Solo travellers"
+  - "International visitors"
+  - "Travellers with luggage"
+
+whatsCovered:
+  - title: "Airport meet & greet"
+    description: "Pickup at Maharana Pratap (Dabok) airport with a name board and luggage assistance."
+  - title: "Flight-aware timing"
+    description: "Share your flight number; we plan pickup around reasonable arrival delays."
+  - title: "Hotel or city drop"
+    description: "Direct drop to your Udaipur hotel, guest house or any city address."
+  - title: "Luggage guidance"
+    description: "We recommend a vehicle that comfortably seats your group after bags."
+
+suitableVehicles:
+  - "sedan"
+  - "suv"
+  - "innova-crysta"
+
+faqs:
+  - question: "What if my flight is delayed?"
+    answer: "Share your flight number in the enquiry. We track reasonable delays and plan the pickup accordingly. Long delays beyond included waiting may involve a small waiting charge, confirmed with you."
+  - question: "Where exactly will the driver meet me?"
+    answer: "Your driver will wait near Exit 1 of the terminal arrivals hall holding a placard with your name."
+  - question: "Can you drop me at a specific hotel inside the old city?"
+    answer: "Yes, our drivers are experienced in navigating narrow old city roads around Lake Pichola and Chandpole."
+
 pricing:
-  shortLabel: ""
-  amount: "₹1,200 (Sedan) / ₹1,800 (SUV)"
-  unit: "Per One-Way Trip"
-  inclusions: ["Airport parking charges included", "45 minutes waiting after flight landing", "Meet & greet at arrival terminal exit", "Luggage assistance"]
-  exclusions: ["En-route sightseeing stops", "Waiting time beyond 45 minutes"]
-  notes: "Please provide your exact Flight Number and Arrival Time in the inquiry form so our driver can track delays automatically."
+  amount: "₹899"
+  shortLabel: "onwards, per trip"
+  unit: "Airport to city, sedan"
+  lastUpdated: "Jul 2026"
+  inclusions:
+    - "Private cab with driver"
+    - "Fuel and driver charges"
+    - "Pickup at the airport terminal"
+    - "Reasonable waiting on arrival"
+  exclusions:
+    - "Airport entry / parking (at actuals)"
+    - "Extra stops beyond the route"
+    - "GST where applicable"
+    - "Anything not listed as included"
 ---
 
-### Reliable Maharana Pratap Airport Cab Service
-Arrive in Rajasthan without the stress of negotiating taxi fares. Our shared **Udaipur airport transfer** service connects Maharana Pratap Airport (Dabok) directly to your hotel, resort, or residence in Udaipur city. 
-
-### How Our Airport Pickup Works
-When your flight lands, our professional driver will be waiting at the arrival terminal exit holding a placard with your name. The airport is located approximately **22 to 25 kilometers** from the city center and lakeside zones (like Pichola and Fateh Sagar). The drive typically takes **35 to 45 minutes**.
-
-* **Flight Tracking & Waiting:** We monitor live flight schedules. If your arrival is delayed, your pickup time adjusts automatically. We include **45 minutes of complimentary waiting time** from the moment your flight lands.
-* **Luggage & Vehicle Guidance:** For 1 to 3 passengers with standard luggage (2-3 bags), a Sedan (Dzire/Etios) is recommended. For families or groups with heavy luggage, choose an SUV (Ertiga/Crysta) or Tempo Traveller.
+Additional narrative text or logistical guidance can be typed here in the markdown body if ever needed.
