@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'blog'>;
+}
+
+const { article } = Astro.props;
+const { title, summary, publishDate, category } = article.data;
+
+// Format date
+const formattedDate = new Date(publishDate).toLocaleDateString('en-IN', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric'
+});
+---
+
+<article class="bg-surface-card border border-brand-100 rounded-xl overflow-hidden shadow-sm hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+  <div class="p-6">
+    <div class="flex items-center justify-between gap-2 mb-3 text-xs">
+      <span class="font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-full">
+        {category}
+      </span>
+      <time datetime={publishDate} class="text-typography-muted font-medium">
+        {formattedDate}
+      </time>
+    </div>
+
+    <h3 class="font-serif text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-3 leading-snug">
+      <a href={`/blog/${article.id}/`}>{title}</a>
+    </h3>
+
+    <p class="text-typography-muted text-sm leading-relaxed mb-6">
+      {summary}
+    </p>
+  </div>
+
+  <div class="px-6 py-4 bg-surface-alt/50 border-t border-brand-100/60 flex items-center justify-between">
+    <a 
+      href={`/blog/${article.id}/`} 
+      class="text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent transition-colors flex items-center gap-1.5"
+    >
+      <span>Read Guide</span>
+      <span class="text-accent group-hover:translate-x-1 transition-transform">&rarr;</span>
+    </a>
+  </div>
+</article>

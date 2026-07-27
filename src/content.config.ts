@@ -65,34 +65,39 @@ const faqsCollection = defineCollection({
 
 const blogCollection = defineCollection({
     loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog" }),
-    schema: z.object({
-        title: z.string(),
-        summary: z.string(),
+    schema: ({ image }) => z.object({
+        title: z.string().max(100, "Keep title SEO friendly"),
+        summary: z.string().max(160, "Summary used for card preview and SEO description"),
+        publishDate: z.string(),
+        author: z.string().default("Transport Editorial Team"),
+        category: z.enum(["Vehicle Guide", "Airport Transfers", "Pricing & Quotes", "Travel Tips"]),
+        image: image().optional(),
+        relatedService: z.string().optional(),
         published: z.boolean().default(true),
     }),
 });
 
 const aboutCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/about" }),
-  schema: ({ image }) => z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    storyHeading: z.string(),
-    image: image().optional(),
-    imageCaption: z.string().default("Verified Local Identity"),
-    promisesHeading: z.string(),
-    promises: z.array(z.object({
-      icon: z.string(),
-      title: z.string(),
-      desc: z.string(),
-    })),
-    coverageHeading: z.string(),
-    coverageSubtitle: z.string(),
-    coverageAreas: z.array(z.object({
-      title: z.string(),
-      desc: z.string(),
-    })),
-  }),
+    loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/about" }),
+    schema: ({ image }) => z.object({
+        title: z.string(),
+        subtitle: z.string(),
+        storyHeading: z.string(),
+        image: image().optional(),
+        imageCaption: z.string().default("Verified Local Identity"),
+        promisesHeading: z.string(),
+        promises: z.array(z.object({
+            icon: z.string(),
+            title: z.string(),
+            desc: z.string(),
+        })),
+        coverageHeading: z.string(),
+        coverageSubtitle: z.string(),
+        coverageAreas: z.array(z.object({
+            title: z.string(),
+            desc: z.string(),
+        })),
+    }),
 });
 
 export const collections = {

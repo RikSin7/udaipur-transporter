@@ -1,0 +1,190 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import ServiceCard from '../../components/cards/ServiceCard.astro';
+import BlogCard from '../../components/cards/BlogCard.astro';
+import { getWhatsAppUrl } from '../../utils/helpers';
+
+// 1. GENERATE STATIC PATHS FOR EVERY ARTICLE
+export async function getStaticPaths() {
+  const articles = await getCollection('blog').catch(() => []);
+  return articles.map(entry => ({
+    params: { slug: entry.id }, // URL slug
+    props: { entry }, //data passed to the page
+  }));
+}
+
+// 2. EXTRACT ARTICLE DATA
+const { entry } = Astro.props;
+const { title, summary, publishDate, author, category, relatedService } = entry.data;
+
+// 3. CONVERT MARKDOWN BODY INTO HTML (<Content />)
+const { Content } = await render(entry);
+
+// 4. Fetch Related Commercial Service
+const allServices = await getCollection('services').catch(() => []);
+const matchingService = relatedService 
+  ? allServices.find(s => s.id === relatedService) 
+  : allServices[0]; // Fallback to first service if name doesn't match
+
+// 5. Fetch Related Articles (excludes current one)
+const allArticles = await getCollection('blog').catch(() => []);
+const relatedArticles = allArticles
+  .filter(a => a.id !== entry.id && a.data.published)
+  .slice(0, 3);
+
+// Format date nicely (e.g., "21 July 2026")
+const formattedDate = new Date(publishDate).toLocaleDateString('en-IN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+// Fetch business settings for direct WhatsApp/Call URLs
+const settingsEntries = await getCollection('settings').catch(() => []);
+const site = settingsEntries[0]?.data || { 
+  phone: "+91 98765 43210", 
+  whatsapp: "919876543210", 
+  companyName: "Udaipur Royal Transporter" 
+};
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, `Article Inquiry: ${title}`, Astro.url.href);
+---
+
+<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
+  <Header slot="header" />
+
+  {/* 1. ARTICLE HERO HEADER */}
+  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+        {category}
+      </span>
+      
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-6">
+        {title}
+      </h1>
+      
+      {/* Author & Date Metadata */}
+      <div class="flex items-center justify-center gap-6 text-xs text-brand-100/70 border-t border-brand-800/80 pt-6 max-w-md mx-auto">
+        <div>
+          <span class="block text-[10px] uppercase tracking-wider text-accent">Written By</span>
+          <span class="font-medium text-white text-sm">{author}</span>
+        </div>
+        <div class="h-8 w-px bg-brand-800"></div>
+        <div>
+          <span class="block text-[10px] uppercase tracking-wider text-accent">Published On</span>
+          <time datetime={publishDate} class="font-medium text-white text-sm">{formattedDate}</time>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 2. ARTICLE BODY & SIDEBAR FUNNEL */}
+  <section class="py-16 lg:py-24 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        {/* Left Column: Markdown Content & Inline Banner */}
+        <div class="lg:col-span-8">
+          
+          {/* Renders paragraphs, bullet lists, and bold text from .md file */}
+          <div class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-sm mb-12">
+            <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-a:text-accent">
+              <Content />
+            </div>
+          </div>
+
+          {/* Inline Conversion Banner */}
+          <div class="bg-brand-900 text-white p-8 rounded-2xl shadow-premium flex flex-col sm:flex-row items-center justify-between gap-6 border border-brand-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-accent block mb-1">
+                Need Direct Advice?
+              </span>
+              <h3 class="font-serif text-xl font-bold text-white">
+                Plan your vehicle route with our local team.
+              </h3>
+              <p class="text-xs text-brand-100/80 mt-1">
+                We provide owner-approved quotes without automated call centers or booking fees.
+              </p>
+            </div>
+            <div class="flex gap-3 w-full sm:w-auto shrink-0">
+              <a 
+                href="/enquiry/" 
+                class="flex-1 sm:flex-initial text-center bg-accent hover:bg-accent-hover text-white px-5 py-3 rounded-xl text-xs font-bold tracking-wide transition-all shadow active:scale-95"
+              >
+                Send Enquiry
+              </a>
+              <a 
+                href={whatsappUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex-1 sm:flex-initial text-center bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-xl text-xs font-bold tracking-wide transition-all shadow active:scale-95 flex items-center justify-center gap-1.5"
+              >
+                <span>💬</span> WhatsApp
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Right Column: Sticky Commercial Service Funnel */}
+        <div class="lg:col-span-4 space-y-8">
+          <div class="sticky top-28 space-y-6">
+            
+            {/* Displays the exact commercial service linked in frontmatter */}
+            {matchingService ? (
+              <div class="bg-surface-alt/60 border border-brand-100 p-6 rounded-2xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-brand-900 mb-4 flex items-center gap-1.5">
+                  <span>🚗</span> Recommended Transport Service
+                </span>
+                <ServiceCard service={matchingService} />
+              </div>
+            ) : null}
+
+            {/* Quick Fleet Reference Card */}
+            <div class="bg-surface-card border border-brand-100 p-6 rounded-2xl shadow-sm text-center">
+              <h4 class="font-serif text-base font-bold text-brand-900 mb-2">
+                Need a Specific Vehicle?
+              </h4>
+              <p class="text-xs text-typography-muted leading-relaxed mb-4">
+                View our complete fleet capacity matrix to check passenger limits and luggage space for all Sedans, SUVs, and Tempo Travellers.
+              </p>
+              <a 
+                href="/vehicles/" 
+                class="block w-full bg-brand-900 hover:bg-brand-800 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all"
+              >
+                Explore Vehicle Fleet &rarr;
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {/* 3. RELATED ARTICLES FOOTER */}
+  {relatedArticles.length > 0 && (
+    <section class="py-16 bg-surface-alt/40 border-t border-brand-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-2">
+            More Transport Planning Guides
+          </h2>
+          <p class="text-sm text-typography-muted">
+            Read additional tips to make your travel across Udaipur and Rajasthan comfortable and hassle-free.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {relatedArticles.map(rel => (
+            <BlogCard article={rel} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+</BaseLayout>
