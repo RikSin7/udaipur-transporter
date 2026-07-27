@@ -3,27 +3,96 @@
 @import "@fontsource/poppins";
 
 @theme {
-  /* Fonts */
-  --font-sans: "Poppins", "ui-sans-serif", "system-ui", sans-serif;
-  --font-serif: "Playfair Display", "ui-serif", Georgia, serif;
-  --font-heading: var(--font-serif); /* Alias for headings if preferred */
+  /* Typography */
 
-  /* Colors: Brand (Midnight Navy) */
-  --color-brand-100: #E8ECF2; /* Subtle backgrounds */
-  --color-brand-800: #2C4167; /* Hover states, borders */
-  --color-brand-900: #1A2B4C; /* Headers, Primary Text */
+  --font-sans: "Poppins", "ui-sans-serif", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-heading: var(--font-serif);
 
-  /* Colors: Accent (Vintage Gold) */
-  --color-accent-light: #F4EAD8;   /* Faint Gold (Highlight backgrounds) */
-  --color-accent-DEFAULT: #C89B55; /* Vintage Gold (Primary CTAs, Icons, Prices) */
-  --color-accent-hover: #B38A4B;   /* Darker Gold (Hover states) */
+  /* BRAND */
 
-  /* Colors: Surface */
-  --color-surface-DEFAULT: #FAFAFA; /* Main page background (Ivory/Pearl) */
-  --color-surface-card: #FFFFFF;    /* White for cards */
-  --color-surface-alt: #F5F3E9;     /* Warm Sandstone (Alternate section backgrounds) */
+  --color-brand-50: #F8FAFC;
+  --color-brand-100: #EDF2F7;
+  --color-brand-200: #DDE6F0;
+  --color-brand-300: #C3D0E0;
 
-  /* Colors: Typography */
-  --color-typography-main: #222222;  /* Charcoal (Body text) */
-  --color-typography-muted: #555555; /* Gray (Secondary text, metadata) */
+  --color-brand-700: #314769;
+  --color-brand-800: #1C2D47;
+  --color-brand-900: #122033;
+  --color-brand-950: #09111C;
+
+  --color-brand: #122033;
+
+  /* CHAMPAGNE GOLD */
+
+  --color-accent-light: #FCF8F0;
+  --color-accent-subtle: #EFE5D3;
+
+  --color-accent: #BFA06A;
+
+  --color-accent-hover: #CBAE79;
+
+  --color-accent-dark: #957341;
+
+  /* SURFACES */
+
+  --color-surface: #FCFBF9;
+
+  --color-surface-card: #FFFFFF;
+
+  --color-surface-alt: #F7F3ED;
+
+  --color-surface-dark: #18263B;
+
+  /* Typography */
+
+  --color-typography-main: #202938;
+
+  --color-typography-muted: #6A7484;
+
+  /* STATUS */
+
+  --color-success: #2E7D4F;
+  --color-success-light: #EDF8F2;
+
+  --color-warning: #B88628;
+  --color-warning-light: #FFF7E8;
+
+  --color-error: #B74B4B;
+  --color-error-light: #FFF3F3;
+
+  /* BORDERS */
+
+  --color-border: #E5E8EC;
+
+  --color-border-light: #F2F4F7;
+
+  --color-border-dark: #D7DEE7;
+
+  /* SHADOWS */
+
+  --shadow-sm:
+    0 2px 8px rgba(18,32,51,.04);
+
+  --shadow-md:
+    0 8px 24px rgba(18,32,51,.07);
+
+  --shadow-lg:
+    0 16px 48px rgba(18,32,51,.10);
+
+  --shadow-xl:
+    0 28px 72px rgba(18,32,51,.14);
+
+  /* RADIUS */
+
+  --radius-card: 18px;
+  --radius-button: 12px;
+  --radius-input: 12px;
+
+  /* TRANSITIONS */
+
+  --default-transition-duration: 260ms;
+
+  --default-transition-timing-function:
+      cubic-bezier(.22,1,.36,1);
 }
