@@ -1,0 +1,182 @@
+---
+import { getCollection } from 'astro:content';
+import { 
+  IconFileText, 
+  IconBrandWhatsapp, 
+  IconPhoneCall 
+} from '@tabler/icons-astro';
+import { getWhatsAppUrl } from '../../utils/helpers';
+
+// 1. Fetch business settings autonomously for phone & WhatsApp routing
+const settingsEntries = await getCollection('settings').catch(() => []);
+const site = settingsEntries[0]?.data || {
+  companyName: "Udaipur Royal Transporter",
+  phone: "+91 98765 43210",
+  whatsapp: "919876543210",
+};
+
+const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, "Homepage Direct Enquiry", Astro.url.href);
+---
+
+<section class="py-10 lg:py-12 bg-surface border-b border-brand-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    {/* 1. SECTION HEADER */}
+    <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+      <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-2.5">
+        How To Reach Us
+      </span>
+      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-900 tracking-tight">
+        Three easy ways to enquire
+      </h2>
+    </div>
+
+    {/* 2. THREE CONTACT METHOD CARDS */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-8 sm:mb-10">
+      
+      {/* Card 1: Send an enquiry */}
+      <div class="bg-surface-card border border-brand-100 rounded-xl p-5 sm:p-6 shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between group">
+        <div>
+          <div class="w-10 h-10 rounded-lg bg-brand-900 text-accent flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+            <IconFileText size={20} stroke={2} />
+          </div>
+          <h3 class="font-serif text-base sm:text-lg font-bold text-brand-900 mb-2">
+            Send an enquiry
+          </h3>
+          <p class="text-xs text-typography-muted leading-relaxed mb-5">
+            Share your travel plan in a short form. It reaches us by email and we reply to arrange it.
+          </p>
+        </div>
+        <div>
+          <a 
+            href="/enquiry/" 
+            class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent transition-colors"
+          >
+            <span>Open form</span>
+            <span class="text-accent group-hover:translate-x-1 transition-transform">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Card 2: Message on WhatsApp */}
+      <div class="bg-surface-card border border-brand-100 rounded-xl p-5 sm:p-6 shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between group">
+        <div>
+          <div class="w-10 h-10 rounded-lg bg-brand-900 text-accent flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+            <IconBrandWhatsapp size={22} stroke={2} />
+          </div>
+          <h3 class="font-serif text-base sm:text-lg font-bold text-brand-900 mb-2">
+            Message on WhatsApp
+          </h3>
+          <p class="text-xs text-typography-muted leading-relaxed mb-5">
+            Chat with us directly with your dates, pickup and requirement for a quick response.
+          </p>
+        </div>
+        <div>
+          <a 
+            href={whatsappUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent transition-colors"
+          >
+            <span>Chat now</span>
+            <span class="text-accent group-hover:translate-x-1 transition-transform">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Card 3: Call us */}
+      <div class="bg-surface-card border border-brand-100 rounded-xl p-5 sm:p-6 shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between group">
+        <div>
+          <div class="w-10 h-10 rounded-lg bg-brand-900 text-accent flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+            <IconPhoneCall size={20} stroke={2} />
+          </div>
+          <h3 class="font-serif text-base sm:text-lg font-bold text-brand-900 mb-2">
+            Call us
+          </h3>
+          <p class="text-xs text-typography-muted leading-relaxed mb-5">
+            Prefer to talk? Call during our response hours and we will help you plan your trip.
+          </p>
+        </div>
+        <div>
+          <a 
+            href={callUrl} 
+            class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent transition-colors"
+          >
+            <span>Call now</span>
+            <span class="text-accent group-hover:translate-x-1 transition-transform">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    {/* 3. FOUR-STEP WORKFLOW BANNER (Dark Brand Container) */}
+    <div class="bg-brand-900 text-white rounded-2xl px-6 py-6 sm:px-8 sm:py-7 lg:py-8 shadow-premium border border-brand-800">
+      
+      <div class="mb-6 border-b border-brand-800/80 pb-4">
+        <h3 class="font-serif text-lg sm:text-xl lg:text-2xl font-bold text-white tracking-tight">
+          What happens after you send a request
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
+        
+        {/* Step 1 */}
+        <div class="space-y-1.5">
+          <div class="w-8 h-8 rounded-lg bg-brand-800 text-accent font-serif font-bold text-sm flex items-center justify-center border border-brand-700 mb-1">
+            1
+          </div>
+          <h4 class="font-serif text-sm sm:text-base font-bold text-white">
+            You send a request
+          </h4>
+          <p class="text-[11px] sm:text-xs text-brand-100/80 leading-relaxed">
+            By form, WhatsApp or call, with your service, date and requirement.
+          </p>
+        </div>
+
+        {/* Step 2 */}
+        <div class="space-y-1.5">
+          <div class="w-8 h-8 rounded-lg bg-brand-800 text-accent font-serif font-bold text-sm flex items-center justify-center border border-brand-700 mb-1">
+            2
+          </div>
+          <h4 class="font-serif text-sm sm:text-base font-bold text-white">
+            We receive it
+          </h4>
+          <p class="text-[11px] sm:text-xs text-brand-100/80 leading-relaxed">
+            Your enquiry is emailed to us with your page and service context.
+          </p>
+        </div>
+
+        {/* Step 3 */}
+        <div class="space-y-1.5">
+          <div class="w-8 h-8 rounded-lg bg-brand-800 text-accent font-serif font-bold text-sm flex items-center justify-center border border-brand-700 mb-1">
+            3
+          </div>
+          <h4 class="font-serif text-sm sm:text-base font-bold text-white">
+            We contact you
+          </h4>
+          <p class="text-[11px] sm:text-xs text-brand-100/80 leading-relaxed">
+            We confirm vehicle, price and details directly with you.
+          </p>
+        </div>
+
+        {/* Step 4 */}
+        <div class="space-y-1.5">
+          <div class="w-8 h-8 rounded-lg bg-brand-800 text-accent font-serif font-bold text-sm flex items-center justify-center border border-brand-700 mb-1">
+            4
+          </div>
+          <h4 class="font-serif text-sm sm:text-base font-bold text-white">
+            Trip is arranged
+          </h4>
+          <p class="text-[11px] sm:text-xs text-brand-100/80 leading-relaxed">
+            Once you agree, we finalise the trip. This site does not auto-confirm.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

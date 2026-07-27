@@ -1,11 +1,12 @@
 ---
 title: "Udaipur Airport Transfer Taxi Service"
-category: "Transfers"
-summary: "Direct, private Maharana Pratap Airport (Dabok) cab transfers to Udaipur lakeside hotels and city residences with flight tracking."
+category: "Group"
+summary: "Direct, shared Maharana Pratap Airport (Dabok) cab transfers to Udaipur lakeside hotels and city residences with flight tracking."
+image: "../../assets/images/services/udaipur-transfer.jpg"
 sortOrder: 1
 published: true
 pricing:
-  shortLabel: "From ₹1,200"
+  shortLabel: ""
   amount: "₹1,200 (Sedan) / ₹1,800 (SUV)"
   unit: "Per One-Way Trip"
   inclusions: ["Airport parking charges included", "45 minutes waiting after flight landing", "Meet & greet at arrival terminal exit", "Luggage assistance"]
@@ -14,7 +15,7 @@ pricing:
 ---
 
 ### Reliable Maharana Pratap Airport Cab Service
-Arrive in Rajasthan without the stress of negotiating taxi fares. Our private **Udaipur airport transfer** service connects Maharana Pratap Airport (Dabok) directly to your hotel, resort, or residence in Udaipur city. 
+Arrive in Rajasthan without the stress of negotiating taxi fares. Our shared **Udaipur airport transfer** service connects Maharana Pratap Airport (Dabok) directly to your hotel, resort, or residence in Udaipur city. 
 
 ### How Our Airport Pickup Works
 When your flight lands, our professional driver will be waiting at the arrival terminal exit holding a placard with your name. The airport is located approximately **22 to 25 kilometers** from the city center and lakeside zones (like Pichola and Fateh Sagar). The drive typically takes **35 to 45 minutes**.

@@ -1,154 +1,84 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import FeaturedServices from '../components/sections/FeaturedServices.astro';
-import FeaturedVehicles from '../components/sections/FeaturedVehicles.astro';
-import EnquiryForm from '../components/forms/EnquiryForm.astro';
-import Hero from '../components/sections/Hero.astro';
-import { getCollection } from 'astro:content';
-import { sortPublishedByOrder, getWhatsAppUrl } from '../utils/helpers';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import WhyChooseUs from "../components/sections/WhyChooseUs.astro";
+import FeaturedServices from "../components/sections/FeaturedServices.astro";
+import FeaturedVehicles from "../components/sections/FeaturedVehicles.astro";
+import BookingProcess from "../components/sections/BookingProcess.astro";
+import EnquiryForm from "../components/forms/EnquiryForm.astro";
+import { getCollection } from "astro:content";
+import { sortPublishedByOrder, getWhatsAppUrl } from "../utils/helpers";
+import ReviewsSection from "../components/sections/ReviewsSection.astro";
+import PlanYourTrip from "../components/sections/PlanYourTrip.astro";
+import FaqSection from "../components/sections/FaqSection.astro";
 
 // Fetch site settings
-const settingsEntries = await getCollection('settings');
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
   whatsapp: "919876543210",
-  serviceArea: "Udaipur & All Rajasthan Outstation Routes"
+  serviceArea: "Udaipur & All Rajasthan Outstation Routes",
 };
 
 // Fetch and sort services & vehicles
-const allServices = await getCollection('services');
+const allServices = await getCollection("services");
 const featuredServices = sortPublishedByOrder(allServices).slice(0, 6);
 
-const allVehicles = await getCollection('vehicles');
+const allVehicles = await getCollection("vehicles");
 const featuredVehicles = sortPublishedByOrder(allVehicles).slice(0, 6);
 
-// Fetch FAQs (or fallback if none seeded yet)
-const allFaqs = await getCollection('faqs');
-const displayFaqs = allFaqs.length > 0 ? allFaqs.slice(0, 4) : [
-  { data: { question: "How do I confirm a taxi booking in Udaipur?", answer: "Submitting our enquiry form or contacting us via WhatsApp is the first step. We will review your travel schedule, confirm vehicle availability, and provide an owner-approved price." } },
-  { data: { question: "Are toll taxes and parking included in the price?", answer: "This depends on the specific service. Airport and station transfers typically have fixed rates, while outstation travel may list driver allowances and tolls separately. Check the specific service page for transparent inclusions." } }
-];
-
-const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 ---
 
-<BaseLayout 
+<BaseLayout
   title={`${site.companyName} | Private Taxi & Car Rental in Udaipur`}
   description="Straightforward, dependable private transportation across Udaipur and Rajasthan. Airport transfers, local sightseeing, and outstation tempo travellers."
 >
   {/* 1. HERO SECTION */}
   <Hero whatsappUrl={whatsappUrl} />
 
-  {/* 2. FEATURED SERVICES */}
+  {/* 2. WHY CHOOSE US (NEW POSITIONING SECTION) */}
+  <WhyChooseUs />
+
+  {/* 3. FEATURED SERVICES */}
   <FeaturedServices featuredServices={featuredServices} />
 
-  {/* 3. VEHICLE FLEET & CAPACITY GUIDANCE */}
+  {/* 4. VEHICLE FLEET & CAPACITY GUIDANCE */}
   <FeaturedVehicles featuredVehicles={featuredVehicles} />
 
-  {/* 4. HOW TO CONTACT & BOOKING PROCESS */}
-  <section class="py-16 lg:py-20 bg-brand-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">
-          How Our Booking Process Works
+  {/* 5. HOW TO CONTACT & BOOKING PROCESS */}
+  <BookingProcess />
+
+  {/* 6. REVIEWS PROOF */}
+  <ReviewsSection />
+
+  {/* 7. PLAN YOUR TRIP  */}
+  <PlanYourTrip />
+
+  {/* 8. FREQUENTLY ASKED QUESTIONS */}
+  <FaqSection />
+
+  {/* 9. FINAL ENQUIRY FORM */}
+  <section
+    id="enquiry-section"
+    class="py-16 lg:py-24 bg-surface border-t border-brand-100"
+  >
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Section Heading */}
+      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3">
+          Direct Local Booking
+        </span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight">
+          Request Your Transport Quote
         </h2>
-        <p class="text-brand-100/80 text-sm sm:text-base">
-          We prioritize clear communication over automated systems. Here is how we ensure your Udaipur travel is organized seamlessly.
+        <p class="text-typography-muted text-sm sm:text-base mt-2 leading-relaxed">
+          Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-brand-800/50 border border-brand-800 p-6 rounded-xl text-center">
-          <div class="w-12 h-12 bg-accent text-white font-serif text-xl font-bold rounded-full flex items-center justify-center mx-auto mb-4">1</div>
-          <h3 class="font-serif text-lg font-bold text-white mb-2">Send Your Route Details</h3>
-          <p class="text-sm text-brand-100/70 leading-relaxed">
-            Fill out our online inquiry form, call us directly, or send a WhatsApp message with your travel dates, passenger count, and destinations.
-          </p>
-        </div>
-
-        <div class="bg-brand-800/50 border border-brand-800 p-6 rounded-xl text-center">
-          <div class="w-12 h-12 bg-accent text-white font-serif text-xl font-bold rounded-full flex items-center justify-center mx-auto mb-4">2</div>
-          <h3 class="font-serif text-lg font-bold text-white mb-2">Review Approved Pricing</h3>
-          <p class="text-sm text-brand-100/70 leading-relaxed">
-            The transport owner reviews your request and communicates a straightforward, transparent price with exact inclusions and exclusions.
-          </p>
-        </div>
-
-        <div class="bg-brand-800/50 border border-brand-800 p-6 rounded-xl text-center">
-          <div class="w-12 h-12 bg-accent text-white font-serif text-xl font-bold rounded-full flex items-center justify-center mx-auto mb-4">3</div>
-          <h3 class="font-serif text-lg font-bold text-white mb-2">Confirm & Travel</h3>
-          <p class="text-sm text-brand-100/70 leading-relaxed">
-            Once agreed, your vehicle category and professional driver are allocated. We provide driver contact details prior to your pickup time.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* 5. REVIEWS PROOF */}
-  <section class="py-16 bg-surface border-b border-brand-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="font-serif text-3xl font-bold text-brand-900 mb-3">Trusted by Travellers in Rajasthan</h2>
-      <p class="text-typography-muted text-sm max-w-xl mx-auto mb-10">
-        We rely on real customer experiences and straightforward service. Read feedback from families, couples, and international visitors.
-      </p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-        <div class="bg-surface-card p-6 rounded-xl border border-brand-100 shadow-sm">
-          <div class="text-accent text-sm font-bold mb-2">★★★★★</div>
-          <p class="text-xs text-typography-muted italic mb-4">"Booked an airport pickup and 2-day Udaipur sightseeing. The Tempo Traveller was clean, and the driver knew all the old city navigation very well."</p>
-          <span class="text-xs font-bold text-brand-900">— Amit S., New Delhi</span>
-        </div>
-        <div class="bg-surface-card p-6 rounded-xl border border-brand-100 shadow-sm">
-          <div class="text-accent text-sm font-bold mb-2">★★★★★</div>
-          <p class="text-xs text-typography-muted italic mb-4">"Transparent pricing. No hidden fees requested at the end of our Mount Abu day trip. Very professional transport provider."</p>
-          <span class="text-xs font-bold text-brand-900">— David & Sarah, UK</span>
-        </div>
-        <div class="bg-surface-card p-6 rounded-xl border border-brand-100 shadow-sm">
-          <div class="text-accent text-sm font-bold mb-2">★★★★★</div>
-          <p class="text-xs text-typography-muted italic mb-4">"Excellent communication over WhatsApp before our train arrived at Udaipur city station. Driver was waiting right at the exit."</p>
-          <span class="text-xs font-bold text-brand-900">— Priya M., Ahmedabad</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* 6. FREQUENTLY ASKED QUESTIONS */}
-  <section class="py-16 lg:py-20 bg-surface-alt/30">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="font-serif text-3xl font-bold text-brand-900 mb-3">Frequently Asked Questions</h2>
-        <p class="text-typography-muted text-sm">Answers to common transport, pricing, and booking questions in Udaipur.</p>
-      </div>
-
-      <div class="space-y-4">
-        {displayFaqs.map(faq => (
-          <div class="bg-surface-card border border-brand-100 rounded-xl p-6 shadow-sm">
-            <h3 class="font-serif text-base font-bold text-brand-900 mb-2">
-              {faq.data.question}
-            </h3>
-            <p class="text-sm text-typography-muted leading-relaxed">
-              {faq.data.answer}
-            </p>
-          </div>
-        ))}
-      </div>
-      
-      <div class="text-center mt-8">
-        <a href="/faqs/" class="text-sm font-semibold text-brand-900 hover:text-accent underline">
-          Read all frequently asked questions &rarr;
-        </a>
-      </div>
-    </div>
-  </section>
-
-  {/* 7. FINAL ENQUIRY FORM */}
-  <section id="enquiry-section" class="py-16 lg:py-24 bg-surface border-t border-brand-100">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <EnquiryForm />
     </div>
   </section>
-
 </BaseLayout>

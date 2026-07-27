@@ -1,0 +1,181 @@
+---
+import { getCollection } from 'astro:content';
+import { 
+  IconChevronDown, 
+  IconHelpCircle, 
+  IconArrowRight 
+} from '@tabler/icons-astro';
+
+// 1. Fetch published FAQs and sort ascending by 'order'
+const allFaqs = await getCollection('faqs').catch(() => []);
+const publishedFaqs = allFaqs
+  .filter(f => f.data.published)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 5); 
+---
+
+<section class="py-16 lg:py-24 bg-surface-alt/30 border-b border-brand-100 relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    {/* 1. SECTION HEADER WITH DESKTOP NAVIGATION CTA */}
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full mb-3">
+          <IconHelpCircle size={14} stroke={2} className="text-accent shrink-0" />
+          <span>Clear Answers</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-typography-muted text-sm sm:text-base mt-2 max-w-xl">
+          Straightforward facts regarding our pricing rules, vehicle allocations, and booking confirmation process.
+        </p>
+      </div>
+
+      {/* DESKTOP NAVIGATION BUTTON (Hidden on mobile) */}
+      <div class="hidden sm:block shrink-0 self-start md:self-auto">
+        <a 
+          href="/faqs/" 
+          class="inline-flex items-center gap-2 bg-surface-card border border-brand-100 hover:border-brand-900 text-brand-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow group active:scale-95"
+        >
+          <span>View All FAQs</span>
+          <IconArrowRight size={16} stroke={2} className="text-accent group-hover:translate-x-1 transition-transform" />
+        </a>
+      </div>
+    </div>
+
+    {/* 2. EXCLUSIVE ACCORDION LIST */}
+    <div class="space-y-4" id="faq-accordion-group">
+      {publishedFaqs.map((faq, index) => {
+        const isFirst = index === 0; // Open only the first FAQ by default
+        return (
+          <div 
+            class="faq-item bg-surface-card border border-brand-100 rounded-2xl transition-all duration-300 overflow-hidden shadow-sm hover:border-brand-800/40"
+            data-open={isFirst ? "true" : "false"}
+          >
+            {/* Toggle Button */}
+            <button 
+              type="button"
+              aria-expanded={isFirst ? "true" : "false"}
+              class="faq-trigger w-full p-6 sm:p-7 text-left font-serif text-lg sm:text-xl font-bold text-brand-900 flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset cursor-pointer"
+            >
+              <span class="leading-snug">{faq.data.question}</span>
+              <div class="w-8 h-8 rounded-full bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 shrink-0 transition-transform duration-300 faq-icon">
+                <IconChevronDown size={18} stroke={2.5} />
+              </div>
+            </button>
+
+            {/* Collapsible Answer Box */}
+            <div 
+              class="faq-content transition-all duration-300 ease-in-out overflow-hidden"
+              style={isFirst ? "" : "max-height: 0px; opacity: 0;"}
+            >
+              <div class="px-6 pb-6 sm:px-7 sm:pb-7 pt-1 text-typography-muted text-sm sm:text-base leading-relaxed border-t border-brand-100/40 mt-1">
+                {faq.data.answer}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* 3. MOBILE NAVIGATION BUTTON (Visible only on small screens) */}
+    <div class="mt-8 text-center sm:hidden">
+      <a 
+        href="/faqs/" 
+        class="w-full inline-flex items-center justify-center gap-2 bg-brand-900 text-white font-bold px-6 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md group active:scale-95"
+      >
+        <span>View All FAQs</span>
+        <IconArrowRight size={16} stroke={2} className="text-accent group-hover:translate-x-1 transition-transform" />
+      </a>
+    </div>
+
+    {/* 4. FOOTER CROSS-LINK TO DIRECT ENQUIRY */}
+    <div class="mt-12 pt-8 border-t border-brand-100/60 text-center">
+      <div class="inline-flex flex-col sm:flex-row items-center justify-center gap-2 bg-surface-card border border-brand-100 px-6 py-4 rounded-2xl shadow-sm text-xs sm:text-sm">
+        <span class="text-typography-muted">Have a specific question about your itinerary or vehicle capacity?</span>
+        <a href="/enquiry/" class="font-bold text-brand-900 hover:text-accent underline transition-colors">
+          Ask our Udaipur team directly &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{/* Interactive Single-Open Controller Engine */}
+<script>
+  function initFaqAccordion() {
+    const triggers = document.querySelectorAll('.faq-trigger');
+
+    triggers.forEach((trigger) => {
+      // Clone nodes to purge ghost listeners during Astro View Transitions
+      const newTrigger = trigger.cloneNode(true) as HTMLElement;
+      trigger.parentNode?.replaceChild(newTrigger, trigger);
+
+      newTrigger.addEventListener('click', () => {
+        const parent = newTrigger.closest('.faq-item') as HTMLElement;
+        const content = parent?.querySelector('.faq-content') as HTMLElement;
+        const icon = newTrigger.querySelector('.faq-icon') as HTMLElement;
+        const isOpen = newTrigger.getAttribute('aria-expanded') === 'true';
+
+        if (!parent || !content) return;
+
+        // STEP 1: CLOSING LOGIC
+        if (!isOpen) {
+          document.querySelectorAll('.faq-item[data-open="true"]').forEach((openItem) => {
+            if (openItem !== parent) {
+              const openTrigger = openItem.querySelector('.faq-trigger') as HTMLElement;
+              const openContent = openItem.querySelector('.faq-content') as HTMLElement;
+              const openIcon = openItem.querySelector('.faq-icon') as HTMLElement;
+
+              if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
+              openItem.setAttribute('data-open', 'false');
+              if (openContent) {
+                openContent.style.maxHeight = '0px';
+                openContent.style.opacity = '0';
+              }
+              if (openIcon) openIcon.style.transform = 'rotate(0deg)';
+            }
+          });
+        }
+
+        // STEP 2: TOGGLE TARGET ITEM
+        if (isOpen) {
+          // Close the clicked item
+          newTrigger.setAttribute('aria-expanded', 'false');
+          parent.setAttribute('data-open', 'false');
+          content.style.maxHeight = '0px';
+          content.style.opacity = '0';
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        } else {
+          // Open the clicked item 
+          newTrigger.setAttribute('aria-expanded', 'true');
+          parent.setAttribute('data-open', 'true');
+          content.style.maxHeight = `${content.scrollHeight}px`;
+          content.style.opacity = '1';
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Set initial heights for the default opened element on render
+    document.querySelectorAll('.faq-item[data-open="true"]').forEach((item) => {
+      const content = item.querySelector('.faq-content') as HTMLElement;
+      const icon = item.querySelector('.faq-icon') as HTMLElement;
+      if (content) {
+        content.style.maxHeight = `${content.scrollHeight}px`;
+        content.style.opacity = '1';
+      }
+      if (icon) {
+        icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  }
+
+  // Execute on initial DOM load
+  initFaqAccordion();
+
+  // Execute on Astro View Transition SPA navigation
+  document.addEventListener('astro:page-load', initFaqAccordion);
+</script>

@@ -1,4 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
+import { IconSend } from '@tabler/icons-astro';
+
 interface Props {
   defaultService?: string;
   defaultVehicle?: string;
@@ -12,6 +15,13 @@ const {
 } = Astro.props;
 
 const currentUrl = Astro.url.pathname;
+
+// Fetch Published Services & Vehicles to Populate Dropdowns Server-Side
+const allServices = await getCollection('services').catch(() => []);
+const publishedServices = allServices.filter(s => s.data.published);
+
+const allVehicles = await getCollection('vehicles').catch(() => []);
+const publishedVehicles = allVehicles.filter(v => v.data.published);
 ---
 
 <form 
@@ -32,8 +42,8 @@ const currentUrl = Astro.url.pathname;
     </p>
   </div>
 
-  {/* Row 1: Contact Details */}
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+  {/* Row 1: Contact Details (Name, Phone, Email) */}
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
     <div>
       <label for="name" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
         Full Name <span class="text-red-500">*</span>
@@ -60,39 +70,62 @@ const currentUrl = Astro.url.pathname;
         class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
       />
     </div>
+    <div>
+      <label for="email" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Email Address <span class="text-typography-muted font-normal text-[10px]">(Optional)</span>
+      </label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        placeholder="rajesh@example.com" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
   </div>
 
-  {/* Row 2: Service & Vehicle Selection */}
+ {/* Row 2: Dynamic Dropdowns (Service & Vehicle Selection) */}
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <div>
       <label for="service" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
-        Required Service / Transfer
+        Required Service / Transfer <span class="text-typography-muted font-normal text-[10px]">(Optional)</span>
       </label>
-      <input 
-        type="text" 
+      <select 
         id="service" 
         name="service" 
-        value={defaultService} 
-        placeholder="e.g. Udaipur Airport Transfer or Local Sightseeing" 
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900"
-      />
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer"
+      >
+        {/* Empowering fallback copy for direct visitors */}
+        <option value="">-- Custom Route / General Quote --</option>
+        {publishedServices.map(s => (
+          <option value={s.data.title} selected={defaultService === s.data.title}>
+            {s.data.title}
+          </option>
+        ))}
+      </select>
     </div>
+
     <div>
       <label for="vehicle" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
-        Vehicle Preference
+        Vehicle Preference <span class="text-typography-muted font-normal text-[10px]">(Optional)</span>
       </label>
-      <input 
-        type="text" 
+      <select 
         id="vehicle" 
         name="vehicle" 
-        value={defaultVehicle} 
-        placeholder="e.g. Sedan, SUV, or Tempo Traveller" 
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900"
-      />
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer"
+      >
+        {/* Conversational fallback copy that builds trust */}
+        <option value="">-- I'm Not Sure / Recommend Me a Vehicle --</option>
+        {publishedVehicles.map(v => (
+          <option value={v.data.title} selected={defaultVehicle === v.data.title}>
+            {v.data.title} ({v.data.passengers} Max Passengers)
+          </option>
+        ))}
+      </select>
     </div>
   </div>
 
-  {/* Row 3: Travel Schedule & Locations */}
+  {/* Row 3: Travel Schedule (Date, Pickup Time, Return Date) */}
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
     <div>
       <label for="travelDate" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
@@ -106,6 +139,36 @@ const currentUrl = Astro.url.pathname;
         class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
       />
     </div>
+
+    {/* FIELD: Pickup Time (Optional) */}
+    <div>
+      <label for="pickupTime" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Pickup Time <span class="text-typography-muted font-normal text-[10px]">(Optional)</span>
+      </label>
+      <input 
+        type="time" 
+        id="pickupTime" 
+        name="pickupTime" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+
+    {/* CONDITIONAL FIELD: Return Date */}
+    <div>
+      <label for="returnDate" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
+        Return Date <span class="text-typography-muted font-normal text-[10px]">(For Round Trips)</span>
+      </label>
+      <input 
+        type="date" 
+        id="returnDate" 
+        name="returnDate" 
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
+      />
+    </div>
+  </div>
+
+  {/* Row 4: Route Locations (Pickup & Drop) */}
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <div>
       <label for="pickup" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
         Pickup Location <span class="text-red-500">*</span>
@@ -115,7 +178,7 @@ const currentUrl = Astro.url.pathname;
         id="pickup" 
         name="pickup" 
         required 
-        placeholder="e.g. Udaipur Airport / City Palace Hotel" 
+        placeholder="e.g. Udaipur Airport / Lake Pichola Hotel" 
         class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
       />
     </div>
@@ -128,13 +191,13 @@ const currentUrl = Astro.url.pathname;
         id="drop" 
         name="drop" 
         required 
-        placeholder="e.g. Hotel drop or 8 Hrs Sightseeing" 
+        placeholder="e.g. Hotel drop, Mount Abu Day Trip, or 8 Hrs Sightseeing" 
         class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
       />
     </div>
   </div>
 
-  {/* Row 4: Passengers & Luggage */}
+  {/* Row 5: Passengers & Luggage */}
   <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
     <div>
       <label for="adults" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
@@ -178,16 +241,16 @@ const currentUrl = Astro.url.pathname;
     </div>
   </div>
 
-  {/* Row 5: Additional Notes */}
+  {/* Row 6: Additional Notes / Flight & Train info */}
   <div>
     <label for="message" class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2">
-      Special Instructions / Flight or Train Number
+      Message / Special Requests
     </label>
     <textarea 
       id="message" 
       name="message" 
       rows="3" 
-      placeholder="Provide flight/train details for station transfers, or list specific sightseeing stops you prefer..." 
+      placeholder="Provide flight/train details for airport transfers (e.g. 6E 2134 arriving 10:30 AM), or list preferred sightseeing stops..." 
       class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
     ></textarea>
   </div>
@@ -195,50 +258,85 @@ const currentUrl = Astro.url.pathname;
   {/* Consent & Submit */}
   <div class="pt-2">
     <label class="flex items-start gap-3 cursor-pointer mb-6 text-xs text-typography-muted">
-      <input type="checkbox" required class="mt-0.5 rounded border-brand-100 text-accent focus:ring-accent" />
+      <input type="checkbox" required class="mt-0.5 rounded border-brand-100 text-accent focus:ring-accent shrink-0" />
       <span>
         I agree to be contacted via Phone, Email, or WhatsApp regarding this travel inquiry. I understand this form is a request for contact and does not automatically confirm a reservation.
       </span>
     </label>
 
-    <button 
+<button 
       type="submit" 
-      class="w-full sm:w-auto bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-base tracking-wide flex items-center justify-center gap-2 active:scale-95"
+      aria-label="Submit your travel enquiry to our Udaipur transport team"
+      class="group w-full sm:w-auto bg-brand-900 hover:bg-brand-800 text-white font-serif font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-xl border border-brand-800/80 hover:border-brand-700 transition-all duration-300 text-base tracking-wide flex items-center justify-center gap-3 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
-      <span>✈️</span> Submit Travel Enquiry
+      <span>Submit Travel Enquiry</span>
+      <IconSend 
+        size={20} 
+        stroke={2} 
+        className="text-accent transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-0.5 shrink-0" 
+      />
     </button>
   </div>
 </form>
 
-{/* Client-Side Autofill Engine for Static SSG Deployments */}
+{/* Client-Side Smart Dropdown & Input Autofill Engine */}
 <script>
   function autofillContextFromUrl() {
-    // 1. Inspect browser address bar
     const params = new URLSearchParams(window.location.search);
     const serviceParam = params.get('service');
     const vehicleParam = params.get('vehicle');
     const priceParam = params.get('priceLabel');
+    const timeParam = params.get('pickupTime');
 
-    // 2. Locate DOM input elements
-    const serviceInput = document.getElementById('service') as HTMLInputElement | null;
-    const vehicleInput = document.getElementById('vehicle') as HTMLInputElement | null;
+    // Helper: Smart Dropdown Selection Logic
+    const selectMatchingOption = (selectEl: HTMLSelectElement | null, rawParamValue: string | null) => {
+      if (!selectEl || !rawParamValue) return;
+
+      const targetStr = rawParamValue.trim().toLowerCase();
+      let matched = false;
+
+      // 1. Attempt exact or partial string matching against existing <option> values and text
+      for (let i = 0; i < selectEl.options.length; i++) {
+        const option = selectEl.options[i];
+        const optValue = option.value.toLowerCase();
+        const optText = option.text.toLowerCase();
+
+        if (optValue === targetStr || optText === targetStr || optText.includes(targetStr) || targetStr.includes(optText)) {
+          selectEl.selectedIndex = i;
+          matched = true;
+          break;
+        }
+      }
+
+      // 2. Fallback: If no option matched (e.g., custom URL query), create and select a custom option
+      if (!matched && rawParamValue.trim() !== '') {
+        const customOpt = document.createElement('option');
+        customOpt.value = rawParamValue;
+        customOpt.text = `${rawParamValue} (Selected)`;
+        customOpt.selected = true;
+        selectEl.appendChild(customOpt);
+      }
+    };
+
+    // Auto-select dropdowns
+    selectMatchingOption(document.getElementById('service') as HTMLSelectElement, serviceParam);
+    selectMatchingOption(document.getElementById('vehicle') as HTMLSelectElement, vehicleParam);
+
+    // Auto-fill input fields
     const priceInput = document.getElementById('priceLabel') as HTMLInputElement | null;
+    const timeInput = document.getElementById('pickupTime') as HTMLInputElement | null;
 
-    // 3. Inject URL parameters directly into text fields
-    if (serviceParam && serviceInput) {
-      serviceInput.value = serviceParam;
-    }
-    if (vehicleParam && vehicleInput) {
-      vehicleInput.value = vehicleParam;
-    }
     if (priceParam && priceInput) {
       priceInput.value = priceParam;
     }
+    if (timeParam && timeInput) {
+      timeInput.value = timeParam;
+    }
   }
 
-  // Execute immediately when browser loads the HTML
+  // Execute immediately when browser loads HTML
   autofillContextFromUrl();
 
-  // Execute again if navigating via Astro View Transitions
+  // Execute on Astro View Transition SPA navigation
   document.addEventListener('astro:page-load', autofillContextFromUrl);
 </script>
