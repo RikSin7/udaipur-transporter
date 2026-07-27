@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedServices from '../components/sections/FeaturedServices.astro';
-import VehicleCard from '../components/cards/VehicleCard.astro';
+import FeaturedVehicles from '../components/sections/FeaturedVehicles.astro';
 import EnquiryForm from '../components/forms/EnquiryForm.astro';
 import Hero from '../components/sections/Hero.astro';
 import { getCollection } from 'astro:content';
@@ -21,7 +21,7 @@ const allServices = await getCollection('services');
 const featuredServices = sortPublishedByOrder(allServices).slice(0, 6);
 
 const allVehicles = await getCollection('vehicles');
-const featuredVehicles = sortPublishedByOrder(allVehicles).slice(0, 4);
+const featuredVehicles = sortPublishedByOrder(allVehicles).slice(0, 6);
 
 // Fetch FAQs (or fallback if none seeded yet)
 const allFaqs = await getCollection('faqs');
@@ -45,37 +45,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
   <FeaturedServices featuredServices={featuredServices} />
 
   {/* 3. VEHICLE FLEET & CAPACITY GUIDANCE */}
-  <section class="py-16 lg:py-24 bg-surface-alt/60 border-y border-brand-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-        <div>
-          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 mb-3">
-            Choose a Suitable Vehicle
-          </h2>
-          <p class="text-typography-muted text-base max-w-2xl">
-            Our fleet guidelines help you select the right vehicle category based on passenger count and luggage volume for maximum comfort on Rajasthan roads.
-          </p>
-        </div>
-        <a href="/vehicles/" class="mt-4 md:mt-0 text-brand-900 hover:text-accent font-semibold text-sm flex items-center gap-1 transition-colors">
-          Explore Full Fleet &rarr;
-        </a>
-      </div>
-
-      {featuredVehicles.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredVehicles.map(vehicle => (
-            <VehicleCard vehicle={vehicle} />
-          ))}
-        </div>
-      ) : (
-        <div class="bg-surface border border-brand-100 rounded-xl p-8 text-center text-typography-muted">
-          <p class="italic">No vehicles published yet. Add markdown files to <code>src/content/vehicles/</code> to populate this section.</p>
-        </div>
-      )}
-
-    </div>
-  </section>
+  <FeaturedVehicles featuredVehicles={featuredVehicles} />
 
   {/* 4. HOW TO CONTACT & BOOKING PROCESS */}
   <section class="py-16 lg:py-20 bg-brand-900 text-white">

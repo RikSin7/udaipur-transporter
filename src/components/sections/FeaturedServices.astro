@@ -9,31 +9,38 @@ interface Props {
 const { featuredServices } = Astro.props;
 ---
 
-<section class="py-16 lg:py-24 bg-surface">
+<section class="py-16 lg:py-24 bg-surface border-b border-border/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-      <div>
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 mb-3">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div class="max-w-2xl">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2 block">
+          Tailored Travel Categories
+        </span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand mb-3">
           Our Transport Services
         </h2>
-        <p class="text-typography-muted text-base max-w-2xl">
+        <p class="text-typography-muted text-base leading-relaxed">
           Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey.
         </p>
       </div>
-      <a href="/services/" class="mt-4 md:mt-0 text-brand-900 hover:text-accent font-semibold text-sm flex items-center gap-1 transition-colors">
-        View All Services &rarr;
+      <a 
+        href="/services/" 
+        class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-accent transition-colors py-2 group shrink-0"
+      >
+        <span>View All Services</span>
+        <span class="group-hover:translate-x-1 transition-transform duration-200">&rarr;</span>
       </a>
     </div>
 
     {featuredServices.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
         {featuredServices.map((service: any) => (
           <ServiceCard service={service} />
         ))}
       </div>
     ) : (
-      <div class="bg-surface-alt border border-brand-100 rounded-xl p-8 text-center text-typography-muted">
+      <div class="bg-surface-alt border border-border rounded-[var(--radius-card,18px)] p-12 text-center text-typography-muted max-w-xl mx-auto">
         <p class="italic">No services published yet. Add markdown files to <code>src/content/services/</code> to populate this section.</p>
       </div>
     )}
