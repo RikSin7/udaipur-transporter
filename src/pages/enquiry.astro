@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import EnquiryForm from '../components/forms/EnquiryForm.astro';
+import { getWhatsAppUrl } from '../utils/helpers';
+
+// 1. Fetch Singleton Business Settings
+const settingsEntries = await getCollection('settings').catch(() => []);
+const site = settingsEntries[0]?.data || {
+  companyName: "Udaipur Royal Transporter",
+  phone: "+91 98765 43210",
+  whatsapp: "919876543210",
+  email: "bookings@udaipurtransporter.com",
+  operatingHours: "Typical Response Time: Under 15 Minutes (7 Days a Week)",
+};
+
+// 2. Fetch Singleton Enquiry Page Data
+const enquiryEntries = await getCollection('enquiry').catch(() => []);
+const enquiryData = enquiryEntries[0]?.data || {
+  title: "Send Travel Enquiry",
+  subtitle: "Share your travel dates, route details, and passenger count for an owner-approved quote.",
+  noindex: false,
+  processHeading: "What Happens After You Enquire?",
+  processSubtitle: "We prioritize straightforward, direct communication without automated queues.",
+  processSteps: [
+    { stepNumber: "01", title: "Route & Schedule Review", desc: "Our local coordinators review your travel schedule and vehicle needs." },
+    { stepNumber: "02", title: "Transparent Tariff Calculation", desc: "We calculate an owner-approved price with exact inclusions and exclusions." },
+    { stepNumber: "03", title: "Direct Confirmation", desc: "We reach out directly via WhatsApp or Phone to finalize your itinerary." }
+  ],
+  alternativesHeading: "Prefer Instant Communication?",
+  alternativesDesc: "If your travel date is within the next 24 hours, use our direct channels below."
+};
+
+// 3. Extract URL Parameters for Contextual Auto-Prefilling
+const urlParams = Astro.url.searchParams;
+const paramService = urlParams.get('service') || "";
+const paramVehicle = urlParams.get('vehicle') || "";
+const paramPrice = urlParams.get('priceLabel') || "";
+
+const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
+const whatsappUrl = getWhatsAppUrl(
+  site.whatsapp, 
+  paramService || paramVehicle || "General Quote Request", 
+  Astro.url.href
+);
+---
+
+<BaseLayout 
+  title={`${enquiryData.title} | ${site.companyName}`}
+  description={enquiryData.subtitle}
+>
+  {enquiryData.noindex && <meta slot="head" name="robots" content="noindex, nofollow" />}
+  
+  <Header slot="header" />
+
+  {/* 1. HERO BANNER */}
+  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+          Request For Quote & Contact
+        </span>
+        <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+          {enquiryData.title}
+        </h1>
+        <p class="text-brand-100/90 text-lg font-light leading-relaxed">
+          {enquiryData.subtitle}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* 2. MAIN ENQUIRY AREA: Form + Process Explanation */}
+  <section class="py-16 lg:py-24 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        {/* Left Column: Response Process & Direct Alternatives (Span 5) */}
+        <div class="lg:col-span-5 space-y-10 order-2 lg:order-1">
+          
+          {/* Response Process Explanation */}
+          <div class="bg-surface-card border border-brand-100 p-6 sm:p-8 rounded-2xl shadow-sm">
+            <h2 class="font-serif text-2xl font-bold text-brand-900 mb-2">
+              {enquiryData.processHeading}
+            </h2>
+            <p class="text-xs text-typography-muted mb-6 leading-relaxed">
+              {enquiryData.processSubtitle}
+            </p>
+
+            <div class="space-y-6">
+              {enquiryData.processSteps.map(step => (
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-brand-900 text-accent font-serif font-bold text-sm flex items-center justify-center shrink-0">
+                    {step.stepNumber}
+                  </div>
+                  <div>
+                    <h3 class="font-serif text-base font-bold text-brand-900 mb-1">{step.title}</h3>
+                    <p class="text-xs text-typography-muted leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Disclaimer Highlight */}
+            <div class="mt-6 pt-6 border-t border-brand-100/80 text-[11px] text-typography-muted bg-surface-alt/60 p-3.5 rounded-xl border hover:border-brand-100/60 leading-relaxed">
+              <strong>⚠️ Important Note:</strong> Submitting this form is an inquiry for pricing and vehicle availability. It does not automatically confirm a reservation or process any online payments.
+            </div>
+          </div>
+
+          {/* WhatsApp and Call Alternatives */}
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-serif text-xl font-bold text-brand-900 mb-1">
+                {enquiryData.alternativesHeading}
+              </h3>
+              <p class="text-xs text-typography-muted leading-relaxed">
+                {enquiryData.alternativesDesc}
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              {/* Call Button */}
+              <a 
+                href={callUrl} 
+                class="bg-brand-900 hover:bg-brand-800 text-white p-4 rounded-xl transition-all shadow-sm flex items-center justify-between group"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">📞</span>
+                  <div>
+                    <span class="text-[10px] uppercase tracking-wider text-brand-100/70 block">Call Directly</span>
+                    <span class="font-serif font-bold text-sm text-white group-hover:text-accent transition-colors">{site.phone}</span>
+                  </div>
+                </div>
+                <span class="text-accent text-lg">&rarr;</span>
+              </a>
+
+              {/* WhatsApp Button */}
+              <a 
+                href={whatsappUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-xl transition-all shadow-sm flex items-center justify-between group"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">💬</span>
+                  <div>
+                    <span class="text-[10px] uppercase tracking-wider text-emerald-100 block">WhatsApp Chat</span>
+                    <span class="font-serif font-bold text-sm text-white">Instant Quote Support</span>
+                  </div>
+                </div>
+                <span class="text-white text-lg">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Right Column: Reusable Enquiry Form */}
+        <div class="lg:col-span-7 order-1 lg:order-2">
+          {/* 
+            We pass the URL parameters into the form. 
+            If someone clicked a service card, it automatically pre-fills!
+          */}
+          <EnquiryForm 
+            defaultService={paramService}
+            defaultVehicle={paramVehicle}
+            priceLabel={paramPrice}
+          />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {/* 3. CROSS-LINK TO CATALOGUE */}
+  <section class="py-16 bg-surface-alt/40 border-t border-brand-100">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-serif text-2xl font-bold text-brand-900 mb-2">Not sure what vehicle you need?</h2>
+      <p class="text-sm text-typography-muted mb-6">
+        Review our fleet capacity matrix or check our service catalogue to see recommended luggage limits and transparent tariff structures.
+      </p>
+      
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a 
+          href="/vehicles/" 
+          class="bg-surface-card border border-brand-100 hover:border-brand-800 text-brand-900 font-bold px-6 py-3.5 rounded-xl shadow-sm transition-all text-xs uppercase tracking-wider"
+        >
+          Explore Vehicle Fleet &rarr;
+        </a>
+        <a 
+          href="/services/" 
+          class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3.5 rounded-xl shadow-sm transition-all text-xs uppercase tracking-wider"
+        >
+          View All Services &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -20,10 +20,10 @@ const currentUrl = Astro.url.pathname;
   data-netlify="true" 
   class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-premium space-y-6"
 >
-  {/* Hidden/read-only context fields */}
+  {/* Hidden context fields for Netlify/Email routing */}
   <input type="hidden" name="form-name" value="travel-enquiry" />
   <input type="hidden" name="sourcePage" value={currentUrl} />
-  {priceLabel && <input type="hidden" name="priceLabel" value={priceLabel} />}
+  <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
 
   <div class="border-b border-brand-100 pb-4 mb-6">
     <h3 class="font-serif text-2xl font-bold text-brand-900">Send Travel Request</h3>
@@ -74,7 +74,7 @@ const currentUrl = Astro.url.pathname;
         name="service" 
         value={defaultService} 
         placeholder="e.g. Udaipur Airport Transfer or Local Sightseeing" 
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium"
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900"
       />
     </div>
     <div>
@@ -87,7 +87,7 @@ const currentUrl = Astro.url.pathname;
         name="vehicle" 
         value={defaultVehicle} 
         placeholder="e.g. Sedan, SUV, or Tempo Traveller" 
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium"
+        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900"
       />
     </div>
   </div>
@@ -145,7 +145,7 @@ const currentUrl = Astro.url.pathname;
         id="adults" 
         name="adults" 
         min="1" 
-        value="2"  
+        value="2" 
         required 
         class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
       />
@@ -203,9 +203,42 @@ const currentUrl = Astro.url.pathname;
 
     <button 
       type="submit" 
-      class="w-full sm:w-auto bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-base tracking-wide flex items-center justify-center gap-2"
+      class="w-full sm:w-auto bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-base tracking-wide flex items-center justify-center gap-2 active:scale-95"
     >
       <span>✈️</span> Submit Travel Enquiry
     </button>
   </div>
 </form>
+
+{/* Client-Side Autofill Engine for Static SSG Deployments */}
+<script>
+  function autofillContextFromUrl() {
+    // 1. Inspect browser address bar
+    const params = new URLSearchParams(window.location.search);
+    const serviceParam = params.get('service');
+    const vehicleParam = params.get('vehicle');
+    const priceParam = params.get('priceLabel');
+
+    // 2. Locate DOM input elements
+    const serviceInput = document.getElementById('service') as HTMLInputElement | null;
+    const vehicleInput = document.getElementById('vehicle') as HTMLInputElement | null;
+    const priceInput = document.getElementById('priceLabel') as HTMLInputElement | null;
+
+    // 3. Inject URL parameters directly into text fields
+    if (serviceParam && serviceInput) {
+      serviceInput.value = serviceParam;
+    }
+    if (vehicleParam && vehicleInput) {
+      vehicleInput.value = vehicleParam;
+    }
+    if (priceParam && priceInput) {
+      priceInput.value = priceParam;
+    }
+  }
+
+  // Execute immediately when browser loads the HTML
+  autofillContextFromUrl();
+
+  // Execute again if navigating via Astro View Transitions
+  document.addEventListener('astro:page-load', autofillContextFromUrl);
+</script>

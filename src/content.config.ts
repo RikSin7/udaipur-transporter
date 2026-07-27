@@ -114,6 +114,24 @@ const contactCollection = defineCollection({
   }),
 });
 
+const enquiryCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/enquiry" }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    noindex: z.boolean().default(false),
+    processHeading: z.string(),
+    processSubtitle: z.string(),
+    processSteps: z.array(z.object({
+      stepNumber: z.string(),
+      title: z.string(),
+      desc: z.string(),
+    })),
+    alternativesHeading: z.string(),
+    alternativesDesc: z.string(),
+  }),
+});
+
 export const collections = {
     'services': servicesCollection,
     'vehicles': vehiclesCollection,
@@ -122,4 +140,5 @@ export const collections = {
     'blog': blogCollection,
     'about': aboutCollection,
     'contact': contactCollection,
+    'enquiry': enquiryCollection,
 };
