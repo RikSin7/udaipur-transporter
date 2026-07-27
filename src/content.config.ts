@@ -100,6 +100,20 @@ const aboutCollection = defineCollection({
     }),
 });
 
+const contactCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/contact" }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    directChannelsHeading: z.string(),
+    directChannelsDesc: z.string(),
+    locationHeading: z.string(),
+    locationSubheading: z.string(),
+    locationDesc: z.string(),
+    googleMapsUrl: z.string(),
+  }),
+});
+
 export const collections = {
     'services': servicesCollection,
     'vehicles': vehiclesCollection,
@@ -107,4 +121,5 @@ export const collections = {
     'faqs': faqsCollection,
     'blog': blogCollection,
     'about': aboutCollection,
+    'contact': contactCollection,
 };
