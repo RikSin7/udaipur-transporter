@@ -132,6 +132,24 @@ const enquiryCollection = defineCollection({
   }),
 });
 
+const privacyCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/privacy" }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    lastUpdated: z.string(),
+  }),
+});
+
+const termsCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/terms" }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    lastUpdated: z.string(),
+  }),
+});
+
 export const collections = {
     'services': servicesCollection,
     'vehicles': vehiclesCollection,
@@ -141,4 +159,6 @@ export const collections = {
     'about': aboutCollection,
     'contact': contactCollection,
     'enquiry': enquiryCollection,
+    'privacy': privacyCollection,
+    'terms': termsCollection,
 };

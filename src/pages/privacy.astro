@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+
+// 1. Fetch Singleton Business Settings
+const settingsEntries = await getCollection('settings').catch(() => []);
+const site = settingsEntries[0]?.data || {
+  companyName: "Udaipur Royal Transporter",
+  phone: "+91 98765 43210",
+  email: "bookings@udaipurtransporter.com",
+  address: "Udaipur, Rajasthan, India"
+};
+
+// 2. Fetch Singleton Privacy Data
+const privacyEntries = await getCollection('privacy').catch(() => []);
+const privacyEntry = privacyEntries[0];
+
+if (!privacyEntry) {
+  throw new Error("Missing src/content/privacy/privacy.md file.");
+}
+
+const { title, subtitle, lastUpdated } = privacyEntry.data;
+const { Content } = await render(privacyEntry);
+---
+
+<BaseLayout title={`${title} | ${site.companyName}`} description={subtitle}>
+  <Header slot="header" />
+
+  {/* HERO BANNER */}
+  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+        Legal & Data Protection
+      </span>
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+        {title}
+      </h1>
+      <p class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-6">
+        {subtitle}
+      </p>
+      <span class="text-xs text-brand-100/60 block">Effective / Last Updated: {lastUpdated}</span>
+    </div>
+  </section>
+
+  {/* DOCUMENTATION BODY */}
+  <section class="py-16 lg:py-24 bg-surface">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-12 shadow-sm">
+        
+        <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1">
+          <Content />
+        </div>
+
+        {/* Dynamic Contact Box Inside Policy */}
+        <div class="mt-12 pt-8 border-t border-brand-100 bg-surface-alt/50 p-6 rounded-xl border hover:border-brand-100/80 text-sm">
+          <h4 class="font-serif text-base font-bold text-brand-900 mb-2">Questions Regarding Your Personal Data?</h4>
+          <p class="text-typography-muted text-xs leading-relaxed mb-4">
+            If you wish to request deletion of your inquiry details from our communication logs or have questions regarding data privacy, reach out to our administration team directly:
+          </p>
+          <div class="space-y-1 text-xs text-brand-900 font-semibold">
+            <p>🏢 Company: <span class="font-normal">{site.companyName}</span></p>
+            <p>✉️ Email: <a href={`mailto:${site.email}`} class="text-accent underline font-normal">{site.email}</a></p>
+            <p>📍 Address: <span class="font-normal">{site.address}</span></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
