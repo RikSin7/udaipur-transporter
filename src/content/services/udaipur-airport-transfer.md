@@ -51,5 +51,3 @@ pricing:
     - "GST where applicable"
     - "Anything not listed as included"
 ---
-
-Additional narrative text or logistical guidance can be typed here in the markdown body if ever needed.

@@ -10,9 +10,15 @@ interface Props {
 const { service } = Astro.props;
 const { title, summary, pricing, image, category } = service.data;
 
-// Show price label only if approved, else "Ask for Price"
-const priceLabel = pricing?.shortLabel || "Ask for Price";
-const hasApprovedPrice = !!pricing?.shortLabel;
+// 1. Evaluate Approved Price Status based on the actual monetary amount
+const amount = pricing?.amount;
+const shortLabel = pricing?.shortLabel;
+const hasApprovedPrice = !!amount;
+
+// 2. Format the display label (e.g., "₹899 onwards, per trip" or "From ₹2,000 / Day")
+const priceDisplay = hasApprovedPrice 
+  ? `${amount} ${shortLabel || ""}`.trim() 
+  : (shortLabel || "Ask for Price");
 ---
 
 <div
@@ -57,8 +63,8 @@ const hasApprovedPrice = !!pricing?.shortLabel;
         </span>
         {
           hasApprovedPrice && (
-            <span class="text-xs font-bold px-2.5 py-1 rounded-md border bg-accent-light border-accent/40 text-accent-dark font-sans tracking-wide shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-              {priceLabel}
+            <span class="text-xs font-bold px-2.5 py-1 rounded-md border bg-accent-light border-accent/40 text-accent-dark font-sans tracking-wide shadow-[0_1px_2px_rgba(0,0,0,0.03)] truncate max-w-[55%]">
+              {priceDisplay}
             </span>
           )
         }
@@ -92,7 +98,7 @@ const hasApprovedPrice = !!pricing?.shortLabel;
     </a>
     <a
       href={`/enquiry/?service=${encodeURIComponent(title)}`}
-      class="bg-brand hover:bg-brand-800 text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group"
+      class="bg-brand hover:bg-brand-800 text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group shrink-0"
     >
       <span>{hasApprovedPrice ? "Enquire" : "Ask for Price"}</span>
       <span
