@@ -12,9 +12,8 @@ import {
   IconUsers, 
   IconPlus, 
   IconCar, 
-  IconFileText, 
-  IconArrowRight 
 } from '@tabler/icons-astro';
+import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 
 // 1. Fetch singleton business settings
 const settingsEntries = await getCollection('settings').catch(() => []);
@@ -174,60 +173,7 @@ const groupedServices = categoryOrder
     </div>
   </section>
 
-  {/* 4. COMPARE VEHICLES & DIRECT SERVICE ENQUIRY BANNER (Reference Image 2) */}
-  <section class="py-12 bg-surface border-t border-brand-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-        
-        {/* Left Card: Compare Vehicles (Light Surface Theme) */}
-        <a 
-          href="/vehicles/" 
-          class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-premium transition-all duration-300 flex items-center justify-between gap-6 group"
-        >
-          <div class="flex items-start gap-4 sm:gap-5 min-w-0">
-            <div class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 shrink-0 group-hover:scale-105 transition-transform">
-              <IconCar size={24} stroke={2} />
-            </div>
-            <div class="min-w-0">
-              <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-1">
-                Compare our vehicles
-              </h3>
-              <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
-                Seats, luggage guidance and amenities for each category.
-              </p>
-            </div>
-          </div>
-          <div class="text-brand-900 group-hover:text-accent shrink-0 transition-transform group-hover:translate-x-1">
-            <IconArrowRight size={20} stroke={2} />
-          </div>
-        </a>
-
-        {/* Right Card: Not Sure Which Service? (Dark Royal Theme) */}
-        <a 
-          href="/enquiry/" 
-          class="bg-brand-900 border border-brand-800 rounded-2xl p-6 sm:p-8 shadow-premium hover:bg-brand-800 transition-all duration-300 flex items-center justify-between gap-6 group"
-        >
-          <div class="flex items-start gap-4 sm:gap-5 min-w-0">
-            <div class="w-12 h-12 rounded-xl bg-brand-800 border border-brand-700 flex items-center justify-center text-accent shrink-0 group-hover:scale-105 transition-transform">
-              <IconFileText size={24} stroke={2} />
-            </div>
-            <div class="min-w-0">
-              <h3 class="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-accent transition-colors mb-1">
-                Not sure which service?
-              </h3>
-              <p class="text-xs sm:text-sm text-brand-100/80 leading-relaxed">
-                Send us your plan — we'll suggest the right service and reply directly.
-              </p>
-            </div>
-          </div>
-          <div class="text-accent shrink-0 transition-transform group-hover:translate-x-1">
-            <IconArrowRight size={20} stroke={2} />
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
+    <CatalogueSupportCTA type="services" />
 
   {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
   <FaqSection />

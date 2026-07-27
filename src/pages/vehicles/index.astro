@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import VehicleCard from '../../components/cards/VehicleCard.astro';
 import { getCollection } from 'astro:content';
+import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 
 const settingsEntries = await getCollection('settings').catch(() => []);
 const site = settingsEntries[0]?.data || {
@@ -59,39 +60,5 @@ const vehicles = await getCollection('vehicles');
     </div>
   </section>
 
-  {/* 3. GENERAL ENQUIRY BANNER */}
-  <section class="py-16 bg-surface-alt/70 border-t border-brand-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-brand-900 text-white rounded-2xl p-8 sm:p-12 shadow-premium flex flex-col lg:flex-row items-center justify-between gap-8">
-        
-        <div class="max-w-2xl text-center lg:text-left">
-          <span class="text-xs font-bold uppercase tracking-widest text-accent mb-2 block">
-            Can't Decide?
-          </span>
-          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mb-3">
-            Need Help Choosing the Right Vehicle?
-          </h2>
-          <p class="text-brand-100/80 text-sm sm:text-base leading-relaxed">
-            Unsure which vehicle best fits your group size and luggage? Contact our travel experts and we'll recommend the ideal car or Tempo Traveller for your Rajasthan trip.
-          </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto shrink-0">
-          <a 
-            href="/services/" 
-            class="bg-brand-800 hover:bg-brand-700 text-white font-bold px-6 py-4 rounded-xl text-sm text-center transition-all border border-brand-100/20"
-          >
-            Explore Services &rarr;
-          </a>
-          <a 
-            href="/enquiry/" 
-            class="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-4 rounded-xl text-sm text-center transition-all shadow-md active:scale-95"
-          >
-            Send Inquiry
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </section>
+  <CatalogueSupportCTA type="vehicles" />
 </BaseLayout>
