@@ -4,12 +4,12 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import EnquiryForm from "../../components/forms/EnquiryForm.astro";
+import ServiceCard from "../../components/cards/ServiceCard.astro";
 import { getWhatsAppUrl } from "../../utils/helpers";
 import {
   IconCheck,
   IconX,
   IconChevronDown,
-  IconArrowRight,
   IconBrandWhatsapp,
   IconPhoneCall,
   IconMessage2,
@@ -331,30 +331,10 @@ const priceLabel = pricing?.shortLabel || "Ask for Price";
                 <h2 class="font-serif text-2xl font-bold text-brand-900 mb-6">
                   Related services
                 </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 items-stretch">
                   {relatedServices.map((rel) => (
-                    <a
-                      href={`/services/${rel.id}/`}
-                      class="bg-surface-card border border-brand-100 rounded-xl p-5 shadow-sm hover:shadow-premium transition-all group flex flex-col justify-between"
-                    >
-                      <div>
-                        <h3 class="font-serif text-base font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
-                          {rel.data.title}
-                        </h3>
-                        <p class="text-xs text-typography-muted line-clamp-2 leading-relaxed">
-                          {rel.data.summary}
-                        </p>
-                      </div>
-                      <div class="mt-4 pt-3 border-t border-brand-100/60 text-xs font-bold text-brand-900 group-hover:text-accent flex items-center justify-between">
-                        <span>From {rel.data.pricing?.amount || "Quote"}</span>
-                        <IconArrowRight
-                          size={14}
-                          stroke={2}
-                          className="group-hover:translate-x-1 transition-transform"
-                        />
-                      </div>
-                    </a>
-                  ))}
+                    <ServiceCard service={rel} />
+                    ))}
                 </div>
               </div>
             )

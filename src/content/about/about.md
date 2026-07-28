@@ -42,6 +42,6 @@ coverageLocations:
   - "Jaipur"
 ---
 
-Udaipur Royal Cabs is built on a simple idea: visitors and local travellers should be able to arrange a cab without confusion about the service, vehicle or next step. Our “royal” standard is practical—thoughtful attention, a suitable vehicle and details explained before you decide.
+Udaipur Royal Transporter is built on a simple idea: visitors and local travellers should be able to arrange a cab without confusion about the service, vehicle or next step. Our “royal” standard is practical—thoughtful attention, a suitable vehicle and details explained before you decide.
 
 Based in Udaipur, we assist with airport and railway transfers, local sightseeing, outstation travel, group vehicles and event transport. Every request is followed up by a person; this website does not automatically confirm a trip.

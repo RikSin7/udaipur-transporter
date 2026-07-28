@@ -28,307 +28,392 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published);
   name="travel-enquiry"
   method="POST"
   data-netlify="true"
-  class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-premium space-y-6"
+  class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-premium space-y-8 text-brand-900"
 >
   {/* Hidden context fields for Netlify/Email routing */}
   <input type="hidden" name="form-name" value="travel-enquiry" />
   <input type="hidden" name="sourcePage" value={currentUrl} />
   <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
 
-  <div class="border-b border-brand-100 pb-4 mb-6">
-    <h3 class="font-serif text-2xl font-bold text-brand-900">
+  {/* Form Header */}
+  <div class="border-b border-brand-100 pb-5">
+    <h3
+      class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tracking-tight"
+    >
       Send Travel Request
     </h3>
-    <p class="text-sm text-typography-muted mt-1">
-      Fill out this short form. The transport provider will review your route
-      and contact you directly to confirm rates and vehicle availability.
+    <p class="text-sm text-typography-muted mt-1.5 leading-relaxed">
+      Fill out your travel requirements below. Our Udaipur dispatch team will
+      calculate exact road distances, review toll actuals, and contact you
+      directly to confirm rates.
     </p>
   </div>
 
-  {/* Row 1: Contact Details (Name, Phone, Email) */}
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-    <div>
-      <label
-        for="name"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
+  {/* SECTION 1: CONTACT DETAILS */}
+  <div class="space-y-4">
+    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
+      <span
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        >1</span
       >
-        Full Name <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        required
-        placeholder="e.g. Rajesh Kumar"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
+      <h4
+        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
+      >
+        Contact Information
+      </h4>
     </div>
-    <div>
-      <label
-        for="phone"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Mobile / WhatsApp Number <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        required
-        placeholder="+91 98765 43210"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
-    </div>
-    <div>
-      <label
-        for="email"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Email Address <span
-          class="text-typography-muted font-normal text-[10px]">(Optional)</span
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+      {/* Full Name - 50% Width */}
+      <div class="md:col-span-6">
+        <label
+          for="name"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-      </label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="rajesh@example.com"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
+          Full Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="e.g. Rajesh Kumar"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+        />
+      </div>
+
+      {/* Phone / WhatsApp - 50% Width */}
+      <div class="md:col-span-6">
+        <label
+          for="phone"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        >
+          Mobile / WhatsApp Number <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          placeholder="+91 98765 43210"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+        />
+      </div>
+
+      {/* Email Address - 100% Width for comfortable typing */}
+      <div class="md:col-span-12">
+        <label
+          for="email"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Email Address</span>
+          <span class="text-typography-muted font-normal text-[11px]"
+            >(Optional — Recommended for detailed written quotes)</span
+          >
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="rajesh@example.com"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+        />
+      </div>
     </div>
   </div>
 
-  {/* Row 2: Dynamic Dropdowns (Service & Vehicle Selection) */}
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <div>
-      <label
-        for="service"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
+  {/* SECTION 2: SERVICE & VEHICLE PREFERENCE */}
+  <div class="space-y-4 pt-2">
+    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
+      <span
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        >2</span
       >
-        Required Service / Transfer <span
-          class="text-typography-muted font-normal text-[10px]">(Optional)</span
-        >
-      </label>
-      <select
-        id="service"
-        name="service"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer"
+      <h4
+        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
       >
-        {/* Empowering fallback copy for direct visitors */}
-        <option value="">-- Custom Route / General Quote --</option>
-        {
-          publishedServices.map((s) => (
-            <option
-              value={s.data.title}
-              selected={defaultService === s.data.title}
-            >
-              {s.data.title}
-            </option>
-          ))
-        }
-      </select>
+        Transport & Vehicle Selection
+      </h4>
     </div>
 
-    <div>
-      <label
-        for="vehicle"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Vehicle Preference <span
-          class="text-typography-muted font-normal text-[10px]">(Optional)</span
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+      {/* Service Dropdown - 50% Width */}
+      <div class="md:col-span-6">
+        <label
+          for="service"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
         >
-      </label>
-      <select
-        id="vehicle"
-        name="vehicle"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer"
-      >
-        {/* Conversational fallback copy that builds trust */}
-        <option value="">-- I'm Not Sure / Recommend Me a Vehicle --</option>
-        {
-          publishedVehicles.map((v) => (
-            <option
-              value={v.data.title}
-              selected={defaultVehicle === v.data.title}
-            >
-              {v.data.title} ({v.data.passengers} Max Passengers)
-            </option>
-          ))
-        }
-      </select>
+          <span>Required Service / Transfer</span>
+          <span class="text-typography-muted font-normal text-[11px]"
+            >(Optional)</span
+          >
+        </label>
+        <select
+          id="service"
+          name="service"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer transition-all"
+        >
+          <option value="">-- Custom Route / General Quote --</option>
+          {
+            publishedServices.map((s) => (
+              <option
+                value={s.data.title}
+                selected={defaultService === s.data.title}
+              >
+                {s.data.title}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      {/* Vehicle Dropdown - 50% Width */}
+      <div class="md:col-span-6">
+        <label
+          for="vehicle"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Vehicle Preference</span>
+          <span class="text-typography-muted font-normal text-[11px]"
+            >(Optional)</span
+          >
+        </label>
+        <select
+          id="vehicle"
+          name="vehicle"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer transition-all"
+        >
+          <option value="">-- I'm Not Sure / Recommend Me a Vehicle --</option>
+          {
+            publishedVehicles.map((v) => (
+              <option
+                value={v.data.title}
+                selected={defaultVehicle === v.data.title}
+              >
+                {v.data.title} ({v.data.passengers} Max Passengers)
+              </option>
+            ))
+          }
+        </select>
+      </div>
     </div>
   </div>
 
-  {/* Row 3: Travel Schedule (Date, Pickup Time, Return Date) */}
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-    <div>
-      <label
-        for="travelDate"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
+  {/* SECTION 3: ITINERARY & SCHEDULE */}
+  <div class="space-y-4 pt-2">
+    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
+      <span
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        >3</span
       >
-        Travel Date <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="date"
-        id="travelDate"
-        name="travelDate"
-        required
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
+      <h4
+        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
+      >
+        Schedule & Route Locations
+      </h4>
     </div>
 
-    {/* FIELD: Pickup Time (Optional) */}
-    <div>
-      <label
-        for="pickupTime"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Pickup Time <span class="text-typography-muted font-normal text-[10px]"
-          >(Optional)</span
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+      {/* Pickup Location - 50% Width */}
+      <div class="md:col-span-6">
+        <label
+          for="pickup"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-      </label>
-      <input
-        type="time"
-        id="pickupTime"
-        name="pickupTime"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
-    </div>
+          Pickup Location / Hotel <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="pickup"
+          name="pickup"
+          required
+          placeholder="e.g. Dabok Airport / Taj Lake Palace"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+        />
+      </div>
 
-    {/* CONDITIONAL FIELD: Return Date */}
-    <div>
-      <label
-        for="returnDate"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Return Date <span class="text-typography-muted font-normal text-[10px]"
-          >(For Round Trips)</span
+      {/* Drop Location - 50% Width */}
+      <div class="md:col-span-6">
+        <label
+          for="drop"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-      </label>
-      <input
-        type="date"
-        id="returnDate"
-        name="returnDate"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
+          Drop / Service Requirement <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="drop"
+          name="drop"
+          required
+          placeholder="e.g. Hotel drop, Mount Abu Day Trip, or 8 Hrs Sightseeing"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+        />
+      </div>
+
+      {/* Travel Date - 33.3% Width */}
+      <div class="md:col-span-4">
+        <label
+          for="travelDate"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        >
+          Travel Date <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="date"
+          id="travelDate"
+          name="travelDate"
+          required
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface text-brand-900 transition-all"
+        />
+      </div>
+
+      {/* Pickup Time - 33.3% Width */}
+      <div class="md:col-span-4">
+        <label
+          for="pickupTime"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Pickup Time</span>
+          <span class="text-typography-muted font-normal text-[11px]"
+            >(Optional)</span
+          >
+        </label>
+        <input
+          type="time"
+          id="pickupTime"
+          name="pickupTime"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface text-brand-900 transition-all"
+        />
+      </div>
+
+      {/* Return Date - 33.3% Width */}
+      <div class="md:col-span-4">
+        <label
+          for="returnDate"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Return Date</span>
+          <span class="text-typography-muted font-normal text-[11px]"
+            >(Round Trips)</span
+          >
+        </label>
+        <input
+          type="date"
+          id="returnDate"
+          name="returnDate"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface text-brand-900 transition-all"
+        />
+      </div>
     </div>
   </div>
 
-  {/* Row 4: Route Locations (Pickup & Drop) */}
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <div>
-      <label
-        for="pickup"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
+  {/* SECTION 4: PASSENGERS & SPECIAL REQUESTS */}
+  <div class="space-y-4 pt-2">
+    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
+      <span
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        >4</span
       >
-        Pickup Location <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        id="pickup"
-        name="pickup"
-        required
-        placeholder="e.g. Udaipur Airport / Lake Pichola Hotel"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
-    </div>
-    <div>
-      <label
-        for="drop"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
+      <h4
+        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
       >
-        Drop / Service Requirement <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        id="drop"
-        name="drop"
-        required
-        placeholder="e.g. Hotel drop, Mount Abu Day Trip, or 8 Hrs Sightseeing"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
+        Passengers & Luggage Details
+      </h4>
     </div>
-  </div>
 
-  {/* Row 5: Passengers & Luggage */}
-  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
-    <div>
-      <label
-        for="adults"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Adults <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="number"
-        id="adults"
-        name="adults"
-        min="1"
-        value="2"
-        required
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
-    </div>
-    <div>
-      <label
-        for="children"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Children
-      </label>
-      <input
-        type="number"
-        id="children"
-        name="children"
-        min="0"
-        value="0"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
-    </div>
-    <div class="col-span-2 sm:col-span-1">
-      <label
-        for="bags"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-      >
-        Luggage Bags
-      </label>
-      <input
-        type="number"
-        id="bags"
-        name="bags"
-        min="0"
-        placeholder="e.g. 3"
-        class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-      />
-    </div>
-  </div>
+    <div class="grid grid-cols-2 md:grid-cols-12 gap-5">
+      {/* Adults - 33.3% Width on desktop, 50% on mobile */}
+      <div class="col-span-1 md:col-span-4">
+        <label
+          for="adults"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        >
+          Adults <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="number"
+          id="adults"
+          name="adults"
+          min="1"
+          value="2"
+          required
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all"
+        />
+      </div>
 
-  {/* Row 6: Additional Notes / Flight & Train info */}
-  <div>
-    <label
-      for="message"
-      class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-2"
-    >
-      Message / Special Requests
-    </label>
-    <textarea
-      id="message"
-      name="message"
-      rows="3"
-      placeholder="Provide flight/train details for airport transfers (e.g. 6E 2134 arriving 10:30 AM), or list preferred sightseeing stops..."
-      class="w-full px-4 py-3 rounded-lg border border-brand-100 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-sm bg-surface"
-    ></textarea>
+      {/* Children - 33.3% Width on desktop, 50% on mobile */}
+      <div class="col-span-1 md:col-span-4">
+        <label
+          for="children"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Children</span>
+          <span class="text-typography-muted font-normal text-[10px]"
+            >(Under 12)</span
+          >
+        </label>
+        <input
+          type="number"
+          id="children"
+          name="children"
+          min="0"
+          value="0"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all"
+        />
+      </div>
+
+      {/* Luggage Bags - 33.3% Width on desktop, 100% on mobile */}
+      <div class="col-span-2 md:col-span-4">
+        <label
+          for="bags"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Luggage Bags</span>
+          <span class="text-typography-muted font-normal text-[10px]"
+            >(Large Suitcases)</span
+          >
+        </label>
+        <input
+          type="number"
+          id="bags"
+          name="bags"
+          min="0"
+          placeholder="e.g. 3"
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+        />
+      </div>
+
+      {/* Message / Special Requests - 100% Width */}
+      <div class="col-span-2 md:col-span-12 pt-1">
+        <label
+          for="message"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+        >
+          <span>Message / Special Requests</span>
+          <span class="text-typography-muted font-normal text-[11px]"
+            >(Flight details, train arrival times, outstation stops)</span
+          >
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows="3"
+          placeholder="Provide flight/train details for airport transfers (e.g. 6E 2134 arriving 10:30 AM), or list preferred sightseeing stops..."
+          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all leading-relaxed resize-y"
+        ></textarea>
+      </div>
+    </div>
   </div>
 
   {/* Consent & Submit */}
-  <div class="pt-2">
+  <div class="pt-4 border-t border-brand-100">
     <label
-      class="flex items-start gap-3 cursor-pointer mb-6 text-xs text-typography-muted"
+      class="flex items-start gap-3 cursor-pointer mb-6 text-xs text-typography-muted leading-relaxed"
     >
       <input
         type="checkbox"
         required
-        class="mt-0.5 rounded border-brand-100 text-accent focus:ring-accent shrink-0"
+        class="mt-0.5 rounded border-brand-100 text-[var(--color-cta,#AD5C1F)] focus:ring-[var(--color-cta,#AD5C1F)] shrink-0 cursor-pointer"
       />
       <span>
         I agree to be contacted via Phone, Email, or WhatsApp regarding this
@@ -340,7 +425,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published);
     <button
       type="submit"
       aria-label="Submit your travel enquiry to our Udaipur transport team"
-      class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-serif font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-base tracking-wide flex items-center justify-center gap-3 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-cta,#AD5C1F)] focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-base tracking-wide flex items-center justify-center gap-3 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-cta,#AD5C1F)] focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
       <span>Submit Travel Enquiry</span>
       <IconSend
