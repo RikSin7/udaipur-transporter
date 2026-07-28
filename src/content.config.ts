@@ -107,6 +107,7 @@ const blogCollection = defineCollection({
     image: image().optional(),
     relatedService: z.string().optional(),
     published: z.boolean().default(true),
+    featured: z.boolean().default(false),
   }),
 });
 

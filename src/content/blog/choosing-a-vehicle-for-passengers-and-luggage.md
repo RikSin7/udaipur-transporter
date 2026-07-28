@@ -6,6 +6,7 @@ author: "Udaipur Royal Fleet Team"
 category: "Vehicle Guide"
 relatedService: "tempo-traveller-and-group-transport"
 published: true
+featured: true
 ---
 
 When planning a private transport itinerary across Rajasthan, many travellers make the mistake of choosing a vehicle based solely on passenger seat counts while completely forgetting about their luggage. 
