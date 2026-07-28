@@ -11,51 +11,56 @@
 
   /* BRAND */
 
-  --color-brand-50: #F8FAFC;
-  --color-brand-100: #EDF2F7;
-  --color-brand-200: #DDE6F0;
-  --color-brand-300: #C3D0E0;
+  --color-brand-50: #F3F6F4;
+  --color-brand-100: #E9EFEA;
+  --color-brand-200: #CBD8D3;
+  --color-brand-300: #96AAA4;
 
-  --color-brand-700: #314769;
-  --color-brand-800: #1C2D47;
-  --color-brand-900: #122033;
-  --color-brand-950: #09111C;
+  --color-brand-700: #216E6A;
+  --color-brand-800: #165351;
+  --color-brand-900: #103F3E;
+  --color-brand-950: #0B302F;
 
-  --color-brand: #122033;
+  --color-brand: #103F3E;
 
-  /* CHAMPAGNE GOLD */
+  /* CHAMPAGNE & ROYAL GOLD / OCHRE */
 
-  --color-accent-light: #FCF8F0;
+  --color-accent-light: #FDFBEE;
   --color-accent-subtle: #EFE5D3;
 
-  --color-accent: #BFA06A;
+  --color-accent: #D7B56D;
 
-  --color-accent-hover: #CBAE79;
+  --color-accent-hover: #E3C37E;
 
-  --color-accent-dark: #957341;
+  --color-accent-dark: #8D671D;
+
+  /* CTA MARIGOLD / ORANGE */
+
+  --color-cta: #AD5C1F;
+  --color-cta-hover: #8E4416;
 
   /* SURFACES */
 
-  --color-surface: #FCFBF9;
+  --color-surface: #FBF7EF;
 
   --color-surface-card: #FFFFFF;
 
-  --color-surface-alt: #F7F3ED;
+  --color-surface-alt: #E9EFEA;
 
-  --color-surface-dark: #18263B;
+  --color-surface-dark: #0B302F;
 
   /* Typography */
 
-  --color-typography-main: #202938;
+  --color-typography-main: #1E2A28;
 
-  --color-typography-muted: #6A7484;
+  --color-typography-muted: #6A726F;
 
   /* STATUS */
 
-  --color-success: #2E7D4F;
+  --color-success: #2F7A55;
   --color-success-light: #EDF8F2;
 
-  --color-warning: #B88628;
+  --color-warning: #8D671D;
   --color-warning-light: #FFF7E8;
 
   --color-error: #B74B4B;
@@ -63,29 +68,32 @@
 
   /* BORDERS */
 
-  --color-border: #E5E8EC;
+  --color-border: #DED8CC;
 
-  --color-border-light: #F2F4F7;
+  --color-border-light: #E7E1D7;
 
-  --color-border-dark: #D7DEE7;
+  --color-border-dark: #D3CCBE;
 
   /* SHADOWS */
 
   --shadow-sm:
-    0 2px 8px rgba(18,32,51,.04);
+    0 8px 24px rgba(11,48,47,.07);
 
   --shadow-md:
-    0 8px 24px rgba(18,32,51,.07);
+    0 18px 46px rgba(11,48,47,.12);
 
   --shadow-lg:
-    0 16px 48px rgba(18,32,51,.10);
+    0 24px 60px rgba(11,48,47,.16);
 
   --shadow-xl:
-    0 28px 72px rgba(18,32,51,.14);
+    0 32px 80px rgba(11,48,47,.20);
+
+  --shadow-premium:
+    0 14px 36px rgba(11,48,47,.14);
 
   /* RADIUS */
 
-  --radius-card: 18px;
+  --radius-card: 20px;
   --radius-button: 12px;
   --radius-input: 12px;
 

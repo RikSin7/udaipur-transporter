@@ -10,7 +10,7 @@ import {
   IconShieldCheck,
   IconMapPin,
   IconArrowRight,
-  IconMessage2,
+  IconBrandWhatsapp,
   IconBuildingArch,
   IconClock,
 } from "@tabler/icons-astro";
@@ -128,7 +128,7 @@ const whatsappUrl = getWhatsAppUrl(
               rel="noopener noreferrer"
               class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-4 rounded-xl text-sm transition-all shadow-md hover:shadow-premium flex items-center gap-2.5 active:scale-95"
             >
-              <IconMessage2 size={18} stroke={2} />
+              <IconBrandWhatsapp size={18} stroke={2} />
               <span>Chat With Us</span>
             </a>
           </div>
@@ -219,12 +219,12 @@ const whatsappUrl = getWhatsAppUrl(
           howWeWork.map((card) => {
             const IconComponent = iconMap[card.icon] || IconShieldCheck;
             return (
-              <div class="bg-surface-card border border-brand-100 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-brand-800/40 duration-300 transition-all flex flex-col justify-between group">
+              <div class="bg-surface-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group">
                 <div>
-                  <div class="w-12 h-12 bg-surface-alt border border-brand-100 text-brand-900 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-accent transition-colors duration-300 shadow-2xs shrink-0">
+                  <div class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0">
                     <IconComponent size={24} stroke={2} />
                   </div>
-                  <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2.5 group-hover:text-accent transition-colors">
+                  <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-2.5">
                     {card.title}
                   </h3>
                   <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
@@ -343,16 +343,16 @@ const whatsappUrl = getWhatsAppUrl(
         {/* Card 1: Transport Catalogue */}
         <a
           href="/services/"
-          class="bg-surface-card border border-brand-100 p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-brand-800 transition-all duration-300 group flex flex-col justify-between"
+          class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
         >
           <div>
             <div
-              class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 mb-6 group-hover:bg-brand-900 group-hover:text-accent transition-colors duration-300 shadow-2xs"
+              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
             >
               <IconCar size={24} stroke={2} />
             </div>
             <h3
-              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2.5"
+              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-2.5"
             >
               Transport Catalogue
             </h3>
@@ -365,7 +365,7 @@ const whatsappUrl = getWhatsAppUrl(
             </p>
           </div>
           <div
-            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent flex items-center justify-between transition-colors"
+            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center justify-between transition-colors duration-300"
           >
             <span>View All Services</span>
             <IconArrowRight
@@ -379,16 +379,16 @@ const whatsappUrl = getWhatsAppUrl(
         {/* Card 2: Customer Reviews */}
         <a
           href="/reviews/"
-          class="bg-surface-card border border-brand-100 p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-brand-800 transition-all duration-300 group flex flex-col justify-between"
+          class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
         >
           <div>
             <div
-              class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 mb-6 group-hover:bg-brand-900 group-hover:text-accent transition-colors duration-300 shadow-2xs"
+              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
             >
               <IconShieldCheck size={24} stroke={2} />
             </div>
             <h3
-              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2.5"
+              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-2.5"
             >
               Customer Reviews
             </h3>
@@ -401,7 +401,7 @@ const whatsappUrl = getWhatsAppUrl(
             </p>
           </div>
           <div
-            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent flex items-center justify-between transition-colors"
+            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center justify-between transition-colors duration-300"
           >
             <span>Read Real Feedback</span>
             <IconArrowRight
@@ -415,16 +415,16 @@ const whatsappUrl = getWhatsAppUrl(
         {/* Card 3: Contact & Support */}
         <a
           href="/contact/"
-          class="bg-surface-card border border-brand-100 p-8 rounded-2xl shadow-sm hover:shadow-premium hover:border-brand-800 transition-all duration-300 group flex flex-col justify-between"
+          class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
         >
           <div>
             <div
-              class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 mb-6 group-hover:bg-brand-900 group-hover:text-accent transition-colors duration-300 shadow-2xs"
+              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
             >
               <IconPhoneCall size={24} stroke={2} />
             </div>
             <h3
-              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2.5"
+              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-2.5"
             >
               Contact & Support
             </h3>
@@ -436,7 +436,7 @@ const whatsappUrl = getWhatsAppUrl(
             </p>
           </div>
           <div
-            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent flex items-center justify-between transition-colors"
+            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center justify-between transition-colors duration-300"
           >
             <span>Get In Touch</span>
             <IconArrowRight

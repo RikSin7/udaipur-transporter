@@ -22,7 +22,7 @@ const heroFeatures = [
 ];
 ---
 
-<section class="bg-brand-900 text-white relative border-b border-brand-800 flex flex-col justify-between">
+<section class="bg-brand-950 text-white relative border-b border-brand-800 flex flex-col justify-between">
   {/* Main Hero Content */}
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28 w-full">
     <div class="max-w-3xl">
@@ -41,18 +41,18 @@ const heroFeatures = [
       <div class="flex flex-wrap items-center gap-4">
         <a 
           href="#enquiry-section" 
-          class="bg-accent hover:bg-accent-hover text-brand-950 font-bold px-7 py-3.5 rounded-xl shadow-md transition-colors text-sm uppercase tracking-wider flex items-center gap-2 active:scale-95"
+          class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-7 py-3.5 rounded-xl shadow-md transition-all text-sm uppercase tracking-wider flex items-center gap-2 active:scale-95"
         >
           <IconQuote class="w-5 h-5" stroke={2} /> Request Travel Quote
         </a>
         <a 
           href={whatsappUrl} 
           target="_blank" 
-          rel="noopener noreferrer"
+          rel="noopener noreferrer" 
           aria-label="Chat on WhatsApp"
-          class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-md transition-colors text-sm tracking-wide flex items-center gap-2 active:scale-95 border border-emerald-500/30"
+          class="bg-white/14 hover:bg-white/24 border border-white/50 text-white font-semibold px-6 py-3.5 rounded-xl shadow-md transition-all text-sm tracking-wide flex items-center gap-2 active:scale-95"
         >
-          <IconBrandWhatsapp class="w-5 h-5" stroke={2} /> WhatsApp Us
+          <IconBrandWhatsapp class="w-5 h-5 text-emerald-400" stroke={2} /> WhatsApp Us
         </a>
       </div>
     </div>

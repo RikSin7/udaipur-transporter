@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import VehicleCard from '../cards/VehicleCard.astro';
+import { IconArrowRight } from '@tabler/icons-astro';
 
 interface Props {
   featuredVehicles: CollectionEntry<'vehicles'>[];
@@ -24,13 +25,15 @@ const { featuredVehicles } = Astro.props;
           Our fleet guidelines help you select the right vehicle category based on passenger count and luggage volume for maximum comfort on Rajasthan roads.
         </p>
       </div>
-      <a 
-        href="/vehicles/" 
-        class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-accent transition-colors py-2 group shrink-0"
-      >
-        <span>Explore Full Fleet</span>
-        <span class="group-hover:translate-x-1 transition-transform duration-200">&rarr;</span>
-      </a>
+      <div class="hidden sm:block shrink-0 self-start md:self-auto">
+        <a 
+          href="/vehicles/" 
+          class="inline-flex items-center gap-2 bg-surface-card border border-brand-100 hover:border-brand-900 text-brand-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow group active:scale-95"
+        >
+          <span>Explore Full Fleet</span>
+          <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
+        </a>
+      </div>
     </div>
 
     {featuredVehicles.length > 0 ? (
@@ -44,6 +47,16 @@ const { featuredVehicles } = Astro.props;
         <p class="italic">No vehicles published yet. Add markdown files to <code>src/content/vehicles/</code> to populate this section.</p>
       </div>
     )}
+
+    <div class="mt-8 text-center sm:hidden">
+      <a 
+        href="/vehicles/" 
+        class="w-full inline-flex items-center justify-center gap-2 bg-brand-900 text-white font-bold px-6 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md group active:scale-95"
+      >
+        <span>Explore Full Fleet</span>
+        <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
+      </a>
+    </div>
 
   </div>
 </section>

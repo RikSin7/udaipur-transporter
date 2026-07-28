@@ -10,8 +10,9 @@ import {
   IconX,
   IconChevronDown,
   IconArrowRight,
-  IconMessage2,
+  IconBrandWhatsapp,
   IconPhoneCall,
+  IconMessage2,
   IconCar,
   IconShieldCheck,
   IconClock,
@@ -293,10 +294,10 @@ const priceLabel = pricing?.shortLabel || "Ask for Price";
                 <h2 class="font-serif text-2xl font-bold text-brand-900 mb-6">
                   Service FAQs
                 </h2>
-                <div class="space-y-3" id="service-faq-group">
+                <div class="space-y-4" id="service-faq-group">
                   {faqs.map((faq, idx) => (
                     <div
-                      class="faq-item bg-surface-card border border-brand-100 rounded-2xl transition-all overflow-hidden shadow-sm"
+                      class="faq-item bg-surface-card border border-border hover:border-brand-900 rounded-2xl transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
                       data-open={idx === 0 ? "true" : "false"}
                     >
                       <button
@@ -402,7 +403,7 @@ const priceLabel = pricing?.shortLabel || "Ask for Price";
                 rel="noopener noreferrer"
                 class="bg-surface border border-brand-100 hover:border-emerald-600 text-brand-900 hover:text-emerald-600 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-2xs"
               >
-                <IconMessage2
+                <IconBrandWhatsapp
                   size={16}
                   stroke={2}
                   className="text-emerald-600"

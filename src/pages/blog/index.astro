@@ -93,19 +93,21 @@ const whatsappUrl = getWhatsAppUrl(
       class="max-w-4xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
     >
       {
-        categories.map((cat, idx) => (
-          <button
-            type="button"
-            data-category={cat}
-            class={`blog-filter-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
-              idx === 0
-                ? "bg-brand-900 text-white shadow-sm"
-                : "bg-surface-alt/60 text-brand-900 hover:bg-brand-100/80 hover:text-brand-900"
-            }`}
-          >
-            {cat}
-          </button>
-        ))
+        categories.map((cat, idx) => {
+          const activeStyle = "bg-brand-900 text-white shadow-sm border-brand-900";
+          const inactiveStyle = "bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)] border-transparent";
+          return (
+            <button
+              type="button"
+              data-category={cat}
+              class={`blog-filter-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 cursor-pointer ${
+                idx === 0 ? activeStyle : inactiveStyle
+              }`}
+            >
+              {cat}
+            </button>
+          );
+        })
       }
     </div>
   </div>
@@ -271,15 +273,24 @@ const whatsappUrl = getWhatsAppUrl(
     const filterBtns = document.querySelectorAll(".blog-filter-btn");
     const items = document.querySelectorAll(".blog-item-wrapper");
 
+    const activeClasses = ["bg-brand-900", "text-white", "shadow-sm", "border-brand-900"];
+    const inactiveClasses = [
+      "bg-[var(--color-surface-alt,#E9EFEA)]",
+      "text-brand-900",
+      "hover:border-brand-900",
+      "hover:text-[var(--color-accent-dark,#8D671D)]",
+      "border-transparent",
+    ];
+
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         // Active state styling
         filterBtns.forEach((b) => {
-          b.classList.remove("bg-brand-900", "text-white", "shadow-sm");
-          b.classList.add("bg-surface-alt/60", "text-brand-900");
+          b.classList.remove(...activeClasses);
+          b.classList.add(...inactiveClasses);
         });
-        btn.classList.remove("bg-surface-alt/60", "text-brand-900");
-        btn.classList.add("bg-brand-900", "text-white", "shadow-sm");
+        btn.classList.remove(...inactiveClasses);
+        btn.classList.add(...activeClasses);
 
         const selectedCategory = btn.getAttribute("data-category");
 
