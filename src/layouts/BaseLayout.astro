@@ -1,13 +1,16 @@
 ---
 import "../styles/global.css";
 import Footer from "../components/layout/Footer.astro";
-import StickyContactBar from "../components/layout/StickyContactBar.astro";
 import Header from "../components/layout/Header.astro";
+import SEO from "../components/layout/SEO.astro";
 import { getEntry } from "astro:content";
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
 }
 
 const site = await getEntry("settings", "site");
@@ -17,6 +20,9 @@ if (!site) throw new Error("Missing required content: settings/site.md");
 const {
   title = site.data.seoDefaultTitle,
   description = site.data.seoDefaultDesc,
+  image,
+  type,
+  noindex,
 }: Props = Astro.props;
 ---
 
@@ -25,8 +31,13 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      noindex={noindex}
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     {
@@ -57,15 +68,10 @@ const {
   >
     <Header />
 
-    {/* Main Content Area */}
     <main class="grow pb-16 md:pb-0">
       <slot />
     </main>
 
-    {/* Smart Auto-Querying Footer */}
     <Footer />
-
-    {/* Mobile Sticky Contact Bar */}
-    <StickyContactBar />
   </body>
 </html>

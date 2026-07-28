@@ -6,7 +6,7 @@ import Header from "../../components/layout/Header.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
 import FaqSection from "../../components/sections/FaqSection.astro";
 import { getWhatsAppUrl } from "../../utils/helpers";
-import { IconArrowRight, IconMessage2 } from "@tabler/icons-astro";
+import { IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-astro";
 
 // 1. Fetch Singleton Business Settings
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -242,7 +242,7 @@ const whatsappUrl = getWhatsAppUrl(
           rel="noopener noreferrer"
           class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
         >
-          <IconMessage2 size={18} stroke={2} />
+          <IconBrandWhatsapp size={18} stroke={2} />
           <span>Ask a Question on WhatsApp</span>
         </a>
       </div>

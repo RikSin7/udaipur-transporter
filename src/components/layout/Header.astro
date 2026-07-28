@@ -28,16 +28,16 @@ const navLinks = [
   class="bg-[rgba(251,247,239,0.90)] backdrop-blur-md text-typography-main sticky top-0 z-40 border-b border-border shadow-sm"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+    <div class="relative flex items-center justify-between h-20">
       {/* 1. Brand Identity */}
       <a href="/" class="flex flex-col group focus:outline-none">
         <span
-          class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-brand-900 group-hover:text-accent transition-colors"
+          class="font-serif text-md sm:text-xl font-bold tracking-wide text-brand-900 group-hover:text-accent transition-colors"
         >
           {site.companyName}
         </span>
         <span
-          class="text-[10px] text-accent-dark uppercase tracking-[0.2em] font-sans font-medium opacity-90"
+          class="text-[9px] sm:text-[10px] text-accent-dark uppercase tracking-[0.2em] font-sans font-medium opacity-90"
         >
           Private Taxi & Car Rental
         </span>
@@ -89,7 +89,7 @@ const navLinks = [
       </div>
 
       {/* Medium Desktop / Tablet Fallback */}
-      <div class="hidden md:flex xl:hidden items-center space-x-2.5">
+      <div class="hidden md:flex xl:hidden items-center space-x-2.5 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 lg:static lg:translate-x-0 lg:translate-y-0">
         <a
           href={callUrl}
           class="bg-surface-card border border-border-dark p-2.5 rounded-xl text-brand-900 hover:border-brand-900 transition-colors"
@@ -118,14 +118,14 @@ const navLinks = [
       <div class="flex items-center lg:hidden gap-2">
         <a
           href={callUrl}
-          class="p-2 rounded-xl bg-surface-card border border-border-dark text-brand-900 hover:border-brand-900 transition-colors"
+          class="p-2 rounded-xl bg-surface-card border border-border-dark text-brand-900 hover:border-brand-900 transition-colors md:hidden"
           aria-label="Call Now"
         >
           <IconPhoneCall class="w-5 h-5 text-brand-900" stroke={2} />
         </a>
         <a
           href="/contact/?action=enquiry#enquiry-form-section"
-          class="bg-[var(--color-cta,#AD5C1F)] text-white text-xs font-bold px-3.5 py-2 rounded-xl tracking-wider uppercase shadow-sm active:scale-95 transition-colors"
+          class="bg-[var(--color-cta,#AD5C1F)] text-white text-xs font-bold px-3.5 py-2 rounded-xl tracking-wider uppercase shadow-sm active:scale-95 transition-colors md:hidden"
         >
           Enquire
         </a>

@@ -23,7 +23,7 @@ const containerClass = [
   variant === "carousel"
     ? "snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
     : "",
-  "bg-surface-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group",
+  "bg-surface-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group",
   className,
 ]
   .filter(Boolean)
@@ -35,11 +35,11 @@ const containerClass = [
     {/* Star Rating & Quote Icon Header */}
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-1 text-[var(--color-accent,#D7B56D)]">
-        {[...Array(ratingCount)].map(() => (
-          <IconStarFilled size={16} />
-        ))}
+        {[...Array(ratingCount)].map(() => <IconStarFilled size={16} />)}
       </div>
-      <div class="text-brand-100/60 group-hover:text-brand-900 transition-colors">
+      <div
+        class="text-brand-100/60 group-hover:text-brand-900 transition-colors"
+      >
         <IconQuote size={28} stroke={1.5} />
       </div>
     </div>
@@ -83,11 +83,7 @@ const containerClass = [
           {
             item.location && (
               <span class="text-[11px] text-typography-muted flex items-center gap-1 mt-0.5">
-                <IconMapPin
-                  size={13}
-                  stroke={2}
-                  class="text-accent shrink-0"
-                />
+                <IconMapPin size={13} stroke={2} class="text-accent shrink-0" />
                 <span class="truncate">{item.location}</span>
               </span>
             )

@@ -1,0 +1,53 @@
+---
+import { getEntry } from "astro:content";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+}
+
+// Fetch singleton site settings for fallback defaults
+const siteEntry = await getEntry("settings", "site");
+const siteData = siteEntry?.data || {
+  companyName: "Udaipur Royal Transporter",
+  seoDefaultTitle: "Udaipur Royal Transporter | Private Taxi & Car Rental",
+  seoDefaultDesc:
+    "Straightforward, dependable private transportation across Udaipur and Rajasthan.",
+};
+
+const {
+  title = siteData.seoDefaultTitle,
+  description = siteData.seoDefaultDesc,
+  image = "/favicon.svg",
+  type = "website",
+  noindex = false,
+}: Props = Astro.props;
+
+const origin = Astro.site ? Astro.site.toString() : Astro.url.origin;
+const canonicalURL = new URL(Astro.url.pathname, origin).toString();
+const imageURL = new URL(image, origin).toString();
+---
+
+{/* Standard SEO & Canonical URL */}
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{/* Open Graph / Facebook / LinkedIn */}
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content={siteData.companyName} />
+<meta property="og:image" content={imageURL} />
+
+{/* Twitter Card */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
