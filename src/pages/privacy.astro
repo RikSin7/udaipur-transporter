@@ -1,23 +1,34 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/layout/Header.astro';
+import { getCollection, render } from "astro:content";
+
+import {
+  IconBuildingArch,
+  IconMail,
+  IconMapPin,
+  IconShieldCheck,
+  IconPrinter,
+} from "@tabler/icons-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
   email: "bookings@udaipurtransporter.com",
-  address: "Udaipur, Rajasthan, India"
+  address:
+    "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
 };
 
 // 2. Fetch Singleton Privacy Data
-const privacyEntries = await getCollection('privacy').catch(() => []);
+const privacyEntries = await getCollection("privacy").catch(() => []);
 const privacyEntry = privacyEntries[0];
 
 if (!privacyEntry) {
-  throw new Error("Missing src/content/privacy/privacy.md file.");
+  throw new Error(
+    "Missing src/content/privacy/privacy.md file. Please create it to render the Privacy Policy.",
+  );
 }
 
 const { title, subtitle, lastUpdated } = privacyEntry.data;
@@ -27,45 +38,177 @@ const { Content } = await render(privacyEntry);
 <BaseLayout title={`${title} | ${site.companyName}`} description={subtitle}>
   <Header slot="header" />
 
-  {/* HERO BANNER */}
-  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
-        Legal & Data Protection
-      </span>
-      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+  {/* 1. HERO BANNER */}
+  <section
+    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+  >
+    {/* Subtle Background */}
+    <div
+      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"
+    >
+    </div>
+
+    <div
+      class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+    >
+      <div
+        class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-accent bg-brand-800/90 border border-brand-700/60 px-3 py-1 rounded-full mb-4 shadow-2xs"
+      >
+        <IconShieldCheck size={14} stroke={2} class="text-accent shrink-0" />
+        <span>Legal & Data Protection</span>
+      </div>
+
+      <h1
+        class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+      >
         {title}
       </h1>
-      <p class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-6">
+
+      <p
+        class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8"
+      >
         {subtitle}
       </p>
-      <span class="text-xs text-brand-100/60 block">Effective / Last Updated: {lastUpdated}</span>
+
+      {/* Metadata Bar with Print Action */}
+      <div
+        class="flex flex-wrap items-center justify-center gap-6 text-xs text-brand-100/70 border-t border-brand-800/80 pt-6 max-w-md mx-auto"
+      >
+        <div>
+          <span
+            class="block text-[10px] uppercase tracking-wider text-accent font-semibold"
+            >Effective Date</span
+          >
+          <span class="font-medium text-white">{lastUpdated}</span>
+        </div>
+        <div class="h-6 w-px bg-brand-800"></div>
+        <button
+          type="button"
+          id="print-policy-btn"
+          class="inline-flex items-center gap-1.5 font-semibold text-brand-100 hover:text-accent transition-colors cursor-pointer group py-1"
+        >
+          <IconPrinter
+            size={16}
+            stroke={2}
+            class="text-accent group-hover:scale-110 transition-transform"
+          />
+          <span class="underline underline-offset-4">Print / Save Policy</span>
+        </button>
+      </div>
     </div>
   </section>
 
-  {/* DOCUMENTATION BODY */}
+  {/* 2. DOCUMENTATION BODY */}
   <section class="py-16 lg:py-24 bg-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-12 shadow-sm">
-        
-        <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1">
+      <div
+        class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-12 shadow-sm"
+      >
+        {/* Rendered Markdown */}
+        <div
+          class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1.5 prose-a:text-accent prose-a:font-semibold hover:prose-a:underline prose-blockquote:border-l-accent prose-blockquote:bg-surface-alt/50 prose-blockquote:py-2.5 prose-blockquote:px-5 prose-blockquote:rounded-r-xl"
+        >
           <Content />
         </div>
 
-        {/* Dynamic Contact Box Inside Policy */}
-        <div class="mt-12 pt-8 border-t border-brand-100 bg-surface-alt/50 p-6 rounded-xl border hover:border-brand-100/80 text-sm">
-          <h4 class="font-serif text-base font-bold text-brand-900 mb-2">Questions Regarding Your Personal Data?</h4>
-          <p class="text-typography-muted text-xs leading-relaxed mb-4">
-            If you wish to request deletion of your inquiry details from our communication logs or have questions regarding data privacy, reach out to our administration team directly:
+        {/* Dynamic Data Protection Contact Box */}
+        <div
+          class="mt-14 pt-8 border-t-2 border-brand-100 bg-surface-alt/60 p-6 sm:p-8 rounded-xl border border-brand-100/80 shadow-2xs"
+        >
+          <div class="flex items-center gap-2 mb-2">
+            <IconShieldCheck
+              size={20}
+              stroke={2}
+              class="text-accent shrink-0"
+            />
+            <h4 class="font-serif text-lg font-bold text-brand-900">
+              Questions Regarding Your Personal Data?
+            </h4>
+          </div>
+
+          <p
+            class="text-typography-muted text-xs sm:text-sm leading-relaxed mb-6"
+          >
+            If you wish to request deletion of your travel inquiry details from
+            our communication logs or have questions regarding our driver data
+            handling protocols, reach out to our administration desk directly:
           </p>
-          <div class="space-y-1 text-xs text-brand-900 font-semibold">
-            <p>🏢 Company: <span class="font-normal">{site.companyName}</span></p>
-            <p>✉️ Email: <a href={`mailto:${site.email}`} class="text-accent underline font-normal">{site.email}</a></p>
-            <p>📍 Address: <span class="font-normal">{site.address}</span></p>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-brand-100/80 text-xs sm:text-sm"
+          >
+            {/* Company Name */}
+            <div class="flex items-start gap-2.5">
+              <div
+                class="w-8 h-8 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs"
+              >
+                <IconBuildingArch size={16} stroke={2} />
+              </div>
+              <div>
+                <strong class="text-brand-900 block font-semibold text-xs"
+                  >Entity Name</strong
+                >
+                <span class="text-typography-muted font-medium"
+                  >{site.companyName}</span
+                >
+              </div>
+            </div>
+
+            {/* Email Contact */}
+            <div class="flex items-start gap-2.5">
+              <div
+                class="w-8 h-8 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs"
+              >
+                <IconMail size={16} stroke={2} />
+              </div>
+              <div class="min-w-0">
+                <strong class="text-brand-900 block font-semibold text-xs"
+                  >Privacy Desk Email</strong
+                >
+                <a
+                  href={`mailto:${site.email}?subject=Data%20Privacy%20Request`}
+                  class="text-accent hover:underline font-medium block truncate"
+                >
+                  {site.email}
+                </a>
+              </div>
+            </div>
+
+            {/* Physical Base */}
+            <div class="flex items-start gap-2.5">
+              <div
+                class="w-8 h-8 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs"
+              >
+                <IconMapPin size={16} stroke={2} />
+              </div>
+              <div>
+                <strong class="text-brand-900 block font-semibold text-xs"
+                  >Operating Base</strong
+                >
+                <span
+                  class="text-typography-muted font-medium leading-snug block"
+                  >{site.address}</span
+                >
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 </BaseLayout>
+
+{/* Client-Side Print Engine for Corporate Compliance */}
+<script>
+  function initPrintPolicy() {
+    const printBtn = document.getElementById("print-policy-btn");
+    if (printBtn) {
+      printBtn.addEventListener("click", () => {
+        window.print();
+      });
+    }
+  }
+
+  initPrintPolicy();
+  document.addEventListener("astro:page-load", initPrintPolicy);
+</script>

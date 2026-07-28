@@ -1,23 +1,32 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/layout/Header.astro';
+import { getCollection, render } from "astro:content";
+import {
+  IconFileDescription,
+  IconPrinter,
+  IconCheck,
+  IconMail,
+} from "@tabler/icons-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
   email: "bookings@udaipurtransporter.com",
-  address: "Udaipur, Rajasthan, India"
+  address:
+    "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
 };
 
 // 2. Fetch Singleton Terms Data
-const termsEntries = await getCollection('terms').catch(() => []);
+const termsEntries = await getCollection("terms").catch(() => []);
 const termsEntry = termsEntries[0];
 
 if (!termsEntry) {
-  throw new Error("Missing src/content/terms/terms.md file.");
+  throw new Error(
+    "Missing src/content/terms/terms.md file. Please create it to render the Terms of Service.",
+  );
 }
 
 const { title, subtitle, lastUpdated } = termsEntry.data;
@@ -27,40 +36,139 @@ const { Content } = await render(termsEntry);
 <BaseLayout title={`${title} | ${site.companyName}`} description={subtitle}>
   <Header slot="header" />
 
-  {/* HERO BANNER */}
-  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
-        Operational Policy
-      </span>
-      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+  {/* 1. HERO BANNER WITH LUXURY DEPTH */}
+  <section
+    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+  >
+    {/* Subtle Background */}
+    <div
+      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"
+    >
+    </div>
+
+    <div
+      class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+    >
+      <div
+        class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-accent bg-brand-800/90 border border-brand-700/60 px-3 py-1 rounded-full mb-4 shadow-2xs"
+      >
+        <IconFileDescription
+          size={14}
+          stroke={2}
+          class="text-accent shrink-0"
+        />
+        <span>Operational Policy</span>
+      </div>
+
+      <h1
+        class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+      >
         {title}
       </h1>
-      <p class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-6">
+
+      <p
+        class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8"
+      >
         {subtitle}
       </p>
-      <span class="text-xs text-brand-100/60 block">Effective / Last Updated: {lastUpdated}</span>
+
+      {/* Metadata Bar with Print Action */}
+      <div
+        class="flex flex-wrap items-center justify-center gap-6 text-xs text-brand-100/70 border-t border-brand-800/80 pt-6 max-w-md mx-auto"
+      >
+        <div>
+          <span
+            class="block text-[10px] uppercase tracking-wider text-accent font-semibold"
+            >Effective Date</span
+          >
+          <span class="font-medium text-white">{lastUpdated}</span>
+        </div>
+        <div class="h-6 w-px bg-brand-800"></div>
+        <button
+          type="button"
+          id="print-terms-btn"
+          class="inline-flex items-center gap-1.5 font-semibold text-brand-100 hover:text-accent transition-colors cursor-pointer group py-1"
+        >
+          <IconPrinter
+            size={16}
+            stroke={2}
+            class="text-accent group-hover:scale-110 transition-transform"
+          />
+          <span class="underline underline-offset-4">Print / Save Terms</span>
+        </button>
+      </div>
     </div>
   </section>
 
-  {/* DOCUMENTATION BODY */}
+  {/* 2. DOCUMENTATION BODY */}
   <section class="py-16 lg:py-24 bg-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-12 shadow-sm">
-        
-        <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1">
+      <div
+        class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-12 shadow-sm"
+      >
+        {/* Rendered Markdown */}
+        <div
+          class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1.5 prose-a:text-accent prose-a:font-semibold hover:prose-a:underline prose-blockquote:border-l-accent prose-blockquote:bg-surface-alt/50 prose-blockquote:py-2.5 prose-blockquote:px-5 prose-blockquote:rounded-r-xl"
+        >
           <Content />
         </div>
 
-        {/* Legal Disclaimer Box */}
-        <div class="mt-12 pt-8 border-t border-brand-100 bg-surface-alt/50 p-6 rounded-xl border hover:border-brand-100/80 text-sm">
-          <h4 class="font-serif text-base font-bold text-brand-900 mb-2">Acceptance of Operational Terms</h4>
-          <p class="text-typography-muted text-xs leading-relaxed">
-            By initiating contact with **{site.companyName}** via our website inquiry form, email, or WhatsApp, you acknowledge that all transportation services are governed by the pricing rules, waiting time limits, and luggage guidelines outlined above. For custom commercial billing inquiries, please contact <a href={`mailto:${site.email}`} class="text-accent underline font-semibold">{site.email}</a>.
-          </p>
-        </div>
+        {/* Operational Agreement Panel */}
+        <div
+          class="mt-14 pt-8 border-t-2 border-brand-100 bg-surface-alt/60 p-6 sm:p-8 rounded-xl border border-brand-100/80 shadow-2xs"
+        >
+          <div class="flex items-center gap-2.5 mb-3">
+            <div
+              class="w-8 h-8 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 shadow-2xs"
+            >
+              <IconCheck size={18} stroke={2.5} />
+            </div>
+            <h4 class="font-serif text-lg font-bold text-brand-900">
+              Acceptance of Operational Terms
+            </h4>
+          </div>
 
+          <p
+            class="text-typography-muted text-xs sm:text-sm leading-relaxed mb-6"
+          >
+            By initiating contact with <strong
+              class="text-brand-900 font-semibold">{site.companyName}</strong
+            > via our website inquiry form, email, or WhatsApp, you acknowledge that
+            all transportation services are governed by the pricing rules, waiting
+            time limits, and luggage guidelines outlined above.
+          </p>
+
+          <div
+            class="pt-4 border-t border-brand-100/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs sm:text-sm"
+          >
+            <div class="flex items-center gap-2 text-typography-muted">
+              <IconMail size={16} stroke={2} class="text-accent shrink-0" />
+              <span>For corporate billing & custom contract inquiries:</span>
+            </div>
+            <a
+              href={`mailto:${site.email}?subject=Commercial%20Transport%20Terms%20Inquiry`}
+              class="font-semibold text-accent hover:underline block truncate"
+            >
+              {site.email}
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+{/* Client-Side Print Engine */}
+<script>
+  function initPrintTerms() {
+    const printBtn = document.getElementById("print-terms-btn");
+    if (printBtn) {
+      printBtn.addEventListener("click", () => {
+        window.print();
+      });
+    }
+  }
+
+  initPrintTerms();
+  document.addEventListener("astro:page-load", initPrintTerms);
+</script>
