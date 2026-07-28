@@ -158,24 +158,6 @@ const contactCollection = defineCollection({
   }),
 });
 
-const enquiryCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/enquiry" }),
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    noindex: z.boolean().default(false),
-    processHeading: z.string(),
-    processSubtitle: z.string(),
-    processSteps: z.array(z.object({
-      stepNumber: z.string(),
-      title: z.string(),
-      desc: z.string(),
-    })),
-    alternativesHeading: z.string(),
-    alternativesDesc: z.string(),
-  }),
-});
-
 const privacyCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/privacy" }),
   schema: z.object({
@@ -218,7 +200,6 @@ export const collections = {
   'blog': blogCollection,
   'about': aboutCollection,
   'contact': contactCollection,
-  'enquiry': enquiryCollection,
   'privacy': privacyCollection,
   'terms': termsCollection,
   'reviews': reviewCollection,

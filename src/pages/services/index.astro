@@ -1,22 +1,22 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/layout/Header.astro';
-import ServiceCard from '../../components/cards/ServiceCard.astro';
-import FaqSection from '../../components/sections/FaqSection.astro';
-import { sortPublishedByOrder } from '../../utils/helpers';
-import { 
-  IconPlane, 
-  IconMapPin, 
-  IconCompass, 
-  IconUsers, 
-  IconPlus, 
-  IconCar, 
-} from '@tabler/icons-astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/layout/Header.astro";
+import ServiceCard from "../../components/cards/ServiceCard.astro";
+import FaqSection from "../../components/sections/FaqSection.astro";
+import { sortPublishedByOrder } from "../../utils/helpers";
+import {
+  IconPlane,
+  IconMapPin,
+  IconCompass,
+  IconUsers,
+  IconPlus,
+  IconCar,
+} from "@tabler/icons-astro";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 
 // 1. Fetch singleton business settings
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
@@ -24,156 +24,194 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch all published services and sort ascending by order
-const allServices = await getCollection('services').catch(() => []);
-const publishedServices = sortPublishedByOrder(allServices.filter(s => s.data.published));
+const allServices = await getCollection("services").catch(() => []);
+const publishedServices = sortPublishedByOrder(
+  allServices.filter((s) => s.data.published),
+);
 
 // 3. Define category metadata with subtitles and JSX icon references
 const categoryMetadata: Record<string, { subtitle: string; icon: any }> = {
-  "Transfers": {
-    subtitle: "Airport, railway and point-to-point private transfers across Udaipur.",
-    icon: IconPlane
+  Transfers: {
+    subtitle:
+      "Airport, railway and point-to-point private transfers across Udaipur.",
+    icon: IconPlane,
   },
   "Local Travel": {
-    subtitle: "Flexible hourly car rentals and full-day old city sightseeing itineraries.",
-    icon: IconMapPin
+    subtitle:
+      "Flexible hourly car rentals and full-day old city sightseeing itineraries.",
+    icon: IconMapPin,
   },
   "Outstation Travel": {
-    subtitle: "Multi-day highway road trips and one-way taxi drops across Rajasthan.",
-    icon: IconCompass
+    subtitle:
+      "Multi-day highway road trips and one-way taxi drops across Rajasthan.",
+    icon: IconCompass,
   },
   "Group and Event Travel": {
-    subtitle: "Spacious tempo travellers and coordinated fleet logistics for weddings and groups.",
-    icon: IconUsers
+    subtitle:
+      "Spacious tempo travellers and coordinated fleet logistics for weddings and groups.",
+    icon: IconUsers,
   },
-  "Additional": {
-    subtitle: "Custom logistical solutions and specialized corporate transport requests.",
-    icon: IconPlus
-  }
+  Additional: {
+    subtitle:
+      "Custom logistical solutions and specialized corporate transport requests.",
+    icon: IconPlus,
+  },
 };
 
 const categoryOrder = [
-  "Transfers", 
-  "Local Travel", 
-  "Outstation Travel", 
-  "Group and Event Travel", 
-  "Additional"
+  "Transfers",
+  "Local Travel",
+  "Outstation Travel",
+  "Group and Event Travel",
+  "Additional",
 ] as const;
 
 // 4. Group services by category (skips categories with 0 published services)
 const groupedServices = categoryOrder
-  .map(category => ({
+  .map((category) => ({
     category,
-    slug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-    metadata: categoryMetadata[category] || { subtitle: "Private transportation services.", icon: IconCar },
-    services: publishedServices.filter(s => s.data.category === category)
+    slug: category.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    metadata: categoryMetadata[category] || {
+      subtitle: "Private transportation services.",
+      icon: IconCar,
+    },
+    services: publishedServices.filter((s) => s.data.category === category),
   }))
-  .filter(group => group.services.length > 0);
+  .filter((group) => group.services.length > 0);
 ---
 
-<BaseLayout 
+<BaseLayout
   title={`Our Transport Services | ${site.companyName}`}
   description="Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."
 >
   <Header slot="header" />
 
   {/* 1. HERO BANNER */}
-  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden">
+  <section
+    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
-        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
-           Our Services
+        <span
+          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+        >
+          Our Services
         </span>
-        <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+        <h1
+          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+        >
           Private transport for every kind of Udaipur trip
         </h1>
-        <p class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed">
-          Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price.
+        <p
+          class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed"
+        >
+          Transfers, local travel, outstation and group transport. Open a
+          service to see what it covers, suitable vehicles and, where approved,
+          its price.
         </p>
       </div>
     </div>
   </section>
 
   {/* 2. FLOATING TAB BAR NAVIGATION (Reference Image 1) */}
-  <div class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none">
-    <div class="max-w-5xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto">
-      {groupedServices.map((group, idx) => (
-        <a 
-          href={`#${group.slug}`}
-          class={`shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 ${
-            idx === 0 
-              ? "bg-brand-900 text-white shadow-sm" 
-              : "bg-surface-alt/60 text-brand-900 hover:bg-brand-100/80 hover:text-brand-900"
-          }`}
-        >
-          <span>{group.category}</span>
-          <span class={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${idx === 0 ? "bg-brand-800 text-accent" : "bg-brand-100/80 text-brand-900"}`}>
-            {group.services.length}
-          </span>
-        </a>
-      ))}
+  <div
+    class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none"
+  >
+    <div
+      class="max-w-5xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
+    >
+      {
+        groupedServices.map((group, idx) => (
+          <a
+            href={`#${group.slug}`}
+            class={`shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 ${
+              idx === 0
+                ? "bg-brand-900 text-white shadow-sm"
+                : "bg-surface-alt/60 text-brand-900 hover:bg-brand-100/80 hover:text-brand-900"
+            }`}
+          >
+            <span>{group.category}</span>
+            <span
+              class={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${idx === 0 ? "bg-brand-800 text-accent" : "bg-brand-100/80 text-brand-900"}`}
+            >
+              {group.services.length}
+            </span>
+          </a>
+        ))
+      }
     </div>
   </div>
 
   {/* 3. CATEGORISED SERVICE LISTINGS */}
   <section class="pt-16 pb-16 lg:pt-20 lg:pb-24 bg-surface">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 lg:space-y-24">
-      
-      {groupedServices.length > 0 ? (
-        groupedServices.map(group => {
-          const IconComponent = group.metadata.icon;
-          return (
-            /* scroll-mt-32 prevents sticky headers and tab bars from covering titles */
-            <div id={group.slug} class="scroll-mt-32 border-b border-brand-100/80 pb-16 last:border-b-0 last:pb-0">
-              
-              {/* Category Header with Icon Badge & Subtitle Paragraph */}
-              <div class="mb-10">
-                <div class="flex items-center gap-3.5 mb-1">
-                  <div class="w-10 h-10 rounded-xl bg-brand-900 text-accent flex items-center justify-center shrink-0 shadow-sm">
-                    <IconComponent size={20} stroke={2} />
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 lg:space-y-24"
+    >
+      {
+        groupedServices.length > 0 ? (
+          groupedServices.map((group) => {
+            const IconComponent = group.metadata.icon;
+            return (
+              /* scroll-mt-32 prevents sticky headers and tab bars from covering titles */
+              <div
+                id={group.slug}
+                class="scroll-mt-32 border-b border-brand-100/80 pb-16 last:border-b-0 last:pb-0"
+              >
+                {/* Category Header with Icon Badge & Subtitle Paragraph */}
+                <div class="mb-10">
+                  <div class="flex items-center gap-3.5 mb-1">
+                    <div class="w-10 h-10 rounded-xl bg-brand-900 text-accent flex items-center justify-center shrink-0 shadow-sm">
+                      <IconComponent size={20} stroke={2} />
+                    </div>
+                    <h2 class="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-brand-900 tracking-tight">
+                      {group.category}
+                    </h2>
                   </div>
-                  <h2 class="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-brand-900 tracking-tight">
-                    {group.category}
-                  </h2>
+
+                  <p class="text-sm sm:text-base text-typography-muted font-normal max-w-2xl leading-relaxed pl-13 sm:pl-13">
+                    {group.metadata.subtitle}
+                  </p>
+
+                  {/* Elegant Half-Underline Separator */}
+                  <div class="mt-4 border-b border-brand-100/80 w-full" />
                 </div>
-                
-                <p class="text-sm sm:text-base text-typography-muted font-normal max-w-2xl leading-relaxed pl-13 sm:pl-13">
-                  {group.metadata.subtitle}
-                </p>
-                
-                {/* Elegant Half-Underline Separator */}
-                <div class="mt-4 border-b border-brand-100/80 w-full"></div>
-              </div>
 
-              {/* Category Cards Grid */}
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {group.services.map(service => (
-                  <ServiceCard service={service} />
-                ))}
+                {/* Category Cards Grid */}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {group.services.map((service) => (
+                    <ServiceCard service={service} />
+                  ))}
+                </div>
               </div>
-
+            );
+          })
+        ) : (
+          /* Empty State Fallback */
+          <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
+            <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mx-auto mb-4">
+              <IconCar size={24} stroke={2} />
             </div>
-          );
-        })
-      ) : (
-        /* Empty State Fallback */
-        <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
-          <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mx-auto mb-4">
-            <IconCar size={24} stroke={2} />
+            <h3 class="font-serif text-xl font-bold text-brand-900 mb-2">
+              No Services Published Yet
+            </h3>
+            <p class="text-sm text-typography-muted mb-6">
+              Our content administrators are currently updating the transport
+              catalogue. Please check back soon or contact us directly for
+              immediate travel bookings.
+            </p>
+            <a
+              href="/contact/"
+              class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block shadow-sm"
+            >
+              Send General Inquiry
+            </a>
           </div>
-          <h3 class="font-serif text-xl font-bold text-brand-900 mb-2">No Services Published Yet</h3>
-          <p class="text-sm text-typography-muted mb-6">
-            Our content administrators are currently updating the transport catalogue. Please check back soon or contact us directly for immediate travel bookings.
-          </p>
-          <a href="/enquiry/" class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block shadow-sm">
-            Send General Inquiry
-          </a>
-        </div>
-      )}
-
+        )
+      }
     </div>
   </section>
 
-    <CatalogueSupportCTA type="services" />
+  <CatalogueSupportCTA type="services" />
 
   {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
   <FaqSection />
@@ -182,11 +220,15 @@ const groupedServices = categoryOrder
   <section class="py-12 bg-surface-alt/50 border-t border-brand-100/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
-        Each service above is available in and around Udaipur, from airport and railway transfers to sightseeing, nearby day use and outstation travel across Rajasthan. Coverage and example trips are described within each service page as guidance, not as separate booking pages. Where a price is confirmed it is shown with its terms; otherwise please ask us for a quote.
+        Each service above is available in and around Udaipur, from airport and
+        railway transfers to sightseeing, nearby day use and outstation travel
+        across Rajasthan. Coverage and example trips are described within each
+        service page as guidance, not as separate booking pages. Where a price
+        is confirmed it is shown with its terms; otherwise please ask us for a
+        quote.
       </p>
     </div>
   </section>
-
 </BaseLayout>
 
 {/* Hide Scrollbar for Horizontal Mobile Tab Bar */}

@@ -1,17 +1,17 @@
 ---
-import { getCollection } from 'astro:content';
-import { getWhatsAppUrl } from '../../utils/helpers';
-import { IconBrandWhatsapp, IconPhoneCall } from '@tabler/icons-astro';
+import { getCollection } from "astro:content";
+import { getWhatsAppUrl } from "../../utils/helpers";
+import { IconBrandWhatsapp, IconPhoneCall } from "@tabler/icons-astro";
 
 // Fetch singleton business settings
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
   whatsapp: "919876543210",
 };
 
-const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
+const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 
 // Primary Navigation
@@ -24,52 +24,64 @@ const navLinks = [
 ];
 ---
 
-<header class="bg-brand-900 text-white sticky top-0 z-40 border-b border-brand-800/80 shadow-md">
+<header
+  class="bg-brand-900 text-white sticky top-0 z-40 border-b border-brand-800/80 shadow-md"
+>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
-      
       {/* 1. Brand Identity */}
       <a href="/" class="flex flex-col group focus:outline-none">
-        <span class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white group-hover:text-accent transition-colors">
+        <span
+          class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white group-hover:text-accent transition-colors"
+        >
           {site.companyName}
         </span>
-        <span class="text-[10px] text-accent uppercase tracking-[0.2em] font-sans font-medium opacity-90">
+        <span
+          class="text-[10px] text-accent uppercase tracking-[0.2em] font-sans font-medium opacity-90"
+        >
           Private Taxi & Car Rental
         </span>
       </a>
 
       {/* 2. Primary Navigation (Desktop) */}
-      <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
-        {navLinks.map(link => (
-          <a href={link.href} class="text-brand-100 hover:text-accent transition-colors py-2">
-            {link.label}
-          </a>
-        ))}
+      <nav
+        class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide"
+      >
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-brand-100 hover:text-accent transition-colors py-2"
+            >
+              {link.label}
+            </a>
+          ))
+        }
       </nav>
 
       {/* 3. Primary Actions (Desktop: Phone, WhatsApp, Enquiry CTA) */}
       <div class="hidden xl:flex items-center space-x-4">
-        <a 
-          href={callUrl} 
+        <a
+          href={callUrl}
           class="text-sm font-medium text-brand-100 hover:text-accent transition-colors flex items-center gap-1.5 px-2 py-1"
           aria-label="Call Business Phone"
         >
-          <IconPhoneCall class="w-4.5 h-4.5 text-accent" stroke={1.8} /> 
+          <IconPhoneCall class="w-4.5 h-4.5 text-accent" stroke={1.8} />
           <span>{site.phone}</span>
         </a>
-        
-        <a 
-          href={whatsappUrl} 
-          target="_blank" 
-          rel="noopener noreferrer" 
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           class="text-brand-100 hover:text-emerald-400 transition-colors p-1.5"
           aria-label="Chat on WhatsApp"
         >
           <IconBrandWhatsapp class="w-5 h-5" stroke={1.8} />
         </a>
 
-        <a 
-          href="/enquiry/" 
+        <a
+          href="/contact/?action=enquiry#enquiry-form-section"
           class="bg-accent hover:bg-accent-hover text-brand-950 font-bold px-5 py-2.5 rounded-lg text-xs uppercase tracking-wider transition-colors shadow-sm active:scale-95"
         >
           Send Enquiry
@@ -78,59 +90,107 @@ const navLinks = [
 
       {/* Medium Desktop / Tablet Fallback */}
       <div class="hidden md:flex xl:hidden items-center space-x-2.5">
-        <a href={callUrl} class="bg-brand-800 p-2.5 rounded-lg text-brand-100 hover:text-accent transition-colors" title="Call Now">
+        <a
+          href={callUrl}
+          class="bg-brand-800 p-2.5 rounded-lg text-brand-100 hover:text-accent transition-colors"
+          title="Call Now"
+        >
           <IconPhoneCall class="w-4 h-4" stroke={1.8} />
         </a>
-        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="bg-emerald-600/90 p-2.5 rounded-lg text-white hover:bg-emerald-600 transition-colors" title="WhatsApp">
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-emerald-600/90 p-2.5 rounded-lg text-white hover:bg-emerald-600 transition-colors"
+          title="WhatsApp"
+        >
           <IconBrandWhatsapp class="w-4 h-4" stroke={1.8} />
         </a>
-        <a href="/enquiry/" class="bg-accent hover:bg-accent-hover text-brand-950 font-bold px-4 py-2 rounded-lg text-xs uppercase tracking-wider transition-colors">
+        <a
+          href="/contact/?action=enquiry#enquiry-form-section"
+          class="bg-accent hover:bg-accent-hover text-brand-950 font-bold px-4 py-2 rounded-lg text-xs uppercase tracking-wider transition-colors"
+        >
           Enquire
         </a>
       </div>
 
       {/* Mobile Controls */}
       <div class="flex items-center lg:hidden gap-2">
-        <a href={callUrl} class="p-2 rounded-lg bg-brand-800/80 text-brand-100 hover:text-accent transition-colors" aria-label="Call Now">
+        <a
+          href={callUrl}
+          class="p-2 rounded-lg bg-brand-800/80 text-brand-100 hover:text-accent transition-colors"
+          aria-label="Call Now"
+        >
           <IconPhoneCall class="w-5 h-5 text-accent" stroke={1.8} />
         </a>
-        <a 
-          href="/enquiry/" 
+        <a
+          href="/contact/?action=enquiry#enquiry-form-section"
           class="bg-accent text-brand-950 text-xs font-bold px-3.5 py-2 rounded-lg tracking-wider uppercase shadow-sm active:scale-95 transition-colors"
         >
           Enquire
         </a>
-        <button 
-          id="mobile-menu-btn" 
-          type="button" 
+        <button
+          id="mobile-menu-btn"
+          type="button"
           class="text-brand-100 p-2 rounded-lg bg-brand-800/80 hover:text-accent focus:outline-none focus:ring-1 focus:ring-accent transition-colors"
           aria-label="Toggle Navigation Menu"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              id="menu-icon-open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+            <path
+              id="menu-icon-close"
+              class="hidden"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
-
     </div>
   </div>
 
   {/* Mobile Dropdown Menu */}
-  <div id="mobile-menu" class="hidden lg:hidden bg-brand-950 border-t border-brand-800 px-4 pt-4 pb-6 space-y-4 shadow-2xl">
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden bg-brand-950 border-t border-brand-800 px-4 pt-4 pb-6 space-y-4 shadow-2xl"
+  >
     <nav class="flex flex-col space-y-1">
-      {navLinks.map(link => (
-        <a href={link.href} class="block px-3 py-2 rounded-lg text-base font-medium text-brand-100 hover:bg-brand-900 hover:text-accent transition-colors">
-          {link.label}
-        </a>
-      ))}
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block px-3 py-2 rounded-lg text-base font-medium text-brand-100 hover:bg-brand-900 hover:text-accent transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </nav>
-    
+
     <div class="pt-3 border-t border-brand-800/80 grid grid-cols-2 gap-2.5">
-      <a href={callUrl} class="py-2.5 bg-brand-900 hover:bg-brand-800 rounded-lg text-sm font-medium text-brand-100 hover:text-accent transition-colors flex items-center justify-center gap-1.5 border border-brand-800">
+      <a
+        href={callUrl}
+        class="py-2.5 bg-brand-900 hover:bg-brand-800 rounded-lg text-sm font-medium text-brand-100 hover:text-accent transition-colors flex items-center justify-center gap-1.5 border border-brand-800"
+      >
         <IconPhoneCall class="w-4 h-4 text-accent" stroke={1.8} /> Call Us
       </a>
-      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="py-2.5 bg-emerald-600/90 hover:bg-emerald-600 rounded-lg text-sm font-medium text-white transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="py-2.5 bg-emerald-600/90 hover:bg-emerald-600 rounded-lg text-sm font-medium text-white transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+      >
         <IconBrandWhatsapp class="w-4 h-4" stroke={2} /> WhatsApp
       </a>
     </div>
@@ -138,14 +198,14 @@ const navLinks = [
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const openIcon = document.getElementById('menu-icon-open');
-  const closeIcon = document.getElementById('menu-icon-close');
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-icon-open");
+  const closeIcon = document.getElementById("menu-icon-close");
 
-  btn?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
-    openIcon?.classList.toggle('hidden');
-    closeIcon?.classList.toggle('hidden');
+  btn?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+    openIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
   });
 </script>

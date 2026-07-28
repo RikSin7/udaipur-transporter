@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { IconCar } from "@tabler/icons-astro";
+import { createCleanParam } from "../../utils/helpers";
 
 interface Props {
   service: CollectionEntry<"services">;
@@ -16,9 +17,9 @@ const shortLabel = pricing?.shortLabel;
 const hasApprovedPrice = !!amount;
 
 // 2. Format the display label (e.g., "₹899 onwards, per trip" or "From ₹2,000 / Day")
-const priceDisplay = hasApprovedPrice 
-  ? `${amount} ${shortLabel || ""}`.trim() 
-  : (shortLabel || "Ask for Price");
+const priceDisplay = hasApprovedPrice
+  ? `${amount} ${shortLabel || ""}`.trim()
+  : shortLabel || "Ask for Price";
 ---
 
 <div
@@ -97,12 +98,11 @@ const priceDisplay = hasApprovedPrice
       Service Details &rarr;
     </a>
     <a
-      href={`/enquiry/?service=${encodeURIComponent(title)}`}
+      href={`/contact/?service=${createCleanParam(title)}`}
       class="bg-brand hover:bg-brand-800 text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group shrink-0"
     >
       <span>{hasApprovedPrice ? "Enquire" : "Ask for Price"}</span>
-      <span
-        class="text-accent group-hover:translate-x-0.5 transition-transform"
+      <span class="text-accent group-hover:translate-x-0.5 transition-transform"
         >&rarr;</span
       >
     </a>

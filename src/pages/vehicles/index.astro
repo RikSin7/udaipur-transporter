@@ -1,33 +1,42 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import VehicleCard from '../../components/cards/VehicleCard.astro';
-import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VehicleCard from "../../components/cards/VehicleCard.astro";
+import { getCollection } from "astro:content";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
 };
 
-const vehicles = await getCollection('vehicles');
+const vehicles = await getCollection("vehicles");
 ---
 
-<BaseLayout 
+<BaseLayout
   title={`Our Fleet | ${site.companyName}`}
   description="Browse our fleet of private taxis, sedans, SUVs, and tempo travellers for comfortable travel in Udaipur and Rajasthan."
 >
   {/* 1. HERO BANNER */}
-  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden">
+  <section
+    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
-        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+        <span
+          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+        >
           Premium Vehicle Fleet
         </span>
-        <h1 class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+        <h1
+          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+        >
           Our Fleet
         </h1>
         <p class="text-brand-100/90 text-lg font-light leading-relaxed">
-          Choose from our wide range of well-maintained vehicles for your transportation needs in and around Udaipur. From comfortable sedans to spacious Tempo Travellers, we have the perfect vehicle for your group size and luggage requirements.
+          Choose from our wide range of well-maintained vehicles for your
+          transportation needs in and around Udaipur. From comfortable sedans to
+          spacious Tempo Travellers, we have the perfect vehicle for your group
+          size and luggage requirements.
         </p>
       </div>
     </div>
@@ -35,28 +44,36 @@ const vehicles = await getCollection('vehicles');
 
   {/* 2. VEHICLE LISTINGS */}
   <section class="py-16 lg:py-24 bg-surface">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-20">
-      
-      {vehicles.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {vehicles.map(vehicle => (
-            <VehicleCard vehicle={vehicle} />
-          ))}
-        </div>
-      ) : (
-        /* Empty State Fallback */
-        <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
-          <div class="text-3xl mb-3">🚗</div>
-          <h3 class="font-serif text-xl font-bold text-brand-900 mb-2">No Vehicles Available</h3>
-          <p class="text-sm text-typography-muted mb-6">
-            We are currently updating our fleet inventory. Please check back soon or contact us directly to inquire about vehicle availability.
-          </p>
-          <a href="/enquiry/" class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block">
-            Send General Inquiry
-          </a>
-        </div>
-      )}
-
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-20"
+    >
+      {
+        vehicles.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {vehicles.map((vehicle) => (
+              <VehicleCard vehicle={vehicle} />
+            ))}
+          </div>
+        ) : (
+          /* Empty State Fallback */
+          <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
+            <div class="text-3xl mb-3">🚗</div>
+            <h3 class="font-serif text-xl font-bold text-brand-900 mb-2">
+              No Vehicles Available
+            </h3>
+            <p class="text-sm text-typography-muted mb-6">
+              We are currently updating our fleet inventory. Please check back
+              soon or contact us directly to inquire about vehicle availability.
+            </p>
+            <a
+              href="/contact/"
+              class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block"
+            >
+              Send General Inquiry
+            </a>
+          </div>
+        )
+      }
     </div>
   </section>
 

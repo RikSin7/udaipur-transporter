@@ -1,23 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
-import { 
-  IconCar, 
-  IconCompass, 
-  IconArrowRight, 
-  IconFileText, 
-  IconMessage2 
-} from '@tabler/icons-astro';
-import { getWhatsAppUrl } from '../../utils/helpers';
+import { getCollection } from "astro:content";
+import {
+  IconCar,
+  IconCompass,
+  IconArrowRight,
+  IconFileText,
+  IconMessage2,
+} from "@tabler/icons-astro";
+import { getWhatsAppUrl, createCleanParam } from "../../utils/helpers";
 
 interface Props {
-  type: 'services' | 'vehicles';
+  type: "services" | "vehicles";
 }
 
 const { type } = Astro.props;
-const isServicesPage = type === 'services';
+const isServicesPage = type === "services";
 
 // 1. Fetch Singleton Business Settings for WhatsApp Routing
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   whatsapp: "919876543210",
@@ -27,46 +27,61 @@ const site = settingsEntries[0]?.data || {
 const crossLink = {
   href: isServicesPage ? "/vehicles/" : "/services/",
   title: isServicesPage ? "Compare our vehicles" : "Explore transport services",
-  description: isServicesPage 
-    ? "Seats, luggage guidance and amenities for each car and Tempo Traveller category." 
+  description: isServicesPage
+    ? "Seats, luggage guidance and amenities for each car and Tempo Traveller category."
     : "Transparent airport transfers, local Udaipur sightseeing, and multi-day outstation packages.",
-  badge: isServicesPage ? "Fleet Inventory" : "Service Routes"
+  badge: isServicesPage ? "Fleet Inventory" : "Service Routes",
 };
 
 // 3. Build Dynamic Inquiry & WhatsApp Configuration (Right Card)
 const inquiry = {
-  title: isServicesPage ? "Not sure which service?" : "Need help choosing a vehicle?",
-  description: isServicesPage 
-    ? "Send us your travel itinerary — we'll suggest the right service package and reply directly." 
+  title: isServicesPage
+    ? "Not sure which service?"
+    : "Need help choosing a vehicle?",
+  description: isServicesPage
+    ? "Send us your travel itinerary — we'll suggest the right service package and reply directly."
     : "Unsure which car fits your group and luggage? Tell us your passenger count for an instant recommendation.",
   whatsappUrl: getWhatsAppUrl(
-    site.whatsapp, 
-    isServicesPage ? "Service Catalogue Consultation" : "Vehicle Capacity Consultation", 
-    Astro.url.href
-  )
+    site.whatsapp,
+    isServicesPage
+      ? "Service Catalogue Consultation"
+      : "Vehicle Capacity Consultation",
+    Astro.url.href,
+  ),
 };
 ---
 
 <section class="py-8 sm:py-10 bg-surface border-t border-brand-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
-      
       {/* LEFT CARD: Dynamic Internal Cross-Link */}
-      <a 
-        href={crossLink.href} 
+      <a
+        href={crossLink.href}
         class="lg:col-span-5 bg-surface-card border border-brand-100 rounded-xl p-5 sm:p-6 shadow-sm hover:shadow-premium hover:border-brand-800/40 transition-all duration-300 flex flex-col justify-between group"
       >
         <div>
           <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-[10px] font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-2 py-0.5 rounded-md">
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-2 py-0.5 rounded-md"
+            >
               {crossLink.badge}
             </span>
-            <div class="w-8 h-8 rounded-lg bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 shrink-0 group-hover:scale-105 transition-transform">
-              {isServicesPage ? <IconCar size={18} stroke={2} /> : <IconCompass size={18} stroke={2} />}
+            <div
+              class="w-8 h-8 rounded-lg bg-surface-alt border border-brand-100 flex items-center justify-center text-brand-900 shrink-0 group-hover:scale-105 transition-transform"
+            >
+              {
+                isServicesPage ? (
+                  <IconCar size={18} stroke={2} />
+                ) : (
+                  <IconCompass size={18} stroke={2} />
+                )
+              }
             </div>
           </div>
 
-          <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-1">
+          <h3
+            class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-1"
+          >
             {crossLink.title}
           </h3>
           <p class="text-xs text-typography-muted leading-relaxed line-clamp-2">
@@ -74,63 +89,83 @@ const inquiry = {
           </p>
         </div>
 
-        <div class="mt-4 pt-3 border-t border-brand-100/80 flex items-center justify-between text-xs font-bold text-brand-900 group-hover:text-accent transition-colors">
+        <div
+          class="mt-4 pt-3 border-t border-brand-100/80 flex items-center justify-between text-xs font-bold text-brand-900 group-hover:text-accent transition-colors"
+        >
           <span>View Full Catalogue</span>
-          <IconArrowRight size={16} stroke={2} class="group-hover:translate-x-1 transition-transform" />
+          <IconArrowRight
+            size={16}
+            stroke={2}
+            class="group-hover:translate-x-1 transition-transform"
+          />
         </div>
       </a>
 
       {/* RIGHT CARD: Dynamic Consultation with Dual Actions */}
-      <div class="lg:col-span-7 bg-brand-900 border border-brand-800 rounded-xl p-5 sm:p-6 shadow-premium flex flex-col justify-between text-white relative overflow-hidden">
-        
+      <div
+        class="lg:col-span-7 bg-brand-900 border border-brand-800 rounded-xl p-5 sm:p-6 shadow-premium flex flex-col justify-between text-white relative overflow-hidden"
+      >
         {/* Subtle Background Accent Grid */}
-        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-accent/5 rounded-full blur-2xl pointer-events-none"></div>
+        <div
+          class="absolute -right-10 -bottom-10 w-40 h-40 bg-accent/5 rounded-full blur-2xl pointer-events-none"
+        >
+        </div>
 
         <div>
           <div class="flex items-center gap-2.5 mb-2.5">
-            <div class="w-8 h-8 rounded-lg bg-brand-800 border border-brand-700 flex items-center justify-center text-accent shrink-0">
+            <div
+              class="w-8 h-8 rounded-lg bg-brand-800 border border-brand-700 flex items-center justify-center text-accent shrink-0"
+            >
               <IconFileText size={18} stroke={2} />
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-accent">
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-accent"
+            >
               Direct Expert Advice
             </span>
           </div>
 
-          <h3 class="font-serif text-lg sm:text-xl lg:text-2xl font-bold text-white tracking-tight mb-1">
+          <h3
+            class="font-serif text-lg sm:text-xl lg:text-2xl font-bold text-white tracking-tight mb-1"
+          >
             {inquiry.title}
           </h3>
-          <p class="text-xs text-brand-100/80 leading-relaxed max-w-xl line-clamp-2">
+          <p
+            class="text-xs text-brand-100/80 leading-relaxed max-w-xl line-clamp-2"
+          >
             {inquiry.description}
           </p>
         </div>
 
         {/* Dual Action CTA Buttons (Form & WhatsApp) */}
-        <div class="mt-5 pt-4 border-t border-brand-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 relative z-10">
-          
+        <div
+          class="mt-5 pt-4 border-t border-brand-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 relative z-10"
+        >
           {/* Action 1: Standard Enquiry Form */}
-          <a 
-            href="/enquiry/" 
+          <a
+            href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}`}
             class="flex-1 bg-accent hover:bg-accent-hover text-brand-950 font-bold py-2.5 px-4 rounded-lg text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95"
           >
             <span>Send Enquiry Form</span>
-            <IconArrowRight size={15} stroke={2} class="group-hover:translate-x-1 transition-transform" />
+            <IconArrowRight
+              size={15}
+              stroke={2}
+              class="group-hover:translate-x-1 transition-transform"
+            />
           </a>
 
           {/* Action 2: Direct WhatsApp Chat */}
-          <a 
-            href={inquiry.whatsappUrl} 
-            target="_blank" 
+          <a
+            href={inquiry.whatsappUrl}
+            target="_blank"
             rel="noopener noreferrer"
             class="flex-1 bg-brand-800 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-lg border border-brand-700 hover:border-emerald-500 text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
           >
             <IconMessage2 size={16} stroke={2} class="text-emerald-400" />
             <span>Chat on WhatsApp</span>
           </a>
-
         </div>
-
       </div>
-
     </div>
   </div>
 </section>

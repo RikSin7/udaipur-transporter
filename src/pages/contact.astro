@@ -1,66 +1,84 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/layout/Header.astro';
-import EnquiryForm from '../components/forms/EnquiryForm.astro';
-import { getWhatsAppUrl } from '../utils/helpers';
-import { 
-  IconPhoneCall, 
-  IconMessage2, 
-  IconMail, 
-  IconMapPin, 
-  IconClock, 
-  IconCompass, 
-  IconMap, 
-  IconShieldCheck 
-} from '@tabler/icons-astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
+import EnquiryForm from "../components/forms/EnquiryForm.astro";
+import { getWhatsAppUrl } from "../utils/helpers";
+import {
+  IconPhoneCall,
+  IconMessage2,
+  IconMail,
+  IconMapPin,
+  IconClock,
+  IconCompass,
+  IconMap,
+  IconShieldCheck,
+} from "@tabler/icons-astro";
 
 // 1. Fetch Singleton Business Settings (phone, email, address, response hours)
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
   whatsapp: "919876543210",
   email: "bookings@udaipurtransporter.com",
-  address: "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
-  operatingHours: "Typical Response Time: Under 15 Minutes (7 Days a Week, 8:00 AM – 9:00 PM)",
-  serviceArea: "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes"
+  address:
+    "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
+  operatingHours:
+    "Typical Response Time: Under 15 Minutes (7 Days a Week, 8:00 AM – 9:00 PM)",
+  serviceArea:
+    "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes",
 };
 
 // 2. Fetch Singleton Contact Page Content from Decap CMS
-const contactEntries = await getCollection('contact').catch(() => []);
+const contactEntries = await getCollection("contact").catch(() => []);
 const contactData = contactEntries[0]?.data || {
   title: "Contact Our Udaipur Team",
-  subtitle: "Skip automated call centers and algorithmic pricing. Connect directly with the local transport coordinators who manage our Udaipur garage and allocate your vehicle.",
+  subtitle:
+    "Skip automated call centers and algorithmic pricing. Connect directly with the local transport coordinators who manage our Udaipur garage and allocate your vehicle.",
   directChannelsHeading: "Direct Communication Channels",
-  directChannelsDesc: "Choose your preferred method to speak with our local team.",
+  directChannelsDesc:
+    "Choose your preferred method to speak with our local team.",
   locationHeading: "Operating Garage & Base",
   locationSubheading: "Central Udaipur Location",
-  locationDesc: "Our central dispatch garage near the old city allows our drivers to reach lakeside hotels and railway stations rapidly.",
-  googleMapsUrl: "https://maps.google.com/?q=Udaipur+City+Palace"
+  locationDesc:
+    "Our central dispatch garage near the old city allows our drivers to reach lakeside hotels and railway stations rapidly.",
+  googleMapsUrl: "https://maps.google.com/?q=Udaipur+City+Palace",
 };
 
-const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
-const whatsappUrl = getWhatsAppUrl(site.whatsapp, "General Contact Inquiry", Astro.url.href);
+const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
+const whatsappUrl = getWhatsAppUrl(
+  site.whatsapp,
+  "General Contact Inquiry",
+  Astro.url.href,
+);
 ---
 
-<BaseLayout 
+<BaseLayout
   title={`${contactData.title} | ${site.companyName}`}
   description={contactData.subtitle}
 >
   <Header slot="header" />
 
   {/* 1. HERO BANNER */}
-  <section class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden">
+  <section
+    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
-        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+        <span
+          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+        >
           Direct Local Communication
         </span>
-        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-4">
+        <h1
+          class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-4"
+        >
           {contactData.title}
         </h1>
-        <p class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed">
+        <p
+          class="text-brand-100/90 text-base sm:text-lg font-light leading-relaxed"
+        >
           {contactData.subtitle}
         </p>
       </div>
@@ -70,187 +88,258 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp, "General Contact Inquiry", Ast
   {/* 2. ASYMMETRIC DIRECT CHANNELS & OPERATIONAL METRICS */}
   <section class="py-16 lg:py-20 bg-surface border-b border-brand-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-      
       <div class="max-w-3xl">
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-2 tracking-tight">
+        <h2
+          class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-2 tracking-tight"
+        >
           {contactData.directChannelsHeading}
         </h2>
         <p class="text-sm sm:text-base text-typography-muted">
-          {contactData.directChannelsDesc} We do not rely on third-party call centers or automated chat bots.
+          {contactData.directChannelsDesc} We do not rely on third-party call centers
+          or automated chat bots.
         </p>
       </div>
 
       {/* 3-Column Direct Action Cards */}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-        
         {/* Phone Card */}
-        <a 
-          href={callUrl} 
+        <a
+          href={callUrl}
           class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-premium hover:border-brand-800/40 transition-all duration-300 flex flex-col justify-between group"
         >
           <div>
-            <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-2xs">
+            <div
+              class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-2xs"
+            >
               <IconPhoneCall size={24} stroke={2} />
             </div>
-            <span class="text-[11px] font-bold uppercase tracking-widest text-typography-muted block mb-1">
+            <span
+              class="text-[11px] font-bold uppercase tracking-widest text-typography-muted block mb-1"
+            >
               Call Us Directly
             </span>
-            <h3 class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
+            <h3
+              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2"
+            >
               {site.phone}
             </h3>
             <p class="text-xs text-typography-muted leading-relaxed">
-              Speak directly with our Udaipur dispatch team for immediate cab bookings and urgent route inquiries.
+              Speak directly with our Udaipur dispatch team for immediate cab
+              bookings and urgent route inquiries.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-brand-100/80 flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+          <div
+            class="mt-6 pt-4 border-t border-brand-100/80 flex items-center gap-1.5 text-xs font-semibold text-emerald-700"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"
+            ></span>
             <span>Available for Immediate Assistance</span>
           </div>
         </a>
 
         {/* WhatsApp Card */}
-        <a 
-          href={whatsappUrl} 
-          target="_blank" 
+        <a
+          href={whatsappUrl}
+          target="_blank"
           rel="noopener noreferrer"
           class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-premium hover:border-emerald-600/40 transition-all duration-300 flex flex-col justify-between group"
         >
           <div>
-            <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-2xs">
+            <div
+              class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-2xs"
+            >
               <IconMessage2 size={24} stroke={2} />
             </div>
-            <span class="text-[11px] font-bold uppercase tracking-widest text-typography-muted block mb-1">
+            <span
+              class="text-[11px] font-bold uppercase tracking-widest text-typography-muted block mb-1"
+            >
               WhatsApp Support
             </span>
-            <h3 class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-emerald-600 transition-colors mb-2">
+            <h3
+              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-emerald-600 transition-colors mb-2"
+            >
               Chat With Coordinator
             </h3>
             <p class="text-xs text-typography-muted leading-relaxed">
-              Send us your itinerary or voice notes. We reply with flat, owner-approved vehicle quotes and pictures.
+              Send us your itinerary or voice notes. We reply with flat,
+              owner-approved vehicle quotes and pictures.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-brand-100/80 flex items-center gap-1.5 text-xs font-semibold text-typography-muted">
-            <IconShieldCheck size={16} stroke={2} class="text-emerald-600 shrink-0" />
+          <div
+            class="mt-6 pt-4 border-t border-brand-100/80 flex items-center gap-1.5 text-xs font-semibold text-typography-muted"
+          >
+            <IconShieldCheck
+              size={16}
+              stroke={2}
+              class="text-emerald-600 shrink-0"
+            />
             <span>Pre-filled with website context</span>
           </div>
         </a>
 
         {/* Email Card */}
-        <a 
-          href={`mailto:${site.email}`} 
+        <a
+          href={`mailto:${site.email}`}
           class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-premium hover:border-brand-800/40 transition-all duration-300 flex flex-col justify-between group"
         >
           <div>
-            <div class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 text-brand-900 flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-accent transition-colors shadow-2xs">
+            <div
+              class="w-12 h-12 rounded-xl bg-surface-alt border border-brand-100 text-brand-900 flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-accent transition-colors shadow-2xs"
+            >
               <IconMail size={24} stroke={2} />
             </div>
-            <span class="text-[11px] font-bold uppercase tracking-widest text-typography-muted block mb-1">
+            <span
+              class="text-[11px] font-bold uppercase tracking-widest text-typography-muted block mb-1"
+            >
               Email Inquiries
             </span>
-            <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2 truncate">
+            <h3
+              class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-2 truncate"
+            >
               {site.email}
             </h3>
             <p class="text-xs text-typography-muted leading-relaxed">
-              Best suited for detailed multi-day Rajasthan tour itineraries, corporate billing requests, and event transport.
+              Best suited for detailed multi-day Rajasthan tour itineraries,
+              corporate billing requests, and event transport.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-brand-100/80 flex items-center gap-1.5 text-xs font-semibold text-typography-muted">
+          <div
+            class="mt-6 pt-4 border-t border-brand-100/80 flex items-center gap-1.5 text-xs font-semibold text-typography-muted"
+          >
             <span>Written tariff quotes & invoices</span>
           </div>
         </a>
-
       </div>
 
       {/* Operational Base & Response Commitment Bar */}
-      <div class="bg-surface-alt/70 border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-2xs grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-brand-100/80 text-xs sm:text-sm">
-        
+      <div
+        class="bg-surface-alt/70 border border-brand-100 rounded-2xl p-6 sm:p-8 shadow-2xs grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-brand-100/80 text-xs sm:text-sm"
+      >
         <div class="flex items-start gap-3.5 pt-4 md:pt-0">
-          <div class="w-9 h-9 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+          <div
+            class="w-9 h-9 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs"
+          >
             <IconMapPin size={18} stroke={2} />
           </div>
           <div>
-            <strong class="font-serif text-base font-bold text-brand-900 block mb-1">Operating Garage & Base</strong>
+            <strong
+              class="font-serif text-base font-bold text-brand-900 block mb-1"
+              >Operating Garage & Base</strong
+            >
             <p class="text-typography-muted leading-relaxed">{site.address}</p>
           </div>
         </div>
 
         <div class="flex items-start gap-3.5 pt-4 md:pt-0 md:pl-6">
-          <div class="w-9 h-9 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+          <div
+            class="w-9 h-9 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs"
+          >
             <IconClock size={18} stroke={2} />
           </div>
           <div>
-            <strong class="font-serif text-base font-bold text-brand-900 block mb-1">Response Commitment</strong>
-            <p class="text-typography-muted leading-relaxed">{site.operatingHours}</p>
+            <strong
+              class="font-serif text-base font-bold text-brand-900 block mb-1"
+              >Response Commitment</strong
+            >
+            <p class="text-typography-muted leading-relaxed">
+              {site.operatingHours}
+            </p>
           </div>
         </div>
 
         <div class="flex items-start gap-3.5 pt-4 md:pt-0 md:pl-6">
-          <div class="w-9 h-9 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+          <div
+            class="w-9 h-9 rounded-lg bg-brand-900 text-accent flex items-center justify-center shrink-0 mt-0.5 shadow-2xs"
+          >
             <IconCompass size={18} stroke={2} />
           </div>
           <div>
-            <strong class="font-serif text-base font-bold text-brand-900 block mb-1">Service Area Coverage</strong>
-            <p class="text-typography-muted leading-relaxed">{site.serviceArea}</p>
+            <strong
+              class="font-serif text-base font-bold text-brand-900 block mb-1"
+              >Service Area Coverage</strong
+            >
+            <p class="text-typography-muted leading-relaxed">
+              {site.serviceArea}
+            </p>
           </div>
         </div>
-
       </div>
-
     </div>
   </section>
 
   {/* 3. STACKED ENQUIRY FORM AT THE BOTTOM */}
-  <section id="enquiry-form-section" class="py-16 lg:py-24 bg-brand-900 text-white relative overflow-hidden scroll-mt-12">
-    
+  <section
+    id="enquiry-form-section"
+    class="py-16 lg:py-24 bg-brand-900 text-white relative overflow-hidden scroll-mt-12"
+  >
     {/* Subtle Gold Dotted Background Pattern */}
-    <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"
+    >
+    </div>
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      
       {/* Dark Royal Form Header */}
       <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-3">
+        <span
+          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-3"
+        >
           Direct Booking Request
         </span>
-        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+        <h2
+          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight"
+        >
           Send a Travel Enquiry
         </h2>
-        <p class="text-brand-100/80 text-sm sm:text-base mt-2.5 leading-relaxed">
-          Fill out your travel details below. A transport coordinator will calculate accurate road distances, toll actuals, and vehicle sizing before replying directly.
+        <p
+          class="text-brand-100/80 text-sm sm:text-base mt-2.5 leading-relaxed"
+        >
+          Fill out your travel details below. A transport coordinator will
+          calculate accurate road distances, toll actuals, and vehicle sizing
+          before replying directly.
         </p>
         <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
       </div>
 
-      {/* Embedded Reusable Form Component */}
-      <div class="bg-surface text-brand-900 rounded-3xl p-2 sm:p-6 shadow-2xl border border-brand-800">
-        <EnquiryForm />
-      </div>
-
+      <EnquiryForm />
     </div>
   </section>
 
   {/* 4. GOOGLE MAPS LOCATION NOTE */}
   <section class="py-16 bg-surface-alt/50 border-t border-brand-100">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-surface-card border border-brand-100 rounded-2xl p-8 sm:p-12 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+      <div
+        class="bg-surface-card border border-brand-100 rounded-2xl p-8 sm:p-12 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8"
+      >
         <div class="space-y-2 text-center md:text-left max-w-xl">
-          <span class="text-xs font-bold uppercase tracking-widest text-accent block">{contactData.locationHeading}</span>
-          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">{contactData.locationSubheading}</h3>
-          <p class="text-typography-muted text-sm leading-relaxed">{contactData.locationDesc}</p>
+          <span
+            class="text-xs font-bold uppercase tracking-widest text-accent block"
+            >{contactData.locationHeading}</span
+          >
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">
+            {contactData.locationSubheading}
+          </h3>
+          <p class="text-typography-muted text-sm leading-relaxed">
+            {contactData.locationDesc}
+          </p>
         </div>
         <div class="shrink-0 w-full md:w-auto text-center">
-          <a 
-            href={contactData.googleMapsUrl} 
-            target="_blank" 
+          <a
+            href={contactData.googleMapsUrl}
+            target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center gap-2 bg-brand-900 hover:bg-brand-800 text-white font-bold px-7 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 group"
           >
-            <IconMap size={18} stroke={2} class="text-accent group-hover:scale-110 transition-transform" />
+            <IconMap
+              size={18}
+              stroke={2}
+              class="text-accent group-hover:scale-110 transition-transform"
+            />
             <span>View Udaipur on Google Maps &rarr;</span>
           </a>
         </div>
       </div>
     </div>
   </section>
-
 </BaseLayout>
