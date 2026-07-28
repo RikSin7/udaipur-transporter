@@ -1,5 +1,5 @@
 ---
-author: "Rahul Gandhi"
+author: "Amit Sharma"
 location: "New Delhi, India"
 service: "Airport Pickup & 2-Day Sightseeing"
 rating: 5
@@ -8,5 +8,5 @@ comment: "Booked an airport pickup from Dabok and 2-day Udaipur city sightseeing
 verified: true
 featured: true
 sortOrder: 1
-image: "../../assets/images/reviews/rahul-gandhi.jpg"
+image: ""
 ---

@@ -7,15 +7,15 @@ const servicesCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string(),
     category: z.enum([
-      "Transfers", 
-      "Local Travel", 
-      "Outstation Travel", 
-      "Group and Event Travel", 
+      "Transfers",
+      "Local Travel",
+      "Outstation Travel",
+      "Group and Event Travel",
       "Additional"
     ]),
     summary: z.string().max(160, "Keep summary under 160 characters for SEO cards"),
-    image: image().optional(), 
-    sortOrder: z.number().default(10), 
+    image: image().optional(),
+    sortOrder: z.number().default(10),
     published: z.boolean().default(true),
 
     // 1. Who This Is For (Text-only pills)
@@ -86,9 +86,9 @@ const faqsCollection = defineCollection({
     question: z.string().max(120, "Keep questions concise for mobile viewports"),
     answer: z.string(),
     category: z.enum([
-      "General & Booking", 
-      "Pricing & Tariffs", 
-      "Vehicles & Drivers", 
+      "General & Booking",
+      "Pricing & Tariffs",
+      "Vehicles & Drivers",
       "Outstation Routes"
     ]).default("General & Booking"),
     order: z.number().default(10), // Low numbers (e.g., 1, 2) appear first
@@ -115,21 +115,31 @@ const aboutCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string(),
     subtitle: z.string(),
-    storyHeading: z.string(),
+    storyHeading: z.string().default("Our Story"),
     image: image().optional(),
-    imageCaption: z.string().default("Verified Local Identity"),
-    promisesHeading: z.string(),
-    promises: z.array(z.object({
-      icon: z.string(),
+    // 1. How We Work Section
+    howWeWorkHeading: z.string().default("How we work"),
+    howWeWork: z.array(z.object({
+      icon: z.string(), // e.g., "IconFileCheck", "IconCar", "IconPhoneCall", "IconShieldCheck"
       title: z.string(),
       desc: z.string(),
     })),
-    coverageHeading: z.string(),
+
+    // 2. Stats Banner Section
+    stats: z.array(z.object({
+      value: z.string(), // e.g., "Udaipur", "6+", "5", "Direct"
+      label: z.string(), // e.g., "Home base & primary service area"
+    })).default([
+      { value: "Udaipur", label: "Home base & primary service area" },
+      { value: "6+", label: "Service categories offered" },
+      { value: "5", label: "Vehicle categories, sedan to coach" },
+      { value: "Direct", label: "Contact by form, WhatsApp & call" }
+    ]),
+
+    // 3. Where We Operate
+    coverageHeading: z.string().default("Where we operate"),
     coverageSubtitle: z.string(),
-    coverageAreas: z.array(z.object({
-      title: z.string(),
-      desc: z.string(),
-    })),
+    coverageLocations: z.array(z.string()), 
   }),
 });
 
@@ -188,12 +198,14 @@ const reviewCollection = defineCollection({
   schema: ({ image }) => z.object({
     author: z.string(),
     location: z.string().default("Verified Traveller"),
-    service: z.string(), // e.g., "Airport Pickup & Local Sightseeing"
+    service: z.string(), // e.g., "Airport Pickup & 2-Day Sightseeing"
     rating: z.number().min(1).max(5).default(5),
     date: z.string(), // e.g., "October 2025"
     comment: z.string(),
     verified: z.boolean().default(true),
-    image: image().optional(),
+    image: image().optional(), 
+    featured: z.boolean().default(true), 
+    sortOrder: z.number().default(10),
   }),
 });
 
