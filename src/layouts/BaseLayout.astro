@@ -3,17 +3,21 @@ import "../styles/global.css";
 import Footer from "../components/layout/Footer.astro";
 import StickyContactBar from "../components/layout/StickyContactBar.astro";
 import Header from "../components/layout/Header.astro";
+import { getEntry } from "astro:content";
 
 interface Props {
   title?: string;
   description?: string;
-  image?: string;
 }
 
+const site = await getEntry("settings", "site");
+
+if (!site) throw new Error("Missing required content: settings/site.md");
+
 const {
-  title = "Udaipur Royal Transporter | Private Taxi & Car Rental",
-  description = "Reliable, straightforward private transport from Udaipur. Airport transfers, sightseeing tours, outstation taxis, and tempo travellers.",
-} = Astro.props;
+  title = site.data.seoDefaultTitle,
+  description = site.data.seoDefaultDesc,
+}: Props = Astro.props;
 ---
 
 <!doctype html>
@@ -25,11 +29,33 @@ const {
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    {
+      /* 1. NETLIFY IDENTITY WIDGET: Required for Decap CMS authentication modal */
+    }
+    <script
+      defer
+      is:inline
+      src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    {
+      /* 2. ADMIN TOKEN RECOVERY LISTENER: Intercepts email invite tokens and bounces to /admin/ */
+    }
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              window.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </head>
   <body
     class="bg-surface text-typography-main font-sans min-h-screen flex flex-col selection:bg-accent selection:text-white"
   >
-    <Header slot="header" />
+    <Header />
 
     {/* Main Content Area */}
     <main class="grow pb-16 md:pb-0">

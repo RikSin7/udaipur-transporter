@@ -1,96 +1,139 @@
 ---
-import { getCollection } from 'astro:content';
-import { sortPublishedByOrder, getWhatsAppUrl } from '../../utils/helpers';
-import { 
-  IconPhoneCall, 
-  IconBrandWhatsapp, 
-  IconMail, 
+import { getCollection } from "astro:content";
+import { sortPublishedByOrder, getWhatsAppUrl } from "../../utils/helpers";
+import {
+  IconPhoneCall,
+  IconBrandWhatsapp,
+  IconMail,
   IconArrowRight,
   IconMapPin,
-  IconClock
-} from '@tabler/icons-astro';
+  IconClock,
+} from "@tabler/icons-astro";
 
 // 1. Fetch Singleton Settings
-const settingsEntries = await getCollection('settings').catch(() => []);
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
   whatsapp: "919876543210",
   email: "bookings@udaipurtransporter.com",
   operatingHours: "Typical Response Time: Under 15 Minutes",
-  serviceArea: "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes"
+  serviceArea:
+    "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes",
 };
 
 // 2. Query & Slice Top 5 Published Services by sortOrder
-const allServices = await getCollection('services').catch(() => []);
+const allServices = await getCollection("services").catch(() => []);
 const topServices = sortPublishedByOrder(allServices).slice(0, 5);
 
 // 3. Query & Slice Top 5 Published Vehicles by sortOrder
-const allVehicles = await getCollection('vehicles').catch(() => []);
+const allVehicles = await getCollection("vehicles").catch(() => []);
 const topVehicles = sortPublishedByOrder(allVehicles).slice(0, 5);
 
 // 4. Check if a published blog exists
-const allBlogs = await getCollection('blog').catch(() => []);
-const publishedBlogs = allBlogs.filter((blog: any) => blog.data?.published !== false);
+const allBlogs = await getCollection("blog").catch(() => []);
+const publishedBlogs = allBlogs.filter(
+  (blog: any) => blog.data?.published !== false,
+);
 const hasPublishedBlog = publishedBlogs.length > 0;
 
 const currentYear = new Date().getFullYear();
-const callUrl = `tel:${site.phone.replace(/\s+/g, '')}`;
+const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 ---
 
-<footer class="bg-brand-900 text-brand-100 font-sans border-t border-brand-800 relative overflow-hidden">
+<footer
+  class="bg-brand-900 text-brand-100 font-sans border-t border-brand-800 relative overflow-hidden"
+>
   {/* Subtle Background Radial Pattern for Depth */}
-  <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-5 pointer-events-none"></div>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-5 pointer-events-none"
+  >
+  </div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-      
-      {/* GROUP 1: CONTACT (Span 4) — Phone, WhatsApp, email, service area, response hours */}
+  <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 relative z-10"
+  >
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8"
+    >
+      {
+        /* GROUP 1: CONTACT (Span 4) — Phone, WhatsApp, email, service area, response hours */
+      }
       <div class="lg:col-span-4 space-y-5">
         <div>
-          <h3 class="font-serif text-2xl font-bold text-white tracking-wide">{site.companyName}</h3>
-          
-          <div class="mt-2.5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-accent bg-brand-800/80 border border-brand-700/60 px-3 py-1 rounded-md shadow-2xs">
+          <h3 class="font-serif text-2xl font-bold text-white tracking-wide">
+            {site.companyName}
+          </h3>
+
+          <div
+            class="mt-2.5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-accent bg-brand-800/80 border border-brand-700/60 px-3 py-1 rounded-md shadow-2xs"
+          >
             <IconClock size={14} stroke={2} class="text-accent shrink-0" />
             <span>{site.operatingHours}</span>
           </div>
         </div>
 
-        <p class="text-xs sm:text-sm text-brand-100/80 leading-relaxed flex items-start gap-2">
-          <IconMapPin size={18} stroke={2} class="text-accent shrink-0 mt-0.5" />
+        <p
+          class="text-xs sm:text-sm text-brand-100/80 leading-relaxed flex items-start gap-2"
+        >
+          <IconMapPin
+            size={18}
+            stroke={2}
+            class="text-accent shrink-0 mt-0.5"
+          />
           <span>
-            <strong class="font-semibold text-white block sm:inline">Service Area:</strong> {site.serviceArea}
+            <strong class="font-semibold text-white block sm:inline"
+              >Service Area:</strong
+            >
+            {site.serviceArea}
           </span>
         </p>
-        
+
         <div class="pt-2 space-y-3 text-sm border-t border-brand-800/80">
           {/* Phone Action */}
           <div class="flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-lg bg-brand-800 flex items-center justify-center shrink-0">
+            <div
+              class="w-7 h-7 rounded-lg bg-brand-800 flex items-center justify-center shrink-0"
+            >
               <IconPhoneCall size={16} stroke={2} class="text-accent" />
             </div>
-            <a href={callUrl} class="font-bold text-white hover:text-accent transition-colors">
+            <a
+              href={callUrl}
+              class="font-bold text-white hover:text-accent transition-colors"
+            >
               {site.phone}
             </a>
           </div>
 
           {/* WhatsApp Action */}
           <div class="flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-lg bg-brand-800 border border-brand-700/60 flex items-center justify-center shrink-0">
+            <div
+              class="w-7 h-7 rounded-lg bg-brand-800 border border-brand-700/60 flex items-center justify-center shrink-0"
+            >
               <IconBrandWhatsapp size={16} stroke={2} class="text-accent" />
             </div>
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-white hover:text-accent transition-all">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-white hover:text-accent transition-all"
+            >
               WhatsApp Support
             </a>
           </div>
 
           {/* Email Action */}
           <div class="flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-lg bg-brand-800 flex items-center justify-center shrink-0">
+            <div
+              class="w-7 h-7 rounded-lg bg-brand-800 flex items-center justify-center shrink-0"
+            >
               <IconMail size={16} stroke={2} class="text-accent" />
             </div>
-            <a href={`mailto:${site.email}`} class="text-brand-100/90 hover:text-accent transition-colors break-all text-xs sm:text-sm">
+            <a
+              href={`mailto:${site.email}`}
+              class="text-brand-100/90 hover:text-accent transition-colors break-all text-xs sm:text-sm"
+            >
               {site.email}
             </a>
           </div>
@@ -99,32 +142,42 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 
       {/* GROUP 2: SERVICES (Span 3) — Auto Top 5 + Hub Link */}
       <div class="lg:col-span-3 space-y-4">
-        <h4 class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5">
+        <h4
+          class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5"
+        >
           Transport Services
         </h4>
         <ul class="space-y-2.5 text-xs sm:text-sm">
-          {topServices.length > 0 ? (
-            topServices.map(service => (
-              <li>
-                <a 
-                  href={`/services/${service.id}/`} 
-                  class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block truncate"
-                >
-                  {service.data.title}
-                </a>
+          {
+            topServices.length > 0 ? (
+              topServices.map((service) => (
+                <li>
+                  <a
+                    href={`/services/${service.id}/`}
+                    class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block truncate"
+                  >
+                    {service.data.title}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li class="text-xs text-brand-100/50 italic">
+                Services loading from CMS...
               </li>
-            ))
-          ) : (
-            <li class="text-xs text-brand-100/50 italic">Services loading from CMS...</li>
-          )}
-          
+            )
+          }
+
           <li class="pt-2 border-t border-brand-800/60 mt-3">
-            <a 
-              href="/services/" 
+            <a
+              href="/services/"
               class="group inline-flex items-center gap-1.5 text-accent font-bold text-xs uppercase tracking-wider hover:text-white transition-colors"
             >
               <span>Explore All Services</span>
-              <IconArrowRight size={14} stroke={2.5} class="group-hover:translate-x-1 transition-transform" />
+              <IconArrowRight
+                size={14}
+                stroke={2.5}
+                class="group-hover:translate-x-1 transition-transform"
+              />
             </a>
           </li>
         </ul>
@@ -132,32 +185,42 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 
       {/* GROUP 3: VEHICLES (Span 3) — Auto Top 5 + Hub Link */}
       <div class="lg:col-span-3 space-y-4">
-        <h4 class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5">
+        <h4
+          class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5"
+        >
           Vehicle Fleet
         </h4>
         <ul class="space-y-2.5 text-xs sm:text-sm">
-          {topVehicles.length > 0 ? (
-            topVehicles.map(vehicle => (
-              <li>
-                <a 
-                  href={`/vehicles/${vehicle.id}/`} 
-                  class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block truncate"
-                >
-                  {vehicle.data.title}
-                </a>
+          {
+            topVehicles.length > 0 ? (
+              topVehicles.map((vehicle) => (
+                <li>
+                  <a
+                    href={`/vehicles/${vehicle.id}/`}
+                    class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block truncate"
+                  >
+                    {vehicle.data.title}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li class="text-xs text-brand-100/50 italic">
+                Vehicles loading from CMS...
               </li>
-            ))
-          ) : (
-            <li class="text-xs text-brand-100/50 italic">Vehicles loading from CMS...</li>
-          )}
-          
+            )
+          }
+
           <li class="pt-2 border-t border-brand-800/60 mt-3">
-            <a 
-              href="/vehicles/" 
+            <a
+              href="/vehicles/"
               class="group inline-flex items-center gap-1.5 text-accent font-bold text-xs uppercase tracking-wider hover:text-white transition-colors"
             >
               <span>View Fleet Capacity</span>
-              <IconArrowRight size={14} stroke={2.5} class="group-hover:translate-x-1 transition-transform" />
+              <IconArrowRight
+                size={14}
+                stroke={2.5}
+                class="group-hover:translate-x-1 transition-transform"
+              />
             </a>
           </li>
         </ul>
@@ -167,47 +230,99 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       <div class="lg:col-span-2 space-y-6">
         {/* Company */}
         <div>
-          <h4 class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-1.5">
+          <h4
+            class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-1.5"
+          >
             Company
           </h4>
           <ul class="space-y-2 text-xs sm:text-sm">
-            <li><a href="/about/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">About Us</a></li>
-            <li><a href="/reviews/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">Reviews</a></li>
-            <li><a href="/contact/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">Contact</a></li>
+            <li>
+              <a
+                href="/about/"
+                class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                >About Us</a>
+            </li>
+            <li>
+              <a
+                href="/reviews/"
+                class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                >Reviews</a>
+            </li>
+            <li>
+              <a
+                href="/contact/"
+                class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                >Contact</a>
+            </li>
           </ul>
         </div>
 
         {/* Resources */}
         <div>
-          <h4 class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-1.5">
+          <h4
+            class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-1.5"
+          >
             Resources
           </h4>
           <ul class="space-y-2 text-xs sm:text-sm">
-            <li><a href="/faqs/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">FAQs</a></li>
-            {hasPublishedBlog && (
-              <li><a href="/blog/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">Travel Blog</a></li>
-            )}
+            <li>
+              <a
+                href="/faqs/"
+                class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                >FAQs</a>
+            </li>
+            {
+              hasPublishedBlog && (
+                <li>
+                  <a
+                    href="/blog/"
+                    class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                  >
+                    Travel Blog
+                  </a>
+                </li>
+              )
+            }
           </ul>
         </div>
 
         {/* Policies */}
         <div>
-          <h4 class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-1.5">
+          <h4
+            class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-1.5"
+          >
             Policies
           </h4>
           <ul class="space-y-2 text-xs sm:text-sm">
-            <li><a href="/privacy/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">Privacy Policy</a></li>
-            <li><a href="/terms/" class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block">Terms of Service</a></li>
+            <li>
+              <a
+                href="/privacy/"
+                class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                >Privacy Policy</a>
+            </li>
+            <li>
+              <a
+                href="/terms/"
+                class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block"
+                >Terms of Service</a>
+            </li>
           </ul>
         </div>
       </div>
-
     </div>
 
     {/* System Bottom Bar */}
-    <div class="mt-14 pt-8 border-t border-brand-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-100/60">
-      <p>&copy; {currentYear} {site.companyName}. All rights reserved. Straightforward Udaipur Transport.</p>
-      <p class="italic text-center sm:text-right">Prices and service availability subject to owner confirmation.</p>
+    <div
+      class="mt-14 pt-8 border-t border-brand-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-100/60"
+    >
+      <p>
+        &copy; {currentYear}
+        {site.companyName}. All rights reserved. Straightforward Udaipur
+        Transport.
+      </p>
+      <p class="italic text-center sm:text-right">
+        Prices and service availability subject to owner confirmation.
+      </p>
     </div>
   </div>
 </footer>

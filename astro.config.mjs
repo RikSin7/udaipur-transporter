@@ -13,6 +13,5 @@ export default defineConfig({
   integrations: [sitemap()],
   redirects: {
     "/enquiry": "/contact",
-    "/enquiry/": "/contact/",
   },
 });
