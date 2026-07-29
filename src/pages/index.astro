@@ -21,6 +21,14 @@ const site = settingsEntries[0]?.data || {
   serviceArea: "Udaipur & All Rajasthan Outstation Routes",
 };
 
+// Fetch homepage content
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data || {
+  enquiryBadge: "Direct Local Booking",
+  enquiryTitle: "Request Your Transport Quote",
+  enquiryDesc: "Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability.",
+};
+
 // Fetch and sort services & vehicles
 const allServices = await getCollection("services");
 const featuredServices = sortPublishedByOrder(allServices).slice(0, 6);
@@ -68,13 +76,13 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       {/* Section Heading */}
       <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
         <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3">
-          Direct Local Booking
+          {homeData.enquiryBadge}
         </span>
         <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight">
-          Request Your Transport Quote
+          {homeData.enquiryTitle}
         </h2>
         <p class="text-typography-muted text-sm sm:text-base mt-2 leading-relaxed">
-          Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability.
+          {homeData.enquiryDesc}
         </p>
       </div>
 

@@ -192,7 +192,53 @@ const reviewCollection = defineCollection({
   }),
 });
 
+const homeCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/home" }),
+  schema: z.object({
+    // 1. Hero Section
+    heroBadge: z.string().default("Private transport from Udaipur"),
+    heroTitle: z.string(),
+    heroSubtitle: z.string(),
+    heroFeatures: z.array(z.object({
+      icon: z.string(),
+      text: z.string(),
+    })).optional().default([]),
+
+    // 2. Why Choose Us Section
+    whyChooseUsHeading: z.string().default("Why Travellers Choose Us"),
+    whyChooseUsItems: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      desc: z.string(),
+      badgeText: z.string().optional(),
+    })).optional().default([]),
+
+    // 3. Booking Process Section
+    bookingBadge: z.string().default("How to reach us"),
+    bookingHeading: z.string().default("Three easy ways to enquire"),
+    contactMethods: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      desc: z.string(),
+      ctaText: z.string(),
+      ctaLink: z.string(),
+    })).optional().default([]),
+    workflowHeading: z.string().default("What happens after you send a request"),
+    workflowSteps: z.array(z.object({
+      stepNumber: z.string(),
+      title: z.string(),
+      desc: z.string(),
+    })).optional().default([]),
+
+    // 4. Final Enquiry Section
+    enquiryBadge: z.string().default("Direct Local Booking"),
+    enquiryTitle: z.string().default("Request Your Transport Quote"),
+    enquiryDesc: z.string().default("Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."),
+  }),
+});
+
 export const collections = {
+  'home': homeCollection,
   'services': servicesCollection,
   'vehicles': vehiclesCollection,
   'settings': settingsCollection,

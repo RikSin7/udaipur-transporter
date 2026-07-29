@@ -1,10 +1,38 @@
 ---
-import { 
-  IconFileDescription, 
-  IconLuggage, 
-  IconPhoneCalling, 
-  IconShieldCheck 
-} from '@tabler/icons-astro';
+import { getCollection } from "astro:content";
+import { iconResolver } from "../../utils/iconResolver";
+
+// 1. Fetch homepage content autonomously with fallback defaults
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data || {
+  whyChooseUsHeading: "Why Travellers Choose Us",
+  whyChooseUsItems: [
+    {
+      icon: "IconFileDescription",
+      title: "Clear service information",
+      desc: "Each service explains what it covers, suitable vehicles and, where approved, a price with its terms.",
+      badgeText: "No hidden rate rules",
+    },
+    {
+      icon: "IconLuggage",
+      title: "Right vehicle for the trip",
+      desc: "Recommended passengers reflect comfortable seating after luggage, not just a seat count.",
+      badgeText: "Realistic bag limits",
+    },
+    {
+      icon: "IconPhoneCalling",
+      title: "Direct local contact",
+      desc: "Reach a real Udaipur operator by form, WhatsApp or phone — no call centre.",
+      badgeText: "Speak with transport team",
+    },
+    {
+      icon: "IconShieldCheck",
+      title: "Honest, owner-approved facts",
+      desc: "We publish only confirmed services, vehicles and prices. No invented claims.",
+      badgeText: "Zero marketing fluff",
+    },
+  ],
+};
 ---
 
 <section class="py-16 lg:py-20 bg-[var(--color-surface-alt,#E9EFEA)] border-b border-border">
@@ -13,89 +41,38 @@ import {
     {/* Section Header */}
     <div class="text-center max-w-3xl mx-auto mb-14">
       <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-typography-main tracking-tight">
-        Why Travellers Choose Us
+        {homeData.whyChooseUsHeading}
       </h2>
     </div>
 
-    {/* 4-Column Grid */}
+    {/* Dynamic 4-Column Grid */}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-      
-      {/* Point 1: Clear service information */}
-      <div class="flex flex-col justify-between transition-all duration-300">
-        <div>
-          {/* Icon */}
-          <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-5 shadow-sm">
-            <IconFileDescription size={24} stroke={2} />
-          </div>
-          <h3 class="font-serif text-lg font-bold text-typography-main mb-2.5">
-            Clear service information
-          </h3>
-          <p class="text-sm text-typography-muted leading-relaxed">
-            Each service explains what it covers, suitable vehicles and, where approved, a price with its terms.
-          </p>
-        </div>
-        <div class="mt-5 pt-3 border-t border-brand-900/10 flex items-center gap-1.5 text-xs font-semibold text-brand-900">
-          <span class="text-emerald-700 font-bold">✓</span> No hidden rate rules
-        </div>
-      </div>
-
-      {/* Point 2: Right vehicle for the trip */}
-      <div class="flex flex-col justify-between transition-all duration-300">
-        <div>
-          {/* Tabler JSX Icon: IconLuggage */}
-          <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-5 shadow-sm">
-            <IconLuggage size={24} stroke={2} />
-          </div>
-          <h3 class="font-serif text-lg font-bold text-typography-main mb-2.5">
-            Right vehicle for the trip
-          </h3>
-          <p class="text-sm text-typography-muted leading-relaxed">
-            Recommended passengers reflect comfortable seating after luggage, not just a seat count.
-          </p>
-        </div>
-        <div class="mt-5 pt-3 border-t border-brand-900/10 flex items-center gap-1.5 text-xs font-semibold text-brand-900">
-          <span class="text-emerald-700 font-bold">✓</span> Realistic bag limits
-        </div>
-      </div>
-
-      {/* Point 3: Direct local contact */}
-      <div class="flex flex-col justify-between transition-all duration-300">
-        <div>
-          {/* Icon: IconPhoneCalling */}
-          <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-5 shadow-sm">
-            <IconPhoneCalling size={24} stroke={2} />
-          </div>
-          <h3 class="font-serif text-lg font-bold text-typography-main mb-2.5">
-            Direct local contact
-          </h3>
-          <p class="text-sm text-typography-muted leading-relaxed">
-            Reach a real Udaipur operator by form, WhatsApp or phone — no call centre.
-          </p>
-        </div>
-        <div class="mt-5 pt-3 border-t border-brand-900/10 flex items-center gap-1.5 text-xs font-semibold text-brand-900">
-          <span class="text-emerald-700 font-bold">✓</span> Speak with transport team
-        </div>
-      </div>
-
-      {/* Point 4: Honest, owner-approved facts */}
-      <div class="flex flex-col justify-between transition-all duration-300">
-        <div>
-          {/* Icon: IconShieldCheck */}
-          <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-5 shadow-sm">
-            <IconShieldCheck size={24} stroke={2} />
-          </div>
-          <h3 class="font-serif text-lg font-bold text-typography-main mb-2.5">
-            Honest, owner-approved facts
-          </h3>
-          <p class="text-sm text-typography-muted leading-relaxed">
-            We publish only confirmed services, vehicles and prices. No invented claims.
-          </p>
-        </div>
-        <div class="mt-5 pt-3 border-t border-brand-900/10 flex items-center gap-1.5 text-xs font-semibold text-brand-900">
-          <span class="text-emerald-700 font-bold">✓</span> Zero marketing fluff
-        </div>
-      </div>
-
+      {
+        homeData.whyChooseUsItems.map((item: any) => {
+          const Icon = iconResolver[item.icon] || iconResolver.IconShieldCheck;
+          return (
+            <div class="flex flex-col justify-between transition-all duration-300">
+              <div>
+                {/* Dynamic Icon */}
+                <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mb-5 shadow-sm">
+                  <Icon size={24} stroke={2} />
+                </div>
+                <h3 class="font-serif text-lg font-bold text-typography-main mb-2.5">
+                  {item.title}
+                </h3>
+                <p class="text-sm text-typography-muted leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+              {item.badgeText && (
+                <div class="mt-5 pt-3 border-t border-brand-900/10 flex items-center gap-1.5 text-xs font-semibold text-brand-900">
+                  <span class="text-emerald-700 font-bold">✓</span> {item.badgeText}
+                </div>
+              )}
+            </div>
+          );
+        })
+      }
     </div>
 
   </div>

@@ -1,0 +1,223 @@
+backend:
+  name: git-gateway
+  branch: dev
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  # ----------------------------------------
+  # 1. PAGES (Singleton Pages & Settings)
+  # ----------------------------------------
+  - name: "pages"
+    label: "Pages & Settings"
+    files:
+      - name: "home"
+        label: "Home Page"
+        file: "src/content/home/home.md"
+        fields:
+          - { label: "Hero Badge Text", name: "heroBadge", widget: "string", default: "Private transport from Udaipur" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
+          - label: "Hero Bottom Features"
+            name: "heroFeatures"
+            widget: "list"
+            fields:
+              - label: "Icon"
+                name: "icon"
+                widget: "select"
+                options: ["IconCar", "IconMapPin", "IconPhoneCall", "IconShieldCheck", "IconFileDescription", "IconLuggage", "IconPhoneCalling", "IconFileText", "IconBrandWhatsapp", "IconFileCheck", "IconCheck", "IconStar", "IconCompass", "IconHelpCircle", "IconBuildingArch", "IconClock"]
+              - { label: "Text", name: "text", widget: "string" }
+
+          - { label: "Why Choose Us Heading", name: "whyChooseUsHeading", widget: "string", default: "Why Travellers Choose Us" }
+          - label: "Why Choose Us Points"
+            name: "whyChooseUsItems"
+            widget: "list"
+            fields:
+              - label: "Icon"
+                name: "icon"
+                widget: "select"
+                options: ["IconFileDescription", "IconLuggage", "IconPhoneCalling", "IconShieldCheck", "IconCar", "IconMapPin", "IconPhoneCall", "IconFileText", "IconBrandWhatsapp", "IconFileCheck", "IconCheck", "IconStar", "IconCompass", "IconHelpCircle", "IconBuildingArch", "IconClock"]
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Bottom Badge Text", name: "badgeText", widget: "string", required: false }
+
+          - { label: "Booking Process Badge", name: "bookingBadge", widget: "string", default: "How to reach us" }
+          - { label: "Booking Process Heading", name: "bookingHeading", widget: "string", default: "Three easy ways to enquire" }
+          - label: "Contact Method Cards"
+            name: "contactMethods"
+            widget: "list"
+            fields:
+              - label: "Icon"
+                name: "icon"
+                widget: "select"
+                options: ["IconFileText", "IconBrandWhatsapp", "IconPhoneCall", "IconPhoneCalling", "IconCar", "IconMapPin", "IconShieldCheck", "IconCheck", "IconStar", "IconCompass", "IconHelpCircle", "IconBuildingArch", "IconClock"]
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Button Text", name: "ctaText", widget: "string" }
+              - { label: "Button Link (Use #whatsapp or #call for automatic phone routing)", name: "ctaLink", widget: "string", hint: "Use #whatsapp to link to automatic WhatsApp chat, #call to dial business phone, or a path like /contact/" }
+
+          - { label: "Workflow Banner Heading", name: "workflowHeading", widget: "string", default: "What happens after you send a request" }
+          - label: "Workflow Steps"
+            name: "workflowSteps"
+            widget: "list"
+            fields:
+              - { label: "Step Number", name: "stepNumber", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+
+          - { label: "Bottom Enquiry Badge", name: "enquiryBadge", widget: "string", default: "Direct Local Booking" }
+          - { label: "Bottom Enquiry Title", name: "enquiryTitle", widget: "string", default: "Request Your Transport Quote" }
+          - { label: "Bottom Enquiry Description", name: "enquiryDesc", widget: "text" }
+
+      - name: "about"
+        label: "About Page"
+        file: "src/content/about/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - { label: "Story Heading", name: "storyHeading", widget: "string" }
+          - { label: "How We Work Heading", name: "howWeWorkHeading", widget: "string" }
+          - label: "How We Work Items"
+            name: "howWeWork"
+            widget: "list"
+            fields:
+              - label: "Icon"
+                name: "icon"
+                widget: "select"
+                options: ["IconFileCheck", "IconCar", "IconPhoneCall", "IconShieldCheck", "IconMapPin", "IconBrandWhatsapp", "IconLuggage", "IconPhoneCalling", "IconFileText", "IconCheck", "IconStar", "IconCompass", "IconHelpCircle", "IconBuildingArch", "IconClock", "IconSparkles"]
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+          - label: "Stats"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - { label: "Coverage Heading", name: "coverageHeading", widget: "string" }
+          - { label: "Coverage Subtitle", name: "coverageSubtitle", widget: "text" }
+          - { label: "Coverage Locations", name: "coverageLocations", widget: "list" }
+          - { label: "Body Copy", name: "body", widget: "markdown" }
+
+      - name: "settings"
+        label: "Site Settings"
+        file: "src/content/settings/site.md"
+        fields:
+          - { label: "Company Name", name: "companyName", widget: "string" }
+          - { label: "Phone Number", name: "phone", widget: "string" }
+          - { label: "WhatsApp Number", name: "whatsapp", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Address", name: "address", widget: "string" }
+          - { label: "Operating Hours", name: "operatingHours", widget: "string" }
+          - { label: "Service Area", name: "serviceArea", widget: "string" }
+          - { label: "Default SEO Title", name: "seoDefaultTitle", widget: "string" }
+          - { label: "Default SEO Description", name: "seoDefaultDesc", widget: "text" }
+
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/content/contact/contact.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - { label: "Direct Channels Heading", name: "directChannelsHeading", widget: "string" }
+          - { label: "Direct Channels Description", name: "directChannelsDesc", widget: "text" }
+          - { label: "Location Heading", name: "locationHeading", widget: "string" }
+          - { label: "Location Subheading", name: "locationSubheading", widget: "string" }
+          - { label: "Location Description", name: "locationDesc", widget: "text" }
+          - { label: "Google Maps Embed URL", name: "googleMapsUrl", widget: "string" }
+          - { label: "Body Copy", name: "body", widget: "markdown", required: false }
+
+      - name: "privacy"
+        label: "Privacy Policy"
+        file: "src/content/privacy/privacy.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - { label: "Last Updated Date", name: "lastUpdated", widget: "string" }
+          - { label: "Policy Content", name: "body", widget: "markdown" }
+
+      - name: "terms"
+        label: "Terms of Service"
+        file: "src/content/terms/terms.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - { label: "Last Updated Date", name: "lastUpdated", widget: "string" }
+          - { label: "Terms Content", name: "body", widget: "markdown" }
+
+  # ----------------------------------------
+  # 2. FOLDER COLLECTIONS
+  # ----------------------------------------
+  - name: "services"
+    label: "Services"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Transfers", "Local Travel", "Outstation Travel", "Group and Event Travel", "Additional"] }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 10 }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Who This Is For", name: "whoIsThisFor", widget: "list", required: false }
+      - { label: "Body Copy", name: "body", widget: "markdown", required: false }
+
+  - name: "vehicles"
+    label: "Vehicles"
+    folder: "src/content/vehicles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Passengers", name: "passengers", widget: "number" }
+      - { label: "Luggage", name: "luggage", widget: "number" }
+      - { label: "Seats", name: "seats", widget: "number", required: false }
+      - { label: "Amenities", name: "amenities", widget: "list" }
+      - { label: "Image Note", name: "imageNote", widget: "select", options: ["Actual Vehicle", "Representative Vehicle"] }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 10 }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  - name: "faqs"
+    label: "FAQs"
+    folder: "src/content/faqs"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+      - { label: "Category", name: "category", widget: "select", options: ["General & Booking", "Pricing & Tariffs", "Vehicles & Drivers", "Outstation Routes"], default: "General & Booking" }
+      - { label: "Order", name: "order", widget: "number", default: 10 }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  - name: "reviews"
+    label: "Reviews"
+    folder: "src/content/reviews"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Location", name: "location", widget: "string", default: "Verified Traveller" }
+      - { label: "Service", name: "service", widget: "string" }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", default: 5, min: 1, max: 5 }
+      - { label: "Date", name: "date", widget: "string" }
+      - { label: "Comment", name: "comment", widget: "text" }
+      - { label: "Verified", name: "verified", widget: "boolean", default: true }
+      - { label: "Featured", name: "featured", widget: "boolean", default: true }
+      - { label: "Sort Order", name: "sortOrder", widget: "number", default: 10 }
+
+  - name: "blog"
+    label: "Blog Articles"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Publish Date", name: "publishDate", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string", default: "Transport Editorial Team" }
+      - { label: "Category", name: "category", widget: "select", options: ["Vehicle Guide", "Airport Transfers", "Pricing & Quotes", "Travel Tips"] }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Body Content", name: "body", widget: "markdown" }

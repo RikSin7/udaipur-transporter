@@ -4,7 +4,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/layout/Header.astro";
 import { getWhatsAppUrl } from "../utils/helpers";
 import {
-  IconFileCheck,
   IconCar,
   IconPhoneCall,
   IconShieldCheck,
@@ -14,6 +13,7 @@ import {
   IconBuildingArch,
   IconClock,
 } from "@tabler/icons-astro";
+import { iconResolver } from "../utils/iconResolver";
 
 // 1. Fetch Singleton Business Settings
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -50,13 +50,7 @@ const {
 // 3. Render Markdown Body Paragraphs (<Content />)
 const { Content } = await render(aboutEntry);
 
-// 4. Decap CMS String-to-JSX Icon Resolver
-const iconMap: Record<string, any> = {
-  IconFileCheck: IconFileCheck,
-  IconCar: IconCar,
-  IconPhoneCall: IconPhoneCall,
-  IconShieldCheck: IconShieldCheck,
-};
+// 4. Decap CMS String-to-JSX Icon Resolver handled by utility
 
 const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
 const whatsappUrl = getWhatsAppUrl(
@@ -217,7 +211,8 @@ const whatsappUrl = getWhatsAppUrl(
       >
         {
           howWeWork.map((card) => {
-            const IconComponent = iconMap[card.icon] || IconShieldCheck;
+            const IconComponent =
+              iconResolver[card.icon] || iconResolver.IconShieldCheck;
             return (
               <div class="bg-surface-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group">
                 <div>
