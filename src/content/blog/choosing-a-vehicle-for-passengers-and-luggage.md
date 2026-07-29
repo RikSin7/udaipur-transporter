@@ -1,10 +1,12 @@
 ---
-title: "Choosing the Right Vehicle for Passengers and Luggage in Rajasthan"
-summary: "A practical guide to avoiding cramped legroom and overloaded car boots on long outstation highway drives from Udaipur."
-publishDate: "2026-07-21"
-author: "Udaipur Royal Fleet Team"
-category: "Vehicle Guide"
-relatedService: "tempo-traveller-and-group-transport"
+title: Choosing the Right Vehicle for Passengers and Luggage in Rajasthan
+image: ../../assets/images/mohit-khatri-ydrocw9okmw-unsplash.jpg
+summary: A practical guide to avoiding cramped legroom and overloaded car boots
+  on long outstation highway drives from Udaipur.
+publishDate: 2026-07-21
+author: Udaipur Royal Fleet Team
+category: Vehicle Guide
+relatedService: tempo-traveller-and-group-transport
 published: true
 featured: true
 ---
