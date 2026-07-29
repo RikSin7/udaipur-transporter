@@ -1,5 +1,5 @@
 ---
-title: Udaipur Airport Transfer.
+title: Udaipur Airport Transfer
 category: Transfers
 summary: Reliable, flight-aware airport pickup and drop service from Maharana
   Pratap (Dabok) Airport to your hotel in Udaipur city.
