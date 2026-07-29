@@ -124,7 +124,7 @@ const groupedServices = categoryOrder
         groupedServices.map((group, idx) => (
           <a
             href={`#${group.slug}`}
-            class={`shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 ${
+            class={`service-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 ${
               idx === 0
                 ? "bg-brand-900 text-white shadow-sm"
                 : "bg-surface-alt/60 text-brand-900 hover:bg-brand-100/80 hover:text-brand-900"
@@ -244,3 +244,70 @@ const groupedServices = categoryOrder
     scroll-behavior: smooth;
   }
 </style>
+
+{/* Client-Side Scrollspy Engine */}
+<script>
+  function initServiceScrollspy() {
+    const tabBtns = document.querySelectorAll(".service-tab-btn");
+    const activeClasses = ["bg-brand-900", "text-white", "shadow-sm"];
+    const inactiveClasses = ["bg-surface-alt/60", "text-brand-900", "hover:bg-brand-100/80", "hover:text-brand-900"];
+
+    let isClickScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    const updatePills = (activeHref: string | null) => {
+      tabBtns.forEach((btn) => {
+        const href = btn.getAttribute("href");
+        if (href === activeHref) {
+          btn.classList.remove(...inactiveClasses);
+          btn.classList.add(...activeClasses);
+          // Center the active pill horizontally if inside a scrollable container
+          btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        } else {
+          btn.classList.remove(...activeClasses);
+          btn.classList.add(...inactiveClasses);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isClickScrolling) return; // Skip observer updates during click-triggered smooth scroll
+
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const activeId = entry.target.getAttribute("id");
+            updatePills(`#${activeId}`);
+          }
+        });
+      },
+      {
+        rootMargin: "-25% 0px -75% 0px", // Trigger when section hits the upper quarter of the viewport
+        threshold: 0
+      }
+    );
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const href = btn.getAttribute("href");
+        updatePills(href);
+
+        isClickScrolling = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isClickScrolling = false;
+        }, 1000); 
+      });
+
+      // Register sections with the observer
+      const href = btn.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        const target = document.querySelector(href);
+        if (target) observer.observe(target);
+      }
+    });
+  }
+
+  initServiceScrollspy();
+  document.addEventListener("astro:page-load", initServiceScrollspy);
+</script>
