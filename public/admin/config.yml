@@ -156,12 +156,51 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Category", name: "category", widget: "select", options: ["Transfers", "Local Travel", "Outstation Travel", "Group and Event Travel", "Additional"] }
-      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Summary", name: "summary", widget: "string", hint: "Max 160 characters for SEO cards" }
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Sort Order", name: "sortOrder", widget: "number", default: 10 }
       - { label: "Published", name: "published", widget: "boolean", default: true }
-      - { label: "Who This Is For", name: "whoIsThisFor", widget: "list", required: false }
-      - { label: "Body Copy", name: "body", widget: "markdown", required: false }
+
+      # 1. Who This Is For
+      - { label: "Who This Is For (Pills)", name: "whoIsThisFor", widget: "list", required: false, hint: "Add short tags like 'Families & couples' or 'Solo travellers'" }
+
+      # 2. What's Covered (2x2 Grid)
+      - label: "What's Covered (Grid Items)"
+        name: "whatsCovered"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+
+      # 3. Suitable Vehicles
+      - { label: "Suitable Vehicles (Vehicle IDs/Slugs)", name: "suitableVehicles", widget: "list", required: false, hint: "Enter vehicle file slugs like 'sedan', 'suv', or 'tempo-traveller'" }
+
+      # 4. Service-Specific FAQs
+      - label: "Service FAQs"
+        name: "faqs"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Question", name: "question", widget: "string" }
+          - { label: "Answer", name: "answer", widget: "text" }
+
+      # 5. Approved Tariff & Pricing Rules
+      - label: "Pricing & Tariff Details"
+        name: "pricing"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Amount", name: "amount", widget: "string", required: false, hint: "e.g., ₹899" }
+          - { label: "Short Label", name: "shortLabel", widget: "string", required: false, hint: "e.g., onwards, per trip" }
+          - { label: "Unit Description", name: "unit", widget: "string", required: false, hint: "e.g., Airport to city, sedan" }
+          - { label: "Last Updated Date", name: "lastUpdated", widget: "string", required: false, hint: "e.g., Jul 2026" }
+          - { label: "Inclusions", name: "inclusions", widget: "list", required: false, hint: "e.g., Toll taxes, Parking fees" }
+          - { label: "Exclusions", name: "exclusions", widget: "list", required: false, hint: "e.g., Monument entry fees" }
+          - { label: "Additional Notes", name: "notes", widget: "text", required: false }
+
+      # 6. Body Copy (Optional Markdown)
+      - { label: "Body Copy (Optional Long-form Content)", name: "body", widget: "markdown", required: false }
 
   - name: "vehicles"
     label: "Vehicles"
