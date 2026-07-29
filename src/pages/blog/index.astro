@@ -4,9 +4,9 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
-import FaqSection from "../../components/sections/FaqSection.astro";
 import { getWhatsAppUrl } from "../../utils/helpers";
 import { IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-astro";
+import FAQSection from "../../components/sections/FAQSection.astro";
 
 // 1. Fetch Singleton Business Settings
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -250,7 +250,7 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 5. IMPORTED FAQ SECTION */}
-  <FaqSection />
+  <FAQSection />
 </BaseLayout>
 
 {/* Hide Scrollbar for Horizontal Mobile Tab Bar */}
