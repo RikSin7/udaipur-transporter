@@ -1,11 +1,12 @@
 ---
-title: "What is Actually Included in a Private Taxi Price in Rajasthan?"
-summary: "Understand the math behind outstation taxi tariffs: fuel, driver allowances, toll taxes, monument parking fees, and border rules."
-publishDate: "2026-07-18"
-author: "Udaipur Royal Tariff Desk"
-category: "Pricing & Quotes"
-image: ""
-relatedService: "local-car-rental-with-driver"
+title: What is Actually Included in a Private Taxi Price in Rajasthan?
+image: https://images.unsplash.com/photo-1499353965760-b85389474bef?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+summary: "Understand the math behind outstation taxi tariffs: fuel, driver
+  allowances, toll taxes, monument parking fees, and border rules."
+publishDate: 2026-07-18
+author: Udaipur Royal Tariff Desk
+category: Pricing & Quotes
+relatedService: local-car-rental-with-driver
 published: true
 featured: false
 ---
