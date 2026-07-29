@@ -38,10 +38,10 @@ const servicesCollection = defineCollection({
 
     // 5. Approved Tariff & Pricing Rules
     pricing: z.object({
-      amount: z.string().optional(), // e.g., "₹899"
+      amount: z.union([z.string(), z.number()]).transform(val => typeof val === "number" ? `₹${val}` : val).optional(), // e.g., "₹899" or 899
       shortLabel: z.string().optional(), // e.g., "onwards, per trip"
       unit: z.string().optional(), // e.g., "Airport to city, sedan"
-      lastUpdated: z.string().optional(), // e.g., "Jul 2026"
+      lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val).optional(), // e.g., "Jul 2026"
       inclusions: z.array(z.string()).optional(),
       exclusions: z.array(z.string()).optional(),
       notes: z.string().optional(),
@@ -69,8 +69,8 @@ const settingsCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/settings" }),
   schema: z.object({
     companyName: z.string(),
-    phone: z.string(),
-    whatsapp: z.string(),
+    phone: z.union([z.string(), z.number()]).transform(val => String(val)),
+    whatsapp: z.union([z.string(), z.number()]).transform(val => String(val)),
     email: z.string().email(),
     address: z.string(),
     operatingHours: z.string(),
@@ -101,7 +101,7 @@ const blogCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string().max(100, "Keep title SEO friendly"),
     summary: z.string().max(160, "Summary used for card preview and SEO description"),
-    publishDate: z.string(),
+    publishDate: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
     author: z.string().default("Transport Editorial Team"),
     category: z.enum(["Vehicle Guide", "Airport Transfers", "Pricing & Quotes", "Travel Tips"]),
     image: image().optional(),
@@ -128,7 +128,7 @@ const aboutCollection = defineCollection({
 
     // 2. Stats Banner Section
     stats: z.array(z.object({
-      value: z.string(), // e.g., "Udaipur", "6+", "5", "Direct"
+      value: z.union([z.string(), z.number()]).transform(val => String(val)), // e.g., "Udaipur", "6+", "5", "Direct"
       label: z.string(), // e.g., "Home base & primary service area"
     })).default([
       { value: "Udaipur", label: "Home base & primary service area" },
@@ -140,7 +140,7 @@ const aboutCollection = defineCollection({
     // 3. Where We Operate
     coverageHeading: z.string().default("Where we operate"),
     coverageSubtitle: z.string(),
-    coverageLocations: z.array(z.string()), 
+    coverageLocations: z.array(z.string()),
   }),
 });
 
@@ -163,7 +163,7 @@ const privacyCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
-    lastUpdated: z.string(),
+    lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
   }),
 });
 
@@ -172,7 +172,7 @@ const termsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
-    lastUpdated: z.string(),
+    lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
   }),
 });
 
@@ -183,11 +183,11 @@ const reviewCollection = defineCollection({
     location: z.string().default("Verified Traveller"),
     service: z.string(), // e.g., "Airport Pickup & 2-Day Sightseeing"
     rating: z.number().min(1).max(5).default(5),
-    date: z.string(), // e.g., "October 2025"
+    date: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val), // e.g., "October 2025"
     comment: z.string(),
     verified: z.boolean().default(true),
-    image: image().optional(), 
-    featured: z.boolean().default(true), 
+    image: image().optional(),
+    featured: z.boolean().default(true),
     sortOrder: z.number().default(10),
   }),
 });
@@ -225,7 +225,7 @@ const homeCollection = defineCollection({
     })).optional().default([]),
     workflowHeading: z.string().default("What happens after you send a request"),
     workflowSteps: z.array(z.object({
-      stepNumber: z.string(),
+      stepNumber: z.union([z.string(), z.number()]).transform(val => String(val)),
       title: z.string(),
       desc: z.string(),
     })).optional().default([]),

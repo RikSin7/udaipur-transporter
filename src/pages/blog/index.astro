@@ -94,8 +94,10 @@ const whatsappUrl = getWhatsAppUrl(
     >
       {
         categories.map((cat, idx) => {
-          const activeStyle = "bg-brand-900 text-white shadow-sm border-brand-900";
-          const inactiveStyle = "bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)] border-transparent";
+          const activeStyle =
+            "bg-brand-900 text-white shadow-sm border-brand-900";
+          const inactiveStyle =
+            "bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)] border-transparent";
           return (
             <button
               type="button"
@@ -140,7 +142,13 @@ const whatsappUrl = getWhatsAppUrl(
                               {article.data.category}
                             </span>
                             <span class="text-xs text-typography-muted font-medium ml-2">
-                              {article.data.publishDate}
+                              {new Date(
+                                article.data.publishDate,
+                              ).toLocaleDateString("en-IN", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
                             </span>
                           </div>
 
@@ -273,7 +281,12 @@ const whatsappUrl = getWhatsAppUrl(
     const filterBtns = document.querySelectorAll(".blog-filter-btn");
     const items = document.querySelectorAll(".blog-item-wrapper");
 
-    const activeClasses = ["bg-brand-900", "text-white", "shadow-sm", "border-brand-900"];
+    const activeClasses = [
+      "bg-brand-900",
+      "text-white",
+      "shadow-sm",
+      "border-brand-900",
+    ];
     const inactiveClasses = [
       "bg-[var(--color-surface-alt,#E9EFEA)]",
       "text-brand-900",
