@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
-import FaqSection from "../../components/sections/FaqSection.astro";
 import { sortPublishedByOrder } from "../../utils/helpers";
 import {
   IconPlane,
@@ -14,6 +13,7 @@ import {
   IconCar,
 } from "@tabler/icons-astro";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
+import FAQSection from "../../components/sections/FAQSection.astro";
 
 // 1. Fetch singleton business settings
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -214,7 +214,7 @@ const groupedServices = categoryOrder
   <CatalogueSupportCTA type="services" />
 
   {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
-  <FaqSection />
+  <FAQSection />
 
   {/* 6. MANDATORY PRD SERVICE GUIDANCE DISCLAIMER */}
   <section class="py-12 bg-surface-alt/50 border-t border-brand-100/80">

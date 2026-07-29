@@ -10,7 +10,7 @@ import { getCollection } from "astro:content";
 import { sortPublishedByOrder, getWhatsAppUrl } from "../utils/helpers";
 import ReviewsSection from "../components/sections/ReviewsSection.astro";
 import PlanYourTrip from "../components/sections/PlanYourTrip.astro";
-import FaqSection from "../components/sections/FAQSection.astro";
+import FAQSection from "../components/sections/FAQSection.astro";
 
 // Fetch site settings
 const settingsEntries = await getCollection("settings");
@@ -65,7 +65,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
   <PlanYourTrip />
 
   {/* 8. FREQUENTLY ASKED QUESTIONS */}
-  <FaqSection />
+  <FAQSection />
 
   {/* 9. FINAL ENQUIRY FORM */}
   <section
