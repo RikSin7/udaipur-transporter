@@ -5,7 +5,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import EnquiryForm from "../../components/forms/EnquiryForm.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
-import { getWhatsAppUrl } from "../../utils/helpers";
+import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import {
   IconCheck,
   IconX,
@@ -53,7 +53,7 @@ const matchedVehicles = allVehicles.filter((v) =>
 // 5. FETCH RELATED SERVICES (Excluding current one, sorted by your sortOrder convention)
 const allServices = await getCollection("services").catch(() => []);
 const relatedServices = allServices
-  .filter((s) => s.id !== entry.id && s.data.published)
+  .filter((s) => s.data.published && s.id !== entry.id)
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
   .slice(0, 3);
 
@@ -63,14 +63,18 @@ const site = settingsEntries[0]?.data || {
   phone: "+91 98765 43210",
   whatsapp: "919876543210",
 };
-const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
+const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(site.whatsapp, title, Astro.url.href);
 
 const hasPrice = !!pricing?.amount;
 const priceLabel = pricing?.shortLabel || "Ask for Price";
 ---
 
-<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
+<BaseLayout
+  title={`${title} | ${site.companyName}`}
+  description={summary}
+  currentTitle={title}
+>
   <Header slot="header" />
 
   {/* 1. HERO BANNER */}
@@ -85,7 +89,7 @@ const priceLabel = pricing?.shortLabel || "Ask for Price";
           {category}
         </span>
         <h1
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-4 text-white tracking-tight"
+          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-4 text-white tracking-wide"
         >
           {title}
         </h1>

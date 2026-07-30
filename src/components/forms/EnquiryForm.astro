@@ -21,7 +21,7 @@ const allServices = await getCollection("services").catch(() => []);
 const publishedServices = allServices.filter((s) => s.data.published);
 
 const allVehicles = await getCollection("vehicles").catch(() => []);
-const publishedVehicles = allVehicles.filter((v) => v.data.published);
+const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
 ---
 
 <form

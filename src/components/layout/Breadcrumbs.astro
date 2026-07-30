@@ -1,0 +1,140 @@
+---
+import { IconHome, IconChevronRight } from "@tabler/icons-astro";
+import { formatSlug } from "../../utils/helpers";
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items?: BreadcrumbItem[];
+  currentTitle?: string;
+}
+
+const { items: overrideItems, currentTitle } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const isHome =
+  pathname === "/" || pathname === "" || pathname === "/index.html";
+
+// Custom dictionary for converting URL segments to human-readable titles
+const SEGMENT_LABELS: Record<string, string> = {
+  about: "About Us",
+  services: "Services",
+  vehicles: "Vehicles & Fleet",
+  faqs: "FAQs",
+  blog: "Blog",
+  contact: "Contact Us",
+  reviews: "Guest Reviews",
+  privacy: "Privacy Policy",
+  terms: "Terms & Conditions",
+};
+
+// Build breadcrumbs array
+let breadcrumbs: BreadcrumbItem[] = [];
+
+if (overrideItems && overrideItems.length > 0) {
+  breadcrumbs = overrideItems;
+} else if (!isHome) {
+  const segments = pathname.split("/").filter(Boolean);
+  let currentPath = "";
+
+  breadcrumbs = segments.map((segment, index) => {
+    currentPath += `/${segment}`;
+    const isLast = index === segments.length - 1;
+
+    let label = SEGMENT_LABELS[segment.toLowerCase()] || formatSlug(segment);
+    if (isLast && currentTitle) {
+      label = currentTitle;
+    }
+
+    return {
+      label,
+      href: `${currentPath}/`,
+    };
+  });
+}
+
+// Construct absolute URLs for Google Schema.org JSON-LD Structured Data
+const siteOrigin = Astro.site ? Astro.site.origin : Astro.url.origin;
+const schemaList = [
+  {
+    "@type": "ListItem",
+    position: 1,
+    name: "Home",
+    item: new URL("/", siteOrigin).href,
+  },
+  ...breadcrumbs.map((crumb, idx) => ({
+    "@type": "ListItem",
+    position: idx + 2,
+    name: crumb.label,
+    ...(crumb.href ? { item: new URL(crumb.href, siteOrigin).href } : {}),
+  })),
+];
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: schemaList,
+};
+---
+
+{
+  !isHome && (
+    <nav
+      aria-label="Breadcrumb"
+      class="font-sans transition-all duration-200"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center">
+        <ol class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {/* Home Root Link */}
+          <li class="inline-flex items-center shrink-0">
+            <a
+              href="/"
+              class="text-typography-muted opacity-75 hover:opacity-100 hover:text-accent focus:text-accent flex items-center gap-1.5 font-medium transition-all duration-200 focus:outline-none group"
+              title="Return to Homepage"
+            >
+              <IconHome class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-typography-muted opacity-60 group-hover:text-accent group-hover:opacity-100 shrink-0 transition-all duration-200" />
+              <span>Home</span>
+            </a>
+          </li>
+
+          {/* Trail Segments */}
+          {breadcrumbs.map((item, index) => {
+            const isLast = index === breadcrumbs.length - 1;
+            return (
+              <li class="inline-flex items-center shrink-0 space-x-1.5 sm:space-x-2">
+                <span class="text-typography-muted opacity-35 shrink-0" aria-hidden="true">
+                  <IconChevronRight class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </span>
+                {isLast || !item.href ? (
+                  <span
+                    aria-current="page"
+                    class="text-brand-900 font-semibold opacity-95 tracking-normal truncate max-w-[200px] sm:max-w-[320px] md:max-w-none select-none"
+                  >
+                    {item.label}
+                  </span>
+                ) : (
+                  <a
+                    href={item.href}
+                    class="text-typography-muted opacity-75 hover:opacity-100 hover:text-accent focus:text-accent font-medium transition-all duration-200 focus:outline-none truncate max-w-[150px] sm:max-w-[240px] md:max-w-none"
+                  >
+                    {item.label}
+                  </a>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+
+      {/* SEO Structured Data */}
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(schemaData)}
+      />
+    </nav>
+  )
+}

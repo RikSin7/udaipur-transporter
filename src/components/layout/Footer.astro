@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { sortPublishedByOrder, getWhatsAppUrl } from "../../utils/helpers";
+import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import {
   IconPhoneCall,
   IconBrandWhatsapp,
@@ -24,11 +24,17 @@ const site = settingsEntries[0]?.data || {
 
 // 2. Query & Slice Top 5 Published Services by sortOrder
 const allServices = await getCollection("services").catch(() => []);
-const topServices = sortPublishedByOrder(allServices).slice(0, 5);
+const topServices = allServices
+  .filter((s) => s.data.published)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .slice(0, 5);
 
 // 3. Query & Slice Top 5 Published Vehicles by sortOrder
 const allVehicles = await getCollection("vehicles").catch(() => []);
-const topVehicles = sortPublishedByOrder(allVehicles).slice(0, 5);
+const topVehicles = allVehicles
+  .filter((v) => v.data.published !== false)
+  .sort((a, b) => (a.data.sortOrder ?? 10) - (b.data.sortOrder ?? 10))
+  .slice(0, 5);
 
 // 4. Check if a published blog exists
 const allBlogs = await getCollection("blog").catch(() => []);
@@ -38,7 +44,7 @@ const publishedBlogs = allBlogs.filter(
 const hasPublishedBlog = publishedBlogs.length > 0;
 
 const currentYear = new Date().getFullYear();
-const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
+const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 ---
 

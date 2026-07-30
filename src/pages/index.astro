@@ -7,13 +7,13 @@ import FeaturedVehicles from "../components/sections/FeaturedVehicles.astro";
 import BookingProcess from "../components/sections/BookingProcess.astro";
 import EnquiryForm from "../components/forms/EnquiryForm.astro";
 import { getCollection } from "astro:content";
-import { sortPublishedByOrder, getWhatsAppUrl } from "../utils/helpers";
+import { getWhatsAppUrl } from "../utils/helpers";
 import ReviewsSection from "../components/sections/ReviewsSection.astro";
 import PlanYourTrip from "../components/sections/PlanYourTrip.astro";
 import FAQSection from "../components/sections/FAQSection.astro";
 
 // Fetch site settings
-const settingsEntries = await getCollection("settings");
+const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 98765 43210",
@@ -30,11 +30,17 @@ const homeData = homeEntries[0]?.data || {
 };
 
 // Fetch and sort services & vehicles
-const allServices = await getCollection("services");
-const featuredServices = sortPublishedByOrder(allServices).slice(0, 6);
+const allServices = await getCollection("services").catch(() => []);
+const featuredServices = allServices
+  .filter((s) => s.data.published)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .slice(0, 6);
 
-const allVehicles = await getCollection("vehicles");
-const featuredVehicles = sortPublishedByOrder(allVehicles).slice(0, 6);
+const allVehicles = await getCollection("vehicles").catch(() => []);
+const featuredVehicles = allVehicles
+  .filter((v) => v.data.published !== false)
+  .sort((a, b) => (a.data.sortOrder ?? 10) - (b.data.sortOrder ?? 10))
+  .slice(0, 6);
 
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 ---

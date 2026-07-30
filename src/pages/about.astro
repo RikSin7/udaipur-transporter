@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/layout/Header.astro";
-import { getWhatsAppUrl } from "../utils/helpers";
+import { getWhatsAppUrl, getCallUrl } from "../utils/helpers";
 import {
   IconCar,
   IconPhoneCall,
@@ -52,7 +52,7 @@ const { Content } = await render(aboutEntry);
 
 // 4. Decap CMS String-to-JSX Icon Resolver handled by utility
 
-const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
+const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(
   site.whatsapp,
   "About Us / General Enquiry",
@@ -63,6 +63,7 @@ const whatsappUrl = getWhatsAppUrl(
 <BaseLayout
   title={`About Our Service | ${site.companyName}`}
   description={subtitle}
+  currentTitle={title}
 >
   <Header slot="header" />
 
@@ -78,7 +79,7 @@ const whatsappUrl = getWhatsAppUrl(
           Our Identity & Approach
         </span>
         <h1
-          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
         >
           {title}
         </h1>

@@ -1,66 +1,90 @@
 ---
-import { getCollection } from 'astro:content';
-import BlogCard from '../cards/BlogCard.astro';
-import { IconArrowRight as TablerArrowRight, IconCompass as TablerCompass } from '@tabler/icons-astro';
+import { getCollection } from "astro:content";
+import BlogCard from "../cards/BlogCard.astro";
+import {
+  IconArrowRight as TablerArrowRight,
+  IconCompass as TablerCompass,
+} from "@tabler/icons-astro";
 
 // 1. Fetch published articles and sort newest to oldest
-const allArticles = await getCollection('blog').catch(() => []);
+const allArticles = await getCollection("blog").catch(() => []);
 const publishedArticles = allArticles
-  .filter(a => a.data.published)
-  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+  .filter((a) => a.data.published)
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime(),
+  );
 
 // 2. Filter for featured articles, fallback to latest 2 published if none are marked featured
-const featuredArticles = publishedArticles.filter(a => a.data.featured);
-const displayArticles = featuredArticles.length > 0 ? featuredArticles.slice(0, 2) : publishedArticles.slice(0, 2);
+const featuredArticles = publishedArticles.filter((a) => a.data.featured);
+const displayArticles =
+  featuredArticles.length > 0
+    ? featuredArticles.slice(0, 2)
+    : publishedArticles.slice(0, 2);
 ---
 
-<section class="py-16 lg:py-24 bg-surface-alt/30 border-b border-brand-100 relative">
+<section
+  class="py-16 lg:py-24 bg-surface-alt/30 border-b border-brand-100 relative"
+>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
     {/* 1. SECTION HEADER */}
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+    <div
+      class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+    >
       <div>
-        <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full mb-3">
+        <div
+          class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full mb-3"
+        >
           <TablerCompass size={14} stroke={2} class="text-accent shrink-0" />
           <span>Practical Travel Advice</span>
         </div>
-        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight">
+        <h2
+          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight"
+        >
           Plan Your Trip
         </h2>
         <p class="text-typography-muted text-sm sm:text-base mt-2 max-w-xl">
-          Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing.
+          Logistical advice on selecting vehicle capacities, navigating airport
+          pickup protocols, and understanding transparent outstation taxi
+          pricing.
         </p>
       </div>
 
       {/* DESKTOP NAVIGATION CTA */}
       <div class="hidden sm:block shrink-0 self-start md:self-auto">
-        <a 
-          href="/blog/" 
+        <a
+          href="/blog/"
           class="inline-flex items-center gap-2 bg-surface-card border border-brand-100 hover:border-brand-900 text-brand-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow group active:scale-95"
         >
           <span>View All Transport Guides</span>
-          <TablerArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
+          <TablerArrowRight
+            size={16}
+            stroke={2}
+            class="text-accent group-hover:translate-x-1 transition-transform"
+          />
         </a>
       </div>
     </div>
 
     {/* 2. FEATURED BLOG CARDS GRID */}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 sm:mb-0">
-      {displayArticles.map((article) => (
-        <BlogCard article={article} />
-      ))}
+      {displayArticles.map((article) => <BlogCard article={article} />)}
     </div>
 
     {/* 3. MOBILE NAVIGATION CTA */}
     <div class="text-center sm:hidden mt-8">
-      <a 
-        href="/blog/" 
+      <a
+        href="/blog/"
         class="w-full inline-flex items-center justify-center gap-2 bg-brand-900 text-white font-bold px-6 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md group active:scale-95"
       >
         <span>View All Transport Guides</span>
-        <TablerArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
+        <TablerArrowRight
+          size={16}
+          stroke={2}
+          class="text-accent group-hover:translate-x-1 transition-transform"
+        />
       </a>
     </div>
-
   </div>
 </section>

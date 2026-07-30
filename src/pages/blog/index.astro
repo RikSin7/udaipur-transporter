@@ -4,8 +4,8 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
-import { getWhatsAppUrl } from "../../utils/helpers";
-import { IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-astro";
+import { getWhatsAppUrl, formatDate } from "../../utils/helpers";
+import { IconArrowRight, IconArrowLeft, IconBrandWhatsapp } from "@tabler/icons-astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
 
 // 1. Fetch Singleton Business Settings
@@ -16,7 +16,6 @@ const site = settingsEntries[0]?.data || {
   whatsapp: "919876543210",
 };
 
-// 2. Fetch and sort published articles by date newest to oldest
 const allArticles = await getCollection("blog").catch(() => []);
 const publishedArticles = allArticles
   .filter((a) => a.data.published)
@@ -73,7 +72,7 @@ const whatsappUrl = getWhatsAppUrl(
           Travel Planning Resources
         </span>
         <h1
-          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
         >
           Udaipur travel
         </h1>
@@ -122,7 +121,7 @@ const whatsappUrl = getWhatsAppUrl(
           <>
             {/* FEATURED BLOG STACK */}
             {displayFeatured.length > 0 && (
-              <div class="space-y-8">
+              <div class="space-y-8" id="featured-articles-stack">
                 {displayFeatured.map((article) => (
                   <div
                     data-article-category={article.data.category}
@@ -142,13 +141,7 @@ const whatsappUrl = getWhatsAppUrl(
                               {article.data.category}
                             </span>
                             <span class="text-xs text-typography-muted font-medium ml-2">
-                              {new Date(
-                                article.data.publishDate,
-                              ).toLocaleDateString("en-IN", {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              })}
+                              {formatDate(article.data.publishDate)}
                             </span>
                           </div>
 
@@ -202,6 +195,32 @@ const whatsappUrl = getWhatsAppUrl(
                 </div>
               ))}
             </div>
+
+            {/* NO ARTICLES IN SELECTED CATEGORY FALLBACK */}
+            <div
+              id="category-empty-state"
+              class="hidden bg-surface-card border border-brand-100 rounded-2xl p-10 sm:p-14 text-center max-w-2xl mx-auto my-4 shadow-sm"
+            >
+              <div class="w-12 h-12 rounded-xl bg-brand-100/80 text-brand-900 flex items-center justify-center mx-auto mb-4 text-2xl">
+                🗂️
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-brand-900 mb-2">
+                No Guides Found in "<span id="empty-state-category-name" />"
+              </h3>
+              <p class="text-sm sm:text-base text-typography-muted mb-8 max-w-md mx-auto leading-relaxed">
+                We haven't published any travel articles in this topic yet.
+                Explore our other category tabs to read helpful transport guides
+                for your trip.
+              </p>
+              <button
+                type="button"
+                id="reset-category-btn"
+                class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-flex items-center justify-center gap-2 shadow-sm active:scale-95 cursor-pointer"
+              >
+                <IconArrowLeft size={16} stroke={2} class="text-accent group-hover:-translate-x-1 transition-transform" />
+                <span>View All Guides</span>
+              </button>
+            </div>
           </>
         ) : (
           <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
@@ -240,9 +259,10 @@ const whatsappUrl = getWhatsAppUrl(
       <div class="flex flex-wrap items-center justify-center gap-4">
         <a
           href="/services/"
-          class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm active:scale-95"
+          class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm inline-flex items-center gap-2 active:scale-95"
         >
-          View Transport Services &rarr;
+          <span>View Transport Services</span>
+          <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
         </a>
         <a
           href={whatsappUrl}
@@ -280,6 +300,11 @@ const whatsappUrl = getWhatsAppUrl(
   function initBlogFilter() {
     const filterBtns = document.querySelectorAll(".blog-filter-btn");
     const items = document.querySelectorAll(".blog-item-wrapper");
+    const featuredStack = document.getElementById("featured-articles-stack");
+    const blogGrid = document.getElementById("blog-grid");
+    const emptyState = document.getElementById("category-empty-state");
+    const emptyCatName = document.getElementById("empty-state-category-name");
+    const resetBtn = document.getElementById("reset-category-btn");
 
     const activeClasses = [
       "bg-brand-900",
@@ -295,6 +320,15 @@ const whatsappUrl = getWhatsAppUrl(
       "border-transparent",
     ];
 
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        const allBtn = document.querySelector(
+          '.blog-filter-btn[data-category="All"]',
+        ) as HTMLElement;
+        if (allBtn) allBtn.click();
+      });
+    }
+
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         // Active state styling
@@ -306,15 +340,42 @@ const whatsappUrl = getWhatsAppUrl(
         btn.classList.add(...activeClasses);
 
         const selectedCategory = btn.getAttribute("data-category");
+        let visibleFeatured = 0;
+        let visibleStandard = 0;
 
         items.forEach((item) => {
           const itemCategory = item.getAttribute("data-article-category");
-          if (selectedCategory === "All" || itemCategory === selectedCategory) {
+          const isMatch =
+            selectedCategory === "All" || itemCategory === selectedCategory;
+          if (isMatch) {
             (item as HTMLElement).style.display = "";
+            if (featuredStack && featuredStack.contains(item)) {
+              visibleFeatured++;
+            } else {
+              visibleStandard++;
+            }
           } else {
             (item as HTMLElement).style.display = "none";
           }
         });
+
+        if (featuredStack) {
+          featuredStack.style.display = visibleFeatured > 0 ? "" : "none";
+        }
+        if (blogGrid) {
+          blogGrid.style.display = visibleStandard > 0 ? "" : "none";
+        }
+
+        if (emptyState) {
+          if (visibleFeatured + visibleStandard === 0) {
+            emptyState.classList.remove("hidden");
+            if (emptyCatName && selectedCategory) {
+              emptyCatName.textContent = selectedCategory;
+            }
+          } else {
+            emptyState.classList.add("hidden");
+          }
+        }
       });
     });
   }

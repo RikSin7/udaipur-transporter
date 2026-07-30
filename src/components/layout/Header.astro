@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { getWhatsAppUrl } from "../../utils/helpers";
+import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { IconBrandWhatsapp, IconPhoneCall } from "@tabler/icons-astro";
 
 // Fetch singleton business settings
@@ -11,7 +11,7 @@ const site = settingsEntries[0]?.data || {
   whatsapp: "919876543210",
 };
 
-const callUrl = `tel:${site.phone.replace(/\s+/g, "")}`;
+const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 
 // Primary Navigation

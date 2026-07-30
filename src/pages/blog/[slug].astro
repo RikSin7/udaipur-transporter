@@ -5,7 +5,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
-import { getWhatsAppUrl } from "../../utils/helpers";
+import { getWhatsAppUrl, formatDate } from "../../utils/helpers";
 import {
   IconClock,
   IconCar,
@@ -48,13 +48,14 @@ const matchingService = relatedService
 const allArticles = await getCollection("blog").catch(() => []);
 const relatedArticles = allArticles
   .filter((a) => a.id !== entry.id && a.data.published)
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime(),
+  )
   .slice(0, 3);
 
-const formattedDate = new Date(publishDate).toLocaleDateString("en-IN", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const formattedDate = formatDate(publishDate, "long");
 
 // Fetch business settings for direct WhatsApp URLs
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -70,44 +71,55 @@ const whatsappUrl = getWhatsAppUrl(
 );
 ---
 
-<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
+<BaseLayout
+  title={`${title} | ${site.companyName}`}
+  description={summary}
+  currentTitle={title}
+>
   <Header slot="header" />
 
   {/* 1. ARTICLE HERO HEADER */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800"
+    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative"
   >
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span
-        class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
-      >
-        {category}
-      </span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <span
+          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+        >
+          {category}
+        </span>
 
-      <h1
-        class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-6"
-      >
-        {title}
-      </h1>
+        <h1
+          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-4 text-white tracking-wide"
+        >
+          {title}
+        </h1>
 
-      {/* Author, Date & Reading Time Metadata */}
-      <div
-        class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-brand-100/80 border-t border-brand-800/80 pt-6 max-w-lg mx-auto"
-      >
-        <div class="flex items-center gap-1.5">
-          <IconUser size={16} stroke={2} class="text-accent shrink-0" />
-          <span class="font-medium">{author}</span>
-        </div>
-        <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
-        <div class="flex items-center gap-1.5">
-          <IconCalendar size={16} stroke={2} class="text-accent shrink-0" />
-          <time datetime={publishDate} class="font-medium">{formattedDate}</time
-          >
-        </div>
-        <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
-        <div class="flex items-center gap-1.5">
-          <IconClock size={16} stroke={2} class="text-accent shrink-0" />
-          <span class="font-medium">{readingTime} min read</span>
+        <p
+          class="text-brand-100/90 text-base sm:text-lg leading-relaxed font-light mb-8"
+        >
+          {summary}
+        </p>
+
+        {/* Author, Date & Reading Time Metadata */}
+        <div
+          class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-brand-100/80 border-t border-brand-800/80 pt-6"
+        >
+          <div class="flex items-center gap-1.5">
+            <IconUser size={16} stroke={2} class="text-accent shrink-0" />
+            <span class="font-medium">{author}</span>
+          </div>
+          <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
+          <div class="flex items-center gap-1.5">
+            <IconCalendar size={16} stroke={2} class="text-accent shrink-0" />
+            <time datetime={publishDate} class="font-medium">{formattedDate}</time>
+          </div>
+          <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
+          <div class="flex items-center gap-1.5">
+            <IconClock size={16} stroke={2} class="text-accent shrink-0" />
+            <span class="font-medium">{readingTime} min read</span>
+          </div>
         </div>
       </div>
     </div>
@@ -147,46 +159,46 @@ const whatsappUrl = getWhatsAppUrl(
             </div>
           </div>
 
-          {/* Inline Conversion Banner */}
-          <div
-            class="bg-brand-900 text-white p-8 rounded-2xl shadow-premium flex flex-col sm:flex-row items-center justify-between gap-6 border border-brand-800"
-          >
-            <div>
-              <span
-                class="text-xs font-bold uppercase tracking-widest text-accent block mb-1"
-              >
-                Need Direct Advice?
-              </span>
-              <h3 class="font-serif text-xl font-bold text-white">
-                Plan your vehicle route with our local team.
-              </h3>
-              <p class="text-xs text-brand-100/80 mt-1">
-                We provide owner-approved quotes without automated call centers
-                or booking fees.
-              </p>
-            </div>
-            <div class="flex flex-wrap gap-4 w-full sm:w-auto shrink-0">
-              <a
-                href="/contact/"
-                class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-7 py-3.5 rounded-xl shadow-md transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2 active:scale-95"
-              >
-                <IconQuote class="w-5 h-5" stroke={2} />
-                <span>Request Travel Quote</span>
-              </a>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="bg-white/14 hover:bg-white/24 border border-white/50 text-white font-semibold px-6 py-3.5 rounded-xl shadow-md transition-all text-sm tracking-wide flex items-center justify-center gap-2 active:scale-95"
-              >
-                <IconBrandWhatsapp
-                  class="w-5 h-5 text-emerald-400"
-                  stroke={2}
-                />
-                <span>WhatsApp Us</span>
-              </a>
-            </div>
-          </div>
+          {/* Inline Conversion Banner (Shown only when Recommended Service exists) */}
+          {
+            matchingService && (
+              <div class="bg-brand-900 text-white p-6 sm:p-8 rounded-2xl shadow-premium flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 border border-brand-800">
+                <div class="flex-1 min-w-0">
+                  <span class="text-xs font-bold uppercase tracking-widest text-accent block mb-1">
+                    Need Direct Advice?
+                  </span>
+                  <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">
+                    Plan your vehicle route with our local team.
+                  </h3>
+                  <p class="text-xs sm:text-sm text-brand-100/80 mt-1.5 leading-relaxed">
+                    We provide owner-approved quotes without automated call centers
+                    or booking fees.
+                  </p>
+                </div>
+                <div class="flex flex-col sm:flex-row md:flex-col xl:flex-row gap-3 sm:gap-4 w-full md:w-auto shrink-0">
+                  <a
+                    href="/contact/"
+                    class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-6 py-3.5 rounded-xl shadow-md transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2 active:scale-95 text-center"
+                  >
+                    <IconQuote class="w-5 h-5 shrink-0" stroke={2} />
+                    <span>Request Travel Quote</span>
+                  </a>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bg-white/14 hover:bg-white/24 border border-white/50 text-white font-semibold px-6 py-3.5 rounded-xl shadow-md transition-all text-sm tracking-wide flex items-center justify-center gap-2 active:scale-95 text-center"
+                  >
+                    <IconBrandWhatsapp
+                      class="w-5 h-5 text-emerald-400 shrink-0"
+                      stroke={2}
+                    />
+                    <span>WhatsApp Us</span>
+                  </a>
+                </div>
+              </div>
+            )
+          }
         </div>
 
         {/* Right Column */}
@@ -204,23 +216,40 @@ const whatsappUrl = getWhatsAppUrl(
                 <ServiceCard service={matchingService} />
               </div>
             ) : (
-              <div class="bg-brand-900 border border-brand-800 p-6 rounded-2xl text-white shadow-premium">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-accent block mb-2">
-                  Custom Requirements?
-                </span>
-                <h4 class="font-serif text-lg font-bold text-white mb-2">
-                  Need a Custom Route Quote?
-                </h4>
-                <p class="text-xs text-brand-100/80 leading-relaxed mb-6">
-                  Send us your exact Udaipur or outstation itinerary. We'll
-                  calculate toll actuals and suggest the right vehicle.
-                </p>
-                <a
-                  href="/contact/"
-                  class="block w-full bg-accent hover:bg-accent-hover text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider text-center transition-all shadow-sm"
-                >
-                  Request Custom Quote &rarr;
-                </a>
+              <div class="bg-brand-900 border border-brand-800 p-6 sm:p-8 rounded-2xl text-white shadow-premium flex flex-col md:flex-row lg:flex-col justify-between md:items-center lg:items-stretch gap-6">
+                <div class="flex-1 min-w-0">
+                  <span class="text-xs font-bold uppercase tracking-widest text-accent block mb-1.5">
+                    Custom Requirements?
+                  </span>
+                  <h4 class="font-serif text-lg sm:text-xl font-bold text-white mb-2">
+                    Need a Custom Route Quote?
+                  </h4>
+                  <p class="text-xs sm:text-sm text-brand-100/80 leading-relaxed">
+                    Send us your exact Udaipur or outstation itinerary. We'll
+                    calculate toll actuals and suggest the right vehicle.
+                  </p>
+                </div>
+                <div class="flex flex-col sm:flex-row md:flex-col gap-3 sm:gap-4 w-full md:w-auto lg:w-full xl:w-auto shrink-0">
+                  <a
+                    href="/contact/"
+                    class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-3.5 px-6 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 group text-center"
+                  >
+                    <span>Request Custom Quote</span>
+                    <span class="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+                  </a>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bg-white/14 hover:bg-white/24 border border-white/50 text-white font-semibold py-3.5 px-6 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 text-center"
+                  >
+                    <IconBrandWhatsapp
+                      class="w-4 h-4 text-emerald-400 shrink-0"
+                      stroke={2}
+                    />
+                    <span>WhatsApp Us</span>
+                  </a>
+                </div>
               </div>
             )
           }

@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
-import { sortPublishedByOrder } from "../../utils/helpers";
+import { slugify } from "../../utils/helpers";
 import {
   IconPlane,
   IconMapPin,
@@ -25,9 +25,9 @@ const site = settingsEntries[0]?.data || {
 
 // 2. Fetch all published services and sort ascending by order
 const allServices = await getCollection("services").catch(() => []);
-const publishedServices = sortPublishedByOrder(
-  allServices.filter((s) => s.data.published),
-);
+const publishedServices = allServices
+  .filter((s) => s.data.published)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
 // 3. Define category metadata with subtitles and JSX icon references
 const categoryMetadata: Record<string, { subtitle: string; icon: any }> = {
@@ -70,7 +70,7 @@ const categoryOrder = [
 const groupedServices = categoryOrder
   .map((category) => ({
     category,
-    slug: category.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    slug: slugify(category),
     metadata: categoryMetadata[category] || {
       subtitle: "Private transportation services.",
       icon: IconCar,
@@ -98,7 +98,7 @@ const groupedServices = categoryOrder
           Our Services
         </span>
         <h1
-          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
         >
           Private transport for every kind of Udaipur trip
         </h1>
@@ -118,26 +118,30 @@ const groupedServices = categoryOrder
     class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none"
   >
     <div
-      class="max-w-5xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
+      class="max-w-4xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
     >
       {
-        groupedServices.map((group, idx) => (
-          <a
-            href={`#${group.slug}`}
-            class={`service-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 ${
-              idx === 0
-                ? "bg-brand-900 text-white shadow-sm"
-                : "bg-surface-alt/60 text-brand-900 hover:bg-brand-100/80 hover:text-brand-900"
-            }`}
-          >
-            <span>{group.category}</span>
-            <span
-              class={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${idx === 0 ? "bg-brand-800 text-accent" : "bg-brand-100/80 text-brand-900"}`}
+        groupedServices.map((group, idx) => {
+          const activeStyle =
+            "bg-brand-900 text-white shadow-sm border-brand-900";
+          const inactiveStyle =
+            "bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)] border-transparent";
+          return (
+            <a
+              href={`#${group.slug}`}
+              class={`service-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                idx === 0 ? activeStyle : inactiveStyle
+              }`}
             >
-              {group.services.length}
-            </span>
-          </a>
-        ))
+              <span>{group.category}</span>
+              <span
+                class={`service-tab-badge text-[10px] px-1.5 py-0.5 rounded-md font-semibold transition-colors duration-200 ${idx === 0 ? "bg-brand-800 text-accent" : "bg-brand-100/80 text-brand-900"}`}
+              >
+                {group.services.length}
+              </span>
+            </a>
+          );
+        })
       }
     </div>
   </div>
@@ -249,8 +253,21 @@ const groupedServices = categoryOrder
 <script>
   function initServiceScrollspy() {
     const tabBtns = document.querySelectorAll(".service-tab-btn");
-    const activeClasses = ["bg-brand-900", "text-white", "shadow-sm"];
-    const inactiveClasses = ["bg-surface-alt/60", "text-brand-900", "hover:bg-brand-100/80", "hover:text-brand-900"];
+    const activeClasses = [
+      "bg-brand-900",
+      "text-white",
+      "shadow-sm",
+      "border-brand-900",
+    ];
+    const inactiveClasses = [
+      "bg-[var(--color-surface-alt,#E9EFEA)]",
+      "text-brand-900",
+      "hover:border-brand-900",
+      "hover:text-[var(--color-accent-dark,#8D671D)]",
+      "border-transparent",
+    ];
+    const badgeActiveClasses = ["bg-brand-800", "text-accent"];
+    const badgeInactiveClasses = ["bg-brand-100/80", "text-brand-900"];
 
     let isClickScrolling = false;
     let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -258,14 +275,23 @@ const groupedServices = categoryOrder
     const updatePills = (activeHref: string | null) => {
       tabBtns.forEach((btn) => {
         const href = btn.getAttribute("href");
+        const badge = btn.querySelector(".service-tab-badge");
         if (href === activeHref) {
           btn.classList.remove(...inactiveClasses);
           btn.classList.add(...activeClasses);
+          if (badge) {
+            badge.classList.remove(...badgeInactiveClasses);
+            badge.classList.add(...badgeActiveClasses);
+          }
           // Center the active pill horizontally if inside a scrollable container
           btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
         } else {
           btn.classList.remove(...activeClasses);
           btn.classList.add(...inactiveClasses);
+          if (badge) {
+            badge.classList.remove(...badgeActiveClasses);
+            badge.classList.add(...badgeInactiveClasses);
+          }
         }
       });
     };

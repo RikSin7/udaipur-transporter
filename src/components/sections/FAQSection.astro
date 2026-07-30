@@ -54,7 +54,7 @@ const publishedFaqs = allFaqs
           <IconArrowRight
             size={16}
             stroke={2}
-            className="text-accent group-hover:translate-x-1 transition-transform"
+            class="text-accent group-hover:translate-x-1 transition-transform"
           />
         </a>
       </div>
@@ -107,7 +107,7 @@ const publishedFaqs = allFaqs
         <IconArrowRight
           size={16}
           stroke={2}
-          className="text-accent group-hover:translate-x-1 transition-transform"
+          class="text-accent group-hover:translate-x-1 transition-transform"
         />
       </a>
     </div>
@@ -122,9 +122,10 @@ const publishedFaqs = allFaqs
         >
         <a
           href="/contact/"
-          class="font-bold text-brand-900 hover:text-accent underline transition-colors"
+          class="group font-bold text-brand-900 hover:text-accent transition-colors inline-flex items-center gap-1"
         >
-          Ask our Udaipur team directly &rarr;
+          <span>Ask our Udaipur team directly</span>
+          <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
         </a>
       </div>
     </div>

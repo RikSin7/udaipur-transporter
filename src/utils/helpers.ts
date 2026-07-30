@@ -15,12 +15,49 @@ export function getWhatsAppUrl(phone: string, serviceName?: string, pageUrl?: st
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
 
-export function sortPublishedByOrder<T extends { data: { published: boolean; sortOrder: number } }>(items: T[]): T[] {
-    return items
-        .filter(item => item.data.published)
-        .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+/**
+ * Generates a tel: URI from a formatted phone string
+ */
+export function getCallUrl(phone: string = ""): string {
+    return `tel:${(phone || "").replace(/\s+/g, "")}`;
 }
 
+/**
+ * Formats a date string or Date object into human-readable string
+ */
+export function formatDate(date: string | Date, monthFormat: "short" | "long" | "numeric" = "short", locale: string = "en-IN"): string {
+    if (!date) return "";
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return "";
+    return d.toLocaleDateString(locale, {
+        year: "numeric",
+        month: monthFormat,
+        day: "numeric",
+    });
+}
+
+/**
+ * Converts a hyphenated URL slug into Title Case display label
+ */
+export function formatSlug(slug: string = ""): string {
+    if (!slug) return "";
+    return decodeURIComponent(slug)
+        .replace(/[-_]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+/**
+ * Converts an arbitrary text string (such as category name) into a lowercase hyphenated ID/slug
+ */
+export function slugify(text: string = ""): string {
+    return (text || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Cleans string for URL parameters
+ */
 export function createCleanParam(text: string): string {
     return text
         .replace(/\//g, '-')          // Replace slashes with hyphens

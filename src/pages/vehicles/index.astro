@@ -9,7 +9,7 @@ const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
 };
 
-const vehicles = await getCollection("vehicles");
+const vehicles = await getCollection("vehicles").catch(() => []);
 ---
 
 <BaseLayout
@@ -28,7 +28,7 @@ const vehicles = await getCollection("vehicles");
           Premium Vehicle Fleet
         </span>
         <h1
-          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4"
+          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
         >
           Our Fleet
         </h1>
