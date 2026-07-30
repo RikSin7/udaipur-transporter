@@ -143,7 +143,10 @@ const inputBaseClasses =
           id="service"
           name="service"
           required
-          class={cn(inputBaseClasses, "font-medium text-brand-900 cursor-pointer")}
+          class={cn(
+            inputBaseClasses,
+            "font-medium text-brand-900 cursor-pointer",
+          )}
         >
           <option value="">-- Custom Route / General Quote --</option>
           {
@@ -173,7 +176,10 @@ const inputBaseClasses =
         <select
           id="vehicle"
           name="vehicle"
-          class={cn(inputBaseClasses, "font-medium text-brand-900 cursor-pointer")}
+          class={cn(
+            inputBaseClasses,
+            "font-medium text-brand-900 cursor-pointer",
+          )}
         >
           <option value="">-- I'm Not Sure / Recommend Me a Vehicle --</option>
           {
@@ -440,10 +446,10 @@ const inputBaseClasses =
       <div class="col-span-2 md:col-span-12 pt-1">
         <label
           for="message"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0"
         >
           <span>Message / Special Requests</span>
-          <span class="text-typography-muted font-normal text-[11px]"
+          <span class="text-typography-muted font-normal text-[11px] normal-case tracking-normal"
             >(Flight details, train arrival times, outstation stops)</span
           >
         </label>
@@ -452,8 +458,10 @@ const inputBaseClasses =
           name="message"
           rows="3"
           placeholder="Let us know if you need child seats, wheelchair accessibility, or have a specific itinerary..."
-          class={cn(inputBaseClasses, "placeholder:text-typography-muted leading-relaxed resize-y")}
-        ></textarea>
+          class={cn(
+            inputBaseClasses,
+            "placeholder:text-typography-muted leading-relaxed resize-y",
+          )}></textarea>
       </div>
     </div>
   </div>
@@ -496,8 +504,6 @@ const inputBaseClasses =
     const params = new URLSearchParams(window.location.search);
     const serviceParam = params.get("service");
     const vehicleParam = params.get("vehicle");
-    const priceParam = params.get("priceLabel");
-    const timeParam = params.get("pickupTime");
 
     // Helper: Smart Dropdown Selection Logic
     const selectMatchingOption = (
@@ -547,27 +553,40 @@ const inputBaseClasses =
       vehicleParam,
     );
 
-    // Auto-fill input fields
-    const priceInput = document.getElementById(
-      "priceLabel",
-    ) as HTMLInputElement | null;
-    const timeInput = document.getElementById(
+    // Auto-fill all standard input and textarea fields from URL parameters
+    const inputIds = [
+      "name",
+      "phone",
+      "pickup",
+      "drop",
+      "travelDate",
       "pickupTime",
-    ) as HTMLInputElement | null;
+      "returnDate",
+      "adults",
+      "children",
+      "bags",
+      "priceLabel",
+      "message",
+    ];
 
-    if (priceParam && priceInput) {
-      priceInput.value = priceParam;
-    }
-    if (timeParam && timeInput) {
-      timeInput.value = timeParam;
-    }
+    inputIds.forEach((id) => {
+      const paramVal = params.get(id);
+      if (paramVal && paramVal.trim() !== "") {
+        const el = document.getElementById(id) as
+          HTMLInputElement | HTMLTextAreaElement | null;
+        if (el) {
+          el.value = paramVal.trim();
+        }
+      }
+    });
 
-    // Auto-scroll to the form section if coming from a service, vehicle, or header enquiry button
+    // Auto-scroll to the form section if coming from a service, vehicle, hero compact form, or header enquiry button
     if (
       serviceParam ||
       vehicleParam ||
       params.get("action") === "enquiry" ||
       params.has("enquiry") ||
+      params.get("source") === "hero-compact" ||
       window.location.hash.includes("enquiry")
     ) {
       const formSection =
@@ -577,11 +596,25 @@ const inputBaseClasses =
         setTimeout(() => {
           formSection.scrollIntoView({ behavior: "smooth", block: "start" });
 
-          const nameInput = document.getElementById(
-            "name",
-          ) as HTMLInputElement | null;
-          if (nameInput) {
-            setTimeout(() => nameInput.focus({ preventScroll: true }), 450);
+          const formEl = document.querySelector(
+            'form[name="travel-enquiry"]',
+          ) as HTMLFormElement | null;
+          if (formEl) {
+            // Intelligently target the first empty required field (e.g. drop location) instead of forcing focus back on pre-filled name
+            const requiredFields = Array.from(
+              formEl.querySelectorAll(
+                'input[required]:not([type="checkbox"]), select[required], textarea[required]',
+              ),
+            ) as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)[];
+
+            const firstEmpty =
+              requiredFields.find((f) => f.value.trim() === "") ||
+              (document.getElementById("drop") as HTMLInputElement | null) ||
+              (document.getElementById("name") as HTMLInputElement | null);
+
+            if (firstEmpty && typeof firstEmpty.focus === "function") {
+              setTimeout(() => firstEmpty.focus({ preventScroll: true }), 450);
+            }
           }
         }, 150);
       }
