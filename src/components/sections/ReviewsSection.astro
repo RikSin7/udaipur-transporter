@@ -1,10 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import ReviewCard from "../cards/ReviewCard.astro";
-import {
-  IconChevronLeft,
-  IconChevronRight,
-} from "@tabler/icons-astro";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 
 // 1. Fetch from 'reviews' collection
@@ -16,7 +13,7 @@ const displayReviews = allReviews
 ---
 
 <section
-  class="py-16 lg:py-24 bg-surface border-b border-brand-100 relative overflow-hidden"
+  class="py-16 lg:py-20 bg-surface border-b border-brand-100 relative overflow-hidden"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* 1. SECTION HEADER WITH CONTROLS */}
@@ -45,7 +42,11 @@ const displayReviews = allReviews
       <div
         class="flex items-center gap-3 sm:gap-4 shrink-0 self-end md:self-auto"
       >
-        <ViewAllButton href="/reviews/" text="View All Reviews" class="hidden sm:inline-flex" />
+        <ViewAllButton
+          href="/reviews/"
+          text="View All Reviews"
+          class="hidden sm:inline-flex"
+        />
 
         <div class="flex items-center gap-2 sm:gap-3">
           <button
@@ -81,7 +82,11 @@ const displayReviews = allReviews
 
     {/* 3. MOBILE NAVIGATION CTA */}
     <div class="mt-4 text-center sm:hidden">
-      <ViewAllButton href="/reviews/" text="View All Reviews" variant="mobile" />
+      <ViewAllButton
+        href="/reviews/"
+        text="View All Reviews"
+        variant="mobile"
+      />
     </div>
   </div>
 </section>

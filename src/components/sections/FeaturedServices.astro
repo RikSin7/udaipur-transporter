@@ -1,50 +1,66 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import ServiceCard from '../cards/ServiceCard.astro';
-import ViewAllButton from '../ui/ViewAllButton.astro';
+import type { CollectionEntry } from "astro:content";
+import ServiceCard from "../cards/ServiceCard.astro";
+import ViewAllButton from "../ui/ViewAllButton.astro";
 
 interface Props {
-  featuredServices: CollectionEntry<'services'>[];
+  featuredServices: CollectionEntry<"services">[];
 }
 
 const { featuredServices } = Astro.props;
 ---
 
-<section class="py-16 lg:py-24 bg-surface border-b border-border/70">
+<section class="py-16 lg:py-20 bg-surface border-b border-border/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <div
+      class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+    >
       <div class="max-w-2xl">
-        <span class="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2 block">
+        <span
+          class="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2 block"
+        >
           Featured Services
         </span>
         <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand mb-3">
           What We Drive for You
         </h2>
         <p class="text-typography-muted text-base leading-relaxed">
-          Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey.
+          Choose from owner-approved transport categories. We offer transparent
+          pricing structures and reliable driver allocation for every journey.
         </p>
       </div>
       <div class="hidden sm:block shrink-0 self-start md:self-auto">
-        <ViewAllButton href="/services/" text="View All Services" variant="desktop" />
+        <ViewAllButton
+          href="/services/"
+          text="View All Services"
+          variant="desktop"
+        />
       </div>
     </div>
 
-    {featuredServices.length > 0 ? (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-        {featuredServices.map((service: any) => (
-          <ServiceCard service={service} />
-        ))}
-      </div>
-    ) : (
-      <div class="bg-surface-alt border border-border rounded-[var(--radius-card,18px)] p-12 text-center text-typography-muted max-w-xl mx-auto">
-        <p class="italic">No services published yet. Add markdown files to <code>src/content/services/</code> to populate this section.</p>
-      </div>
-    )}
+    {
+      featuredServices.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+          {featuredServices.map((service: any) => (
+            <ServiceCard service={service} />
+          ))}
+        </div>
+      ) : (
+        <div class="bg-surface-alt border border-border rounded-[var(--radius-card,18px)] p-12 text-center text-typography-muted max-w-xl mx-auto">
+          <p class="italic">
+            No services published yet. Add markdown files to{" "}
+            <code>src/content/services/</code> to populate this section.
+          </p>
+        </div>
+      )
+    }
 
     <div class="mt-8 text-center sm:hidden">
-      <ViewAllButton href="/services/" text="View All Services" variant="mobile" />
+      <ViewAllButton
+        href="/services/"
+        text="View All Services"
+        variant="mobile"
+      />
     </div>
-
   </div>
 </section>

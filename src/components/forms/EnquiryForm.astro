@@ -508,6 +508,9 @@ const inputBaseClasses =
           targetStr.includes(optText)
         ) {
           selectEl.selectedIndex = i;
+          if (!option.text.includes("(Auto-filled)")) {
+            option.text = `${option.text} (Auto-filled)`;
+          }
           matched = true;
           break;
         }
@@ -517,7 +520,7 @@ const inputBaseClasses =
       if (!matched && rawParamValue.trim() !== "") {
         const customOpt = document.createElement("option");
         customOpt.value = rawParamValue;
-        customOpt.text = `${rawParamValue} (Selected)`;
+        customOpt.text = `${rawParamValue} (Auto-filled)`;
         customOpt.selected = true;
         selectEl.appendChild(customOpt);
       }

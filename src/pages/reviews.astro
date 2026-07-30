@@ -150,7 +150,7 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 2. RESPONSIVE 3-COLUMN TESTIMONIAL GRID */}
-  <section class="py-16 lg:py-24 bg-surface">
+  <section class="py-16 lg:py-20 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {
         displayReviews.length > 0 ? (
@@ -204,7 +204,9 @@ const whatsappUrl = getWhatsAppUrl(
           </p>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto shrink-0">
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto shrink-0"
+        >
           <a
             href={whatsappUrl}
             target="_blank"
@@ -219,7 +221,11 @@ const whatsappUrl = getWhatsAppUrl(
             class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-7 py-4 rounded-xl text-sm text-center transition-all shadow-md flex items-center justify-center gap-2 active:scale-95"
           >
             <span>Send Enquiry</span>
-            <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
+            <IconArrowRight
+              size={16}
+              stroke={2}
+              class="text-accent group-hover:translate-x-1 transition-transform"
+            />
           </a>
         </div>
       </div>
