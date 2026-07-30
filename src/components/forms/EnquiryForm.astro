@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { IconSend } from "@tabler/icons-astro";
+import { IconSend, IconMinus, IconPlus } from "@tabler/icons-astro";
 
 interface Props {
   defaultService?: string;
@@ -28,12 +28,19 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
   name="travel-enquiry"
   method="POST"
   data-netlify="true"
+  netlify-honeypot="bot-field"
+  action="/thank-you/"
   class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-premium space-y-8 text-brand-900"
 >
   {/* Hidden context fields for Netlify/Email routing */}
   <input type="hidden" name="form-name" value="travel-enquiry" />
   <input type="hidden" name="sourcePage" value={currentUrl} />
   <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
+  <p hidden>
+    <label>
+      Don't fill this out: <input name="bot-field" />
+    </label>
+  </p>
 
   {/* Form Header */}
   <div class="border-b border-brand-100 pb-5">
@@ -64,13 +71,13 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-      {/* Full Name - 50% Width */}
+      {/* Name - 50% Width */}
       <div class="md:col-span-6">
         <label
           for="name"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Full Name <span class="text-red-500">*</span>
+          Name <span class="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -100,25 +107,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
         />
       </div>
 
-      {/* Email Address - 100% Width for comfortable typing */}
-      <div class="md:col-span-12">
-        <label
-          for="email"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-        >
-          <span>Email Address</span>
-          <span class="text-typography-muted font-normal text-[11px]"
-            >(Optional — Recommended for detailed written quotes)</span
-          >
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="rajesh@example.com"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
-        />
-      </div>
+
     </div>
   </div>
 
@@ -330,15 +319,23 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
         >
           Adults <span class="text-red-500">*</span>
         </label>
-        <input
-          type="number"
-          id="adults"
-          name="adults"
-          min="1"
-          value="2"
-          required
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all"
-        />
+        <div class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all">
+          <button type="button" class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="adults" aria-label="Decrease adults">
+            <IconMinus size={18} stroke={2} />
+          </button>
+          <input
+            type="number"
+            id="adults"
+            name="adults"
+            min="1"
+            value="2"
+            required
+            class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
+          />
+          <button type="button" class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="adults" aria-label="Increase adults">
+            <IconPlus size={18} stroke={2} />
+          </button>
+        </div>
       </div>
 
       {/* Children - 33.3% Width on desktop, 50% on mobile */}
@@ -352,14 +349,22 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             >(Under 12)</span
           >
         </label>
-        <input
-          type="number"
-          id="children"
-          name="children"
-          min="0"
-          value="0"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all"
-        />
+        <div class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all">
+          <button type="button" class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="children" aria-label="Decrease children">
+            <IconMinus size={18} stroke={2} />
+          </button>
+          <input
+            type="number"
+            id="children"
+            name="children"
+            min="0"
+            value="0"
+            class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
+          />
+          <button type="button" class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="children" aria-label="Increase children">
+            <IconPlus size={18} stroke={2} />
+          </button>
+        </div>
       </div>
 
       {/* Luggage Bags - 33.3% Width on desktop, 100% on mobile */}
@@ -373,14 +378,22 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             >(Large Suitcases)</span
           >
         </label>
-        <input
-          type="number"
-          id="bags"
-          name="bags"
-          min="0"
-          placeholder="e.g. 3"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
-        />
+        <div class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all">
+          <button type="button" class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="bags" aria-label="Decrease bags">
+            <IconMinus size={18} stroke={2} />
+          </button>
+          <input
+            type="number"
+            id="bags"
+            name="bags"
+            min="0"
+            value="0"
+            class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
+          />
+          <button type="button" class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="bags" aria-label="Increase bags">
+            <IconPlus size={18} stroke={2} />
+          </button>
+        </div>
       </div>
 
       {/* Message / Special Requests - 100% Width */}
@@ -540,4 +553,32 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
 
   // Execute on Astro View Transition SPA navigation
   document.addEventListener("astro:page-load", autofillContextFromUrl);
+
+  // Global Event Delegation for Quantity Buttons
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const minusBtn = target.closest(".qty-minus");
+    const plusBtn = target.closest(".qty-plus");
+
+    if (minusBtn) {
+      const targetId = minusBtn.getAttribute("data-target");
+      if (targetId) {
+        const input = document.getElementById(targetId) as HTMLInputElement;
+        if (input) {
+          const min = parseInt(input.min) || 0;
+          let val = parseInt(input.value) || 0;
+          if (val > min) input.value = (val - 1).toString();
+        }
+      }
+    } else if (plusBtn) {
+      const targetId = plusBtn.getAttribute("data-target");
+      if (targetId) {
+        const input = document.getElementById(targetId) as HTMLInputElement;
+        if (input) {
+          let val = parseInt(input.value) || 0;
+          input.value = (val + 1).toString();
+        }
+      }
+    }
+  });
 </script>
