@@ -88,7 +88,7 @@ const inputBaseClasses =
           id="name"
           name="name"
           required
-          placeholder="e.g. Rajesh Kumar"
+          placeholder="e.g. Hrithik Roshan"
           class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
@@ -148,7 +148,7 @@ const inputBaseClasses =
             "font-medium text-brand-900 cursor-pointer",
           )}
         >
-          <option value="">-- Custom Route / General Quote --</option>
+          <option value="">-- Select Service --</option>
           {
             publishedServices.map((s) => (
               <option
@@ -181,7 +181,7 @@ const inputBaseClasses =
             "font-medium text-brand-900 cursor-pointer",
           )}
         >
-          <option value="">-- I'm Not Sure / Recommend Me a Vehicle --</option>
+          <option value="">-- Recommend a Vehicle --</option>
           {
             publishedVehicles.map((v) => (
               <option
@@ -212,38 +212,38 @@ const inputBaseClasses =
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-      {/* Pickup Location - 50% Width */}
-      <div class="md:col-span-6">
+      {/* Pickup Location - 33.3% Width */}
+      <div class="md:col-span-4">
         <label
           for="pickup"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Pickup Location / Hotel <span class="text-red-500">*</span>
+          Pickup Location <span class="text-red-500">*</span>
         </label>
         <input
           type="text"
           id="pickup"
           name="pickup"
           required
-          placeholder="e.g. Dabok Airport / Taj Lake Palace"
+          placeholder="e.g. Airport / Hotel"
           class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
 
-      {/* Drop Location - 50% Width */}
-      <div class="md:col-span-6">
+      {/* Drop Location - 33.3% Width */}
+      <div class="md:col-span-4">
         <label
           for="drop"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Drop / Service Requirement <span class="text-red-500">*</span>
+          Drop Location <span class="text-red-500">*</span>
         </label>
         <input
           type="text"
           id="drop"
           name="drop"
           required
-          placeholder="e.g. Hotel drop, Mount Abu Day Trip, or 8 Hrs Sightseeing"
+          placeholder="e.g. Hotel / Mount Abu"
           class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
@@ -252,54 +252,17 @@ const inputBaseClasses =
       <div class="md:col-span-4">
         <label
           for="travelDate"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
-        >
-          Travel Date <span class="text-red-500">*</span>
-        </label>
-        <input
-          type="date"
-          id="travelDate"
-          name="travelDate"
-          required
-          class={cn(inputBaseClasses, "text-brand-900")}
-        />
-      </div>
-
-      {/* Pickup Time - 33.3% Width */}
-      <div class="md:col-span-4">
-        <label
-          for="pickupTime"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
         >
-          <span>Pickup Time</span>
+          <span>Travel Date</span>
           <span class="text-typography-muted font-normal text-[11px]"
             >(Optional)</span
           >
         </label>
         <input
-          type="time"
-          id="pickupTime"
-          name="pickupTime"
-          class={cn(inputBaseClasses, "text-brand-900")}
-        />
-      </div>
-
-      {/* Return Date - 33.3% Width */}
-      <div class="md:col-span-4">
-        <label
-          for="returnDate"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-        >
-          <span>Return Date</span>
-          <span class="text-typography-muted font-normal text-[11px]"
-            >(Round Trips)</span
-          >
-        </label>
-        <input
           type="date"
-          id="returnDate"
-          name="returnDate"
-          min={new Date().toISOString().split("T")[0]}
+          id="travelDate"
+          name="travelDate"
           class={cn(inputBaseClasses, "text-brand-900")}
         />
       </div>
@@ -307,27 +270,44 @@ const inputBaseClasses =
   </div>
 
   {/* SECTION 4: PASSENGERS & SPECIAL REQUESTS */}
-  <div class="space-y-4 pt-2">
-    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
+  <details class="space-y-4 pt-2 group">
+    <summary
+      class="flex items-center gap-2 border-b border-brand-100/60 pb-2 cursor-pointer list-none appearance-none focus:outline-none [&::-webkit-details-marker]:hidden"
+    >
       <span
         class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
         >4</span
       >
       <h4
-        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
+        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase flex-1"
       >
-        Passengers & Luggage Details
+        Passenger Details
       </h4>
-    </div>
+      <span
+        class="text-brand-900 group-open:rotate-180 transition-transform duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg
+        >
+      </span>
+    </summary>
 
-    <div class="grid grid-cols-2 md:grid-cols-12 gap-5">
+    <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
       {/* Adults - 33.3% Width on desktop, 50% on mobile */}
       <div class="col-span-1 md:col-span-4">
         <label
           for="adults"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Adults <span class="text-red-500">*</span>
+          Adults
         </label>
         <div
           class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
@@ -346,7 +326,6 @@ const inputBaseClasses =
             name="adults"
             min="1"
             value="2"
-            required
             class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
           />
           <button
@@ -441,29 +420,30 @@ const inputBaseClasses =
           </button>
         </div>
       </div>
-
-      {/* Message / Special Requests - 100% Width */}
-      <div class="col-span-2 md:col-span-12 pt-1">
-        <label
-          for="message"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0"
-        >
-          <span>Message / Special Requests</span>
-          <span class="text-typography-muted font-normal text-[11px] normal-case tracking-normal"
-            >(Flight details, train arrival times, outstation stops)</span
-          >
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows="3"
-          placeholder="Let us know if you need child seats, wheelchair accessibility, or have a specific itinerary..."
-          class={cn(
-            inputBaseClasses,
-            "placeholder:text-typography-muted leading-relaxed resize-y",
-          )}></textarea>
-      </div>
     </div>
+  </details>
+
+  {/* SECTION 5: SPECIAL REQUESTS */}
+  <div class="pt-2">
+    <label
+      for="message"
+      class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0"
+    >
+      <span>Message / Special Requests</span>
+      <span
+        class="text-typography-muted font-normal text-[11px] normal-case tracking-normal"
+        >(Flight details, train arrival times, outstation stops)</span
+      >
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      rows="3"
+      placeholder="Let us know if you need child seats, wheelchair accessibility, or have a specific itinerary..."
+      class={cn(
+        inputBaseClasses,
+        "placeholder:text-typography-muted leading-relaxed resize-y",
+      )}></textarea>
   </div>
 
   {/* Consent & Submit */}
@@ -560,8 +540,6 @@ const inputBaseClasses =
       "pickup",
       "drop",
       "travelDate",
-      "pickupTime",
-      "returnDate",
       "adults",
       "children",
       "bags",

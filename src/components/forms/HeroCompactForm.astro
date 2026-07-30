@@ -49,7 +49,7 @@ const inputBaseClasses =
           id="hero-name"
           name="name"
           required
-          placeholder="e.g. Rajesh Kumar"
+          placeholder="e.g. Hrithik Roshan"
           class={cn(
             inputBaseClasses,
             "placeholder:text-typography-muted font-normal",
@@ -92,7 +92,7 @@ const inputBaseClasses =
         name="service"
         class={cn(inputBaseClasses, "cursor-pointer font-medium")}
       >
-        <option value="">-- Select Transfer Type / General Quote --</option>
+        <option value="">-- Select Service --</option>
         {
           publishedServices.map((s) => (
             <option value={s.data.title}>{s.data.title}</option>
