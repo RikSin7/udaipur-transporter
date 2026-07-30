@@ -13,6 +13,7 @@ import {
   IconCalendar,
   IconQuote,
   IconBrandWhatsapp,
+  IconFileText,
 } from "@tabler/icons-astro";
 
 // 1. GENERATE STATIC PATHS FOR EVERY ARTICLE
@@ -168,9 +169,14 @@ const whatsappUrl = getWhatsAppUrl(
             matchingService && (
               <div class="bg-brand-900 text-white p-6 sm:p-8 rounded-2xl shadow-premium flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 border border-brand-800">
                 <div class="flex-1 min-w-0">
-                  <span class="text-xs font-bold uppercase tracking-widest text-accent block mb-1">
-                    Need Direct Advice?
-                  </span>
+                  <div class="flex items-center gap-2.5 mb-3">
+                    <div class="w-8 h-8 rounded-lg bg-brand-800 border border-brand-700 flex items-center justify-center text-accent shrink-0">
+                      <IconFileText size={18} stroke={2} />
+                    </div>
+                    <span class="text-[11px] font-semibold uppercase tracking-wider text-accent bg-brand-800 px-3 py-1 rounded-full">
+                      Direct Expert Advice
+                    </span>
+                  </div>
                   <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">
                     Plan your vehicle route with our local team.
                   </h3>

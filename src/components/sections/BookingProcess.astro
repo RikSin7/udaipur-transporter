@@ -75,17 +75,14 @@ const homeData = homeEntries[0]?.data || {
 <section class="py-14 lg:py-20 bg-surface border-b border-border">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* 1. SECTION HEADER */}
-    <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-      <span
-        class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent-dark,#8D671D)] inline-block mb-2.5"
-      >
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <span class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3">
         {homeData.bookingBadge}
       </span>
-      <h2
-        class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-typography-main tracking-tight"
-      >
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight">
         {homeData.bookingHeading}
       </h2>
+      <span class="inline-block w-12 h-1 bg-accent rounded-full mt-3"></span>
     </div>
 
     {/* 2. THREE CONTACT METHOD CARDS */}
@@ -109,7 +106,7 @@ const homeData = homeEntries[0]?.data || {
                 <div class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                   <Icon size={24} stroke={2} />
                 </div>
-                <h3 class="font-serif text-xl font-bold text-typography-main group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-2.5">
+                <h3 class="font-serif text-xl font-bold text-typography-main group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3">
                   {method.title}
                 </h3>
                 <p class="text-sm text-typography-muted leading-relaxed mb-6">
@@ -137,11 +134,11 @@ const homeData = homeEntries[0]?.data || {
 
     {/* 3. FOUR-STEP WORKFLOW BANNER (Clean Professional Container) */}
     <div
-      class="bg-brand-950 text-white rounded-[2rem] p-8 sm:p-10 lg:p-12 border border-brand-800/60"
+      class="bg-brand-900 text-white rounded-[2rem] p-8 sm:p-10 lg:p-12 border border-brand-800/60"
     >
       <div class="mb-12 text-center max-w-2xl mx-auto">
         <span
-          class="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-3 block"
+          class="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-3"
         >
           The Booking Process
         </span>

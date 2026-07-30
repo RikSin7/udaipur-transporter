@@ -205,6 +205,7 @@ const homeCollection = defineCollection({
     })).optional().default([]),
 
     // 2. Why Choose Us Section
+    whyChooseUsBadge: z.string().default("Our Promise"),
     whyChooseUsHeading: z.string().default("Why Travellers Choose Us"),
     whyChooseUsItems: z.array(z.object({
       icon: z.string(),

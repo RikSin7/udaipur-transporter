@@ -53,6 +53,12 @@ collections:
               - { label: "Text", name: "text", widget: "string" }
 
           - {
+              label: "Why Choose Us Badge",
+              name: "whyChooseUsBadge",
+              widget: "string",
+              default: "Our Promise",
+            }
+          - {
               label: "Why Choose Us Heading",
               name: "whyChooseUsHeading",
               widget: "string",

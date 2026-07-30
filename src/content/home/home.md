@@ -14,6 +14,7 @@ heroFeatures:
     text: "Clear service info before you decide"
 
 # 2. Why Choose Us Section
+whyChooseUsBadge: "Our Promise"
 whyChooseUsHeading: "Why Travellers Choose Us"
 whyChooseUsItems:
   - icon: "IconFileDescription"

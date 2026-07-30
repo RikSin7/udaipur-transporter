@@ -12,24 +12,23 @@ const { featuredServices } = Astro.props;
 
 <section class="py-16 lg:py-20 bg-surface border-b border-border/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div
-      class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
-    >
-      <div class="max-w-2xl">
-        <span
-          class="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2 block"
-        >
+    <div class="flex flex-col mb-12">
+      {/* Section Header */}
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3">
           Featured Services
         </span>
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand mb-3">
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2">
           What We Drive for You
         </h2>
-        <p class="text-typography-muted text-base leading-relaxed">
-          Choose from owner-approved transport categories. We offer transparent
-          pricing structures and reliable driver allocation for every journey.
+        <p class="text-sm sm:text-base text-typography-muted">
+          Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey.
         </p>
+        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
       </div>
-      <div class="hidden sm:block shrink-0 self-start md:self-auto">
+
+      {/* Action Button */}
+      <div class="hidden sm:flex justify-end mt-6">
         <ViewAllButton
           href="/services/"
           text="View All Services"

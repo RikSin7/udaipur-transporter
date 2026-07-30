@@ -81,22 +81,17 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
   >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Section Heading */}
-      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-        <span
-          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
-        >
+      <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3">
           {homeData.enquiryBadge}
         </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight"
-        >
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2">
           {homeData.enquiryTitle}
         </h2>
-        <p
-          class="text-typography-muted text-sm sm:text-base mt-2 leading-relaxed"
-        >
+        <p class="text-sm sm:text-base text-typography-muted leading-relaxed">
           {homeData.enquiryDesc}
         </p>
+        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
       </div>
 
       <EnquiryForm />

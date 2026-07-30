@@ -270,21 +270,29 @@ const inputBaseClasses =
   </div>
 
   {/* SECTION 4: PASSENGERS & SPECIAL REQUESTS */}
-  <details class="space-y-4 pt-2 group">
-    <summary
-      class="flex items-center gap-2 border-b border-brand-100/60 pb-2 cursor-pointer list-none appearance-none focus:outline-none [&::-webkit-details-marker]:hidden"
+  <div class="space-y-4 pt-2 group" data-open="false" id="passenger-group">
+    <button
+      type="button"
+      id="passenger-toggle"
+      class="w-full flex items-center gap-2 border-b border-brand-100/60 pb-2 cursor-pointer focus:outline-none bg-transparent"
     >
       <span
         class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
         >4</span
       >
       <h4
-        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase flex-1"
+        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase flex-1 text-left"
       >
         Passenger Details
       </h4>
+      <div
+        class="hidden sm:flex items-center text-[10px] uppercase tracking-wider font-bold text-typography-muted mr-3 transition-opacity"
+      >
+        <span class="group-data-[open=true]:hidden">Collapsed</span>
+        <span class="hidden group-data-[open=true]:block">Expanded</span>
+      </div>
       <span
-        class="text-brand-900 group-open:rotate-180 transition-transform duration-300"
+        class="text-brand-900 group-data-[open=true]:rotate-180 transition-transform duration-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -298,130 +306,136 @@ const inputBaseClasses =
           stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg
         >
       </span>
-    </summary>
+    </button>
 
-    <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
-      {/* Adults - 33.3% Width on desktop, 50% on mobile */}
-      <div class="col-span-1 md:col-span-4">
-        <label
-          for="adults"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
-        >
-          Adults
-        </label>
-        <div
-          class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
-        >
-          <button
-            type="button"
-            class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-            data-target="adults"
-            aria-label="Decrease adults"
-          >
-            <IconMinus size={18} stroke={2} />
-          </button>
-          <input
-            type="number"
-            id="adults"
-            name="adults"
-            min="1"
-            value="2"
-            class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
-          />
-          <button
-            type="button"
-            class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-            data-target="adults"
-            aria-label="Increase adults"
-          >
-            <IconPlus size={18} stroke={2} />
-          </button>
-        </div>
-      </div>
+    <div
+      class="grid transition-[grid-template-rows] duration-300 ease-in-out [grid-template-rows:0fr] group-data-[open=true]:[grid-template-rows:1fr]"
+    >
+      <div class="overflow-hidden">
+        <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
+          {/* Adults - 33.3% Width on desktop, 50% on mobile */}
+          <div class="col-span-1 md:col-span-4">
+            <label
+              for="adults"
+              class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+            >
+              Adults
+            </label>
+            <div
+              class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
+            >
+              <button
+                type="button"
+                class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+                data-target="adults"
+                aria-label="Decrease adults"
+              >
+                <IconMinus size={18} stroke={2} />
+              </button>
+              <input
+                type="number"
+                id="adults"
+                name="adults"
+                min="1"
+                value="2"
+                class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
+              />
+              <button
+                type="button"
+                class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+                data-target="adults"
+                aria-label="Increase adults"
+              >
+                <IconPlus size={18} stroke={2} />
+              </button>
+            </div>
+          </div>
 
-      {/* Children - 33.3% Width on desktop, 50% on mobile */}
-      <div class="col-span-1 md:col-span-4">
-        <label
-          for="children"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-        >
-          <span>Children</span>
-          <span class="text-typography-muted font-normal text-[10px]"
-            >(Under 12)</span
-          >
-        </label>
-        <div
-          class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
-        >
-          <button
-            type="button"
-            class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-            data-target="children"
-            aria-label="Decrease children"
-          >
-            <IconMinus size={18} stroke={2} />
-          </button>
-          <input
-            type="number"
-            id="children"
-            name="children"
-            min="0"
-            value="0"
-            class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
-          />
-          <button
-            type="button"
-            class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-            data-target="children"
-            aria-label="Increase children"
-          >
-            <IconPlus size={18} stroke={2} />
-          </button>
-        </div>
-      </div>
+          {/* Children - 33.3% Width on desktop, 50% on mobile */}
+          <div class="col-span-1 md:col-span-4">
+            <label
+              for="children"
+              class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+            >
+              <span>Children</span>
+              <span class="text-typography-muted font-normal text-[10px]"
+                >(Under 12)</span
+              >
+            </label>
+            <div
+              class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
+            >
+              <button
+                type="button"
+                class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+                data-target="children"
+                aria-label="Decrease children"
+              >
+                <IconMinus size={18} stroke={2} />
+              </button>
+              <input
+                type="number"
+                id="children"
+                name="children"
+                min="0"
+                value="0"
+                class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
+              />
+              <button
+                type="button"
+                class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+                data-target="children"
+                aria-label="Increase children"
+              >
+                <IconPlus size={18} stroke={2} />
+              </button>
+            </div>
+          </div>
 
-      {/* Luggage Bags - 33.3% Width on desktop, 100% on mobile */}
-      <div class="col-span-2 md:col-span-4">
-        <label
-          for="bags"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-        >
-          <span>Luggage Bags</span>
-          <span class="text-typography-muted font-normal text-[10px]"
-            >(Large Suitcases)</span
-          >
-        </label>
-        <div
-          class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
-        >
-          <button
-            type="button"
-            class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-            data-target="bags"
-            aria-label="Decrease bags"
-          >
-            <IconMinus size={18} stroke={2} />
-          </button>
-          <input
-            type="number"
-            id="bags"
-            name="bags"
-            min="0"
-            value="0"
-            class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
-          />
-          <button
-            type="button"
-            class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-            data-target="bags"
-            aria-label="Increase bags"
-          >
-            <IconPlus size={18} stroke={2} />
-          </button>
+          {/* Luggage Bags - 33.3% Width on desktop, 100% on mobile */}
+          <div class="col-span-2 md:col-span-4">
+            <label
+              for="bags"
+              class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+            >
+              <span>Luggage Bags</span>
+              <span class="text-typography-muted font-normal text-[10px]"
+                >(Large Suitcases)</span
+              >
+            </label>
+            <div
+              class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
+            >
+              <button
+                type="button"
+                class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+                data-target="bags"
+                aria-label="Decrease bags"
+              >
+                <IconMinus size={18} stroke={2} />
+              </button>
+              <input
+                type="number"
+                id="bags"
+                name="bags"
+                min="0"
+                value="0"
+                class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
+              />
+              <button
+                type="button"
+                class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+                data-target="bags"
+                aria-label="Increase bags"
+              >
+                <IconPlus size={18} stroke={2} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </details>
+  </div>
 
   {/* SECTION 5: SPECIAL REQUESTS */}
   <div class="pt-2">
@@ -635,4 +649,14 @@ const inputBaseClasses =
       }
     }
   });
+
+  // Passenger Details Toggle
+  const passengerToggle = document.getElementById("passenger-toggle");
+  const passengerGroup = document.getElementById("passenger-group");
+  if (passengerToggle && passengerGroup) {
+    passengerToggle.addEventListener("click", () => {
+      const isOpen = passengerGroup.getAttribute("data-open") === "true";
+      passengerGroup.setAttribute("data-open", String(!isOpen));
+    });
+  }
 </script>

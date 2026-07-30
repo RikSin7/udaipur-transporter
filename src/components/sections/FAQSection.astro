@@ -20,33 +20,22 @@ const publishedFaqs = allFaqs
 >
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* 1. SECTION HEADER WITH DESKTOP NAVIGATION CTA */}
-    <div
-      class="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6"
-    >
-      <div>
-        <div
-          class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent bg-brand-100/80 px-3 py-1 rounded-full mb-3"
-        >
-          <IconHelpCircle
-            size={14}
-            stroke={2}
-            className="text-accent shrink-0"
-          />
-          <span>Clear Answers</span>
-        </div>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight"
-        >
+    <div class="flex flex-col mb-12 sm:mb-16">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3">
+          Clear Answers
+        </span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2">
           Frequently Asked Questions
         </h2>
-        <p class="text-typography-muted text-sm sm:text-base mt-2 max-w-xl">
-          Straightforward facts regarding our pricing rules, vehicle
-          allocations, and booking confirmation process.
+        <p class="text-sm sm:text-base text-typography-muted">
+          Straightforward facts regarding our pricing rules, vehicle allocations, and booking confirmation process.
         </p>
+        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
       </div>
 
       {/* DESKTOP NAVIGATION BUTTON (Hidden on mobile) */}
-      <div class="hidden sm:block shrink-0 self-start md:self-auto">
+      <div class="hidden sm:flex justify-end mt-6">
         <ViewAllButton href="/faqs/" text="View All FAQs" variant="desktop" />
       </div>
     </div>

@@ -1,16 +1,48 @@
 @import "tailwindcss";
-@import "@fontsource/playfair-display";
+@import "@fontsource/cormorant-garamond";
+@import "@fontsource/marcellus";
 @import "@fontsource/poppins";
+@import "@fontsource/playfair-display";
+
+/* Option 1: The Heritage Concierge */
+@import "@fontsource/lora";
+@import "@fontsource/inter";
+
+/* Option 2: The Majestic Palace */
+@import "@fontsource/cinzel";
+@import "@fontsource/montserrat";
+
+/* Option 3: The Modern Premium */
+@import "@fontsource/fraunces";
+@import "@fontsource/dm-sans";
 
 @theme {
   /* Typography */
 
   --font-sans: "Poppins", "ui-sans-serif", system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
-  --font-heading: var(--font-serif);
+
+  /* --font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif; */
+  /* --font-sans: "Inter", "ui-sans-serif", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+
+  /* =======================================================
+     OPTION 2: CINZEL + MONTSERRAT (Commented Out)
+     Vibe: Bold, Historical, Architectural
+     To use: Uncomment the two lines below, comment Option 1
+     ======================================================= */
+  /* --font-serif: "Cinzel", Georgia, Cambria, "Times New Roman", Times, serif; */
+  /* --font-sans: "Montserrat", "ui-sans-serif", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; */
+
+  /* =======================================================
+     OPTION 3: FRAUNCES + DM SANS (Commented Out)
+     Vibe: Modern, High-End, Sleek
+     To use: Uncomment the two lines below, comment Option 1
+     ======================================================= */
+  /* --font-serif: "Fraunces", Georgia, Cambria, "Times New Roman", Times, serif; */
+  /* --font-sans: "DM Sans", "ui-sans-serif", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; */
+
 
   /* BRAND */
-
   --color-brand-50: #F3F6F4;
   --color-brand-100: #E9EFEA;
   --color-brand-200: #CBD8D3;
