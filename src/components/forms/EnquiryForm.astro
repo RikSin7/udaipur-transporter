@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { IconSend, IconMinus, IconPlus } from "@tabler/icons-astro";
+import { cn } from "../../utils/cn";
 
 interface Props {
   defaultService?: string;
@@ -22,6 +23,9 @@ const publishedServices = allServices.filter((s) => s.data.published);
 
 const allVehicles = await getCollection("vehicles").catch(() => []);
 const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
+
+const inputBaseClasses =
+  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all";
 ---
 
 <form
@@ -85,7 +89,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           name="name"
           required
           placeholder="e.g. Rajesh Kumar"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
 
@@ -103,11 +107,9 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           name="phone"
           required
           placeholder="+91 98765 43210"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
-
-
     </div>
   </div>
 
@@ -140,7 +142,8 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
         <select
           id="service"
           name="service"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer transition-all"
+          required
+          class={cn(inputBaseClasses, "font-medium text-brand-900 cursor-pointer")}
         >
           <option value="">-- Custom Route / General Quote --</option>
           {
@@ -170,7 +173,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
         <select
           id="vehicle"
           name="vehicle"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface font-medium text-brand-900 cursor-pointer transition-all"
+          class={cn(inputBaseClasses, "font-medium text-brand-900 cursor-pointer")}
         >
           <option value="">-- I'm Not Sure / Recommend Me a Vehicle --</option>
           {
@@ -217,7 +220,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           name="pickup"
           required
           placeholder="e.g. Dabok Airport / Taj Lake Palace"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
 
@@ -235,7 +238,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           name="drop"
           required
           placeholder="e.g. Hotel drop, Mount Abu Day Trip, or 8 Hrs Sightseeing"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all"
+          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
         />
       </div>
 
@@ -252,7 +255,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           id="travelDate"
           name="travelDate"
           required
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface text-brand-900 transition-all"
+          class={cn(inputBaseClasses, "text-brand-900")}
         />
       </div>
 
@@ -271,7 +274,7 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           type="time"
           id="pickupTime"
           name="pickupTime"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface text-brand-900 transition-all"
+          class={cn(inputBaseClasses, "text-brand-900")}
         />
       </div>
 
@@ -290,7 +293,8 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           type="date"
           id="returnDate"
           name="returnDate"
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface text-brand-900 transition-all"
+          min={new Date().toISOString().split("T")[0]}
+          class={cn(inputBaseClasses, "text-brand-900")}
         />
       </div>
     </div>
@@ -319,8 +323,15 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
         >
           Adults <span class="text-red-500">*</span>
         </label>
-        <div class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all">
-          <button type="button" class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="adults" aria-label="Decrease adults">
+        <div
+          class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
+        >
+          <button
+            type="button"
+            class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+            data-target="adults"
+            aria-label="Decrease adults"
+          >
             <IconMinus size={18} stroke={2} />
           </button>
           <input
@@ -332,7 +343,12 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             required
             class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
           />
-          <button type="button" class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="adults" aria-label="Increase adults">
+          <button
+            type="button"
+            class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+            data-target="adults"
+            aria-label="Increase adults"
+          >
             <IconPlus size={18} stroke={2} />
           </button>
         </div>
@@ -349,8 +365,15 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             >(Under 12)</span
           >
         </label>
-        <div class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all">
-          <button type="button" class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="children" aria-label="Decrease children">
+        <div
+          class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
+        >
+          <button
+            type="button"
+            class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+            data-target="children"
+            aria-label="Decrease children"
+          >
             <IconMinus size={18} stroke={2} />
           </button>
           <input
@@ -361,7 +384,12 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             value="0"
             class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
           />
-          <button type="button" class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="children" aria-label="Increase children">
+          <button
+            type="button"
+            class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+            data-target="children"
+            aria-label="Increase children"
+          >
             <IconPlus size={18} stroke={2} />
           </button>
         </div>
@@ -378,8 +406,15 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             >(Large Suitcases)</span
           >
         </label>
-        <div class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all">
-          <button type="button" class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="bags" aria-label="Decrease bags">
+        <div
+          class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
+        >
+          <button
+            type="button"
+            class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+            data-target="bags"
+            aria-label="Decrease bags"
+          >
             <IconMinus size={18} stroke={2} />
           </button>
           <input
@@ -390,7 +425,12 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
             value="0"
             class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
           />
-          <button type="button" class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer" data-target="bags" aria-label="Increase bags">
+          <button
+            type="button"
+            class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
+            data-target="bags"
+            aria-label="Increase bags"
+          >
             <IconPlus size={18} stroke={2} />
           </button>
         </div>
@@ -411,8 +451,8 @@ const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
           id="message"
           name="message"
           rows="3"
-          placeholder="Provide flight/train details for airport transfers (e.g. 6E 2134 arriving 10:30 AM), or list preferred sightseeing stops..."
-          class="w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface placeholder:text-typography-muted transition-all leading-relaxed resize-y"
+          placeholder="Let us know if you need child seats, wheelchair accessibility, or have a specific itinerary..."
+          class={cn(inputBaseClasses, "placeholder:text-typography-muted leading-relaxed resize-y")}
         ></textarea>
       </div>
     </div>

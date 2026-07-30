@@ -8,6 +8,7 @@ import {
   IconShieldCheck,
   IconCar,
 } from "@tabler/icons-astro";
+import { cn } from "../../utils/cn";
 
 export interface Props {
   review: CollectionEntry<"reviews">;
@@ -38,7 +39,7 @@ const containerClass = [
         {[...Array(ratingCount)].map(() => <IconStarFilled size={16} />)}
       </div>
       <div
-        class="text-brand-100/60 group-hover:text-brand-900 transition-colors"
+        class="text-brand-300 group-hover:text-brand-900 transition-colors"
       >
         <IconQuote size={28} stroke={1.5} />
       </div>
@@ -46,7 +47,7 @@ const containerClass = [
 
     {/* Review Comment */}
     <p
-      class={`text-typography-muted text-sm sm:text-base leading-relaxed italic mb-8 ${variant === "carousel" ? "line-clamp-5 sm:line-clamp-4" : ""}`}
+      class={cn("text-typography-muted text-sm sm:text-base leading-relaxed italic mb-8", variant === "carousel" && "line-clamp-5 sm:line-clamp-4")}
     >
       "{item.comment}"
     </p>

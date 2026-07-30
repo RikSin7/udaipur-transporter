@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
+import { cn } from "../../utils/cn";
 import { getWhatsAppUrl, formatDate } from "../../utils/helpers";
 import { IconArrowRight, IconArrowLeft, IconBrandWhatsapp } from "@tabler/icons-astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
@@ -101,9 +102,7 @@ const whatsappUrl = getWhatsAppUrl(
             <button
               type="button"
               data-category={cat}
-              class={`blog-filter-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 cursor-pointer ${
-                idx === 0 ? activeStyle : inactiveStyle
-              }`}
+              class={cn("blog-filter-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 cursor-pointer", idx === 0 ? activeStyle : inactiveStyle)}
             >
               {cat}
             </button>
