@@ -63,10 +63,13 @@ const homeData = homeEntries[0]?.data || {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          class="bg-white/14 hover:bg-white/24 border border-white/50 text-white font-semibold px-6 py-3.5 rounded-xl shadow-md transition-all text-sm tracking-wide flex items-center gap-2 active:scale-95"
+          class="group bg-surface-card hover:bg-success border border-transparent hover:border-success text-brand-950 hover:text-white font-semibold px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 text-sm tracking-wide flex items-center gap-2 active:scale-95"
         >
-          <IconBrandWhatsapp class="w-5 h-5 text-emerald-400" stroke={2} /> WhatsApp
-          Us
+          <IconBrandWhatsapp
+            class="w-5 h-5 text-success group-hover:text-white transition-all duration-300"
+            stroke={2}
+          />
+          <span>WhatsApp Us</span>
         </a>
       </div>
     </div>
@@ -80,7 +83,8 @@ const homeData = homeEntries[0]?.data || {
       >
         {
           homeData.heroFeatures.map((item: any, idx: number) => {
-            const Icon = iconResolver[item.icon] || iconResolver.IconShieldCheck;
+            const Icon =
+              iconResolver[item.icon] || iconResolver.IconShieldCheck;
             return (
               <div
                 class={`flex items-center gap-3.5 ${idx !== 0 ? "pt-4 sm:pt-0 sm:pl-4 lg:pl-6" : ""}`}

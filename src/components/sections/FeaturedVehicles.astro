@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import VehicleCard from '../cards/VehicleCard.astro';
-import { IconArrowRight } from '@tabler/icons-astro';
+import ViewAllButton from '../ui/ViewAllButton.astro';
 
 interface Props {
   featuredVehicles: CollectionEntry<'vehicles'>[];
@@ -26,13 +26,7 @@ const { featuredVehicles } = Astro.props;
         </p>
       </div>
       <div class="hidden sm:block shrink-0 self-start md:self-auto">
-        <a 
-          href="/vehicles/" 
-          class="inline-flex items-center gap-2 bg-surface-card border border-brand-100 hover:border-brand-900 text-brand-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow group active:scale-95"
-        >
-          <span>Explore Full Fleet</span>
-          <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
-        </a>
+        <ViewAllButton href="/vehicles/" text="Explore Full Fleet" variant="desktop" />
       </div>
     </div>
 
@@ -49,13 +43,7 @@ const { featuredVehicles } = Astro.props;
     )}
 
     <div class="mt-8 text-center sm:hidden">
-      <a 
-        href="/vehicles/" 
-        class="w-full inline-flex items-center justify-center gap-2 bg-brand-900 text-white font-bold px-6 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md group active:scale-95"
-      >
-        <span>Explore Full Fleet</span>
-        <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
-      </a>
+      <ViewAllButton href="/vehicles/" text="Explore Full Fleet" variant="mobile" />
     </div>
 
   </div>

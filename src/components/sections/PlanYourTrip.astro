@@ -1,10 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import BlogCard from "../cards/BlogCard.astro";
-import {
-  IconArrowRight as TablerArrowRight,
-  IconCompass as TablerCompass,
-} from "@tabler/icons-astro";
+import ViewAllButton from "../ui/ViewAllButton.astro";
+import { IconCompass as TablerCompass } from "@tabler/icons-astro";
 
 // 1. Fetch published articles and sort newest to oldest
 const allArticles = await getCollection("blog").catch(() => []);
@@ -53,17 +51,11 @@ const displayArticles =
 
       {/* DESKTOP NAVIGATION CTA */}
       <div class="hidden sm:block shrink-0 self-start md:self-auto">
-        <a
+        <ViewAllButton
           href="/blog/"
-          class="inline-flex items-center gap-2 bg-surface-card border border-brand-100 hover:border-brand-900 text-brand-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow group active:scale-95"
-        >
-          <span>View All Transport Guides</span>
-          <TablerArrowRight
-            size={16}
-            stroke={2}
-            class="text-accent group-hover:translate-x-1 transition-transform"
-          />
-        </a>
+          text="View All Transport Guides"
+          variant="desktop"
+        />
       </div>
     </div>
 
@@ -74,17 +66,11 @@ const displayArticles =
 
     {/* 3. MOBILE NAVIGATION CTA */}
     <div class="text-center sm:hidden mt-8">
-      <a
+      <ViewAllButton
         href="/blog/"
-        class="w-full inline-flex items-center justify-center gap-2 bg-brand-900 text-white font-bold px-6 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md group active:scale-95"
-      >
-        <span>View All Transport Guides</span>
-        <TablerArrowRight
-          size={16}
-          stroke={2}
-          class="text-accent group-hover:translate-x-1 transition-transform"
-        />
-      </a>
+        text="View All Transport Guides"
+        variant="mobile"
+      />
     </div>
   </div>
 </section>

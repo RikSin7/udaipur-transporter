@@ -5,6 +5,7 @@ import {
   IconHelpCircle,
   IconArrowRight,
 } from "@tabler/icons-astro";
+import ViewAllButton from "../ui/ViewAllButton.astro";
 
 // 1. Fetch published FAQs and sort ascending by 'order'
 const allFaqs = await getCollection("faqs").catch(() => []);
@@ -46,17 +47,7 @@ const publishedFaqs = allFaqs
 
       {/* DESKTOP NAVIGATION BUTTON (Hidden on mobile) */}
       <div class="hidden sm:block shrink-0 self-start md:self-auto">
-        <a
-          href="/faqs/"
-          class="inline-flex items-center gap-2 bg-surface-card border border-brand-100 hover:border-brand-900 text-brand-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow group active:scale-95"
-        >
-          <span>View All FAQs</span>
-          <IconArrowRight
-            size={16}
-            stroke={2}
-            class="text-accent group-hover:translate-x-1 transition-transform"
-          />
-        </a>
+        <ViewAllButton href="/faqs/" text="View All FAQs" variant="desktop" />
       </div>
     </div>
 
@@ -99,17 +90,7 @@ const publishedFaqs = allFaqs
 
     {/* 3. MOBILE NAVIGATION BUTTON (Visible only on small screens) */}
     <div class="mt-8 text-center sm:hidden">
-      <a
-        href="/faqs/"
-        class="w-full inline-flex items-center justify-center gap-2 bg-brand-900 text-white font-bold px-6 py-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md group active:scale-95"
-      >
-        <span>View All FAQs</span>
-        <IconArrowRight
-          size={16}
-          stroke={2}
-          class="text-accent group-hover:translate-x-1 transition-transform"
-        />
-      </a>
+      <ViewAllButton href="/faqs/" text="View All FAQs" variant="mobile" />
     </div>
 
     {/* 4. FOOTER CROSS-LINK TO DIRECT ENQUIRY */}

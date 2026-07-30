@@ -25,14 +25,14 @@ const navLinks = [
 ---
 
 <header
-  class="bg-[rgba(251,247,239,0.90)] backdrop-blur-md text-typography-main sticky top-0 z-40 border-b border-border shadow-sm"
+  class="bg-[rgba(251,247,239,0.95)] backdrop-blur-md text-typography-main sticky top-0 z-40 border-b border-border shadow-sm"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-20">
       {/* 1. Brand Identity */}
       <a href="/" class="flex flex-col group focus:outline-none">
         <span
-          class="font-serif text-md sm:text-xl font-bold tracking-wide text-brand-900 group-hover:text-accent transition-colors"
+          class="font-serif text-md sm:text-xl font-bold tracking-wide text-brand-900 group-hover:text-accent-dark transition-colors"
         >
           {site.companyName}
         </span>
@@ -51,9 +51,10 @@ const navLinks = [
           navLinks.map((link) => (
             <a
               href={link.href}
-              class="text-typography-main hover:text-brand-900 transition-colors py-2"
+              class="group relative text-typography-main hover:text-accent-dark transition-colors py-2"
             >
               {link.label}
+              <span class="absolute bottom-0 left-0 w-full h-[2px] bg-accent-dark scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out rounded-full" />
             </a>
           ))
         }
@@ -89,7 +90,9 @@ const navLinks = [
       </div>
 
       {/* Medium Desktop / Tablet Fallback */}
-      <div class="hidden md:flex xl:hidden items-center space-x-2.5 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 lg:static lg:translate-x-0 lg:translate-y-0">
+      <div
+        class="hidden md:flex xl:hidden items-center space-x-2.5 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 lg:static lg:translate-x-0 lg:translate-y-0"
+      >
         <a
           href={callUrl}
           class="bg-surface-card border border-border-dark p-2.5 rounded-xl text-brand-900 hover:border-brand-900 transition-colors"
@@ -170,7 +173,7 @@ const navLinks = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="block px-3 py-2.5 rounded-xl text-base font-medium text-typography-main hover:bg-brand-100/50 hover:text-brand-900 transition-colors"
+            class="block px-3 py-2.5 rounded-xl text-base font-medium text-typography-main hover:bg-brand-50 hover:text-accent hover:translate-x-1.5 transition-all duration-300"
           >
             {link.label}
           </a>
