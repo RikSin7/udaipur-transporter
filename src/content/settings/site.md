@@ -1,7 +1,7 @@
 ---
 companyName: "Udaipur Royal Transporter"
-phone: "+91 98765 43210"
-whatsapp: "919876543210"
+phone: "+91 70458 36164"
+whatsapp: "917045836164"
 email: "bookings@udaipurroyaltransporter.com"
 address: "Udaipur, Rajasthan, India"
 operatingHours: "24/7 Support"

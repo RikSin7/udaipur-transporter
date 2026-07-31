@@ -3,21 +3,20 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/layout/Header.astro";
 import {
-  IconHelpCircle,
   IconChevronDown,
   IconArrowRight,
-  IconMessage2,
   IconPhoneCall,
-  IconCompass,
+  IconBrandWhatsapp,
 } from "@tabler/icons-astro";
 import { getWhatsAppUrl, getCallUrl, slugify } from "../utils/helpers";
+import TabBar from "../components/ui/TabBar.astro";
 
 // 1. Fetch Singleton Business Settings
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 70458 36164",
+  whatsapp: "917045836164",
 };
 
 // 2. Fetch All Published FAQs & Sort by Order
@@ -26,7 +25,7 @@ const publishedFaqs = allFaqs
   .filter((f) => f.data.published)
   .sort((a, b) => a.data.order - b.data.order);
 
-// 3. Define Approved Categories in Logical Display Sequence
+// 3. Define Approved Categories
 const categories = [
   "General & Booking",
   "Pricing & Tariffs",
@@ -66,7 +65,7 @@ const whatsappUrl = getWhatsAppUrl(
 
   {/* 1. HERO BANNER */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div
       class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
@@ -74,7 +73,6 @@ const whatsappUrl = getWhatsAppUrl(
       <div
         class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full mb-4"
       >
-        <IconHelpCircle size={16} stroke={2} className="text-accent shrink-0" />
         <span>Operational Transparency</span>
       </div>
       <h1
@@ -88,53 +86,40 @@ const whatsappUrl = getWhatsAppUrl(
         Everything you need to know about our owner-approved pricing, driver
         allowances, luggage limits, and direct booking confirmation process.
       </p>
-
-      {/* QUICK-JUMP CATEGORY PILLS */}
-      <div
-        class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2"
-      >
-        {
-          groupedFaqs.map((group) => (
-            <a
-              href={`#${group.slug}`}
-              class="bg-brand-800/80 hover:bg-accent hover:text-white text-brand-100 text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-brand-700/60 transition-all active:scale-95 shadow-sm"
-            >
-              {group.categoryName} ({group.faqs.length})
-            </a>
-          ))
-        }
-      </div>
     </div>
   </section>
 
-  {/* 2. CATEGORIZED ACCORDION CONTENT */}
-  <section class="py-16 lg:py-20 bg-surface">
+  {/* 2. FLOATING TAB BAR NAVIGATION */}
+  <TabBar
+    mode="anchor"
+    tabClass="faq-tab-btn"
+    tabs={groupedFaqs.map((group) => ({
+      label: group.categoryName,
+      badge: group.faqs.length,
+      slug: group.slug,
+    }))}
+  />
+
+  {/* 3. CATEGORIZED ACCORDION CONTENT */}
+  <section id="faq-wrapper" class="py-12 bg-surface">
     <div
       class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20"
     >
       {
         groupedFaqs.map((group, groupIndex) => (
           <div id={group.slug} class="scroll-mt-24">
-            {/* Category Section Header */}
             <div class="border-b border-brand-100 pb-4 mb-6 flex items-center justify-between">
-              <div>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-accent block mb-1">
-                  Section 0{groupIndex + 1}
-                </span>
-                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tracking-tight">
-                  {group.categoryName}
-                </h2>
-              </div>
+              <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tracking-tight">
+                {group.categoryName}
+              </h2>
               <span class="text-xs font-semibold text-typography-muted bg-surface-alt px-3 py-1 rounded-full border border-brand-100 hidden sm:inline-block">
                 {group.faqs.length}{" "}
                 {group.faqs.length === 1 ? "Answer" : "Answers"}
               </span>
             </div>
 
-            {/* Category Accordion Group */}
             <div class="space-y-4">
               {group.faqs.map((faq, faqIndex) => {
-                // Open ONLY the very first question of the first category by default
                 const isDefaultOpen = groupIndex === 0 && faqIndex === 0;
                 return (
                   <div
@@ -151,7 +136,6 @@ const whatsappUrl = getWhatsAppUrl(
                         <IconChevronDown size={18} stroke={2.5} />
                       </div>
                     </button>
-
                     <div
                       class="faq-content transition-all duration-300 ease-in-out overflow-hidden"
                       style={
@@ -172,14 +156,13 @@ const whatsappUrl = getWhatsAppUrl(
     </div>
   </section>
 
-  {/* 3. RELATED SERVICES & TRANSPORT LINKS */}
-  <section class="py-16 bg-surface-alt/40 border-t border-brand-100">
+  {/* 4. RELATED SERVICES & TRANSPORT LINKS */}
+  <section class="py-12 bg-surface-alt/40 border-t border-brand-100">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-2xl mx-auto mb-10">
         <div
-          class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent bg-brand-100 px-3 py-1 rounded-full mb-2"
+          class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100 px-3 py-1 rounded-full mb-2"
         >
-          <IconCompass size={14} stroke={2} className="text-accent shrink-0" />
           <span>Explore Transport Options</span>
         </div>
         <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">
@@ -191,7 +174,6 @@ const whatsappUrl = getWhatsAppUrl(
         </p>
       </div>
 
-      {/* 3-Column Related Services Grid */}
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
         {
           topServices.map((service) => (
@@ -200,7 +182,7 @@ const whatsappUrl = getWhatsAppUrl(
               class="bg-surface-card border border-brand-100 rounded-xl p-5 shadow-sm hover:shadow-premium hover:border-brand-800 transition-all group flex flex-col justify-between"
             >
               <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-accent block mb-1">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-accent-dark block mb-1">
                   {service.data.category}
                 </span>
                 <h3 class="font-serif text-base font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
@@ -220,7 +202,6 @@ const whatsappUrl = getWhatsAppUrl(
         }
       </div>
 
-      {/* Fleet Cross-Link Button */}
       <div class="text-center">
         <a
           href="/vehicles/"
@@ -237,14 +218,13 @@ const whatsappUrl = getWhatsAppUrl(
     </div>
   </section>
 
-  {/* 4. DIRECT CONTACT CTA BANNER */}
-  <section class="py-16 bg-brand-900 text-white border-t border-brand-800">
+  {/* 5. DIRECT CONTACT CTA BANNER */}
+  <section class="py-12 bg-brand-900 text-white border-t border-brand-800">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <span
         class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+        >Still Have Questions?</span
       >
-        Still Have Questions?
-      </span>
       <h2
         class="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3"
       >
@@ -259,18 +239,15 @@ const whatsappUrl = getWhatsAppUrl(
       </p>
 
       <div class="flex flex-wrap items-center justify-center gap-4">
-        {/* WhatsApp Action */}
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-sm flex items-center gap-2.5 active:scale-95"
         >
-          <IconMessage2 size={20} stroke={2} />
+          <IconBrandWhatsapp size={20} stroke={2} />
           <span>Chat on WhatsApp</span>
         </a>
-
-        {/* Call Action */}
         <a
           href={callUrl}
           class="bg-surface-card hover:bg-surface text-brand-900 font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2.5 active:scale-95"
@@ -278,8 +255,6 @@ const whatsappUrl = getWhatsAppUrl(
           <IconPhoneCall size={20} stroke={2} className="text-accent" />
           <span>Call {site.phone}</span>
         </a>
-
-        {/* Online Form Action */}
         <a
           href="/contact/"
           class="group bg-brand-800 hover:bg-brand-700 text-white font-bold px-8 py-4 rounded-xl border border-brand-700 shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
@@ -296,87 +271,106 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 </BaseLayout>
 
-{/* Global Single-Open Accordion Controller */}
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
 <script>
-  function initGlobalFaqAccordion() {
-    const triggers = document.querySelectorAll(".faq-trigger");
+  function initFAQPage() {
+    // --- 1. Tab Bar Scrollspy ---
+    const tabs = document.querySelectorAll(".faq-tab-btn");
+    let isClickScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
-    triggers.forEach((trigger) => {
-      // Clone node to safely purge ghost listeners during Astro SPA routing
-      const newTrigger = trigger.cloneNode(true) as HTMLElement;
-      trigger.parentNode?.replaceChild(newTrigger, trigger);
-
-      newTrigger.addEventListener("click", () => {
-        const parent = newTrigger.closest(".faq-item") as HTMLElement;
-        const content = parent?.querySelector(".faq-content") as HTMLElement;
-        const icon = newTrigger.querySelector(".faq-icon") as HTMLElement;
-        const isOpen = newTrigger.getAttribute("aria-expanded") === "true";
-
-        if (!parent || !content) return;
-
-        // STEP 1: EXCLUSIVE GLOBAL CLOSING LOGIC
-        // Close every open FAQ across ALL categories before opening the target
-        if (!isOpen) {
-          document
-            .querySelectorAll('.faq-item[data-open="true"]')
-            .forEach((openItem) => {
-              if (openItem !== parent) {
-                const openTrigger = openItem.querySelector(
-                  ".faq-trigger",
-                ) as HTMLElement;
-                const openContent = openItem.querySelector(
-                  ".faq-content",
-                ) as HTMLElement;
-                const openIcon = openItem.querySelector(
-                  ".faq-icon",
-                ) as HTMLElement;
-
-                if (openTrigger)
-                  openTrigger.setAttribute("aria-expanded", "false");
-                openItem.setAttribute("data-open", "false");
-                if (openContent) {
-                  openContent.style.maxHeight = "0px";
-                  openContent.style.opacity = "0";
-                }
-                if (openIcon) openIcon.style.transform = "rotate(0deg)";
-              }
-            });
-        }
-
-        // STEP 2: TOGGLE TARGET ITEM
-        if (isOpen) {
-          newTrigger.setAttribute("aria-expanded", "false");
-          parent.setAttribute("data-open", "false");
-          content.style.maxHeight = "0px";
-          content.style.opacity = "0";
-          if (icon) icon.style.transform = "rotate(0deg)";
-        } else {
-          newTrigger.setAttribute("aria-expanded", "true");
-          parent.setAttribute("data-open", "true");
-          content.style.maxHeight = `${content.scrollHeight}px`;
-          content.style.opacity = "1";
-          if (icon) icon.style.transform = "rotate(180deg)";
-        }
+    const setActive = (activeHref: string) => {
+      tabs.forEach((btn) => {
+        const isMatch = btn.getAttribute("href") === activeHref;
+        btn.setAttribute("aria-selected", String(isMatch));
+        if (isMatch)
+          btn.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
       });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isClickScrolling) return;
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(`#${e.target.id}`);
+        });
+      },
+      { rootMargin: "-25% 0px -75% 0px", threshold: 0 },
+    );
+
+    tabs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const href = btn.getAttribute("href");
+        if (href) setActive(href);
+        isClickScrolling = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => (isClickScrolling = false), 1000);
+      });
+      const href = btn.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        const target = document.querySelector(href);
+        if (target) observer.observe(target);
+      }
     });
 
-    // Set dynamic pixel heights for default opened items on initial render
-    document.querySelectorAll('.faq-item[data-open="true"]').forEach((item) => {
+    // --- 2. Global Event Delegation Accordion ---
+    const wrapper = document.getElementById("faq-wrapper");
+    if (!wrapper || wrapper.dataset.init === "true") return;
+    wrapper.dataset.init = "true";
+
+    const toggleFaq = (item: HTMLElement, open: boolean) => {
+      item.setAttribute("data-open", String(open));
+      const trigger = item.querySelector(".faq-trigger");
       const content = item.querySelector(".faq-content") as HTMLElement;
       const icon = item.querySelector(".faq-icon") as HTMLElement;
+
+      if (trigger) trigger.setAttribute("aria-expanded", String(open));
       if (content) {
-        content.style.maxHeight = `${content.scrollHeight}px`;
-        content.style.opacity = "1";
+        content.style.maxHeight = open ? `${content.scrollHeight}px` : "0px";
+        content.style.opacity = open ? "1" : "0";
       }
-      if (icon) {
-        icon.style.transform = "rotate(180deg)";
-      }
+      if (icon) icon.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
+    };
+
+    wrapper.addEventListener("click", (e) => {
+      const trigger = (e.target as HTMLElement).closest(".faq-trigger");
+      if (!trigger) return;
+
+      const currentItem = trigger.closest(".faq-item") as HTMLElement;
+      const isOpen = currentItem.getAttribute("data-open") === "true";
+
+      // Close all currently open FAQs globally
+      wrapper
+        .querySelectorAll('.faq-item[data-open="true"]')
+        .forEach((openItem) => {
+          if (openItem !== currentItem)
+            toggleFaq(openItem as HTMLElement, false);
+        });
+
+      // Toggle clicked item
+      toggleFaq(currentItem, !isOpen);
     });
+
+    // Mount initial heights
+    wrapper
+      .querySelectorAll('.faq-item[data-open="true"]')
+      .forEach((item) => toggleFaq(item as HTMLElement, true));
   }
 
-  // Execute on initial DOM load
-  initGlobalFaqAccordion();
-
-  // Execute on Astro View Transition SPA navigation
-  document.addEventListener("astro:page-load", initGlobalFaqAccordion);
+  // Execute and register for SPA transitions
+  initFAQPage();
+  document.addEventListener("astro:page-load", initFAQPage);
 </script>

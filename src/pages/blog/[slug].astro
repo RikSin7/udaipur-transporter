@@ -61,8 +61,8 @@ const formattedDate = formatDate(publishDate, "long");
 // Fetch business settings for direct WhatsApp URLs
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 70458 36164",
+  whatsapp: "917045836164",
   companyName: "Udaipur Royal Transporter",
 };
 const whatsappUrl = getWhatsAppUrl(
@@ -81,7 +81,7 @@ const whatsappUrl = getWhatsAppUrl(
 
   {/* 1. ARTICLE HERO HEADER */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
@@ -129,7 +129,7 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 2. ARTICLE BODY & SIDEBAR FUNNEL */}
-  <section class="py-16 lg:py-20 bg-surface">
+  <section class="py-12 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Markdown Content & Inline Banner */}
@@ -156,7 +156,7 @@ const whatsappUrl = getWhatsAppUrl(
             class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-sm"
           >
             <div
-              class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-a:text-accent prose-blockquote:border-l-accent prose-blockquote:bg-surface-alt/50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg"
+              class="prose md:prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-a:text-accent prose-blockquote:border-l-accent prose-blockquote:bg-surface-alt/50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg"
             >
               <Content />
             </div>
@@ -296,9 +296,9 @@ const whatsappUrl = getWhatsAppUrl(
   {/* 3. RELATED ARTICLES FOOTER */}
   {
     relatedArticles.length > 0 && (
-      <section class="py-16 bg-surface-alt/40 border-t border-brand-100">
+      <section class="py-12 bg-surface-alt/40 border-t border-brand-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center max-w-2xl mx-auto mb-12">
+          <div class="text-left max-w-2xl mb-12">
             <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-2">
               More Transport Planning Guides
             </h2>

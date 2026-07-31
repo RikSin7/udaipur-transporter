@@ -49,77 +49,57 @@ const inputBaseClasses =
           id="hero-name"
           name="name"
           required
-          placeholder="e.g. Hrithik Roshan"
+          placeholder="Hrithik Roshan"
           class={cn(
             inputBaseClasses,
-            "placeholder:text-typography-muted font-normal",
+            "placeholder:text-shadow-typography-muted font-normal",
           )}
         />
       </div>
 
-      {/* Phone / WhatsApp - Half width on sm+ */}
+      {/* Phone */}
       <div>
         <label
           for="hero-phone"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Mobile / WhatsApp <span class="text-red-500">*</span>
+          Mobile <span class="text-red-500">*</span>
         </label>
         <input
           type="tel"
           id="hero-phone"
           name="phone"
           required
-          placeholder="+91 98765 43210"
+          placeholder="+91 70458 36164"
           class={cn(
             inputBaseClasses,
-            "placeholder:text-typography-muted font-normal",
+            "placeholder:text-shadow-typography-muted font-normal",
           )}
         />
       </div>
     </div>
 
-    {/* Service Dropdown - Full width */}
-    <div>
-      <label
-        for="hero-service"
-        class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-      >
-        <span>Required Service / Transfer</span>
-      </label>
-      <select
-        id="hero-service"
-        name="service"
-        class={cn(inputBaseClasses, "cursor-pointer font-medium")}
-      >
-        <option value="">-- Select Service --</option>
-        {
-          publishedServices.map((s) => (
-            <option value={s.data.title}>{s.data.title}</option>
-          ))
-        }
-      </select>
-    </div>
-
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {/* Pickup Location - Half width on sm+ */}
+      {/* Service - Half width on sm+ */}
       <div>
         <label
-          for="hero-pickup"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+          for="hero-service"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
         >
-          Pickup Location / Hotel
+          <span>Required Service</span>
         </label>
-        <input
-          type="text"
-          id="hero-pickup"
-          name="pickup"
-          placeholder="e.g. Airport / Taj Lake Palace"
-          class={cn(
-            inputBaseClasses,
-            "placeholder:text-typography-muted font-normal",
-          )}
-        />
+        <select
+          id="hero-service"
+          name="service"
+          class={cn(inputBaseClasses, "cursor-pointer font-medium")}
+        >
+          <option value="">General Enquiry</option>
+          {
+            publishedServices.map((s) => (
+              <option value={s.data.title}>{s.data.title}</option>
+            ))
+          }
+        </select>
       </div>
 
       {/* Travel Date - Half width on sm+ */}
@@ -136,6 +116,48 @@ const inputBaseClasses =
           name="travelDate"
           min={new Date().toISOString().split("T")[0]}
           class={cn(inputBaseClasses, "text-brand-900")}
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Pickup Location - Half width on sm+ */}
+      <div>
+        <label
+          for="hero-pickup"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        >
+          Pickup Location
+        </label>
+        <input
+          type="text"
+          id="hero-pickup"
+          name="pickup"
+          placeholder="Airport"
+          class={cn(
+            inputBaseClasses,
+            "placeholder:text-shadow-typography-muted font-normal",
+          )}
+        />
+      </div>
+
+      {/* Drop Location - Half width on sm+ */}
+      <div>
+        <label
+          for="hero-drop"
+          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        >
+          Drop Location
+        </label>
+        <input
+          type="text"
+          id="hero-drop"
+          name="drop"
+          placeholder="Hotel"
+          class={cn(
+            inputBaseClasses,
+            "placeholder:text-shadow-typography-muted font-normal",
+          )}
         />
       </div>
     </div>

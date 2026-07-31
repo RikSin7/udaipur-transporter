@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import VehicleCard from "../../components/cards/VehicleCard.astro";
 import { getCollection } from "astro:content";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
-
+import FAQSection from "../../components/sections/FAQSection.astro";
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
@@ -18,7 +18,7 @@ const vehicles = await getCollection("vehicles").catch(() => []);
 >
   {/* 1. HERO BANNER */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
@@ -43,7 +43,7 @@ const vehicles = await getCollection("vehicles").catch(() => []);
   </section>
 
   {/* 2. VEHICLE LISTINGS */}
-  <section class="py-16 lg:py-20 bg-surface">
+  <section class="py-12 bg-surface">
     <div
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-20"
     >
@@ -78,4 +78,5 @@ const vehicles = await getCollection("vehicles").catch(() => []);
   </section>
 
   <CatalogueSupportCTA type="vehicles" />
+  <FAQSection />
 </BaseLayout>

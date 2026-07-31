@@ -4,11 +4,21 @@
 export function getWhatsAppUrl(phone: string, serviceName?: string, pageUrl?: string): string {
     const cleanPhone = phone.replace(/\D/g, '');
 
-    let message = "Hello, I would like to enquire about private transport in Udaipur.";
+    let message = "Hello! I am planning a trip and would love some help booking private transport in Udaipur. Could you please share some details and quotes with me?";
+
     if (serviceName) {
-        message = `Hello, I am enquiring about ${serviceName}.`;
-        if (pageUrl) {
-            message += `\nPage: ${pageUrl}`;
+        const lowerName = serviceName.toLowerCase();
+        const isGeneric =
+            lowerName.includes('about') ||
+            lowerName.includes('contact') ||
+            lowerName.includes('general') ||
+            lowerName.includes('faq') ||
+            lowerName.includes('article') ||
+            lowerName.includes('blog') ||
+            lowerName.includes('review') ||
+            lowerName.includes('transport planning')
+        if (!isGeneric) {
+            message = `Hello! I am planning a trip and would love some help. I am specifically interested in booking the ${serviceName}. Could you please share more details, availability, and pricing with me?`;
         }
     }
 

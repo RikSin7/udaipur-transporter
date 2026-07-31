@@ -4,7 +4,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import { slugify } from "../../utils/helpers";
-import { cn } from "../../utils/cn";
 import {
   IconPlane,
   IconMapPin,
@@ -15,22 +14,22 @@ import {
 } from "@tabler/icons-astro";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
+import TabBar from "../../components/ui/TabBar.astro";
 
 // 1. Fetch singleton business settings
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 70458 36164",
 };
 
-// 2. Fetch all published services and sort ascending by order
+// 2. Fetch all published services
 const allServices = await getCollection("services").catch(() => []);
 const publishedServices = allServices
   .filter((s) => s.data.published)
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
-// 3. Define category metadata with subtitles and JSX icon references
+// 3. Define category metadata
 const categoryMetadata: Record<string, { subtitle: string; icon: any }> = {
   Transfers: {
     subtitle:
@@ -67,7 +66,7 @@ const categoryOrder = [
   "Additional",
 ] as const;
 
-// 4. Group services by category (skips categories with 0 published services)
+// 4. Group services by category
 const groupedServices = categoryOrder
   .map((category) => ({
     category,
@@ -89,15 +88,14 @@ const groupedServices = categoryOrder
 
   {/* 1. HERO BANNER */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
         <span
           class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+          >Our Services</span
         >
-          Our Services
-        </span>
         <h1
           class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
         >
@@ -114,36 +112,16 @@ const groupedServices = categoryOrder
     </div>
   </section>
 
-  {/* 2. FLOATING TAB BAR NAVIGATION (Reference Image 1) */}
-  <div
-    class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none"
-  >
-    <div
-      class="max-w-4xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
-    >
-      {
-        groupedServices.map((group, idx) => {
-          const activeStyle =
-            "bg-brand-900 text-white shadow-sm border-brand-900";
-          const inactiveStyle =
-            "bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)] border-transparent";
-          return (
-            <a
-              href={`#${group.slug}`}
-              class={cn("service-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 flex items-center gap-2 cursor-pointer", idx === 0 ? activeStyle : inactiveStyle)}
-            >
-              <span>{group.category}</span>
-              <span
-                class={cn("service-tab-badge text-[10px] px-1.5 py-0.5 rounded-md font-semibold transition-colors duration-200", idx === 0 ? "bg-brand-800 text-accent" : "bg-brand-100/80 text-brand-900")}
-              >
-                {group.services.length}
-              </span>
-            </a>
-          );
-        })
-      }
-    </div>
-  </div>
+  {/* 2. FLOATING TAB BAR NAVIGATION (Refactored to State-Driven CSS) */}
+  <TabBar
+    mode="anchor"
+    tabClass="service-tab-btn"
+    tabs={groupedServices.map((group) => ({
+      label: group.category,
+      badge: group.services.length,
+      slug: group.slug,
+    }))}
+  />
 
   {/* 3. CATEGORISED SERVICE LISTINGS */}
   <section class="pt-16 pb-16 lg:pt-20 lg:pb-24 bg-surface">
@@ -155,12 +133,10 @@ const groupedServices = categoryOrder
           groupedServices.map((group) => {
             const IconComponent = group.metadata.icon;
             return (
-              /* scroll-mt-32 prevents sticky headers and tab bars from covering titles */
               <div
                 id={group.slug}
                 class="scroll-mt-32 border-b border-brand-100/80 pb-16 last:border-b-0 last:pb-0"
               >
-                {/* Category Header with Icon Badge & Subtitle Paragraph */}
                 <div class="mb-10">
                   <div class="flex items-center gap-3.5 mb-1">
                     <div class="w-10 h-10 rounded-xl bg-brand-900 text-accent flex items-center justify-center shrink-0 shadow-sm">
@@ -170,16 +146,11 @@ const groupedServices = categoryOrder
                       {group.category}
                     </h2>
                   </div>
-
                   <p class="text-sm sm:text-base text-typography-muted font-normal max-w-2xl leading-relaxed pl-13 sm:pl-13">
                     {group.metadata.subtitle}
                   </p>
-
-                  {/* Elegant Half-Underline Separator */}
                   <div class="mt-4 border-b border-brand-100/80 w-full" />
                 </div>
-
-                {/* Category Cards Grid */}
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {group.services.map((service) => (
                     <ServiceCard service={service} />
@@ -189,7 +160,6 @@ const groupedServices = categoryOrder
             );
           })
         ) : (
-          /* Empty State Fallback */
           <div class="bg-surface-alt border border-brand-100 rounded-2xl p-12 text-center max-w-2xl mx-auto">
             <div class="w-12 h-12 rounded-xl bg-brand-900 text-accent flex items-center justify-center mx-auto mb-4">
               <IconCar size={24} stroke={2} />
@@ -199,8 +169,7 @@ const groupedServices = categoryOrder
             </h3>
             <p class="text-sm text-typography-muted mb-6">
               Our content administrators are currently updating the transport
-              catalogue. Please check back soon or contact us directly for
-              immediate travel bookings.
+              catalogue.
             </p>
             <a
               href="/contact/"
@@ -215,11 +184,9 @@ const groupedServices = categoryOrder
   </section>
 
   <CatalogueSupportCTA type="services" />
-
-  {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
   <FAQSection />
 
-  {/* 6. MANDATORY PRD SERVICE GUIDANCE DISCLAIMER */}
+  {/* 6. DISCLAIMER */}
   <section class="py-12 bg-surface-alt/50 border-t border-brand-100/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
@@ -234,7 +201,6 @@ const groupedServices = categoryOrder
   </section>
 </BaseLayout>
 
-{/* Hide Scrollbar for Horizontal Mobile Tab Bar */}
 <style>
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -248,83 +214,45 @@ const groupedServices = categoryOrder
   }
 </style>
 
-{/* Client-Side Scrollspy Engine */}
 <script>
   function initServiceScrollspy() {
-    const tabBtns = document.querySelectorAll(".service-tab-btn");
-    const activeClasses = [
-      "bg-brand-900",
-      "text-white",
-      "shadow-sm",
-      "border-brand-900",
-    ];
-    const inactiveClasses = [
-      "bg-[var(--color-surface-alt,#E9EFEA)]",
-      "text-brand-900",
-      "hover:border-brand-900",
-      "hover:text-[var(--color-accent-dark,#8D671D)]",
-      "border-transparent",
-    ];
-    const badgeActiveClasses = ["bg-brand-800", "text-accent"];
-    const badgeInactiveClasses = ["bg-brand-100/80", "text-brand-900"];
-
+    const tabs = document.querySelectorAll(".service-tab-btn");
     let isClickScrolling = false;
     let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
-    const updatePills = (activeHref: string | null) => {
-      tabBtns.forEach((btn) => {
-        const href = btn.getAttribute("href");
-        const badge = btn.querySelector(".service-tab-badge");
-        if (href === activeHref) {
-          btn.classList.remove(...inactiveClasses);
-          btn.classList.add(...activeClasses);
-          if (badge) {
-            badge.classList.remove(...badgeInactiveClasses);
-            badge.classList.add(...badgeActiveClasses);
-          }
-          // Center the active pill horizontally if inside a scrollable container
-          btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        } else {
-          btn.classList.remove(...activeClasses);
-          btn.classList.add(...inactiveClasses);
-          if (badge) {
-            badge.classList.remove(...badgeActiveClasses);
-            badge.classList.add(...badgeInactiveClasses);
-          }
-        }
+    // Helper: Pass the href to activate, it handles the rest.
+    const setActive = (activeHref: string) => {
+      tabs.forEach((btn) => {
+        const isMatch = btn.getAttribute("href") === activeHref;
+        btn.setAttribute("aria-selected", String(isMatch));
+        if (isMatch)
+          btn.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
       });
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (isClickScrolling) return; // Skip observer updates during click-triggered smooth scroll
-
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const activeId = entry.target.getAttribute("id");
-            updatePills(`#${activeId}`);
-          }
+        if (isClickScrolling) return;
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(`#${e.target.id}`);
         });
       },
-      {
-        rootMargin: "-25% 0px -75% 0px", // Trigger when section hits the upper quarter of the viewport
-        threshold: 0
-      }
+      { rootMargin: "-25% 0px -75% 0px", threshold: 0 },
     );
 
-    tabBtns.forEach((btn) => {
+    tabs.forEach((btn) => {
       btn.addEventListener("click", () => {
         const href = btn.getAttribute("href");
-        updatePills(href);
-
+        if (href) setActive(href);
         isClickScrolling = true;
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          isClickScrolling = false;
-        }, 1000); 
+        scrollTimeout = setTimeout(() => (isClickScrolling = false), 1000);
       });
 
-      // Register sections with the observer
       const href = btn.getAttribute("href");
       if (href && href.startsWith("#")) {
         const target = document.querySelector(href);

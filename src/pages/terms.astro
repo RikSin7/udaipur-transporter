@@ -13,7 +13,7 @@ import Header from "../components/layout/Header.astro";
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
-  phone: "+91 98765 43210",
+  phone: "+91 70458 36164",
   email: "bookings@udaipurtransporter.com",
   address:
     "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
@@ -42,7 +42,7 @@ const { Content } = await render(termsEntry);
 
   {/* 1. HERO BANNER WITH LUXURY DEPTH */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     {/* Subtle Background */}
     <div
@@ -105,14 +105,14 @@ const { Content } = await render(termsEntry);
   </section>
 
   {/* 2. DOCUMENTATION BODY */}
-  <section class="py-16 lg:py-20 bg-surface">
+  <section class="py-12 bg-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
         class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-12 shadow-sm"
       >
         {/* Rendered Markdown */}
         <div
-          class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1.5 prose-a:text-accent prose-a:font-semibold hover:prose-a:underline prose-blockquote:border-l-accent prose-blockquote:bg-surface-alt/50 prose-blockquote:py-2.5 prose-blockquote:px-5 prose-blockquote:rounded-r-xl"
+          class="prose md:prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-900 prose-p:text-typography-muted prose-p:leading-relaxed prose-li:text-typography-muted prose-strong:text-brand-900 prose-ul:space-y-1.5 prose-a:text-accent prose-a:font-semibold hover:prose-a:underline prose-blockquote:border-l-accent prose-blockquote:bg-surface-alt/50 prose-blockquote:py-2.5 prose-blockquote:px-5 prose-blockquote:rounded-r-xl"
         >
           <Content />
         </div>

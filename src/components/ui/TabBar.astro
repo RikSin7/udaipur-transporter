@@ -1,0 +1,62 @@
+---
+interface Tab {
+  label: string;
+  badge?: number | string;
+  slug?: string;
+  category?: string;
+}
+
+interface Props {
+  mode: "anchor" | "filter";
+  tabs: Tab[];
+  tabClass?: string;
+}
+
+const { mode, tabs, tabClass = "" } = Astro.props;
+---
+
+<div class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none">
+  <div
+    class="max-w-4xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
+  >
+    {
+      tabs.map((tab, idx) => {
+        const isFirst = idx === 0;
+        const commonClasses = `${tabClass} group shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 flex items-center gap-2 cursor-pointer bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 border-transparent hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)]`;
+
+        if (mode === "anchor") {
+          return (
+            <a
+              href={`#${tab.slug}`}
+              aria-selected={isFirst ? "true" : "false"}
+              class={`${commonClasses} aria-selected:bg-brand-900 aria-selected:text-white aria-selected:border-brand-900 aria-selected:shadow-sm aria-selected:hover:text-white`}
+            >
+              <span>{tab.label}</span>
+              {tab.badge !== undefined && (
+                <span class="text-[10px] px-1.5 py-0.5 rounded-md font-semibold transition-colors duration-200 bg-brand-100/80 text-brand-900 group-aria-selected:bg-brand-800 group-aria-selected:text-accent">
+                  {tab.badge}
+                </span>
+              )}
+            </a>
+          );
+        } else {
+          return (
+            <button
+              type="button"
+              data-category={tab.category}
+              aria-pressed={isFirst ? "true" : "false"}
+              class={`${commonClasses} aria-pressed:bg-brand-900 aria-pressed:text-white aria-pressed:border-brand-900 aria-pressed:shadow-sm aria-pressed:hover:text-white`}
+            >
+              <span>{tab.label}</span>
+              {tab.badge !== undefined && (
+                <span class="text-[10px] px-1.5 py-0.5 rounded-md font-semibold transition-colors duration-200 bg-brand-100/80 text-brand-900 group-aria-pressed:bg-brand-800 group-aria-pressed:text-accent">
+                  {tab.badge}
+                </span>
+              )}
+            </button>
+          );
+        }
+      })
+    }
+  </div>
+</div>

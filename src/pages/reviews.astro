@@ -16,8 +16,8 @@ import ReviewCard from "../components/cards/ReviewCard.astro";
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 70458 36164",
+  whatsapp: "917045836164",
 };
 
 // 2. Fetch All Reviews & Sort Ascending by Order
@@ -51,7 +51,7 @@ const whatsappUrl = getWhatsAppUrl(
 
   {/* 1. HERO BANNER & AGGREGATE SCORECARD */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -150,7 +150,7 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 2. RESPONSIVE 3-COLUMN TESTIMONIAL GRID */}
-  <section class="py-16 lg:py-20 bg-surface">
+  <section class="py-12 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {
         displayReviews.length > 0 ? (
@@ -183,7 +183,7 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 3. DIRECT ACTION BANNER */}
-  <section class="py-16 bg-surface-alt/70 border-t border-brand-100">
+  <section class="py-12 bg-surface-alt/70 border-t border-brand-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
         class="bg-brand-900 text-white rounded-2xl p-8 sm:p-12 shadow-premium flex flex-col lg:flex-row items-center justify-between gap-8"

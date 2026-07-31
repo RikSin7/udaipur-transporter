@@ -25,7 +25,7 @@ const publishedServices = allServices.filter((s) => s.data.published);
 const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
 
 const inputBaseClasses =
-  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all placeholder:text-typography-muted";
+  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";
 
 // Array map to prevent HTML repetition for counters
 const passengerCounters = [
@@ -70,26 +70,8 @@ const passengerCounters = [
   <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
   <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
 
-  {/* Header */}
-  <div class="border-b border-brand-100 pb-5">
-    <h3 class="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
-      Send Travel Request
-    </h3>
-    <p class="text-sm text-typography-muted mt-1.5 leading-relaxed">
-      Fill out your travel requirements below. Our Udaipur dispatch team will
-      calculate exact road distances and contact you directly to confirm rates.
-    </p>
-  </div>
-
   {/* Section 1: Contact */}
   <div class="space-y-4">
-    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
-      <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
-        >1</span
-      >
-      <h4 class="font-serif font-bold uppercase">Contact Information</h4>
-    </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
       <div class="md:col-span-6">
         <label for="name" class="block text-xs font-bold uppercase mb-1.5"
@@ -100,20 +82,20 @@ const passengerCounters = [
           id="name"
           name="name"
           required
-          placeholder="e.g. Hrithik Roshan"
+          placeholder="Hrithik Roshan"
           class={inputBaseClasses}
         />
       </div>
       <div class="md:col-span-6">
         <label for="phone" class="block text-xs font-bold uppercase mb-1.5"
-          >Mobile / WhatsApp <span class="text-red-500">*</span></label
+          >Mobile <span class="text-red-500">*</span></label
         >
         <input
           type="tel"
           id="phone"
           name="phone"
           required
-          placeholder="+91 98765 43210"
+          placeholder="+91 70458 36164"
           class={inputBaseClasses}
         />
       </div>
@@ -122,13 +104,6 @@ const passengerCounters = [
 
   {/* Section 2: Service & Vehicle */}
   <div class="space-y-4 pt-2">
-    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
-      <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
-        >2</span
-      >
-      <h4 class="font-serif font-bold uppercase">Transport & Vehicle</h4>
-    </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
       <div class="md:col-span-6">
         <label
@@ -142,7 +117,7 @@ const passengerCounters = [
           name="service"
           class={cn(inputBaseClasses, "font-medium cursor-pointer")}
         >
-          <option value="">-- Select Service --</option>
+          <option value="General Enquiry">General Enquiry</option>
           {
             publishedServices.map((s) => (
               <option
@@ -167,7 +142,7 @@ const passengerCounters = [
           name="vehicle"
           class={cn(inputBaseClasses, "font-medium cursor-pointer")}
         >
-          <option value="">-- Recommend a Vehicle --</option>
+          <option value="General Recommendation">Recommend a Vehicle</option>
           {
             publishedVehicles.map((v) => (
               <option
@@ -185,13 +160,6 @@ const passengerCounters = [
 
   {/* Section 3: Schedule */}
   <div class="space-y-4 pt-2">
-    <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
-      <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
-        >3</span
-      >
-      <h4 class="font-serif font-bold uppercase">Schedule & Route</h4>
-    </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
       <div class="md:col-span-4">
         <label for="pickup" class="block text-xs font-bold uppercase mb-1.5"
@@ -202,7 +170,7 @@ const passengerCounters = [
           id="pickup"
           name="pickup"
           required
-          placeholder="e.g. Airport"
+          placeholder="Airport"
           class={inputBaseClasses}
         />
       </div>
@@ -215,7 +183,7 @@ const passengerCounters = [
           id="drop"
           name="drop"
           required
-          placeholder="e.g. Hotel"
+          placeholder="Hotel"
           class={inputBaseClasses}
         />
       </div>
@@ -237,104 +205,57 @@ const passengerCounters = [
   </div>
 
   {/* Section 4: Passengers (Refactored to map) */}
-  <div class="space-y-4 pt-2 group" data-open="false" id="passenger-group">
-    <button
-      type="button"
-      id="passenger-toggle"
-      class="w-full flex items-center gap-2 border-b border-brand-100/60 pb-2 cursor-pointer bg-transparent"
-    >
-      <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
-        >4</span
-      >
-      <h4 class="font-serif font-bold uppercase flex-1 text-left">
-        Passenger Details
-      </h4>
-
-      {/* Restored Collapsed/Expanded Text */}
-      <div
-        class="hidden sm:flex items-center text-[10px] uppercase tracking-wider font-bold text-typography-muted mr-3 transition-opacity"
-      >
-        <span class="group-data-[open=true]:hidden">Collapsed</span>
-        <span class="hidden group-data-[open=true]:block">Expanded</span>
-      </div>
-
-      {/* Restored Original SVG Chevron */}
-      <span
-        class="text-brand-900 group-data-[open=true]:rotate-180 transition-transform duration-300"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg
-        >
-      </span>
-    </button>
-
-    <div
-      class="grid transition-[grid-template-rows] duration-300 ease-in-out [grid-template-rows:0fr] group-data-[open=true]:[grid-template-rows:1fr]"
-    >
-      <div class="overflow-hidden">
-        <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
-          {
-            passengerCounters.map((c) => (
-              <div class={c.span}>
-                <label
-                  for={c.id}
-                  class="flex justify-between text-xs font-bold uppercase mb-1.5"
-                >
-                  <span>{c.label}</span>{" "}
-                  {c.sub && (
-                    <span class="font-normal text-[10px]">{c.sub}</span>
-                  )}
-                </label>
-                <div class="relative flex items-center h-[52px] bg-surface rounded-xl border border-brand-100 focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] transition-all overflow-hidden">
-                  <button
-                    type="button"
-                    class="qty-minus w-12 h-full flex justify-center items-center hover:bg-brand-50"
-                    data-target={c.id}
-                  >
-                    <IconMinus size={18} />
-                  </button>
-                  <input
-                    type="number"
-                    id={c.id}
-                    name={c.id}
-                    min={c.min}
-                    value={c.val}
-                    class="flex-1 w-full text-center outline-none bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium"
-                  />
-                  <button
-                    type="button"
-                    class="qty-plus w-12 h-full flex justify-center items-center hover:bg-brand-50"
-                    data-target={c.id}
-                  >
-                    <IconPlus size={18} />
-                  </button>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
+  <div class="space-y-4 pt-2">
+    <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
+      {
+        passengerCounters.map((c) => (
+          <div class={c.span}>
+            <label
+              for={c.id}
+              class="flex justify-between text-xs font-bold uppercase mb-1.5"
+            >
+              <span>{c.label}</span>{" "}
+              {c.sub && <span class="font-normal text-[10px]">{c.sub}</span>}
+            </label>
+            <div class="relative flex items-center h-[52px] bg-surface rounded-xl border border-brand-100 focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] transition-all overflow-hidden">
+              <button
+                type="button"
+                class="qty-minus w-12 h-full flex justify-center items-center hover:bg-brand-50"
+                data-target={c.id}
+              >
+                <IconMinus size={18} />
+              </button>
+              <input
+                type="number"
+                id={c.id}
+                name={c.id}
+                min={c.min}
+                value={c.val}
+                class="flex-1 w-full text-center outline-none bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium"
+              />
+              <button
+                type="button"
+                class="qty-plus w-12 h-full flex justify-center items-center hover:bg-brand-50"
+                data-target={c.id}
+              >
+                <IconPlus size={18} />
+              </button>
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
   {/* Section 5: Message & Submit */}
   <div class="pt-2">
     <label for="message" class="block text-xs font-bold uppercase mb-1.5"
-      >Message / Special Requests</label
+      >Additional Message</label
     >
     <textarea
       id="message"
       name="message"
       rows="3"
-      placeholder="Flight details, child seats..."
+      placeholder="Any special requests or requirements..."
       class={inputBaseClasses}></textarea>
   </div>
 
@@ -367,7 +288,7 @@ const passengerCounters = [
 
 <script>
   function initFormLogic() {
-    // 1. Dynamic Auto-fill Logic
+    // 1. Auto-fill Logic
     const params = new URLSearchParams(window.location.search);
     for (const [key, val] of params.entries()) {
       const el = document.getElementById(key) as
@@ -385,7 +306,7 @@ const passengerCounters = [
           else
             select.insertAdjacentHTML(
               "beforeend",
-              `<option value="${val}" selected>${val} (Auto-filled)</option>`,
+              `<option value="${val}" selected>${val}</option>`,
             );
         } else {
           el.value = val;
@@ -434,17 +355,6 @@ const passengerCounters = [
         if (btn.classList.contains("qty-plus"))
           input.value = String(current + 1);
       }
-    }
-
-    // Toggle Passenger Accordion
-    const toggle = target.closest("#passenger-toggle");
-    if (toggle) {
-      const group = document.getElementById("passenger-group");
-      if (group)
-        group.setAttribute(
-          "data-open",
-          group.getAttribute("data-open") === "true" ? "false" : "true",
-        );
     }
   });
 </script>

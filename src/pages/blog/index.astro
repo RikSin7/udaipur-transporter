@@ -4,19 +4,24 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
-import { cn } from "../../utils/cn";
 import { getWhatsAppUrl, formatDate } from "../../utils/helpers";
-import { IconArrowRight, IconArrowLeft, IconBrandWhatsapp } from "@tabler/icons-astro";
+import {
+  IconArrowRight,
+  IconArrowLeft,
+  IconBrandWhatsapp,
+} from "@tabler/icons-astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
+import TabBar from "../../components/ui/TabBar.astro";
 
 // 1. Fetch Singleton Business Settings
 const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 70458 36164",
+  whatsapp: "917045836164",
 };
 
+// 2. Fetch and Sort Articles
 const allArticles = await getCollection("blog").catch(() => []);
 const publishedArticles = allArticles
   .filter((a) => a.data.published)
@@ -28,7 +33,6 @@ const publishedArticles = allArticles
 
 // 3. Separate Featured and Standard Articles
 const featuredArticles = publishedArticles.filter((a) => a.data.featured);
-// Fallback: If 0 articles are checked as featured in CMS, fall back to newest 1 article so layout doesn't break
 const displayFeatured =
   featuredArticles.length > 0
     ? featuredArticles
@@ -47,7 +51,6 @@ const categories = [
   "Pricing & Quotes",
   "Travel Tips",
 ];
-
 const whatsappUrl = getWhatsAppUrl(
   site.whatsapp,
   "Blog / Transport Planning",
@@ -63,15 +66,14 @@ const whatsappUrl = getWhatsAppUrl(
 
   {/* 1. HERO BANNER */}
   <section
-    class="bg-brand-900 text-white py-14 lg:py-20 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl">
         <span
           class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
+          >Travel Planning Resources</span
         >
-          Travel Planning Resources
-        </span>
         <h1
           class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
         >
@@ -86,31 +88,14 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 2. FLOATING CATEGORY TAB BAR */}
-  <div
-    class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none"
-  >
-    <div
-      class="max-w-4xl mx-auto bg-surface-card/95 backdrop-blur-md border border-brand-100 rounded-2xl p-2 sm:p-2.5 shadow-premium flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pointer-events-auto"
-    >
-      {
-        categories.map((cat, idx) => {
-          const activeStyle =
-            "bg-brand-900 text-white shadow-sm border-brand-900";
-          const inactiveStyle =
-            "bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 hover:border-brand-900 hover:text-[var(--color-accent-dark,#8D671D)] border-transparent";
-          return (
-            <button
-              type="button"
-              data-category={cat}
-              class={cn("blog-filter-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 cursor-pointer", idx === 0 ? activeStyle : inactiveStyle)}
-            >
-              {cat}
-            </button>
-          );
-        })
-      }
-    </div>
-  </div>
+  <TabBar
+    mode="filter"
+    tabClass="blog-filter-btn"
+    tabs={categories.map((cat) => ({
+      label: cat,
+      category: cat,
+    }))}
+  />
 
   {/* 3. ARTICLES CONTAINER */}
   <section class="pt-16 pb-16 lg:pt-20 lg:pb-24 bg-surface">
@@ -118,7 +103,6 @@ const whatsappUrl = getWhatsAppUrl(
       {
         publishedArticles.length > 0 ? (
           <>
-            {/* FEATURED BLOG STACK */}
             {displayFeatured.length > 0 && (
               <div class="space-y-8" id="featured-articles-stack">
                 {displayFeatured.map((article) => (
@@ -143,15 +127,12 @@ const whatsappUrl = getWhatsAppUrl(
                               {formatDate(article.data.publishDate)}
                             </span>
                           </div>
-
                           <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-3">
                             {article.data.title}
                           </h2>
-
                           <p class="text-sm sm:text-base text-typography-muted leading-relaxed line-clamp-3 mb-6">
                             {article.data.summary}
                           </p>
-
                           <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent">
                             <span>Read full step-by-step guide</span>
                             <IconArrowRight
@@ -161,7 +142,6 @@ const whatsappUrl = getWhatsAppUrl(
                             />
                           </span>
                         </div>
-
                         {article.data.image && (
                           <div class="shrink-0 w-full lg:w-72 h-48 rounded-xl overflow-hidden bg-surface-alt border border-brand-100">
                             <Image
@@ -180,7 +160,6 @@ const whatsappUrl = getWhatsAppUrl(
               </div>
             )}
 
-            {/* STANDARD ARTICLES GRID */}
             <div
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               id="blog-grid"
@@ -195,7 +174,6 @@ const whatsappUrl = getWhatsAppUrl(
               ))}
             </div>
 
-            {/* NO ARTICLES IN SELECTED CATEGORY FALLBACK */}
             <div
               id="category-empty-state"
               class="hidden bg-surface-card border border-brand-100 rounded-2xl p-10 sm:p-14 text-center max-w-2xl mx-auto my-4 shadow-sm"
@@ -208,15 +186,18 @@ const whatsappUrl = getWhatsAppUrl(
               </h3>
               <p class="text-sm sm:text-base text-typography-muted mb-8 max-w-md mx-auto leading-relaxed">
                 We haven't published any travel articles in this topic yet.
-                Explore our other category tabs to read helpful transport guides
-                for your trip.
+                Explore our other category tabs.
               </p>
               <button
                 type="button"
                 id="reset-category-btn"
                 class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-flex items-center justify-center gap-2 shadow-sm active:scale-95 cursor-pointer"
               >
-                <IconArrowLeft size={16} stroke={2} class="text-accent group-hover:-translate-x-1 transition-transform" />
+                <IconArrowLeft
+                  size={16}
+                  stroke={2}
+                  class="text-accent group-hover:-translate-x-1 transition-transform"
+                />
                 <span>View All Guides</span>
               </button>
             </div>
@@ -229,8 +210,7 @@ const whatsappUrl = getWhatsAppUrl(
             </h3>
             <p class="text-sm text-typography-muted mb-6">
               Our editorial team is currently drafting helpful transport
-              planning guides. In the meantime, you can explore our vehicle
-              fleet or send an inquiry directly.
+              planning guides.
             </p>
             <a
               href="/contact/"
@@ -245,23 +225,26 @@ const whatsappUrl = getWhatsAppUrl(
   </section>
 
   {/* 4. CONVERSION BANNER */}
-  <section class="py-16 bg-surface-alt/70 border-t border-brand-100">
+  <section class="py-12 bg-surface-alt/70 border-t border-brand-100">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-3">
         Ready to book your vehicle?
       </h2>
       <p class="text-sm text-typography-muted mb-8 max-w-xl mx-auto">
-        Skip the guesswork. Share your travel dates and passenger count with our
-        local team for a straightforward, owner-approved price quote.
+        Skip the guesswork. Share your travel dates and passenger count for a
+        straightforward, owner-approved price quote.
       </p>
-
       <div class="flex flex-wrap items-center justify-center gap-4">
         <a
           href="/services/"
           class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm inline-flex items-center gap-2 active:scale-95"
         >
           <span>View Transport Services</span>
-          <IconArrowRight size={16} stroke={2} class="text-accent group-hover:translate-x-1 transition-transform" />
+          <IconArrowRight
+            size={16}
+            stroke={2}
+            class="text-accent group-hover:translate-x-1 transition-transform"
+          />
         </a>
         <a
           href={whatsappUrl}
@@ -276,11 +259,9 @@ const whatsappUrl = getWhatsAppUrl(
     </div>
   </section>
 
-  {/* 5. IMPORTED FAQ SECTION */}
   <FAQSection />
 </BaseLayout>
 
-{/* Hide Scrollbar for Horizontal Mobile Tab Bar */}
 <style>
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -294,7 +275,6 @@ const whatsappUrl = getWhatsAppUrl(
   }
 </style>
 
-{/* Client-Side Category Filter Engine */}
 <script>
   function initBlogFilter() {
     const filterBtns = document.querySelectorAll(".blog-filter-btn");
@@ -303,77 +283,48 @@ const whatsappUrl = getWhatsAppUrl(
     const blogGrid = document.getElementById("blog-grid");
     const emptyState = document.getElementById("category-empty-state");
     const emptyCatName = document.getElementById("empty-state-category-name");
-    const resetBtn = document.getElementById("reset-category-btn");
 
-    const activeClasses = [
-      "bg-brand-900",
-      "text-white",
-      "shadow-sm",
-      "border-brand-900",
-    ];
-    const inactiveClasses = [
-      "bg-[var(--color-surface-alt,#E9EFEA)]",
-      "text-brand-900",
-      "hover:border-brand-900",
-      "hover:text-[var(--color-accent-dark,#8D671D)]",
-      "border-transparent",
-    ];
-
-    if (resetBtn) {
-      resetBtn.addEventListener("click", () => {
-        const allBtn = document.querySelector(
-          '.blog-filter-btn[data-category="All"]',
-        ) as HTMLElement;
-        if (allBtn) allBtn.click();
+    document
+      .getElementById("reset-category-btn")
+      ?.addEventListener("click", () => {
+        (
+          document.querySelector(
+            '.blog-filter-btn[data-category="All"]',
+          ) as HTMLElement
+        )?.click();
       });
-    }
 
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        // Active state styling
-        filterBtns.forEach((b) => {
-          b.classList.remove(...activeClasses);
-          b.classList.add(...inactiveClasses);
-        });
-        btn.classList.remove(...inactiveClasses);
-        btn.classList.add(...activeClasses);
+        // State-Driven CSS Toggle
+        filterBtns.forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
 
         const selectedCategory = btn.getAttribute("data-category");
-        let visibleFeatured = 0;
-        let visibleStandard = 0;
+        let visibleFeatured = 0,
+          visibleStandard = 0;
 
         items.forEach((item) => {
-          const itemCategory = item.getAttribute("data-article-category");
           const isMatch =
-            selectedCategory === "All" || itemCategory === selectedCategory;
-          if (isMatch) {
-            (item as HTMLElement).style.display = "";
-            if (featuredStack && featuredStack.contains(item)) {
-              visibleFeatured++;
-            } else {
-              visibleStandard++;
-            }
-          } else {
-            (item as HTMLElement).style.display = "none";
-          }
+            selectedCategory === "All" ||
+            item.getAttribute("data-article-category") === selectedCategory;
+          (item as HTMLElement).style.display = isMatch ? "" : "none";
+          if (isMatch)
+            featuredStack?.contains(item)
+              ? visibleFeatured++
+              : visibleStandard++;
         });
 
-        if (featuredStack) {
+        if (featuredStack)
           featuredStack.style.display = visibleFeatured > 0 ? "" : "none";
-        }
-        if (blogGrid) {
+        if (blogGrid)
           blogGrid.style.display = visibleStandard > 0 ? "" : "none";
-        }
 
         if (emptyState) {
-          if (visibleFeatured + visibleStandard === 0) {
-            emptyState.classList.remove("hidden");
-            if (emptyCatName && selectedCategory) {
-              emptyCatName.textContent = selectedCategory;
-            }
-          } else {
-            emptyState.classList.add("hidden");
-          }
+          const isEmpty = visibleFeatured + visibleStandard === 0;
+          emptyState.classList.toggle("hidden", !isEmpty);
+          if (isEmpty && emptyCatName)
+            emptyCatName.textContent = selectedCategory;
         }
       });
     });
