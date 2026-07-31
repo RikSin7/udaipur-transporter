@@ -14,18 +14,46 @@ const {
   defaultVehicle = "",
   priceLabel = "",
 } = Astro.props;
-
 const currentUrl = Astro.url.pathname;
 
-// Fetch Published Services & Vehicles to Populate Dropdowns Server-Side
-const allServices = await getCollection("services").catch(() => []);
+// Fetch Published Collections
+const [allServices, allVehicles] = await Promise.all([
+  getCollection("services").catch(() => []),
+  getCollection("vehicles").catch(() => []),
+]);
 const publishedServices = allServices.filter((s) => s.data.published);
-
-const allVehicles = await getCollection("vehicles").catch(() => []);
 const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
 
 const inputBaseClasses =
-  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all";
+  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all placeholder:text-typography-muted";
+
+// Array map to prevent HTML repetition for counters
+const passengerCounters = [
+  {
+    id: "adults",
+    label: "Adults",
+    sub: "",
+    min: 1,
+    val: 2,
+    span: "col-span-1 md:col-span-4",
+  },
+  {
+    id: "children",
+    label: "Children",
+    sub: "(Under 12)",
+    min: 0,
+    val: 0,
+    span: "col-span-1 md:col-span-4",
+  },
+  {
+    id: "bags",
+    label: "Luggage Bags",
+    sub: "(Large Suitcases)",
+    min: 0,
+    val: 0,
+    span: "col-span-2 md:col-span-4",
+  },
+];
 ---
 
 <form
@@ -36,117 +64,83 @@ const inputBaseClasses =
   action="/thank-you/"
   class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-premium space-y-8 text-brand-900"
 >
-  {/* Hidden context fields for Netlify/Email routing */}
+  {/* Hidden Config */}
   <input type="hidden" name="form-name" value="travel-enquiry" />
   <input type="hidden" name="sourcePage" value={currentUrl} />
   <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
-  <p hidden>
-    <label>
-      Don't fill this out: <input name="bot-field" />
-    </label>
-  </p>
+  <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
 
-  {/* Form Header */}
+  {/* Header */}
   <div class="border-b border-brand-100 pb-5">
-    <h3
-      class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tracking-tight"
-    >
+    <h3 class="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
       Send Travel Request
     </h3>
     <p class="text-sm text-typography-muted mt-1.5 leading-relaxed">
       Fill out your travel requirements below. Our Udaipur dispatch team will
-      calculate exact road distances, review toll actuals, and contact you
-      directly to confirm rates.
+      calculate exact road distances and contact you directly to confirm rates.
     </p>
   </div>
 
-  {/* SECTION 1: CONTACT DETAILS */}
+  {/* Section 1: Contact */}
   <div class="space-y-4">
     <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
       <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
         >1</span
       >
-      <h4
-        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
-      >
-        Contact Information
-      </h4>
+      <h4 class="font-serif font-bold uppercase">Contact Information</h4>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-      {/* Name - 50% Width */}
       <div class="md:col-span-6">
-        <label
-          for="name"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        <label for="name" class="block text-xs font-bold uppercase mb-1.5"
+          >Name <span class="text-red-500">*</span></label
         >
-          Name <span class="text-red-500">*</span>
-        </label>
         <input
           type="text"
           id="name"
           name="name"
           required
           placeholder="e.g. Hrithik Roshan"
-          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
+          class={inputBaseClasses}
         />
       </div>
-
-      {/* Phone / WhatsApp - 50% Width */}
       <div class="md:col-span-6">
-        <label
-          for="phone"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        <label for="phone" class="block text-xs font-bold uppercase mb-1.5"
+          >Mobile / WhatsApp <span class="text-red-500">*</span></label
         >
-          Mobile / WhatsApp Number <span class="text-red-500">*</span>
-        </label>
         <input
           type="tel"
           id="phone"
           name="phone"
           required
           placeholder="+91 98765 43210"
-          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
+          class={inputBaseClasses}
         />
       </div>
     </div>
   </div>
 
-  {/* SECTION 2: SERVICE & VEHICLE PREFERENCE */}
+  {/* Section 2: Service & Vehicle */}
   <div class="space-y-4 pt-2">
     <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
       <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
         >2</span
       >
-      <h4
-        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
-      >
-        Transport & Vehicle Selection
-      </h4>
+      <h4 class="font-serif font-bold uppercase">Transport & Vehicle</h4>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-      {/* Service Dropdown - 50% Width */}
       <div class="md:col-span-6">
         <label
           for="service"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+          class="flex justify-between text-xs font-bold uppercase mb-1.5"
+          ><span>Required Service</span>
+          <span class="font-normal text-[11px]">(Optional)</span></label
         >
-          <span>Required Service / Transfer</span>
-          <span class="text-typography-muted font-normal text-[11px]"
-            >(Optional)</span
-          >
-        </label>
         <select
           id="service"
           name="service"
-          required
-          class={cn(
-            inputBaseClasses,
-            "font-medium text-brand-900 cursor-pointer",
-          )}
+          class={cn(inputBaseClasses, "font-medium cursor-pointer")}
         >
           <option value="">-- Select Service --</option>
           {
@@ -161,25 +155,17 @@ const inputBaseClasses =
           }
         </select>
       </div>
-
-      {/* Vehicle Dropdown - 50% Width */}
       <div class="md:col-span-6">
         <label
           for="vehicle"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+          class="flex justify-between text-xs font-bold uppercase mb-1.5"
+          ><span>Vehicle Preference</span>
+          <span class="font-normal text-[11px]">(Optional)</span></label
         >
-          <span>Vehicle Preference</span>
-          <span class="text-typography-muted font-normal text-[11px]"
-            >(Optional)</span
-          >
-        </label>
         <select
           id="vehicle"
           name="vehicle"
-          class={cn(
-            inputBaseClasses,
-            "font-medium text-brand-900 cursor-pointer",
-          )}
+          class={cn(inputBaseClasses, "font-medium cursor-pointer")}
         >
           <option value="">-- Recommend a Vehicle --</option>
           {
@@ -188,7 +174,7 @@ const inputBaseClasses =
                 value={v.data.title}
                 selected={defaultVehicle === v.data.title}
               >
-                {v.data.title} ({v.data.passengers} Max Passengers)
+                {v.data.title} ({v.data.passengers} Max)
               </option>
             ))
           }
@@ -197,100 +183,83 @@ const inputBaseClasses =
     </div>
   </div>
 
-  {/* SECTION 3: ITINERARY & SCHEDULE */}
+  {/* Section 3: Schedule */}
   <div class="space-y-4 pt-2">
     <div class="flex items-center gap-2 border-b border-brand-100/60 pb-2">
       <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
         >3</span
       >
-      <h4
-        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase"
-      >
-        Schedule & Route Locations
-      </h4>
+      <h4 class="font-serif font-bold uppercase">Schedule & Route</h4>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-      {/* Pickup Location - 33.3% Width */}
       <div class="md:col-span-4">
-        <label
-          for="pickup"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        <label for="pickup" class="block text-xs font-bold uppercase mb-1.5"
+          >Pickup Location <span class="text-red-500">*</span></label
         >
-          Pickup Location <span class="text-red-500">*</span>
-        </label>
         <input
           type="text"
           id="pickup"
           name="pickup"
           required
-          placeholder="e.g. Airport / Hotel"
-          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
+          placeholder="e.g. Airport"
+          class={inputBaseClasses}
         />
       </div>
-
-      {/* Drop Location - 33.3% Width */}
       <div class="md:col-span-4">
-        <label
-          for="drop"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
+        <label for="drop" class="block text-xs font-bold uppercase mb-1.5"
+          >Drop Location <span class="text-red-500">*</span></label
         >
-          Drop Location <span class="text-red-500">*</span>
-        </label>
         <input
           type="text"
           id="drop"
           name="drop"
           required
-          placeholder="e.g. Hotel / Mount Abu"
-          class={cn(inputBaseClasses, "placeholder:text-typography-muted")}
+          placeholder="e.g. Hotel"
+          class={inputBaseClasses}
         />
       </div>
-
-      {/* Travel Date - 33.3% Width */}
       <div class="md:col-span-4">
         <label
           for="travelDate"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+          class="flex justify-between text-xs font-bold uppercase mb-1.5"
+          ><span>Travel Date</span>
+          <span class="font-normal text-[11px]">(Optional)</span></label
         >
-          <span>Travel Date</span>
-          <span class="text-typography-muted font-normal text-[11px]"
-            >(Optional)</span
-          >
-        </label>
         <input
           type="date"
           id="travelDate"
           name="travelDate"
-          class={cn(inputBaseClasses, "text-brand-900")}
+          class={inputBaseClasses}
         />
       </div>
     </div>
   </div>
 
-  {/* SECTION 4: PASSENGERS & SPECIAL REQUESTS */}
+  {/* Section 4: Passengers (Refactored to map) */}
   <div class="space-y-4 pt-2 group" data-open="false" id="passenger-group">
     <button
       type="button"
       id="passenger-toggle"
-      class="w-full flex items-center gap-2 border-b border-brand-100/60 pb-2 cursor-pointer focus:outline-none bg-transparent"
+      class="w-full flex items-center gap-2 border-b border-brand-100/60 pb-2 cursor-pointer bg-transparent"
     >
       <span
-        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center shrink-0"
+        class="w-6 h-6 rounded-md bg-brand-900 text-accent font-serif font-bold text-xs flex items-center justify-center"
         >4</span
       >
-      <h4
-        class="font-serif text-base font-bold text-brand-900 tracking-wide uppercase flex-1 text-left"
-      >
+      <h4 class="font-serif font-bold uppercase flex-1 text-left">
         Passenger Details
       </h4>
+
+      {/* Restored Collapsed/Expanded Text */}
       <div
         class="hidden sm:flex items-center text-[10px] uppercase tracking-wider font-bold text-typography-muted mr-3 transition-opacity"
       >
         <span class="group-data-[open=true]:hidden">Collapsed</span>
         <span class="hidden group-data-[open=true]:block">Expanded</span>
       </div>
+
+      {/* Restored Original SVG Chevron */}
       <span
         class="text-brand-900 group-data-[open=true]:rotate-180 transition-transform duration-300"
       >
@@ -313,350 +282,169 @@ const inputBaseClasses =
     >
       <div class="overflow-hidden">
         <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
-          {/* Adults - 33.3% Width on desktop, 50% on mobile */}
-          <div class="col-span-1 md:col-span-4">
-            <label
-              for="adults"
-              class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
-            >
-              Adults
-            </label>
-            <div
-              class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
-            >
-              <button
-                type="button"
-                class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-                data-target="adults"
-                aria-label="Decrease adults"
-              >
-                <IconMinus size={18} stroke={2} />
-              </button>
-              <input
-                type="number"
-                id="adults"
-                name="adults"
-                min="1"
-                value="2"
-                class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
-              />
-              <button
-                type="button"
-                class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-                data-target="adults"
-                aria-label="Increase adults"
-              >
-                <IconPlus size={18} stroke={2} />
-              </button>
-            </div>
-          </div>
-
-          {/* Children - 33.3% Width on desktop, 50% on mobile */}
-          <div class="col-span-1 md:col-span-4">
-            <label
-              for="children"
-              class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-            >
-              <span>Children</span>
-              <span class="text-typography-muted font-normal text-[10px]"
-                >(Under 12)</span
-              >
-            </label>
-            <div
-              class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
-            >
-              <button
-                type="button"
-                class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-                data-target="children"
-                aria-label="Decrease children"
-              >
-                <IconMinus size={18} stroke={2} />
-              </button>
-              <input
-                type="number"
-                id="children"
-                name="children"
-                min="0"
-                value="0"
-                class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
-              />
-              <button
-                type="button"
-                class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-                data-target="children"
-                aria-label="Increase children"
-              >
-                <IconPlus size={18} stroke={2} />
-              </button>
-            </div>
-          </div>
-
-          {/* Luggage Bags - 33.3% Width on desktop, 100% on mobile */}
-          <div class="col-span-2 md:col-span-4">
-            <label
-              for="bags"
-              class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
-            >
-              <span>Luggage Bags</span>
-              <span class="text-typography-muted font-normal text-[10px]"
-                >(Large Suitcases)</span
-              >
-            </label>
-            <div
-              class="relative flex items-center w-full h-[52px] bg-surface rounded-xl border border-brand-100 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] focus-within:border-[var(--color-cta,#AD5C1F)] transition-all"
-            >
-              <button
-                type="button"
-                class="qty-minus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-                data-target="bags"
-                aria-label="Decrease bags"
-              >
-                <IconMinus size={18} stroke={2} />
-              </button>
-              <input
-                type="number"
-                id="bags"
-                name="bags"
-                min="0"
-                value="0"
-                class="flex-1 w-full h-full text-center outline-none text-sm bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium text-brand-900"
-              />
-              <button
-                type="button"
-                class="qty-plus w-12 h-full flex items-center justify-center text-typography-muted hover:text-brand-900 hover:bg-brand-50 transition-colors cursor-pointer"
-                data-target="bags"
-                aria-label="Increase bags"
-              >
-                <IconPlus size={18} stroke={2} />
-              </button>
-            </div>
-          </div>
+          {
+            passengerCounters.map((c) => (
+              <div class={c.span}>
+                <label
+                  for={c.id}
+                  class="flex justify-between text-xs font-bold uppercase mb-1.5"
+                >
+                  <span>{c.label}</span>{" "}
+                  {c.sub && (
+                    <span class="font-normal text-[10px]">{c.sub}</span>
+                  )}
+                </label>
+                <div class="relative flex items-center h-[52px] bg-surface rounded-xl border border-brand-100 focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] transition-all overflow-hidden">
+                  <button
+                    type="button"
+                    class="qty-minus w-12 h-full flex justify-center items-center hover:bg-brand-50"
+                    data-target={c.id}
+                  >
+                    <IconMinus size={18} />
+                  </button>
+                  <input
+                    type="number"
+                    id={c.id}
+                    name={c.id}
+                    min={c.min}
+                    value={c.val}
+                    class="flex-1 w-full text-center outline-none bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium"
+                  />
+                  <button
+                    type="button"
+                    class="qty-plus w-12 h-full flex justify-center items-center hover:bg-brand-50"
+                    data-target={c.id}
+                  >
+                    <IconPlus size={18} />
+                  </button>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
   </div>
-
-  {/* SECTION 5: SPECIAL REQUESTS */}
+  {/* Section 5: Message & Submit */}
   <div class="pt-2">
-    <label
-      for="message"
-      class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0"
+    <label for="message" class="block text-xs font-bold uppercase mb-1.5"
+      >Message / Special Requests</label
     >
-      <span>Message / Special Requests</span>
-      <span
-        class="text-typography-muted font-normal text-[11px] normal-case tracking-normal"
-        >(Flight details, train arrival times, outstation stops)</span
-      >
-    </label>
     <textarea
       id="message"
       name="message"
       rows="3"
-      placeholder="Let us know if you need child seats, wheelchair accessibility, or have a specific itinerary..."
-      class={cn(
-        inputBaseClasses,
-        "placeholder:text-typography-muted leading-relaxed resize-y",
-      )}></textarea>
+      placeholder="Flight details, child seats..."
+      class={inputBaseClasses}></textarea>
   </div>
 
-  {/* Consent & Submit */}
   <div class="pt-4 border-t border-brand-100">
     <label
-      class="flex items-start gap-3 cursor-pointer mb-6 text-xs text-typography-muted leading-relaxed"
+      class="flex items-start gap-3 cursor-pointer mb-6 text-xs text-typography-muted"
     >
       <input
         type="checkbox"
         required
-        class="mt-0.5 rounded border-brand-100 text-[var(--color-cta,#AD5C1F)] focus:ring-[var(--color-cta,#AD5C1F)] shrink-0 cursor-pointer"
+        class="mt-0.5 rounded border-brand-100 shrink-0 text-[var(--color-cta,#AD5C1F)] focus:ring-[var(--color-cta,#AD5C1F)]"
       />
-      <span>
-        I agree to be contacted via Phone, Email, or WhatsApp regarding this
-        travel inquiry. I understand this form is a request for contact and does
-        not automatically confirm a reservation.
-      </span>
+      <span
+        >I agree to be contacted via Phone, Email, or WhatsApp. This is an
+        inquiry, not a confirmed booking.</span
+      >
     </label>
-
     <button
       type="submit"
-      aria-label="Submit your travel enquiry to our Udaipur transport team"
-      class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-base tracking-wide flex items-center justify-center gap-3 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-cta,#AD5C1F)] focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-3"
     >
       <span>Submit Travel Enquiry</span>
       <IconSend
         size={20}
-        stroke={2}
-        className="text-white transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-0.5 shrink-0"
+        className="transition-transform group-hover:translate-x-1"
       />
     </button>
   </div>
 </form>
 
-{/* Client-Side Smart Dropdown & Input Autofill Engine */}
 <script>
-  function autofillContextFromUrl() {
+  function initFormLogic() {
+    // 1. Dynamic Auto-fill Logic
     const params = new URLSearchParams(window.location.search);
-    const serviceParam = params.get("service");
-    const vehicleParam = params.get("vehicle");
-
-    // Helper: Smart Dropdown Selection Logic
-    const selectMatchingOption = (
-      selectEl: HTMLSelectElement | null,
-      rawParamValue: string | null,
-    ) => {
-      if (!selectEl || !rawParamValue) return;
-
-      const targetStr = rawParamValue.trim().toLowerCase();
-      let matched = false;
-
-      // 1. Attempt exact or partial string matching against existing <option> values and text
-      for (let i = 0; i < selectEl.options.length; i++) {
-        const option = selectEl.options[i];
-        const optValue = option.value.toLowerCase();
-        const optText = option.text.toLowerCase();
-
-        if (
-          optValue === targetStr ||
-          optText === targetStr ||
-          optText.includes(targetStr) ||
-          targetStr.includes(optText)
-        ) {
-          selectEl.selectedIndex = i;
-          if (!option.text.includes("(Auto-filled)")) {
-            option.text = `${option.text} (Auto-filled)`;
-          }
-          matched = true;
-          break;
+    for (const [key, val] of params.entries()) {
+      const el = document.getElementById(key) as
+        HTMLInputElement | HTMLSelectElement | null;
+      if (el) {
+        if (el.tagName === "SELECT") {
+          const select = el as HTMLSelectElement;
+          const targetStr = val.toLowerCase();
+          const match = Array.from(select.options).find(
+            (o) =>
+              o.value.toLowerCase().includes(targetStr) ||
+              o.text.toLowerCase().includes(targetStr),
+          );
+          if (match) match.selected = true;
+          else
+            select.insertAdjacentHTML(
+              "beforeend",
+              `<option value="${val}" selected>${val} (Auto-filled)</option>`,
+            );
+        } else {
+          el.value = val;
         }
       }
+    }
 
-      // 2. Fallback: If no option matched (e.g., custom URL query), create and select a custom option
-      if (!matched && rawParamValue.trim() !== "") {
-        const customOpt = document.createElement("option");
-        customOpt.value = rawParamValue;
-        customOpt.text = `${rawParamValue} (Auto-filled)`;
-        customOpt.selected = true;
-        selectEl.appendChild(customOpt);
-      }
-    };
-
-    // Auto-select dropdowns
-    selectMatchingOption(
-      document.getElementById("service") as HTMLSelectElement,
-      serviceParam,
-    );
-    selectMatchingOption(
-      document.getElementById("vehicle") as HTMLSelectElement,
-      vehicleParam,
-    );
-
-    // Auto-fill all standard input and textarea fields from URL parameters
-    const inputIds = [
-      "name",
-      "phone",
-      "pickup",
-      "drop",
-      "travelDate",
-      "adults",
-      "children",
-      "bags",
-      "priceLabel",
-      "message",
-    ];
-
-    inputIds.forEach((id) => {
-      const paramVal = params.get(id);
-      if (paramVal && paramVal.trim() !== "") {
-        const el = document.getElementById(id) as
-          HTMLInputElement | HTMLTextAreaElement | null;
-        if (el) {
-          el.value = paramVal.trim();
-        }
-      }
-    });
-
-    // Auto-scroll to the form section if coming from a service, vehicle, hero compact form, or header enquiry button
-    if (
-      serviceParam ||
-      vehicleParam ||
-      params.get("action") === "enquiry" ||
-      params.has("enquiry") ||
-      params.get("source") === "hero-compact" ||
-      window.location.hash.includes("enquiry")
-    ) {
-      const formSection =
-        document.getElementById("enquiry-form-section") ||
-        document.querySelector('form[name="travel-enquiry"]');
-      if (formSection) {
+    // 2. Smart Scrolling
+    if (params.toString() || window.location.hash.includes("enquiry")) {
+      const form = document.querySelector('form[name="travel-enquiry"]');
+      if (form) {
         setTimeout(() => {
-          formSection.scrollIntoView({ behavior: "smooth", block: "start" });
-
-          const formEl = document.querySelector(
-            'form[name="travel-enquiry"]',
-          ) as HTMLFormElement | null;
-          if (formEl) {
-            // Intelligently target the first empty required field (e.g. drop location) instead of forcing focus back on pre-filled name
-            const requiredFields = Array.from(
-              formEl.querySelectorAll(
-                'input[required]:not([type="checkbox"]), select[required], textarea[required]',
-              ),
-            ) as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)[];
-
-            const firstEmpty =
-              requiredFields.find((f) => f.value.trim() === "") ||
-              (document.getElementById("drop") as HTMLInputElement | null) ||
-              (document.getElementById("name") as HTMLInputElement | null);
-
-            if (firstEmpty && typeof firstEmpty.focus === "function") {
-              setTimeout(() => firstEmpty.focus({ preventScroll: true }), 450);
-            }
+          if (!window.location.hash.includes("enquiry")) {
+            form.scrollIntoView({ behavior: "smooth", block: "start" });
           }
+          const firstEmpty = form.querySelector(
+            'input[required]:not([value]), input[required][value=""]',
+          ) as HTMLInputElement;
+          if (firstEmpty) firstEmpty.focus({ preventScroll: true });
         }, 150);
       }
     }
   }
 
-  // Execute immediately when browser loads HTML
-  autofillContextFromUrl();
+  // Init Triggers
+  initFormLogic();
+  document.addEventListener("astro:page-load", initFormLogic);
 
-  // Execute on Astro View Transition SPA navigation
-  document.addEventListener("astro:page-load", autofillContextFromUrl);
-
-  // Global Event Delegation for Quantity Buttons
+  // Global Event Listeners (Counters & Accordion)
   document.addEventListener("click", (e) => {
     const target = e.target as HTMLElement;
-    const minusBtn = target.closest(".qty-minus");
-    const plusBtn = target.closest(".qty-plus");
 
-    if (minusBtn) {
-      const targetId = minusBtn.getAttribute("data-target");
-      if (targetId) {
-        const input = document.getElementById(targetId) as HTMLInputElement;
-        if (input) {
-          const min = parseInt(input.min) || 0;
-          let val = parseInt(input.value) || 0;
-          if (val > min) input.value = (val - 1).toString();
-        }
-      }
-    } else if (plusBtn) {
-      const targetId = plusBtn.getAttribute("data-target");
-      if (targetId) {
-        const input = document.getElementById(targetId) as HTMLInputElement;
-        if (input) {
-          let val = parseInt(input.value) || 0;
-          input.value = (val + 1).toString();
-        }
+    // Counters
+    const btn = target.closest("button[data-target]");
+    if (btn) {
+      const input = document.getElementById(
+        btn.getAttribute("data-target")!,
+      ) as HTMLInputElement;
+      if (input) {
+        const current = parseInt(input.value) || 0;
+        if (
+          btn.classList.contains("qty-minus") &&
+          current > parseInt(input.min || "0")
+        )
+          input.value = String(current - 1);
+        if (btn.classList.contains("qty-plus"))
+          input.value = String(current + 1);
       }
     }
-  });
 
-  // Passenger Details Toggle
-  const passengerToggle = document.getElementById("passenger-toggle");
-  const passengerGroup = document.getElementById("passenger-group");
-  if (passengerToggle && passengerGroup) {
-    passengerToggle.addEventListener("click", () => {
-      const isOpen = passengerGroup.getAttribute("data-open") === "true";
-      passengerGroup.setAttribute("data-open", String(!isOpen));
-    });
-  }
+    // Toggle Passenger Accordion
+    const toggle = target.closest("#passenger-toggle");
+    if (toggle) {
+      const group = document.getElementById("passenger-group");
+      if (group)
+        group.setAttribute(
+          "data-open",
+          group.getAttribute("data-open") === "true" ? "false" : "true",
+        );
+    }
+  });
 </script>
