@@ -9,14 +9,18 @@ interface Props {
 }
 
 const { service } = Astro.props;
-const { title, summary, pricing, image, category } = service.data;
+const { title, summary, pricing, image, gallery = [], category } = service.data;
 
-// 1. Evaluate Approved Price Status based on the actual monetary amount
+// 1. Evaluate Primary Image for Card Thumbnail:
+const primaryGalleryItem = gallery.find((item: any) => item?.isPrimary);
+const cardImage = primaryGalleryItem?.url || image || gallery[0]?.url || null;
+
+// 2. Evaluate Approved Price Status
 const amount = pricing?.amount;
 const shortLabel = pricing?.shortLabel;
 const hasApprovedPrice = !!amount;
 
-// 2. Format the display label (e.g., "₹899 onwards, per trip" or "From ₹2,000 / Day")
+// 3. Format the display label (e.g., "₹899 onwards, per trip" or "From ₹2,000 / Day")
 const priceDisplay = hasApprovedPrice
   ? `${amount} ${shortLabel || ""}`.trim()
   : shortLabel || "Ask for Price";
@@ -31,12 +35,20 @@ const priceDisplay = hasApprovedPrice
     class="block w-full h-44 sm:h-48 bg-brand-900 relative overflow-hidden border-b border-border/80 shrink-0"
   >
     {
-      image ? (
-        <Image
-          src={image}
-          alt={title}
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
+      cardImage ? (
+        typeof cardImage === "string" ? (
+          <img
+            src={cardImage}
+            alt={title}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <Image
+            src={cardImage}
+            alt={title}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        )
       ) : (
         <div class="w-full h-full flex flex-col items-center justify-center p-4 relative">
           {/* Delicate Champagne Gold Dotted Pattern */}

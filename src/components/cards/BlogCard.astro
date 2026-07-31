@@ -29,15 +29,23 @@ const formattedDate = formatDate(publishDate);
   >
     {
       image ? (
-        <Image
-          src={image}
-          alt={title}
-          width={600}
-          height={340}
-          format="webp"
-          quality={85}
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-        />
+        typeof image === "string" ? (
+          <img
+            src={image}
+            alt={title}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <Image
+            src={image}
+            alt={title}
+            width={600}
+            height={340}
+            format="webp"
+            quality={85}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        )
       ) : (
         /* Fallback UI */
         <div class="w-full h-full flex flex-col items-center justify-center p-4 relative">

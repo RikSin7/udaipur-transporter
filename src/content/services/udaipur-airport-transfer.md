@@ -4,6 +4,17 @@ category: Transfers
 summary: Reliable, flight-aware airport pickup and drop service from Maharana
   Pratap (Dabok) Airport to your hotel in Udaipur city.
 image: ../../assets/images/services/udaipur-transfer.jpg
+gallery:
+  - url: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
+  - url: "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
+  - url: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
+  - url: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
+  - url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
 sortOrder: 1
 published: true
 whoIsThisFor:

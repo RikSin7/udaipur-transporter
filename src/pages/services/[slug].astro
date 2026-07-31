@@ -18,6 +18,8 @@ import {
   IconClock,
 } from "@tabler/icons-astro";
 
+import ServiceGalleryHero from "../../components/sections/ServiceGalleryHero.astro";
+
 // 1. GENERATE STATIC PATHS
 export async function getStaticPaths() {
   const services = await getCollection("services").catch(() => []);
@@ -34,12 +36,16 @@ const {
   category,
   summary,
   image,
+  gallery = [],
   pricing,
   whoIsThisFor = [],
   whatsCovered = [],
   suitableVehicles = [],
   faqs = [],
 } = entry.data;
+
+const hasPrimaryGalleryImage = gallery.some((item: any) => item?.isPrimary);
+const showInlineImage = image && (!gallery.length || !hasPrimaryGalleryImage);
 
 // 3. RENDER MARKDOWN BODY
 const { Content } = await render(entry);
@@ -84,29 +90,33 @@ const reassurances = [
 >
   <Header slot="header" />
 
-  {/* 1. HERO BANNER */}
-  <section
-    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative"
-  >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <span
-          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
-          >{category}</span
-        >
-        <h1
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-4 text-white tracking-wide"
-        >
-          {title}
-        </h1>
-        <p
-          class="text-brand-100/90 text-base sm:text-lg leading-relaxed font-light"
-        >
-          {summary}
-        </p>
-      </div>
-    </div>
-  </section>
+  {/* 1. GALLERY HERO */}
+  {
+    gallery && gallery.length > 0 ? (
+      <ServiceGalleryHero
+        title={title}
+        category={category}
+        summary={summary}
+        gallery={gallery}
+      />
+    ) : (
+      <section class="bg-brand-900 text-white py-12 border-b border-brand-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl">
+            <span class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4">
+              {category}
+            </span>
+            <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-4 text-white tracking-wide">
+              {title}
+            </h1>
+            <p class="text-brand-100/90 text-base sm:text-lg leading-relaxed font-light">
+              {summary}
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   {/* 2. MAIN CONTENT AREA */}
   <section class="py-12 bg-surface relative">
@@ -115,17 +125,25 @@ const reassurances = [
         {/* LEFT COLUMN */}
         <div class="lg:col-span-7 space-y-16">
           {
-            image && (
+            showInlineImage && (
               <div class="overflow-hidden rounded-2xl border border-brand-100 shadow-sm bg-surface-alt">
-                <Image
-                  src={image}
-                  alt={title}
-                  width={1000}
-                  height={560}
-                  format="webp"
-                  quality={85}
-                  class="w-full h-auto object-cover max-h-[420px] hover:scale-102 transition-transform duration-500"
-                />
+                {typeof image === "string" ? (
+                  <img
+                    src={image}
+                    alt={title}
+                    class="w-full h-auto object-cover max-h-[420px] hover:scale-102 transition-transform duration-500"
+                  />
+                ) : (
+                  <Image
+                    src={image}
+                    alt={title}
+                    width={1000}
+                    height={560}
+                    format="webp"
+                    quality={85}
+                    class="w-full h-auto object-cover max-h-[420px] hover:scale-102 transition-transform duration-500"
+                  />
+                )}
               </div>
             )
           }
@@ -397,11 +415,7 @@ const reassurances = [
               {
                 reassurances.map(({ Icon, text }) => (
                   <div class="flex items-center gap-2">
-                    <Icon
-                      size={16}
-                      stroke={2}
-                      class="text-accent shrink-0"
-                    />{" "}
+                    <Icon size={16} stroke={2} class="text-accent shrink-0" />{" "}
                     <span>{text}</span>
                   </div>
                 ))

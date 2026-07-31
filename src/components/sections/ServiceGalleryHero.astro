@@ -1,0 +1,296 @@
+---
+import {
+  IconX,
+  IconChevronLeft,
+  IconChevronRight,
+  IconPhoto,
+} from "@tabler/icons-astro";
+
+interface Props {
+  title: string;
+  category: string;
+  summary: string;
+  gallery?: any[];
+}
+
+const { title, category, summary, gallery = [] } = Astro.props;
+
+// 1. Find the primary image (if any) and bring it to the front
+const primaryIndex = gallery.findIndex((item: any) => item?.isPrimary);
+let orderedGallery = [...gallery];
+if (primaryIndex > 0) {
+  const [primaryItem] = orderedGallery.splice(primaryIndex, 1);
+  orderedGallery.unshift(primaryItem);
+}
+
+// 2. Map CMS gallery items ({ url, isPrimary } or strings) to component data structure
+const galleryData = orderedGallery.map((item: any, idx: number) => {
+  const img = item?.url || item;
+  const imageUrl = typeof img === "string" ? img : img?.src || "";
+  return {
+    id: String(idx + 1).padStart(2, "0"),
+    imageUrl,
+    title: "",
+    subtitle: "",
+  };
+});
+
+// 1. DYNAMIC GRID LOGIC
+const previewImages = galleryData.slice(0, 3);
+const totalPreviews = previewImages.length;
+
+// Dynamic Tailwind Grid Wrappers based on image count
+const getGridWrapperClass = (total: number) => {
+  const base = "grid gap-4 lg:gap-6 md:h-[350px] lg:h-[420px]";
+  if (total === 1) return `${base} grid-cols-1`;
+  if (total === 2) return `${base} grid-cols-1 md:grid-cols-2`;
+  return `${base} grid-cols-1 md:grid-cols-3 md:grid-rows-2`; // 3 or more images
+};
+
+// Dynamic individual item classes based on position and total count
+const getItemClass = (total: number, index: number) => {
+  const base =
+    "relative overflow-hidden group cursor-pointer gallery-trigger shadow-sm hover:shadow-md transition-shadow";
+  if (total <= 2)
+    return `${base} rounded-[2rem] aspect-[4/3] md:aspect-auto w-full h-full`;
+  if (index === 0)
+    return `${base} md:col-span-2 md:row-span-2 rounded-[2rem] aspect-[4/3] md:aspect-auto`;
+  return `${base} md:col-span-1 md:row-span-1 rounded-[1.5rem] lg:rounded-[2rem] aspect-[4/3] md:aspect-auto`;
+};
+---
+
+{/* Only render the section if the CMS actually provided at least 1 image */}
+{
+  galleryData.length > 0 && (
+    <section class="pt-12 pb-8 bg-surface-alt border-b border-brand-100/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Typography Header */}
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+          <div class="max-w-2xl">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-accent-dark,#8D671D)] block mb-2">
+              The Service, In Pictures
+            </span>
+            <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight">
+              {title} in pictures
+            </h1>
+          </div>
+          <p class="text-sm text-typography-muted max-w-lg leading-relaxed hidden md:block">
+            See the key moments in this service, from meeting your driver to
+            arriving comfortably at your stay.
+          </p>
+        </div>
+
+        {/* Grid */}
+        <div class={getGridWrapperClass(totalPreviews)}>
+          {previewImages.map((image, idx) => (
+            <div class={getItemClass(totalPreviews, idx)} data-index={idx}>
+              <img
+                src={image.imageUrl}
+                alt={image.title || `${title} photo ${image.id}`}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-sm text-typography-muted leading-relaxed block md:hidden text-center sm:text-left">
+            See the key moments in this service, from meeting your driver to
+            arriving comfortably at your stay.
+          </p>
+
+          <button
+            type="button"
+            class="gallery-trigger group inline-flex items-center gap-2 border border-brand-900 hover:bg-brand-900 text-brand-900 hover:text-white font-bold px-7 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 ml-auto cursor-pointer"
+            data-index="0"
+          >
+            <IconPhoto
+              size={18}
+              stroke={2}
+              class="text-accent group-hover:text-accent-light transition-colors"
+            />
+            <span>
+              Gallery {galleryData.length > 3 && `(${galleryData.length})`}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Immersive Fullscreen Modal */}
+      <div
+        id="custom-gallery-modal"
+        class="fixed inset-0 z-[100] hidden flex-col bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+      >
+        {/* Top Controls */}
+        <div class="absolute top-0 left-0 w-full p-4 sm:p-6 flex justify-end items-center z-[110] pointer-events-none">
+          <button
+            id="close-modal"
+            class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xl pointer-events-auto ml-auto"
+          >
+            <IconX size={24} stroke={2} />
+          </button>
+        </div>
+
+        {/* Main Image Container */}
+        <div class="absolute inset-0 w-full h-full p-0 sm:p-4 pb-20 sm:pb-24 flex items-center justify-center z-[100]">
+          <img
+            id="modal-image"
+            src=""
+            alt="Gallery View"
+            class="w-full h-full object-contain transition-all duration-300"
+          />
+        </div>
+
+        {/* Title & Subtitle (Bottom Anchored) */}
+        <div class="absolute bottom-6 left-0 w-full text-center px-4 z-[110] pointer-events-none">
+          <div class="max-w-3xl mx-auto drop-shadow-lg">
+            <h3
+              id="modal-title"
+              class="text-white font-serif text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-widest mb-1 transition-opacity duration-300 empty:hidden pointer-events-auto"
+            />
+            <p
+              id="modal-subtitle"
+              class="text-white/80 text-[10px] sm:text-xs md:text-sm font-medium tracking-wide uppercase transition-opacity duration-300 empty:hidden pointer-events-auto"
+            />
+          </div>
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          id="prev-btn"
+          class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer z-[110] shadow-xl"
+        >
+          <IconChevronLeft size={28} stroke={2} />
+        </button>
+        <button
+          id="next-btn"
+          class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer z-[110] shadow-xl"
+        >
+          <IconChevronRight size={28} stroke={2} />
+        </button>
+      </div>
+    </section>
+  )
+}
+
+{/* Serialized JSON data for Client Script */}
+<script is:inline define:vars={{ galleryData }}>
+  window.serviceGalleryData = galleryData;
+</script>
+
+<script>
+  function initGalleryModal() {
+    const triggers = document.querySelectorAll(".gallery-trigger");
+    const modal = document.getElementById("custom-gallery-modal");
+    const closeBtn = document.getElementById("close-modal");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    const modalImage = document.getElementById(
+      "modal-image",
+    ) as HTMLImageElement;
+    const modalTitle = document.getElementById("modal-title");
+    const modalSubtitle = document.getElementById("modal-subtitle");
+    const modalCounter = document.getElementById("modal-counter");
+
+    // @ts-ignore
+    const data = window.serviceGalleryData || [];
+    let currentIndex = 0;
+
+    if (!modal || data.length === 0) return;
+
+    // Hide arrows completely if there's only 1 image to prevent broken looping
+    if (data.length <= 1) {
+      prevBtn?.classList.add("hidden");
+      nextBtn?.classList.add("hidden");
+    }
+
+    const updateModal = (index: number) => {
+      currentIndex = index;
+
+      // Smooth fade out text and image
+      modalImage.style.opacity = "0";
+      modalImage.style.transform = "scale(0.98)";
+      if (modalTitle) modalTitle.style.opacity = "0";
+      if (modalSubtitle) modalSubtitle.style.opacity = "0";
+
+      setTimeout(() => {
+        modalImage.src = data[currentIndex].imageUrl;
+        if (modalTitle) {
+          modalTitle.textContent = data[currentIndex].title;
+          modalTitle.style.opacity = "1";
+        }
+        if (modalSubtitle) {
+          modalSubtitle.textContent = data[currentIndex].subtitle;
+          modalSubtitle.style.opacity = "1";
+        }
+        if (modalCounter)
+          modalCounter.textContent = `${currentIndex + 1} / ${data.length}`;
+
+        modalImage.style.opacity = "1";
+        modalImage.style.transform = "scale(1)";
+      }, 200);
+    };
+
+    const openModal = (index: number) => {
+      updateModal(index);
+      modal.classList.remove("hidden");
+      void modal.offsetWidth;
+      modal.classList.add("opacity-100");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeModal = () => {
+      modal.classList.remove("opacity-100");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+      }, 300);
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const index = parseInt(target.getAttribute("data-index") || "0", 10);
+        openModal(index);
+      });
+    });
+
+    closeBtn?.addEventListener("click", closeModal);
+
+    // Click outside image to close
+    modal.addEventListener("click", (e) => {
+      if (
+        e.target === modal ||
+        (e.target as HTMLElement).classList.contains("flex-1")
+      )
+        closeModal();
+    });
+
+    // Navigation logic
+    prevBtn?.addEventListener("click", () =>
+      updateModal((currentIndex - 1 + data.length) % data.length),
+    );
+    nextBtn?.addEventListener("click", () =>
+      updateModal((currentIndex + 1) % data.length),
+    );
+
+    // Keyboard Navigation
+    document.addEventListener("keydown", (e) => {
+      if (modal.classList.contains("hidden")) return;
+      if (e.key === "Escape") closeModal();
+
+      // Only allow keyboard left/right if there are multiple images
+      if (data.length > 1) {
+        if (e.key === "ArrowLeft")
+          updateModal((currentIndex - 1 + data.length) % data.length);
+        if (e.key === "ArrowRight")
+          updateModal((currentIndex + 1) % data.length);
+      }
+    });
+  }
+
+  initGalleryModal();
+  document.addEventListener("astro:page-load", initGalleryModal);
+</script>

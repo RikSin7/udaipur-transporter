@@ -2,14 +2,54 @@
 title: "Local Car Rental with Driver in Udaipur"
 category: "Local Travel"
 summary: "Flexible local taxi packages (8 Hrs/80 Km or 12 Hrs/120 Km) for business meetings, shopping, and Udaipur city movement."
+gallery:
+  - url: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
+  - url: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800"
+    isPrimary: true
+  - url: "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
+  - url: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=800"
+    isPrimary: false
 sortOrder: 4
 published: true
+whoIsThisFor:
+  - Business travellers
+  - Tourists exploring the city
+  - Wedding guests
+  - Shoppers
+whatsCovered:
+  - title: Doorstep pickup
+    description: Start from your hotel, railway station or any point within city limits.
+  - title: Multiple stops allowed
+    description: Perfect for shopping in Bapu Bazaar and visiting multiple monuments in one day.
+  - title: Local expertise
+    description: Drivers who know the quickest routes through busy old city streets.
+  - title: Dedicated waiting
+    description: Vehicle and driver stay with you for the duration of the package.
+suitableVehicles:
+  - sedan
+  - suv
+  - innova-crysta
+faqs:
+  - question: What if I exceed the package time or distance?
+    answer: Extra kilometres and extra hours are billed as per transparent standard rates at the end of the trip.
+  - question: Can I take this cab outside Udaipur?
+    answer: This package is meant strictly for local city movement. For outstation trips like Kumbhalgarh or Nathdwara, outstation rates apply.
+  - question: Are monument parking fees included?
+    answer: No, parking and entry fees at monuments or private premises are paid directly by the guest.
 pricing:
-  shortLabel: "From ₹2,000 / Day"
-  amount: "₹2,000 (8 Hrs / 80 Km)"
-  unit: "8 Hours / 80 Kilometres"
-  inclusions: ["Private vehicle with local Udaipur driver", "Fuel charges for local city limits", "Flexibility to choose your own itinerary"]
-  exclusions: ["Toll taxes and monument parking fees", "Travel outside Udaipur municipal city boundary"]
+  amount: ₹2,000
+  shortLabel: / Day
+  unit: 8 Hours / 80 Kilometres, sedan
+  lastUpdated: Jul 2026
+  inclusions:
+    - Private vehicle with local Udaipur driver
+    - Fuel charges for local city limits
+    - Flexibility to choose your own itinerary
+  exclusions:
+    - Toll taxes and monument parking fees
+    - Travel outside Udaipur municipal city boundary
   notes: "Extra time is billed at ₹150/hour and extra distance at ₹12/km. Time and kilometre calculations begin and end at our city garage."
 ---
 
@@ -25,4 +65,3 @@ We offer straightforward local packages tailored to your schedule:
 ### Important Service Rules
 To maintain transparent, owner-approved pricing, please note:
 1. **City Boundaries:** This local service is valid strictly within Udaipur municipal limits. If you travel to nearby outstation locations (like Nathdwara, Eklingji, or Kumbhalgarh), outstation kilometre rates apply.
-2. **Garage to Garage:** Kilometre and time tracking begins when the vehicle leaves our Udaipur garage and ends upon its return.
