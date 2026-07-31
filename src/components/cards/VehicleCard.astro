@@ -6,6 +6,8 @@ import {
   IconUsers,
   IconLuggage,
   IconPhoto,
+  IconCheck,
+  IconArrowRight,
 } from "@tabler/icons-astro";
 import { createCleanParam } from "../../utils/helpers";
 
@@ -100,8 +102,8 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
         amenities
           .slice(0, 3)
           .map((item) => (
-            <span class="text-[10px] font-medium bg-surface-alt text-typography-muted px-2 py-0.5 rounded border border-border/80 truncate max-w-[130px]">
-              ✓ {item}
+            <span class="text-[10px] font-medium bg-surface-alt text-typography-muted px-2 py-0.5 rounded border border-border/80 truncate max-w-[130px] flex items-center gap-1">
+              <IconCheck class="w-3 h-3 text-accent shrink-0" stroke={2.5} /> {item}
             </span>
           ))
       }
@@ -132,9 +134,9 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
       class="bg-brand hover:bg-brand-800 text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group"
     >
       <span>Book Now</span>
-      <span class="text-accent group-hover:translate-x-0.5 transition-transform"
-        >&rarr;</span
-      >
+      <span class="text-accent group-hover:translate-x-0.5 transition-transform flex items-center">
+        <IconArrowRight class="w-4 h-4" stroke={2} />
+      </span>
     </a>
   </div>
 </div>

@@ -141,3 +141,7 @@
   --default-transition-timing-function:
       cubic-bezier(.22,1,.36,1);
 }
+
+button {
+  cursor: pointer;
+}

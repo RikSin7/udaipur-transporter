@@ -38,16 +38,17 @@ const containerClass = [
       <div class="flex items-center gap-1 text-[var(--color-accent,#D7B56D)]">
         {[...Array(ratingCount)].map(() => <IconStarFilled size={16} />)}
       </div>
-      <div
-        class="text-brand-300 group-hover:text-brand-900 transition-colors"
-      >
+      <div class="text-brand-300 group-hover:text-brand-900 transition-colors">
         <IconQuote size={28} stroke={1.5} />
       </div>
     </div>
 
     {/* Review Comment */}
     <p
-      class={cn("text-typography-muted text-sm sm:text-base leading-relaxed italic mb-8", variant === "carousel" && "line-clamp-5 sm:line-clamp-4")}
+      class={cn(
+        "text-typography-muted text-sm sm:text-base leading-relaxed italic mb-8",
+        variant === "carousel" && "line-clamp-5 sm:line-clamp-4",
+      )}
     >
       "{item.comment}"
     </p>
@@ -101,7 +102,7 @@ const containerClass = [
               stroke={2}
               class="text-emerald-600 shrink-0"
             />
-            <span>Verified</span>
+            <span class="hidden sm:inline">Verified</span>
           </span>
         )
       }

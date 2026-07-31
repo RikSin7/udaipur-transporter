@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { iconResolver } from "../../utils/iconResolver";
+import { IconArrowRight } from "@tabler/icons-astro";
 
 // 1. Fetch business settings autonomously for phone & WhatsApp routing
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -125,8 +126,8 @@ const homeData = homeEntries[0]?.data || {
                   class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-900 group-hover:text-brand-800 transition-colors"
                 >
                   <span>{method.ctaText}</span>
-                  <span class="group-hover:translate-x-1 transition-transform">
-                    &rarr;
+                  <span class="group-hover:translate-x-1 transition-transform flex items-center">
+                    <IconArrowRight class="w-4 h-4 text-accent" stroke={2} />
                   </span>
                 </a>
               </div>
