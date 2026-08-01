@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BlogCard from "../cards/BlogCard.astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
-import { IconCompass as TablerCompass } from "@tabler/icons-astro";
+import SectionHeader from "../ui/SectionHeader.astro";
 
 // 1. Fetch published articles and sort newest to oldest
 const allArticles = await getCollection("blog").catch(() => []);
@@ -24,37 +24,14 @@ const displayArticles =
 
 <section class="py-12 bg-surface-alt/30 border-b border-brand-100 relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    {/* 1. SECTION HEADER */}
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 sm:mb-12 gap-6">
-      {/* Section Header */}
-      <div class="text-left max-w-3xl">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
-        >
-          Practical Travel Advice
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2"
-        >
-          Plan Your Trip
-        </h2>
-        <p class="text-sm sm:text-base text-typography-muted">
-          Logistical advice on selecting vehicle capacities, navigating airport
-          pickup protocols, and understanding transparent outstation taxi
-          pricing.
-        </p>
-        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
-      </div>
-
-      {/* Action Button */}
-      <div class="hidden sm:block shrink-0">
-        <ViewAllButton
-          href="/blog/"
-          text="View All Transport Guides"
-          variant="desktop"
-        />
-      </div>
-    </div>
+    {/* Section Header */}
+    <SectionHeader
+      subheading="Practical Travel Advice"
+      heading="Plan Your Trip"
+      description="Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."
+      viewAllHref="/blog/"
+      viewAllText="View All Transport Guides"
+    />
 
     {/* 2. FEATURED BLOG CARDS GRID */}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 sm:mb-0">

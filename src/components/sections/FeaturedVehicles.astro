@@ -2,46 +2,24 @@
 import type { CollectionEntry } from "astro:content";
 import VehicleCard from "../cards/VehicleCard.astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
 
 interface Props {
   featuredVehicles: CollectionEntry<"vehicles">[];
 }
 
-const { featuredVehicles } = Astro.props;
+const { featuredVehicles }: Props = Astro.props;
 ---
 
 <section class="py-12 bg-surface-alt/60 border-y border-border/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 sm:mb-12 gap-6">
-      {/* Section Header */}
-      <div class="text-left max-w-3xl">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-200/40 px-3 py-1 rounded-full inline-block mb-3"
-        >
-          Vehicles
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2"
-        >
-          Choose a Suitable Vehicle
-        </h2>
-        <p class="text-sm sm:text-base text-typography-muted">
-          Our fleet guidelines help you select the right vehicle category based
-          on passenger count and luggage volume for maximum comfort on Rajasthan
-          roads.
-        </p>
-        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
-      </div>
-
-      {/* Action Button */}
-      <div class="hidden sm:block shrink-0">
-        <ViewAllButton
-          href="/vehicles/"
-          text="Explore Full Fleet"
-          variant="desktop"
-        />
-      </div>
-    </div>
+    <SectionHeader
+      subheading="Vehicles"
+      heading="Choose a Suitable Vehicle"
+      description="Our fleet guidelines help you select the right vehicle category based on passenger count and luggage volume for maximum comfort on Rajasthan roads."
+      viewAllHref="/vehicles/"
+      viewAllText="Explore Full Fleet"
+    />
 
     {
       featuredVehicles.length > 0 ? (

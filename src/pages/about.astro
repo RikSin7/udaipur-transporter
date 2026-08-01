@@ -2,8 +2,10 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/layout/Header.astro";
-import { getWhatsAppUrl, getCallUrl } from "../utils/helpers";
+import { getWhatsAppUrl } from "../utils/helpers";
 import { cn } from "../utils/cn";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import HeroHeader from "../components/ui/HeroHeader.astro";
 import {
   IconCar,
   IconPhoneCall,
@@ -51,9 +53,7 @@ const {
 // 3. Render Markdown Body Paragraphs (<Content />)
 const { Content } = await render(aboutEntry);
 
-// 4. Decap CMS String-to-JSX Icon Resolver handled by utility
-
-const callUrl = getCallUrl(site.phone);
+// 4. Decap CMS String-to-JSX Icon Resolver
 const whatsappUrl = getWhatsAppUrl(
   site.whatsapp,
   "About Us / General Enquiry",
@@ -73,21 +73,11 @@ const whatsappUrl = getWhatsAppUrl(
     class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="max-w-3xl">
-        <span
-          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
-        >
-          Our Identity & Approach
-        </span>
-        <h1
-          class="font-serif text-4xl sm:text-5xl font-bold text-white tracking-wide leading-tight mb-4"
-        >
-          {title}
-        </h1>
-        <p class="text-brand-100/90 text-lg font-light leading-relaxed">
-          {subtitle}
-        </p>
-      </div>
+      <HeroHeader
+        subheading="Our Identity & Approach"
+        heading={title}
+        description={subtitle}
+      />
     </div>
   </section>
 
@@ -194,19 +184,11 @@ const whatsappUrl = getWhatsAppUrl(
   {/* 3. HOW WE WORK */}
   <section class="py-12 bg-surface-alt/40 border-t border-brand-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-left max-w-3xl mb-12">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
-        >
-          Operational Standards
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight"
-        >
-          {howWeWorkHeading}
-        </h2>
-        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-3"></span>
-      </div>
+      <SectionHeader
+        subheading="Operational Standards"
+        heading={howWeWorkHeading}
+        class="mb-12"
+      />
 
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
@@ -270,23 +252,14 @@ const whatsappUrl = getWhatsAppUrl(
   {/* 5. WHERE WE OPERATE */}
   <section class="py-12 bg-brand-900 text-white border-y border-brand-800/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-left max-w-2xl mb-12">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1.5 rounded-full border border-brand-800 inline-block mb-4"
-        >
-          Regional Reach
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4"
-        >
-          {coverageHeading}
-        </h2>
-        <p
-          class="text-brand-100/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-        >
-          {coverageSubtitle}
-        </p>
-      </div>
+      <SectionHeader
+        subheading="Regional Reach"
+        heading={coverageHeading}
+        description={coverageSubtitle}
+        theme="dark"
+        underline={false}
+        class="mb-12"
+      />
 
       <div
         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 max-w-7xl mx-auto"
@@ -314,23 +287,12 @@ const whatsappUrl = getWhatsAppUrl(
   {/* 6. EXPLORE OUR TRANSPORT ECOSYSTEM */}
   <section class="py-12 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-left max-w-3xl mb-12">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
-        >
-          Next Steps & Resources
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 tracking-tight mb-2"
-        >
-          Explore Our Transport Ecosystem
-        </h2>
-        <p class="text-sm sm:text-base text-typography-muted">
-          Verify our customer feedback, review available transport packages, or
-          reach out directly to plan your Udaipur itinerary.
-        </p>
-        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-3"></span>
-      </div>
+      <SectionHeader
+        subheading="Next Steps & Resources"
+        heading="Explore Our Transport Ecosystem"
+        description="Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."
+        class="mb-12"
+      />
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Card 1: Transport Catalogue */}

@@ -12,7 +12,7 @@ interface Props {
   tabClass?: string;
 }
 
-const { mode, tabs, tabClass = "" } = Astro.props;
+const { mode, tabs, tabClass = "" }: Props = Astro.props;
 ---
 
 <div class="sticky top-20 z-30 px-4 sm:px-6 lg:px-8 -mt-7 pointer-events-none">

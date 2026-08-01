@@ -16,7 +16,7 @@ export interface Props {
   class?: string;
 }
 
-const { review, variant = "grid", class: className = "" } = Astro.props;
+const { review, variant = "grid", class: className = "" }: Props = Astro.props;
 const item = review.data;
 const ratingCount = item.rating || 5;
 

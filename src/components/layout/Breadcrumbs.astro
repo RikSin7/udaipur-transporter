@@ -12,7 +12,7 @@ interface Props {
   currentTitle?: string;
 }
 
-const { items: overrideItems, currentTitle } = Astro.props;
+const { items: overrideItems, currentTitle }: Props = Astro.props;
 
 const pathname = Astro.url.pathname;
 const isHome =

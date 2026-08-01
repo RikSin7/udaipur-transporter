@@ -11,6 +11,7 @@ import { getWhatsAppUrl } from "../utils/helpers";
 import ReviewsSection from "../components/sections/ReviewsSection.astro";
 import PlanYourTrip from "../components/sections/PlanYourTrip.astro";
 import FAQSection from "../components/sections/FAQSection.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
 
 // Fetch site settings
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -48,7 +49,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 
 <BaseLayout
   title={`${site.companyName} | Private Taxi & Car Rental in Udaipur`}
-  description="Straightforward, dependable private transportation across Udaipur and Rajasthan. Airport transfers, local sightseeing, and outstation tempo travellers."
+  description="Straightforward Private cabs, transfers & tours across Udaipur."
 >
   {/* 1. HERO SECTION */}
   <Hero whatsappUrl={whatsappUrl} />
@@ -81,22 +82,12 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
   >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Section Heading */}
-      <div class="text-left max-w-2xl mb-12">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
-        >
-          {homeData.enquiryBadge}
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2"
-        >
-          {homeData.enquiryTitle}
-        </h2>
-        <p class="text-sm sm:text-base text-typography-muted leading-relaxed">
-          {homeData.enquiryDesc}
-        </p>
-        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
-      </div>
+      <SectionHeader
+        subheading={homeData.enquiryBadge}
+        heading={homeData.enquiryTitle}
+        description={homeData.enquiryDesc}
+        class="mb-12"
+      />
 
       <EnquiryForm />
     </div>

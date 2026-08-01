@@ -8,7 +8,7 @@ interface Props {
   class?: string;
 }
 
-const { href, text, variant = "desktop", class: className = "" } = Astro.props;
+const { href, text, variant = "desktop", class: className = "" }: Props = Astro.props;
 
 // Default classes
 const defaultDisplay = variant === "mobile" ? "w-full inline-flex justify-center" : "inline-flex";
@@ -16,7 +16,7 @@ const defaultDisplay = variant === "mobile" ? "w-full inline-flex justify-center
 const baseStyles = "items-center gap-2 font-bold rounded-xl text-xs uppercase tracking-wider transition-all group active:scale-95";
 const colorStyles = variant === "mobile"
   ? "bg-brand-900 text-white px-6 py-4 shadow-md"
-  : "bg-surface-card border border-brand-100 hover:border-brand-300 text-brand-900 px-6 py-3.5 shadow-sm hover:shadow";
+  : "bg-surface-card border border-brand-100 hover:border-brand-300 text-brand-900 px-6 py-3.5 shadow-sm hover:shadow-md";
 
 const hasCustomDisplay = className.includes('flex') || className.includes('hidden') || className.includes('block') || className.includes('w-');
 const finalClasses = `${hasCustomDisplay ? '' : defaultDisplay} ${baseStyles} ${colorStyles} ${className}`.trim();

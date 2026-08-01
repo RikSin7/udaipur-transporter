@@ -13,7 +13,7 @@ interface Props {
   type: "services" | "vehicles";
 }
 
-const { type } = Astro.props;
+const { type }: Props = Astro.props;
 const isServicesPage = type === "services";
 
 // 1. Fetch Singleton Business Settings for WhatsApp Routing

@@ -1,7 +1,7 @@
 ---
 # 1. Hero Section
 heroBadge: "Private transport from Udaipur"
-heroTitle: "Straightforward Private cabs, transfers & tours across Udaipur."
+heroTitle: "Private cabs, transfers & tours across Udaipur."
 heroSubtitle: "Choose a service, pick a suitable vehicle, and reach us directly by form, WhatsApp or call. We reply to arrange your trip."
 heroFeatures:
   - icon: "IconCar"

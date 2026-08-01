@@ -10,7 +10,7 @@ interface Props {
   class?: string;
 }
 
-const { article, class: className = "" } = Astro.props;
+const { article, class: className = "" }: Props = Astro.props;
 const { title, summary, publishDate, category, image } = article.data;
 
 const formattedDate = formatDate(publishDate);

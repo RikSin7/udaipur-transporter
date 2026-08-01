@@ -1,151 +1,80 @@
 @import "tailwindcss";
 
-@import "@fontsource/cormorant-garamond";
-@import "@fontsource/marcellus";
-@import "@fontsource/poppins";
-@import "@fontsource/playfair-display";
-
-/* Option 1: The Heritage Concierge */
-@import "@fontsource/lora";
-@import "@fontsource/inter";
-
-/* Option 2: The Majestic Palace */
-@import "@fontsource/cinzel";
-@import "@fontsource/montserrat";
-
-/* Option 3: The Modern Premium */
-@import "@fontsource/fraunces";
-@import "@fontsource/dm-sans";
-
 @import "@fontsource/manrope";
-
 @import "@fontsource/plus-jakarta-sans";
 
 @plugin "@tailwindcss/typography";
 
 @theme {
   /* Typography */
-
-  /* --font-sans: "Lora", "ui-sans-serif", system-ui, sans-serif; */
-  /* --font-serif: "Playfair Display", Georgia, serif; */
-
-  /* --font-sans: "Lora", Georgia, Cambria, "Times New Roman", Times, serif; */
-
-  /* --font-sans: "Plus Jakarta Sans", "ui-sans-serif", system-ui, sans-serif; */
   --font-serif: "Plus Jakarta Sans", "ui-sans-serif", system-ui, sans-serif;
   --font-sans: "Manrope", "ui-sans-serif", system-ui, sans-serif;
-  /* --font-serif: "Manrope", "ui-sans-serif", system-ui, sans-serif; */
-
-  /* --font-sans: "Inter", "ui-sans-serif", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
-
-  /* =======================================================
-     OPTION 2: CINZEL + MONTSERRAT (Commented Out)
-     Vibe: Bold, Historical, Architectural
-     To use: Uncomment the two lines below, comment Option 1
-     ======================================================= */
-  /* --font-serif: "Cinzel", Georgia, Cambria, "Times New Roman", Times, serif; */
-  /* --font-sans: "Montserrat", "ui-sans-serif", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; */
-
-  /* =======================================================
-     OPTION 3: FRAUNCES + DM SANS (Commented Out)
-     Vibe: Modern, High-End, Sleek
-     To use: Uncomment the two lines below, comment Option 1
-     ======================================================= */
-  /* --font-serif: "Fraunces", Georgia, Cambria, "Times New Roman", Times, serif; */
-  /* --font-sans: "DM Sans", "ui-sans-serif", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; */
-
 
   /* BRAND */
+  --color-brand: #103F3E;
   --color-brand-50: #F3F6F4;
   --color-brand-100: #E9EFEA;
   --color-brand-200: #CBD8D3;
   --color-brand-300: #96AAA4;
-
   --color-brand-700: #216E6A;
   --color-brand-800: #165351;
   --color-brand-900: #103F3E;
   --color-brand-950: #0B302F;
 
-  --color-brand: #103F3E;
-
   /* CHAMPAGNE & ROYAL GOLD / OCHRE */
-
+  --color-accent: #D7B56D;
   --color-accent-light: #FDFBEE;
   --color-accent-subtle: #EFE5D3;
-
-  --color-accent: #D7B56D;
-
   --color-accent-hover: #E3C37E;
-
   --color-accent-dark: #8D671D;
 
   /* CTA MARIGOLD / ORANGE */
-
   --color-cta: #AD5C1F;
   --color-cta-hover: #8E4416;
 
   /* SURFACES */
-
   --color-surface: #FBF7EF;
-
   --color-surface-card: #FFFFFF;
-
   --color-surface-alt: #E9EFEA;
-
   --color-surface-dark: #0B302F;
 
   /* Typography */
-
   --color-typography-main: #1E2A28;
-
   --color-typography-muted: #6A726F;
 
   /* STATUS */
-
   --color-success: #2F7A55;
   --color-success-light: #EDF8F2;
-
   --color-warning: #8D671D;
   --color-warning-light: #FFF7E8;
-
   --color-error: #B74B4B;
   --color-error-light: #FFF3F3;
 
   /* BORDERS */
-
   --color-border: #DED8CC;
-
   --color-border-light: #E7E1D7;
-
   --color-border-dark: #D3CCBE;
 
   /* SHADOWS */
 
   --shadow-sm:
     0 8px 24px rgba(11,48,47,.07);
-
   --shadow-md:
     0 18px 46px rgba(11,48,47,.12);
-
   --shadow-lg:
     0 24px 60px rgba(11,48,47,.16);
-
   --shadow-xl:
     0 32px 80px rgba(11,48,47,.20);
-
   --shadow-premium:
     0 14px 36px rgba(11,48,47,.14);
 
   /* RADIUS */
-
   --radius-card: 20px;
   --radius-button: 12px;
   --radius-input: 12px;
 
   /* TRANSITIONS */
-
   --default-transition-duration: 260ms;
-
   --default-transition-timing-function:
       cubic-bezier(.22,1,.36,1);
 }

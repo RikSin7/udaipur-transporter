@@ -5,6 +5,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
+import HeroHeader from "../../components/ui/HeroHeader.astro";
 import { getWhatsAppUrl, formatDate } from "../../utils/helpers";
 import {
   IconClock,
@@ -84,25 +85,11 @@ const whatsappUrl = getWhatsAppUrl(
     class="bg-brand-900 text-white py-12 border-b border-brand-800 relative"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <span
-          class="text-xs font-bold uppercase tracking-widest text-accent bg-brand-800 px-3 py-1 rounded-full inline-block mb-4"
-        >
-          {category}
-        </span>
-
-        <h1
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-4 text-white tracking-wide"
-        >
-          {title}
-        </h1>
-
-        <p
-          class="text-brand-100/90 text-base sm:text-lg leading-relaxed font-light mb-8"
-        >
-          {summary}
-        </p>
-
+      <HeroHeader
+        subheading={category}
+        heading={title}
+        description={summary}
+      >
         {/* Author, Date & Reading Time Metadata */}
         <div
           class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-brand-100/80 border-t border-brand-800/80 pt-6"
@@ -124,7 +111,7 @@ const whatsappUrl = getWhatsAppUrl(
             <span class="font-medium">{readingTime} min read</span>
           </div>
         </div>
-      </div>
+      </HeroHeader>
     </div>
   </section>
 

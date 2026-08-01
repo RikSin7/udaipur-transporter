@@ -7,5 +7,5 @@ address: "Udaipur, Rajasthan, India"
 operatingHours: "24/7 Support"
 serviceArea: "Udaipur & All Rajasthan Outstation Routes"
 seoDefaultTitle: "Udaipur Royal Transporter | Private Taxi & Car Rental"
-seoDefaultDesc: "Straightforward, dependable private transportation across Udaipur and Rajasthan."
+seoDefaultDesc: "Private cabs, transfers & tours across Udaipur."
 ---

@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import ReviewCard from "../cards/ReviewCard.astro";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
 
 // 1. Fetch from 'reviews' collection
 const allReviews = await getCollection("reviews").catch(() => []);
@@ -17,54 +18,30 @@ const displayReviews = allReviews
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* 1. SECTION HEADER WITH CONTROLS */}
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 sm:mb-12 gap-6">
-      {/* Section Header */}
-      <div class="text-left max-w-3xl">
-        <span
-          class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
+    <SectionHeader
+      subheading="Verified Passenger Reviews"
+      heading="What Travellers Say"
+      description="We rely on transparent local pricing and experienced Udaipur drivers. Read genuine feedback from families, couples, and international visitors."
+      viewAllHref="/reviews/"
+      viewAllText="View All Reviews"
+    >
+      <div slot="actions" class="flex items-center gap-2 sm:gap-3">
+        <button
+          id="prev-review-btn"
+          aria-label="Previous reviews"
+          class="w-12 h-12 rounded-full border border-brand-800/20 bg-surface-card text-brand-900 hover:bg-brand-900 hover:text-white transition-all shadow-sm flex items-center justify-center active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed group"
         >
-          Verified Passenger Reviews
-        </span>
-        <h2
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight mb-2"
+          <IconChevronLeft size={24} stroke={2} />
+        </button>
+        <button
+          id="next-review-btn"
+          aria-label="Next reviews"
+          class="w-12 h-12 rounded-full border border-brand-800/20 bg-surface-card text-brand-900 hover:bg-brand-900 hover:text-white transition-all shadow-sm flex items-center justify-center active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed group"
         >
-          What Travellers Say
-        </h2>
-        <p class="text-sm sm:text-base text-typography-muted">
-          We rely on transparent local pricing and experienced Udaipur drivers.
-          Read genuine feedback from families, couples, and international
-          visitors.
-        </p>
-        <span class="inline-block w-12 h-1 bg-accent rounded-full mt-4"></span>
+          <IconChevronRight size={24} stroke={2} />
+        </button>
       </div>
-
-      {/* Controls & Desktop CTA */}
-      <div class="flex flex-col items-end gap-4 shrink-0">
-        <div class="hidden sm:block">
-          <ViewAllButton
-            href="/reviews/"
-            text="View All Reviews"
-            variant="desktop"
-          />
-        </div>
-        <div class="flex items-center gap-2 sm:gap-3">
-          <button
-            id="prev-review-btn"
-            aria-label="Previous reviews"
-            class="w-12 h-12 rounded-full border border-brand-800/20 bg-surface-card text-brand-900 hover:bg-brand-900 hover:text-white transition-all shadow-sm flex items-center justify-center active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed group"
-          >
-            <IconChevronLeft size={24} stroke={2} />
-          </button>
-          <button
-            id="next-review-btn"
-            aria-label="Next reviews"
-            class="w-12 h-12 rounded-full border border-brand-800/20 bg-surface-card text-brand-900 hover:bg-brand-900 hover:text-white transition-all shadow-sm flex items-center justify-center active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed group"
-          >
-            <IconChevronRight size={24} stroke={2} />
-          </button>
-        </div>
-      </div>
-    </div>
+    </SectionHeader>
 
     {/* 2. RESPONSIVE CAROUSEL TRACK */}
     <div

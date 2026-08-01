@@ -15,7 +15,7 @@ interface Props {
   vehicle: CollectionEntry<"vehicles">;
 }
 
-const { vehicle } = Astro.props;
+const { vehicle }: Props = Astro.props;
 const { title, passengers, luggage, amenities, imageNote, summary, image } =
   vehicle.data;
 

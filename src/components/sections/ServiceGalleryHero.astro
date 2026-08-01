@@ -12,7 +12,7 @@ interface Props {
   gallery?: any[];
 }
 
-const { title, gallery = [] } = Astro.props;
+const { title, gallery = [] }: Props = Astro.props;
 
 // 1. Find the primary image (if any) and bring it to the front
 const primaryIndex = gallery.findIndex((item: any) => item?.isPrimary);

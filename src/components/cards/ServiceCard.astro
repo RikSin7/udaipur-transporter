@@ -8,7 +8,7 @@ interface Props {
   service: CollectionEntry<"services">;
 }
 
-const { service } = Astro.props;
+const { service }: Props = Astro.props;
 const { title, summary, pricing, image, gallery = [], category } = service.data;
 
 // 1. Evaluate Primary Image for Card Thumbnail:

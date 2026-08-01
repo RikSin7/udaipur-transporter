@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { iconResolver } from "../../utils/iconResolver";
 import { IconArrowRight } from "@tabler/icons-astro";
+import SectionHeader from "../ui/SectionHeader.astro";
 
 // 1. Fetch business settings autonomously for phone & WhatsApp routing
 const settingsEntries = await getCollection("settings").catch(() => []);
@@ -75,20 +76,12 @@ const homeData = homeEntries[0]?.data || {
 
 <section class="py-12 bg-surface border-b border-border">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    {/* 1. SECTION HEADER */}
-    <div class="text-left max-w-3xl mb-12">
-      <span
-        class="text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/80 px-3 py-1 rounded-full inline-block mb-3"
-      >
-        {homeData.bookingBadge}
-      </span>
-      <h2
-        class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight"
-      >
-        {homeData.bookingHeading}
-      </h2>
-      <span class="inline-block w-12 h-1 bg-accent rounded-full mt-3"></span>
-    </div>
+    {/* Section Header */}
+    <SectionHeader
+      subheading={homeData.bookingBadge}
+      heading={homeData.bookingHeading}
+      class="mb-12"
+    />
 
     {/* 2. THREE CONTACT METHOD CARDS */}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 mb-12">
