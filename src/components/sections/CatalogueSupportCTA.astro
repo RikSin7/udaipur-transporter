@@ -29,21 +29,29 @@ const ctaData = ctaEntries[0]?.data;
 // 2. Build Dynamic Cross-Link Configuration (Left Card)
 const crossLink = {
   href: isServicesPage ? "/vehicles/" : "/services/",
-  title: isServicesPage ? (ctaData?.servicesCrossTitle || "Compare our vehicles") : (ctaData?.vehiclesCrossTitle || "Explore transport services"),
+  title: isServicesPage
+    ? ctaData?.servicesCrossTitle || "Compare our vehicles"
+    : ctaData?.vehiclesCrossTitle || "Explore transport services",
   description: isServicesPage
-    ? (ctaData?.servicesCrossDesc || "Seats, luggage guidance and amenities for each car and Tempo Traveller category.")
-    : (ctaData?.vehiclesCrossDesc || "Transparent airport transfers, local Udaipur sightseeing, and multi-day outstation packages."),
-  badge: isServicesPage ? (ctaData?.servicesCrossBadge || "Fleet Inventory") : (ctaData?.vehiclesCrossBadge || "Service Routes"),
+    ? ctaData?.servicesCrossDesc ||
+      "Seats, luggage guidance and amenities for each car and Tempo Traveller category."
+    : ctaData?.vehiclesCrossDesc ||
+      "Transparent airport transfers, local Udaipur sightseeing, and multi-day outstation packages.",
+  badge: isServicesPage
+    ? ctaData?.servicesCrossBadge || "Fleet Inventory"
+    : ctaData?.vehiclesCrossBadge || "Service Routes",
 };
 
 // 3. Build Dynamic Inquiry & WhatsApp Configuration (Right Card)
 const inquiry = {
   title: isServicesPage
-    ? (ctaData?.servicesInquiryTitle || "Not sure which service?")
-    : (ctaData?.vehiclesInquiryTitle || "Need help choosing a vehicle?"),
+    ? ctaData?.servicesInquiryTitle || "Not sure which service?"
+    : ctaData?.vehiclesInquiryTitle || "Need help choosing a vehicle?",
   description: isServicesPage
-    ? (ctaData?.servicesInquiryDesc || "Send us your travel itinerary — we'll suggest the right service package and reply directly.")
-    : (ctaData?.vehiclesInquiryDesc || "Unsure which car fits your group and luggage? Tell us your passenger count for an instant recommendation."),
+    ? ctaData?.servicesInquiryDesc ||
+      "Send us your travel itinerary — we'll suggest the right service package and reply directly."
+    : ctaData?.vehiclesInquiryDesc ||
+      "Unsure which car fits your group and luggage? Tell us your passenger count for an instant recommendation.",
   whatsappUrl: getWhatsAppUrl(
     site.whatsapp,
     isServicesPage

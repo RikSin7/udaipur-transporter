@@ -62,9 +62,9 @@ const hubData = hubEntries[0]?.data;
 
 <BaseLayout
   title={hubData?.seoTitle || `Transport Planning Guides | ${site.companyName}`}
-  description={hubData?.seoDesc || "Practical advice, vehicle capacity guides, and local transport tips for planning a seamless private taxi journey across Udaipur and Rajasthan."}
+  description={hubData?.seoDesc ||
+    "Practical advice, vehicle capacity guides, and local transport tips for planning a seamless private taxi journey across Udaipur and Rajasthan."}
 >
-
   {/* 1. HERO BANNER */}
   <section
     class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
@@ -73,7 +73,8 @@ const hubData = hubEntries[0]?.data;
       <HeroHeader
         subheading={hubData?.badge || "Travel Planning Resources"}
         heading={hubData?.title || "Udaipur travel"}
-        description={hubData?.description || "Honest, useful advice on airport pickups, choosing a vehicle and what a private taxi price really includes."}
+        description={hubData?.description ||
+          "Honest, useful advice on airport pickups, choosing a vehicle and what a private taxi price really includes."}
       />
     </div>
   </section>

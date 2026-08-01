@@ -82,10 +82,7 @@ const schemaData = {
 
 {
   !isHome && (
-    <nav
-      aria-label="Breadcrumb"
-      class="font-sans transition-all duration-200"
-    >
+    <nav aria-label="Breadcrumb" class="font-sans transition-all duration-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center">
         <ol class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {/* Home Root Link */}
@@ -105,7 +102,10 @@ const schemaData = {
             const isLast = index === breadcrumbs.length - 1;
             return (
               <li class="inline-flex items-center shrink-0 space-x-1.5 sm:space-x-2">
-                <span class="text-typography-muted opacity-35 shrink-0" aria-hidden="true">
+                <span
+                  class="text-typography-muted opacity-35 shrink-0"
+                  aria-hidden="true"
+                >
                   <IconChevronRight class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </span>
                 {isLast || !item.href ? (

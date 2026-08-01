@@ -222,6 +222,7 @@ const passengerCounters = [
                 type="button"
                 class="qty-minus w-12 h-full flex justify-center items-center hover:bg-brand-50"
                 data-target={c.id}
+                aria-label={`Decrease ${c.label}`}
               >
                 <IconMinus size={18} />
               </button>
@@ -237,6 +238,7 @@ const passengerCounters = [
                 type="button"
                 class="qty-plus w-12 h-full flex justify-center items-center hover:bg-brand-50"
                 data-target={c.id}
+                aria-label={`Increase ${c.label}`}
               >
                 <IconPlus size={18} />
               </button>
@@ -278,10 +280,7 @@ const passengerCounters = [
       class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-3"
     >
       <span>Submit Travel Enquiry</span>
-      <IconSend
-        size={20}
-        class="transition-transform group-hover:scale-120"
-      />
+      <IconSend size={20} class="transition-transform group-hover:scale-120" />
     </button>
   </div>
 </form>
@@ -350,13 +349,15 @@ const passengerCounters = [
       ) as HTMLInputElement;
       if (input) {
         const current = parseInt(input.value) || 0;
-        if (
-          btn.classList.contains("qty-minus") &&
-          current > parseInt(input.min || "0")
-        )
+        const minVal = parseInt(input.min) || 0;
+        const maxVal = input.max ? parseInt(input.max) : Infinity;
+
+        if (btn.classList.contains("qty-minus") && current > minVal) {
           input.value = String(current - 1);
-        if (btn.classList.contains("qty-plus"))
+        }
+        if (btn.classList.contains("qty-plus") && current < maxVal) {
           input.value = String(current + 1);
+        }
       }
     }
   });

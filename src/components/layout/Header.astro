@@ -32,7 +32,10 @@ const navLinks = [
       <div class="bg-brand-900 text-brand-100 text-xs py-2 px-4 text-center border-b border-brand-800 flex items-center justify-center gap-2">
         <span class="font-medium">{site.announcementBar.text}</span>
         {site.announcementBar.link && (
-          <a href={site.announcementBar.link} class="text-accent underline font-bold hover:text-white transition-colors shrink-0">
+          <a
+            href={site.announcementBar.link}
+            class="text-accent underline font-bold hover:text-white transition-colors shrink-0"
+          >
             Learn More &rarr;
           </a>
         )}

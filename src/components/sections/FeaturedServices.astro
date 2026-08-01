@@ -18,7 +18,8 @@ const homeData = homeEntries[0]?.data;
     <SectionHeader
       subheading={homeData?.servicesSection?.badge || "Featured Services"}
       heading={homeData?.servicesSection?.heading || "What We Drive for You"}
-      description={homeData?.servicesSection?.description || "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."}
+      description={homeData?.servicesSection?.description ||
+        "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."}
       viewAllHref="/services/"
       viewAllText="View All Services"
     />

@@ -22,9 +22,11 @@ const homeData = homeEntries[0]?.data;
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* 1. SECTION HEADER WITH CONTROLS */}
     <SectionHeader
-      subheading={homeData?.reviewsSection?.badge || "Verified Passenger Reviews"}
+      subheading={homeData?.reviewsSection?.badge ||
+        "Verified Passenger Reviews"}
       heading={homeData?.reviewsSection?.heading || "What Travellers Say"}
-      description={homeData?.reviewsSection?.description || "We rely on transparent local pricing and experienced Udaipur drivers. Read genuine feedback from families, couples, and international visitors."}
+      description={homeData?.reviewsSection?.description ||
+        "We rely on transparent local pricing and experienced Udaipur drivers. Read genuine feedback from families, couples, and international visitors."}
       viewAllHref="/reviews/"
       viewAllText="View All Reviews"
     >

@@ -31,7 +31,8 @@ const homeData = homeEntries[0]?.data;
     <SectionHeader
       subheading={homeData?.blogSection?.badge || "Practical Travel Advice"}
       heading={homeData?.blogSection?.heading || "Plan Your Trip"}
-      description={homeData?.blogSection?.description || "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."}
+      description={homeData?.blogSection?.description ||
+        "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."}
       viewAllHref="/blog/"
       viewAllText="View All Transport Guides"
     />

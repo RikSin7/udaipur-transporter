@@ -61,10 +61,11 @@ const hubData = hubEntries[0]?.data;
 ---
 
 <BaseLayout
-  title={hubData?.seoTitle || `Frequently Asked Questions | ${site.companyName}`}
-  description={hubData?.seoDesc || "Clear, straightforward answers regarding Udaipur taxi tariffs, airport waiting times, outstation toll rules, and vehicle luggage capacities."}
+  title={hubData?.seoTitle ||
+    `Frequently Asked Questions | ${site.companyName}`}
+  description={hubData?.seoDesc ||
+    "Clear, straightforward answers regarding Udaipur taxi tariffs, airport waiting times, outstation toll rules, and vehicle luggage capacities."}
 >
-
   {/* 1. HERO BANNER */}
   <section
     class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
@@ -73,7 +74,8 @@ const hubData = hubEntries[0]?.data;
       <HeroHeader
         subheading={hubData?.badge || "Operational Transparency"}
         heading={hubData?.title || "Frequently Asked Questions"}
-        description={hubData?.description || "Everything you need to know about our owner-approved pricing, driver allowances, luggage limits, and direct booking confirmation process."}
+        description={hubData?.description ||
+          "Everything you need to know about our owner-approved pricing, driver allowances, luggage limits, and direct booking confirmation process."}
         align="center"
       />
     </div>
@@ -208,7 +210,8 @@ const hubData = hubEntries[0]?.data;
       <SectionHeader
         subheading={hubData?.ctaBadge || "Still Have Questions?"}
         heading={hubData?.ctaTitle || "Speak Directly With Our Udaipur Team"}
-        description={hubData?.ctaDesc || "Skip automated call centers. Connect with a local transport coordinator who can review your custom route, calculate toll actuals, and confirm vehicle availability immediately."}
+        description={hubData?.ctaDesc ||
+          "Skip automated call centers. Connect with a local transport coordinator who can review your custom route, calculate toll actuals, and confirm vehicle availability immediately."}
         theme="dark"
         align="center"
         underline={false}
