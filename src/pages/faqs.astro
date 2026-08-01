@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/layout/Header.astro";
 import {
   IconChevronDown,
   IconArrowRight,
@@ -57,13 +56,14 @@ const whatsappUrl = getWhatsAppUrl(
   "FAQ Page Inquiry",
   Astro.url.href,
 );
+const hubEntries = await getCollection("faqs_hub").catch(() => []);
+const hubData = hubEntries[0]?.data;
 ---
 
 <BaseLayout
-  title={`Frequently Asked Questions | ${site.companyName}`}
-  description="Clear, straightforward answers regarding Udaipur taxi tariffs, airport waiting times, outstation toll rules, and vehicle luggage capacities."
+  title={hubData?.seoTitle || `Frequently Asked Questions | ${site.companyName}`}
+  description={hubData?.seoDesc || "Clear, straightforward answers regarding Udaipur taxi tariffs, airport waiting times, outstation toll rules, and vehicle luggage capacities."}
 >
-  <Header slot="header" />
 
   {/* 1. HERO BANNER */}
   <section
@@ -71,9 +71,9 @@ const whatsappUrl = getWhatsAppUrl(
   >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading="Operational Transparency"
-        heading="Frequently Asked Questions"
-        description="Everything you need to know about our owner-approved pricing, driver allowances, luggage limits, and direct booking confirmation process."
+        subheading={hubData?.badge || "Operational Transparency"}
+        heading={hubData?.title || "Frequently Asked Questions"}
+        description={hubData?.description || "Everything you need to know about our owner-approved pricing, driver allowances, luggage limits, and direct booking confirmation process."}
         align="center"
       />
     </div>
@@ -206,9 +206,9 @@ const whatsappUrl = getWhatsAppUrl(
   <section class="py-12 bg-brand-900 text-white border-t border-brand-800">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <SectionHeader
-        subheading="Still Have Questions?"
-        heading="Speak Directly With Our Udaipur Team"
-        description="Skip automated call centers. Connect with a local transport coordinator who can review your custom route, calculate toll actuals, and confirm vehicle availability immediately."
+        subheading={hubData?.ctaBadge || "Still Have Questions?"}
+        heading={hubData?.ctaTitle || "Speak Directly With Our Udaipur Team"}
+        description={hubData?.ctaDesc || "Skip automated call centers. Connect with a local transport coordinator who can review your custom route, calculate toll actuals, and confirm vehicle availability immediately."}
         theme="dark"
         align="center"
         underline={false}

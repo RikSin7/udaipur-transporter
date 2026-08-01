@@ -33,9 +33,8 @@ whatsCovered:
   - title: Luggage guidance
     description: We recommend a vehicle that comfortably seats your group after bags.
 suitableVehicles:
-  - sedan
-  - suv
-  - innova-crysta
+  - sedan-dzire-etios
+  - tempo-traveller-12-seater
 faqs:
   - question: What if my flight is delayed?
     answer:

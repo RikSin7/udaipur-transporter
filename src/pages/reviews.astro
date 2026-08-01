@@ -8,7 +8,6 @@ import {
   IconArrowRight,
 } from "@tabler/icons-astro";
 import { getWhatsAppUrl } from "../utils/helpers";
-import Header from "../components/layout/Header.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ReviewCard from "../components/cards/ReviewCard.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
@@ -42,13 +41,15 @@ const whatsappUrl = getWhatsAppUrl(
   "Reviews Page Inquiry",
   Astro.url.href,
 );
+
+const hubEntries = await getCollection("reviews_hub").catch(() => []);
+const hubData = hubEntries[0]?.data;
 ---
 
 <BaseLayout
-  title={`Verified Passenger Reviews | ${site.companyName}`}
-  description="Read genuine feedback from families, couples, and international travellers who hired private taxis and drivers with Udaipur Royal Transporter."
+  title={hubData?.seoTitle || `Verified Passenger Reviews | ${site.companyName}`}
+  description={hubData?.seoDesc || "Read genuine feedback from families, couples, and international travellers who hired private taxis and drivers with Udaipur Royal Transporter."}
 >
-  <Header slot="header" />
 
   {/* 1. HERO BANNER & AGGREGATE SCORECARD */}
   <section
@@ -59,9 +60,9 @@ const whatsappUrl = getWhatsAppUrl(
         {/* Left Column: Hero Title */}
         <div class="lg:col-span-7">
           <HeroHeader
-            subheading="100% Transparent Proof"
-            heading="What Travellers Say About Our Drivers & Taxis"
-            description="Every review below reflects an actual trip across Udaipur, Kumbhalgarh, Mount Abu, or Rajasthan outstation circuits. We never edit comments or filter out real customer experiences."
+            subheading={hubData?.badge || "100% Transparent Proof"}
+            heading={hubData?.title || "What Travellers Say About Our Drivers & Taxis"}
+            description={hubData?.description || "Every review below reflects an actual trip across Udaipur, Kumbhalgarh, Mount Abu, or Rajasthan outstation circuits. We never edit comments or filter out real customer experiences."}
           />
         </div>
 

@@ -19,10 +19,8 @@ whatsCovered:
   - title: Flexible sightseeing stops
     description: Pause along the route for meals or famous en-route sightseeing (e.g., Ranakpur, Kumbhalgarh).
 suitableVehicles:
-  - sedan
-  - suv
-  - innova-crysta
-  - tempo-traveller
+  - sedan-dzire-etios
+  - suv-ertiga-xl6
 faqs:
   - question: Are toll taxes and state taxes included in the fare?
     answer: It depends on the package you choose. We offer both "All-Inclusive" and "Cab & Driver Only" packages. Our quotes clearly state what is included.

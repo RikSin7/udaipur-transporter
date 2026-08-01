@@ -1,0 +1,19 @@
+---
+seoTitle: "Our Transport Services | Udaipur Royal Transporter"
+seoDesc: "Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."
+badge: "Our Services"
+title: "Private transport for every kind of Udaipur trip"
+description: "Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price."
+disclaimerText: "Each service above is available in and around Udaipur, from airport and railway transfers to sightseeing, nearby day use and outstation travel across Rajasthan. Coverage and example trips are described within each service page as guidance, not as separate booking pages. Where a price is confirmed it is shown with its terms; otherwise please ask us for a quote."
+categoryDescriptions:
+  - category: "Transfers"
+    subtitle: "Airport, railway and point-to-point private transfers across Udaipur."
+  - category: "Local Travel"
+    subtitle: "Flexible hourly car rentals and full-day old city sightseeing itineraries."
+  - category: "Outstation Travel"
+    subtitle: "Multi-day highway road trips and one-way taxi drops across Rajasthan."
+  - category: "Group and Event Travel"
+    subtitle: "Spacious tempo travellers and coordinated fleet logistics for weddings and groups."
+  - category: "Additional"
+    subtitle: "Custom logistical solutions and specialized corporate transport requests."
+---

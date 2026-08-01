@@ -28,9 +28,8 @@ whatsCovered:
   - title: Dedicated waiting
     description: Vehicle and driver stay with you for the duration of the package.
 suitableVehicles:
-  - sedan
-  - suv
-  - innova-crysta
+  - sedan-dzire-etios
+  - tempo-traveller-12-seater
 faqs:
   - question: What if I exceed the package time or distance?
     answer: Extra kilometres and extra hours are billed as per transparent standard rates at the end of the trip.

@@ -66,13 +66,14 @@ export function slugify(text: string = ""): string {
 }
 
 /**
- * Cleans string for URL parameters
+ * Cleans string for URL parameters while safely URI-encoding special characters
  */
-export function createCleanParam(text: string): string {
-    return text
+export function createCleanParam(text: string = ""): string {
+    const cleaned = text
         .replace(/\//g, '-')          // Replace slashes with hyphens
         .replace(/[()]/g, '')         // Remove parentheses for cleaner reading
-        .replace(/\s+/g, '+')         // Use '+' instead of '%20' for spaces in URL query strings
-        .replace(/\+-+\+/g, '+-+')    // Clean up multiple hyphens with pluses
         .trim();
+    return encodeURIComponent(cleaned)
+        .replace(/%20/g, '+')         // Use '+' instead of '%20' for spaces in URL query strings
+        .replace(/\+-+\+/g, '+-+');   // Clean up multiple hyphens with pluses
 }

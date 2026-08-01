@@ -2,7 +2,6 @@
 import { getCollection, render } from "astro:content";
 import { IconPrinter, IconCheck, IconMail } from "@tabler/icons-astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/layout/Header.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 
 // 1. Fetch Singleton Business Settings
@@ -34,7 +33,6 @@ const { Content } = await render(termsEntry);
   description={subtitle}
   currentTitle={title}
 >
-  <Header slot="header" />
 
   {/* 1. HERO BANNER WITH LUXURY DEPTH */}
   <section

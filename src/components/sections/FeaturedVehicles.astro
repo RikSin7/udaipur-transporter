@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import VehicleCard from "../cards/VehicleCard.astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
@@ -9,14 +9,16 @@ interface Props {
 }
 
 const { featuredVehicles }: Props = Astro.props;
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data;
 ---
 
-<section class="py-12 bg-surface-alt/60 border-y border-border/70">
+<section class="py-12 bg-surface-alt/50 border-y border-border/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionHeader
-      subheading="Vehicles"
-      heading="Choose a Suitable Vehicle"
-      description="Our fleet guidelines help you select the right vehicle category based on passenger count and luggage volume for maximum comfort on Rajasthan roads."
+      subheading={homeData?.vehiclesSection?.badge || "Vehicles"}
+      heading={homeData?.vehiclesSection?.heading || "Choose a Suitable Vehicle"}
+      description={homeData?.vehiclesSection?.description || "Our fleet guidelines help you select the right vehicle category based on passenger count and luggage volume for maximum comfort on Rajasthan roads."}
       viewAllHref="/vehicles/"
       viewAllText="Explore Full Fleet"
     />

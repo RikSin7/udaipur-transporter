@@ -7,11 +7,14 @@ const settingsEntries = await getCollection("settings").catch(() => []);
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
 };
+
+const tyEntries = await getCollection("thank_you").catch(() => []);
+const tyData = tyEntries[0]?.data;
 ---
 
 <BaseLayout
-  title={`Thank You | ${site.companyName}`}
-  description="Thank you for your enquiry. We will get back to you shortly."
+  title={tyData?.seoTitle || `Thank You | ${site.companyName}`}
+  description={tyData?.seoDesc || "Thank you for your enquiry. We will get back to you shortly."}
   noindex={true}
 >
   <section
@@ -27,15 +30,13 @@ const site = settingsEntries[0]?.data || {
       <h1
         class="font-serif text-4xl sm:text-5xl font-bold text-brand-900 tracking-tight mb-4"
       >
-        Thank You for Your Request!
+        {tyData?.title || "Thank You for Your Request!"}
       </h1>
 
       <p
         class="text-typography-muted text-base sm:text-lg mb-10 leading-relaxed max-w-xl mx-auto"
       >
-        We have received your travel requirements. Our Udaipur dispatch team
-        will review your details, calculate the exact rates, and get in touch
-        with you very shortly.
+        {tyData?.message || "We have received your travel requirements. Our Udaipur dispatch team will review your details, calculate the exact rates, and get in touch with you very shortly."}
       </p>
 
       <a
@@ -47,7 +48,7 @@ const site = settingsEntries[0]?.data || {
           stroke={2}
           class="text-accent group-hover:-translate-x-1 transition-transform"
         />
-        <span>Return to Homepage</span>
+        <span>{tyData?.buttonText || "Return to Homepage"}</span>
       </a>
     </div>
   </section>

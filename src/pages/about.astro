@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/layout/Header.astro";
 import { getWhatsAppUrl } from "../utils/helpers";
 import { cn } from "../utils/cn";
 import SectionHeader from "../components/ui/SectionHeader.astro";
@@ -64,9 +63,7 @@ const whatsappUrl = getWhatsAppUrl(
 <BaseLayout
   title={`About Our Service | ${site.companyName}`}
   description={subtitle}
-  currentTitle={title}
 >
-  <Header slot="header" />
 
   {/* 1. HERO BANNER */}
   <section

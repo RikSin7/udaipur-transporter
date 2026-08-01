@@ -8,6 +8,9 @@ import {
   IconArrowRight,
   IconMapPin,
   IconClock,
+  IconBrandInstagram,
+  IconBrandFacebook,
+  IconBrandTripadvisor,
 } from "@tabler/icons-astro";
 
 // 1. Fetch Singleton Settings
@@ -64,9 +67,9 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8"
     >
       {
-        /* GROUP 1: CONTACT (Span 4) — Phone, WhatsApp, email, service area, response hours */
+        /* GROUP 1: CONTACT (Span 5) — Phone, WhatsApp, email, service area, response hours */
       }
-      <div class="lg:col-span-4 space-y-5">
+      <div class="lg:col-span-5 space-y-5">
         <div>
           <h3 class="font-serif text-2xl font-bold text-white tracking-wide">
             {site.companyName}
@@ -143,11 +146,38 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
               {site.email}
             </a>
           </div>
+
+          {
+            site.socialLinks && (
+              <div class="pt-3 flex items-center gap-2.5 border-t border-brand-800/60 mt-3">
+                {site.socialLinks.instagram && (
+                  <a href={site.socialLinks.instagram} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="Instagram">
+                    <IconBrandInstagram size={18} stroke={1.8} />
+                  </a>
+                )}
+                {site.socialLinks.facebook && (
+                  <a href={site.socialLinks.facebook} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="Facebook">
+                    <IconBrandFacebook size={18} stroke={1.8} />
+                  </a>
+                )}
+                {site.socialLinks.tripadvisor && (
+                  <a href={site.socialLinks.tripadvisor} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="TripAdvisor">
+                    <IconBrandTripadvisor size={18} stroke={1.8} />
+                  </a>
+                )}
+                {site.socialLinks.googleMaps && (
+                  <a href={site.socialLinks.googleMaps} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="Google Maps">
+                    <IconMapPin size={18} stroke={1.8} />
+                  </a>
+                )}
+              </div>
+            )
+          }
         </div>
       </div>
 
-      {/* GROUP 2: SERVICES (Span 3) — Auto Top 5 + Hub Link */}
-      <div class="lg:col-span-3 space-y-4">
+      {/* GROUP 2: SERVICES (Span 4) — Auto Top 5 + Hub Link */}
+      <div class="lg:col-span-4 space-y-4">
         <h4
           class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5"
         >
@@ -189,51 +219,9 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
         </ul>
       </div>
 
-      {/* GROUP 3: VEHICLES (Span 3) — Auto Top 5 + Hub Link */}
-      <div class="lg:col-span-3 space-y-4">
-        <h4
-          class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5"
-        >
-          Vehicle Fleet
-        </h4>
-        <ul class="space-y-2.5 text-xs sm:text-sm">
-          {
-            topVehicles.length > 0 ? (
-              topVehicles.map((vehicle) => (
-                <li>
-                  <a
-                    href={`/vehicles/${vehicle.id}/`}
-                    class="text-brand-100/80 hover:text-accent hover:pl-1 transition-all duration-200 block truncate"
-                  >
-                    {vehicle.data.title}
-                  </a>
-                </li>
-              ))
-            ) : (
-              <li class="text-xs text-brand-100/50 italic">
-                Vehicles loading from CMS...
-              </li>
-            )
-          }
 
-          <li class="pt-2 border-t border-brand-800/60 mt-3">
-            <a
-              href="/vehicles/"
-              class="group inline-flex items-center gap-1.5 text-accent font-bold text-xs uppercase tracking-wider hover:text-white transition-colors"
-            >
-              <span>View Fleet Capacity</span>
-              <IconArrowRight
-                size={14}
-                stroke={2.5}
-                class="group-hover:translate-x-1 transition-transform"
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      {/* GROUP 4: COMPANY, RESOURCES & POLICIES (Span 2) */}
-      <div class="lg:col-span-2 space-y-6">
+      {/* GROUP 4: COMPANY, RESOURCES & POLICIES (Span 3) */}
+      <div class="lg:col-span-3 space-y-6">
         {/* Company */}
         <div>
           <h4
@@ -330,11 +318,10 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       <p>
         &copy; {currentYear}
         {" "}
-        {site.companyName}. All rights reserved. Straightforward Udaipur
-        Transport.
+        {site.companyName}. All rights reserved. {site.footerTagline || "Straightforward Udaipur Transport."}
       </p>
       <p class="italic text-center sm:text-right">
-        Prices and service availability subject to owner confirmation.
+        {site.footerDisclaimer || "Prices and service availability subject to owner confirmation."}
       </p>
     </div>
   </div>

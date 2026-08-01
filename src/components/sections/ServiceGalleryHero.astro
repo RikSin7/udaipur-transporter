@@ -197,7 +197,8 @@ const getItemClass = (total: number, index: number) => {
     const data = window.serviceGalleryData || [];
     let currentIndex = 0;
 
-    if (!modal || data.length === 0) return;
+    if (!modal || modal.dataset.init === "true" || data.length === 0) return;
+    modal.dataset.init = "true";
 
     // Hide arrows completely if there's only 1 image to prevent broken looping
     if (data.length <= 1) {
@@ -232,15 +233,30 @@ const getItemClass = (total: number, index: number) => {
       }, 200);
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (modal.classList.contains("hidden")) return;
+      if (e.key === "Escape") closeModal();
+
+      // Only allow keyboard left/right if there are multiple images
+      if (data.length > 1) {
+        if (e.key === "ArrowLeft")
+          updateModal((currentIndex - 1 + data.length) % data.length);
+        if (e.key === "ArrowRight")
+          updateModal((currentIndex + 1) % data.length);
+      }
+    };
+
     const openModal = (index: number) => {
       updateModal(index);
       modal.classList.remove("hidden");
       void modal.offsetWidth;
       modal.classList.add("opacity-100");
       document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", handleKeyDown);
     };
 
     const closeModal = () => {
+      document.removeEventListener("keydown", handleKeyDown);
       modal.classList.remove("opacity-100");
       setTimeout(() => {
         modal.classList.add("hidden");
@@ -274,20 +290,6 @@ const getItemClass = (total: number, index: number) => {
     nextBtn?.addEventListener("click", () =>
       updateModal((currentIndex + 1) % data.length),
     );
-
-    // Keyboard Navigation
-    document.addEventListener("keydown", (e) => {
-      if (modal.classList.contains("hidden")) return;
-      if (e.key === "Escape") closeModal();
-
-      // Only allow keyboard left/right if there are multiple images
-      if (data.length > 1) {
-        if (e.key === "ArrowLeft")
-          updateModal((currentIndex - 1 + data.length) % data.length);
-        if (e.key === "ArrowRight")
-          updateModal((currentIndex + 1) % data.length);
-      }
-    });
   }
 
   initGalleryModal();

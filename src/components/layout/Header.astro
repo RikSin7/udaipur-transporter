@@ -27,6 +27,18 @@ const navLinks = [
 <header
   class="bg-[rgba(251,247,239,0.95)] backdrop-blur-md text-typography-main sticky top-0 z-40 border-b border-border shadow-sm"
 >
+  {
+    site.announcementBar?.enabled && site.announcementBar?.text && (
+      <div class="bg-brand-900 text-brand-100 text-xs py-2 px-4 text-center border-b border-brand-800 flex items-center justify-center gap-2">
+        <span class="font-medium">{site.announcementBar.text}</span>
+        {site.announcementBar.link && (
+          <a href={site.announcementBar.link} class="text-accent underline font-bold hover:text-white transition-colors shrink-0">
+            Learn More &rarr;
+          </a>
+        )}
+      </div>
+    )
+  }
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-20">
       {/* 1. Brand Identity */}
@@ -201,14 +213,22 @@ const navLinks = [
 </header>
 
 <script>
-  const btn = document.getElementById("mobile-menu-btn");
-  const menu = document.getElementById("mobile-menu");
-  const openIcon = document.getElementById("menu-icon-open");
-  const closeIcon = document.getElementById("menu-icon-close");
+  function initHeader() {
+    const btn = document.getElementById("mobile-menu-btn");
+    const menu = document.getElementById("mobile-menu");
+    const openIcon = document.getElementById("menu-icon-open");
+    const closeIcon = document.getElementById("menu-icon-close");
 
-  btn?.addEventListener("click", () => {
-    menu?.classList.toggle("hidden");
-    openIcon?.classList.toggle("hidden");
-    closeIcon?.classList.toggle("hidden");
-  });
+    if (!btn || btn.dataset.init === "true") return;
+    btn.dataset.init = "true";
+
+    btn.addEventListener("click", () => {
+      menu?.classList.toggle("hidden");
+      openIcon?.classList.toggle("hidden");
+      closeIcon?.classList.toggle("hidden");
+    });
+  }
+
+  initHeader();
+  document.addEventListener("astro:page-load", initHeader);
 </script>

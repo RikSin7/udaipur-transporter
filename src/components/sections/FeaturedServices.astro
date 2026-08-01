@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import ServiceCard from "../cards/ServiceCard.astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
@@ -9,14 +9,16 @@ interface Props {
 }
 
 const { featuredServices }: Props = Astro.props;
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data;
 ---
 
 <section class="py-12 bg-surface border-b border-border/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionHeader
-      subheading="Featured Services"
-      heading="What We Drive for You"
-      description="Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."
+      subheading={homeData?.servicesSection?.badge || "Featured Services"}
+      heading={homeData?.servicesSection?.heading || "What We Drive for You"}
+      description={homeData?.servicesSection?.description || "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."}
       viewAllHref="/services/"
       viewAllText="View All Services"
     />

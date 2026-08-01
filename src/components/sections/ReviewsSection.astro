@@ -11,17 +11,20 @@ const displayReviews = allReviews
   .filter((rev) => rev.data.featured !== false)
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
   .slice(0, 6);
+
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data;
 ---
 
 <section
-  class="py-12 bg-surface border-b border-brand-100 relative overflow-hidden"
+  class="py-12 bg-surface-alt/50 border-b border-brand-100 relative overflow-hidden"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* 1. SECTION HEADER WITH CONTROLS */}
     <SectionHeader
-      subheading="Verified Passenger Reviews"
-      heading="What Travellers Say"
-      description="We rely on transparent local pricing and experienced Udaipur drivers. Read genuine feedback from families, couples, and international visitors."
+      subheading={homeData?.reviewsSection?.badge || "Verified Passenger Reviews"}
+      heading={homeData?.reviewsSection?.heading || "What Travellers Say"}
+      description={homeData?.reviewsSection?.description || "We rely on transparent local pricing and experienced Udaipur drivers. Read genuine feedback from families, couples, and international visitors."}
       viewAllHref="/reviews/"
       viewAllText="View All Reviews"
     >

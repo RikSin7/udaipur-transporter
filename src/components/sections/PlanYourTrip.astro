@@ -20,15 +20,18 @@ const displayArticles =
   featuredArticles.length > 0
     ? featuredArticles.slice(0, 2)
     : publishedArticles.slice(0, 2);
+
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data;
 ---
 
-<section class="py-12 bg-surface-alt/30 border-b border-brand-100 relative">
+<section class="py-12 bg-surface border-b border-brand-100 relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Section Header */}
     <SectionHeader
-      subheading="Practical Travel Advice"
-      heading="Plan Your Trip"
-      description="Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."
+      subheading={homeData?.blogSection?.badge || "Practical Travel Advice"}
+      heading={homeData?.blogSection?.heading || "Plan Your Trip"}
+      description={homeData?.blogSection?.description || "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."}
       viewAllHref="/blog/"
       viewAllText="View All Transport Guides"
     />

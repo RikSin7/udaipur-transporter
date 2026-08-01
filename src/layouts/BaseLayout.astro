@@ -46,25 +46,11 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     {
-      /* 1. NETLIFY IDENTITY WIDGET: Required for Decap CMS authentication modal */
-    }
-    <script
-      defer
-      is:inline
-      src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-    {
-      /* 2. ADMIN TOKEN RECOVERY LISTENER: Intercepts email invite tokens and bounces to /admin/ */
+      /* 1. NETLIFY IDENTITY RECOVERY REDIRECTION: Redirect invite/recovery tokens directly to Decap CMS admin auth without loading identity widget on public pages */
     }
     <script is:inline>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              window.location.href = "/admin/";
-            });
-          }
-        });
+      if (window.location.hash.includes("_token=")) {
+        window.location.href = "/admin/" + window.location.hash;
       }
     </script>
   </head>

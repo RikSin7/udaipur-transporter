@@ -72,6 +72,26 @@ workflowSteps:
 enquiryBadge: "Direct Local Booking"
 enquiryTitle: "Request Your Transport Quote"
 enquiryDesc: "Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."
----
 
-Welcome to Udaipur Royal Transporter official homepage content. Edit any section above using Decap CMS.
+# 5. Homepage & Overview Component Headers
+servicesSection:
+  badge: "Featured Services"
+  heading: "What We Drive for You"
+  description: "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."
+vehiclesSection:
+  badge: "Vehicles"
+  heading: "Featured Fleet"
+  description: "Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."
+blogSection:
+  badge: "Practical Travel Advice"
+  heading: "Plan Your Trip"
+  description: "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."
+reviewsSection:
+  badge: "What Travellers Say"
+  heading: "Customer Reviews"
+  description: "Read genuine feedback from families, couples, and international travellers who hired private cabs and drivers with Udaipur Royal Transporter."
+faqSection:
+  badge: "Operational Transparency"
+  heading: "Frequently Asked Questions"
+  description: "Everything you need to know about our owner-approved pricing, driver selection, and local travel policies."
+---

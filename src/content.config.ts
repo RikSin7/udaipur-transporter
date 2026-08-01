@@ -86,6 +86,19 @@ const settingsCollection = defineCollection({
     serviceArea: z.string(),
     seoDefaultTitle: z.string(),
     seoDefaultDesc: z.string(),
+    socialLinks: z.object({
+      facebook: z.string().optional(),
+      instagram: z.string().optional(),
+      tripadvisor: z.string().optional(),
+      googleMaps: z.string().optional(),
+    }).optional(),
+    footerTagline: z.string().optional(),
+    footerDisclaimer: z.string().optional(),
+    announcementBar: z.object({
+      enabled: z.boolean().default(false),
+      text: z.string().optional(),
+      link: z.string().optional(),
+    }).optional(),
   }),
 });
 
@@ -244,6 +257,121 @@ const homeCollection = defineCollection({
     enquiryBadge: z.string().default("Direct Local Booking"),
     enquiryTitle: z.string().default("Request Your Transport Quote"),
     enquiryDesc: z.string().default("Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."),
+    servicesSection: z.object({
+      badge: z.string().default("Featured Services"),
+      heading: z.string().default("What We Drive for You"),
+      description: z.string().default("Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."),
+    }).optional(),
+    vehiclesSection: z.object({
+      badge: z.string().default("Vehicles"),
+      heading: z.string().default("Featured Fleet"),
+      description: z.string().default("Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."),
+    }).optional(),
+    blogSection: z.object({
+      badge: z.string().default("Practical Travel Advice"),
+      heading: z.string().default("Plan Your Trip"),
+      description: z.string().default("Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."),
+    }).optional(),
+    reviewsSection: z.object({
+      badge: z.string().default("What Travellers Say"),
+      heading: z.string().default("Customer Reviews"),
+      description: z.string().default("Read genuine feedback from families, couples, and international travellers who hired private cabs and drivers with Udaipur Royal Transporter."),
+    }).optional(),
+    faqSection: z.object({
+      badge: z.string().default("Operational Transparency"),
+      heading: z.string().default("Frequently Asked Questions"),
+      description: z.string().default("Everything you need to know about our owner-approved pricing, driver selection, and local travel policies."),
+    }).optional(),
+  }),
+});
+
+const servicesHubCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/services_hub" }),
+  schema: z.object({
+    seoTitle: z.string(),
+    seoDesc: z.string(),
+    badge: z.string(),
+    title: z.string(),
+    description: z.string(),
+    disclaimerText: z.string(),
+    categoryDescriptions: z.array(z.object({
+      category: z.string(),
+      subtitle: z.string(),
+    })),
+  }),
+});
+
+const vehiclesHubCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/vehicles_hub" }),
+  schema: z.object({
+    seoTitle: z.string(),
+    seoDesc: z.string(),
+    badge: z.string(),
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
+const reviewsHubCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/reviews_hub" }),
+  schema: z.object({
+    seoTitle: z.string(),
+    seoDesc: z.string(),
+    badge: z.string(),
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
+const blogHubCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog_hub" }),
+  schema: z.object({
+    seoTitle: z.string(),
+    seoDesc: z.string(),
+    badge: z.string(),
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
+const faqsHubCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/faqs_hub" }),
+  schema: z.object({
+    seoTitle: z.string(),
+    seoDesc: z.string(),
+    badge: z.string(),
+    title: z.string(),
+    description: z.string(),
+    ctaBadge: z.string(),
+    ctaTitle: z.string(),
+    ctaDesc: z.string(),
+  }),
+});
+
+const thankYouCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/thank_you" }),
+  schema: z.object({
+    seoTitle: z.string(),
+    seoDesc: z.string(),
+    title: z.string(),
+    message: z.string(),
+    buttonText: z.string(),
+  }),
+});
+
+const catalogueCtaCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/catalogue_cta" }),
+  schema: z.object({
+    servicesCrossBadge: z.string(),
+    servicesCrossTitle: z.string(),
+    servicesCrossDesc: z.string(),
+    servicesInquiryTitle: z.string(),
+    servicesInquiryDesc: z.string(),
+    vehiclesCrossBadge: z.string(),
+    vehiclesCrossTitle: z.string(),
+    vehiclesCrossDesc: z.string(),
+    vehiclesInquiryTitle: z.string(),
+    vehiclesInquiryDesc: z.string(),
   }),
 });
 
@@ -259,4 +387,11 @@ export const collections = {
   'privacy': privacyCollection,
   'terms': termsCollection,
   'reviews': reviewCollection,
+  'services_hub': servicesHubCollection,
+  'vehicles_hub': vehiclesHubCollection,
+  'reviews_hub': reviewsHubCollection,
+  'blog_hub': blogHubCollection,
+  'faqs_hub': faqsHubCollection,
+  'thank_you': thankYouCollection,
+  'catalogue_cta': catalogueCtaCollection,
 };

@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/layout/Header.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import { slugify } from "../../utils/helpers";
 import {
@@ -29,6 +28,9 @@ const allServices = await getCollection("services").catch(() => []);
 const publishedServices = allServices
   .filter((s) => s.data.published)
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+const hubEntries = await getCollection("services_hub").catch(() => []);
+const hubData = hubEntries[0]?.data;
 
 // 3. Define category metadata
 const categoryMetadata: Record<string, { subtitle: string; icon: any }> = {
@@ -69,33 +71,38 @@ const categoryOrder = [
 
 // 4. Group services by category
 const groupedServices = categoryOrder
-  .map((category) => ({
-    category,
-    slug: slugify(category),
-    metadata: categoryMetadata[category] || {
+  .map((category) => {
+    const cmsSub = hubData?.categoryDescriptions?.find((c: any) => c.category === category)?.subtitle;
+    const defaultMeta = categoryMetadata[category] || {
       subtitle: "Private transportation services.",
       icon: IconCar,
-    },
-    services: publishedServices.filter((s) => s.data.category === category),
-  }))
+    };
+    return {
+      category,
+      slug: slugify(category),
+      metadata: {
+        ...defaultMeta,
+        subtitle: cmsSub || defaultMeta.subtitle,
+      },
+      services: publishedServices.filter((s) => s.data.category === category),
+    };
+  })
   .filter((group) => group.services.length > 0);
 ---
 
 <BaseLayout
-  title={`Our Transport Services | ${site.companyName}`}
-  description="Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."
+  title={hubData?.seoTitle || `Our Transport Services | ${site.companyName}`}
+  description={hubData?.seoDesc || "Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."}
 >
-  <Header slot="header" />
-
   {/* 1. HERO BANNER */}
   <section
     class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading="Our Services"
-        heading="Private transport for every kind of Udaipur trip"
-        description="Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price."
+        subheading={hubData?.badge || "Our Services"}
+        heading={hubData?.title || "Private transport for every kind of Udaipur trip"}
+        description={hubData?.description || "Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price."}
       />
     </div>
   </section>
@@ -178,12 +185,7 @@ const groupedServices = categoryOrder
   <section class="py-12 bg-surface-alt/50 border-t border-brand-100/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
-        Each service above is available in and around Udaipur, from airport and
-        railway transfers to sightseeing, nearby day use and outstation travel
-        across Rajasthan. Coverage and example trips are described within each
-        service page as guidance, not as separate booking pages. Where a price
-        is confirmed it is shown with its terms; otherwise please ask us for a
-        quote.
+        {hubData?.disclaimerText || "Each service above is available in and around Udaipur, from airport and railway transfers to sightseeing, nearby day use and outstation travel across Rajasthan. Coverage and example trips are described within each service page as guidance, not as separate booking pages. Where a price is confirmed it is shown with its terms; otherwise please ask us for a quote."}
       </p>
     </div>
   </section>

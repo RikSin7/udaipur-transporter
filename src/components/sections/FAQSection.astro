@@ -1,9 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import {
-  IconChevronDown,
-  IconArrowRight,
-} from "@tabler/icons-astro";
+import { IconChevronDown, IconArrowRight } from "@tabler/icons-astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 
@@ -13,15 +10,19 @@ const publishedFaqs = allFaqs
   .filter((f) => f.data.published)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 5);
+
+const homeEntries = await getCollection("home").catch(() => []);
+const homeData = homeEntries[0]?.data;
 ---
 
-<section class="py-12 bg-surface-alt/30 border-b border-brand-100 relative">
+<section class="py-12 bg-surface-alt/50 border-b border-brand-100 relative">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Section Header */}
     <SectionHeader
-      subheading="Clear Answers"
-      heading="Frequently Asked Questions"
-      description="Straightforward facts regarding our pricing rules, vehicle allocations, and booking confirmation process."
+      subheading={homeData?.faqSection?.badge || "Clear Answers"}
+      heading={homeData?.faqSection?.heading || "Frequently Asked Questions"}
+      description={homeData?.faqSection?.description ||
+        "Straightforward facts regarding our pricing rules, vehicle allocations, and booking confirmation process."}
       viewAllHref="/faqs/"
       viewAllText="View All FAQs"
     />
@@ -95,85 +96,49 @@ const publishedFaqs = allFaqs
 {/* Interactive Single-Open Controller Engine */}
 <script>
   function initFaqAccordion() {
-    const triggers = document.querySelectorAll(".faq-trigger");
+    const group = document.getElementById("faq-accordion-group");
+    if (!group || group.dataset.init === "true") return;
+    group.dataset.init = "true";
 
-    triggers.forEach((trigger) => {
-      // Clone nodes to purge ghost listeners during Astro View Transitions
-      const newTrigger = trigger.cloneNode(true) as HTMLElement;
-      trigger.parentNode?.replaceChild(newTrigger, trigger);
-
-      newTrigger.addEventListener("click", () => {
-        const parent = newTrigger.closest(".faq-item") as HTMLElement;
-        const content = parent?.querySelector(".faq-content") as HTMLElement;
-        const icon = newTrigger.querySelector(".faq-icon") as HTMLElement;
-        const isOpen = newTrigger.getAttribute("aria-expanded") === "true";
-
-        if (!parent || !content) return;
-
-        // STEP 1: CLOSING LOGIC
-        if (!isOpen) {
-          document
-            .querySelectorAll('.faq-item[data-open="true"]')
-            .forEach((openItem) => {
-              if (openItem !== parent) {
-                const openTrigger = openItem.querySelector(
-                  ".faq-trigger",
-                ) as HTMLElement;
-                const openContent = openItem.querySelector(
-                  ".faq-content",
-                ) as HTMLElement;
-                const openIcon = openItem.querySelector(
-                  ".faq-icon",
-                ) as HTMLElement;
-
-                if (openTrigger)
-                  openTrigger.setAttribute("aria-expanded", "false");
-                openItem.setAttribute("data-open", "false");
-                if (openContent) {
-                  openContent.style.maxHeight = "0px";
-                  openContent.style.opacity = "0";
-                }
-                if (openIcon) openIcon.style.transform = "rotate(0deg)";
-              }
-            });
-        }
-
-        // STEP 2: TOGGLE TARGET ITEM
-        if (isOpen) {
-          // Close the clicked item
-          newTrigger.setAttribute("aria-expanded", "false");
-          parent.setAttribute("data-open", "false");
-          content.style.maxHeight = "0px";
-          content.style.opacity = "0";
-          if (icon) icon.style.transform = "rotate(0deg)";
-        } else {
-          // Open the clicked item
-          newTrigger.setAttribute("aria-expanded", "true");
-          parent.setAttribute("data-open", "true");
-          content.style.maxHeight = `${content.scrollHeight}px`;
-          content.style.opacity = "1";
-          if (icon) icon.style.transform = "rotate(180deg)";
-        }
-      });
-    });
-
-    // Set initial heights for the default opened element on render
-    document.querySelectorAll('.faq-item[data-open="true"]').forEach((item) => {
+    const toggleFaq = (item: HTMLElement, open: boolean) => {
+      item.setAttribute("data-open", String(open));
+      const trigger = item.querySelector(".faq-trigger");
       const content = item.querySelector(".faq-content") as HTMLElement;
       const icon = item.querySelector(".faq-icon") as HTMLElement;
+
+      if (trigger) trigger.setAttribute("aria-expanded", String(open));
       if (content) {
-        content.style.maxHeight = `${content.scrollHeight}px`;
-        content.style.opacity = "1";
+        content.style.maxHeight = open ? `${content.scrollHeight}px` : "0px";
+        content.style.opacity = open ? "1" : "0";
       }
-      if (icon) {
-        icon.style.transform = "rotate(180deg)";
-      }
+      if (icon) icon.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
+    };
+
+    group.addEventListener("click", (e) => {
+      const trigger = (e.target as HTMLElement).closest(".faq-trigger");
+      if (!trigger) return;
+
+      const currentItem = trigger.closest(".faq-item") as HTMLElement;
+      const isOpen = currentItem.getAttribute("data-open") === "true";
+
+      // Close all currently open items in this group
+      group
+        .querySelectorAll('.faq-item[data-open="true"]')
+        .forEach((openItem) => {
+          if (openItem !== currentItem)
+            toggleFaq(openItem as HTMLElement, false);
+        });
+
+      // Toggle clicked item
+      toggleFaq(currentItem, !isOpen);
     });
+
+    // Initialize height and state for any item open by default
+    group
+      .querySelectorAll('.faq-item[data-open="true"]')
+      .forEach((item) => toggleFaq(item as HTMLElement, true));
   }
 
-  // Execute on initial DOM load
   initFaqAccordion();
-
-  // Execute on Astro View Transition SPA navigation
   document.addEventListener("astro:page-load", initFaqAccordion);
 </script>

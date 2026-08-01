@@ -1,11 +1,11 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/layout/Header.astro";
 import EnquiryForm from "../../components/forms/EnquiryForm.astro";
 import SectionHeader from "../../components/ui/SectionHeader.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
+import VehicleCard from "../../components/cards/VehicleCard.astro";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import {
   IconCheck,
@@ -14,7 +14,6 @@ import {
   IconBrandWhatsapp,
   IconPhoneCall,
   IconMessage2,
-  IconCar,
   IconShieldCheck,
   IconClock,
 } from "@tabler/icons-astro";
@@ -93,8 +92,6 @@ const reassurances = [
   description={summary}
   currentTitle={title}
 >
-  <Header slot="header" />
-
   {/* 1. GALLERY HERO */}
   {
     heroGallery && heroGallery.length > 0 ? (
@@ -166,41 +163,6 @@ const reassurances = [
                   flight, hotel or route in the enquiry and we'll confirm the
                   plan.
                 </p>
-              </div>
-            )
-          }
-
-          {
-            matchedVehicles.length > 0 && (
-              <div>
-                <h2 class="font-serif text-2xl font-bold text-brand-900 mb-2">
-                  Suitable vehicles
-                </h2>
-                <p class="text-sm text-typography-muted mb-6">
-                  Recommended passengers reflect comfortable seating after
-                  luggage. Images are representative.
-                </p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {matchedVehicles.map((vehicle) => (
-                    <a
-                      href={`/vehicles/${vehicle.id}/`}
-                      class="bg-surface-card border border-brand-100 rounded-2xl p-5 shadow-sm hover:shadow-premium hover:border-brand-800 transition-all group flex flex-col justify-between"
-                    >
-                      <div>
-                        <div class="w-10 h-10 rounded-xl bg-surface-alt flex items-center justify-center text-brand-900 mb-4 group-hover:scale-105 transition-transform">
-                          <IconCar size={20} stroke={2} />
-                        </div>
-                        <h3 class="font-serif text-base font-bold text-brand-900 group-hover:text-accent transition-colors mb-1">
-                          {vehicle.data.title}
-                        </h3>
-                      </div>
-                      <div class="mt-4 pt-3 border-t border-brand-100/60 text-[11px] font-semibold text-typography-muted flex items-center justify-between">
-                        <span>{vehicle.data.passengers} + driver</span>
-                        <span>{vehicle.data.luggage} bags</span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
               </div>
             )
           }
@@ -311,10 +273,25 @@ const reassurances = [
           }
 
           {
+            matchedVehicles.length > 0 && (
+              <div class="mb-10">
+                <h2 class="font-serif text-2xl font-bold text-brand-900 mb-6">
+                  Suitable vehicles
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+                  {matchedVehicles.map((vehicle) => (
+                    <VehicleCard vehicle={vehicle} />
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          {
             relatedServices.length > 0 && (
               <div>
                 <h2 class="font-serif text-2xl font-bold text-brand-900 mb-6">
-                  Related services
+                  More services
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 items-stretch">
                   {relatedServices.map((rel) => (

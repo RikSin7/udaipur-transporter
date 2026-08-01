@@ -176,6 +176,47 @@ collections:
               widget: "text",
             }
 
+          - label: "Homepage Section Headers"
+            name: "servicesSection"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - name: "vehiclesSection"
+            label: "Vehicles Section Header"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - name: "blogSection"
+            label: "Blog / Trip Plan Section Header"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - name: "reviewsSection"
+            label: "Reviews Section Header"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - name: "faqSection"
+            label: "FAQ Section Header"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
       - name: "about"
         label: "About Page"
         file: "src/content/about/about.md"
@@ -272,6 +313,70 @@ collections:
               name: "seoDefaultDesc",
               widget: "text",
             }
+          - label: "Social Media Platform Links"
+            name: "socialLinks"
+            widget: "object"
+            required: false
+            fields:
+              - {
+                  label: "Facebook Page URL",
+                  name: "facebook",
+                  widget: "string",
+                  required: false,
+                }
+              - {
+                  label: "Instagram URL",
+                  name: "instagram",
+                  widget: "string",
+                  required: false,
+                }
+              - {
+                  label: "TripAdvisor Review URL",
+                  name: "tripadvisor",
+                  widget: "string",
+                  required: false,
+                }
+              - {
+                  label: "Google Business Maps Profile",
+                  name: "googleMaps",
+                  widget: "string",
+                  required: false,
+                }
+          - {
+              label: "Footer Tagline",
+              name: "footerTagline",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Footer Legal Disclaimer",
+              name: "footerDisclaimer",
+              widget: "text",
+              required: false,
+            }
+          - label: "Site Announcement Bar"
+            name: "announcementBar"
+            widget: "object"
+            required: false
+            fields:
+              - {
+                  label: "Enable Announcement Bar",
+                  name: "enabled",
+                  widget: "boolean",
+                  default: false,
+                }
+              - {
+                  label: "Announcement Text",
+                  name: "text",
+                  widget: "string",
+                  required: false,
+                }
+              - {
+                  label: "Button / Link URL",
+                  name: "link",
+                  widget: "string",
+                  required: false,
+                }
 
       - name: "contact"
         label: "Contact Page"
@@ -343,7 +448,162 @@ collections:
           - { label: "Terms Content", name: "body", widget: "markdown" }
 
   # ----------------------------------------
-  # 2. FOLDER COLLECTIONS
+  # 2. ARCHIVE & SYSTEM PAGES
+  # ----------------------------------------
+  - name: "archive_pages"
+    label: "Archive & System Pages"
+    files:
+      - name: "services_hub"
+        label: "Services Catalogue Page (/services)"
+        file: "src/content/services_hub/services_hub.md"
+        fields:
+          - { label: "SEO Title", name: "seoTitle", widget: "string" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "Hero Badge", name: "badge", widget: "string" }
+          - { label: "Hero Title", name: "title", widget: "string" }
+          - { label: "Hero Description", name: "description", widget: "text" }
+          - {
+              label: "Footer Disclaimer Paragraph",
+              name: "disclaimerText",
+              widget: "text",
+            }
+          - label: "Category Subtitles"
+            name: "categoryDescriptions"
+            widget: "list"
+            fields:
+              - { label: "Category Name", name: "category", widget: "string" }
+              - {
+                  label: "Description / Subtitle",
+                  name: "subtitle",
+                  widget: "text",
+                }
+
+      - name: "vehicles_hub"
+        label: "Vehicles Fleet Page (/vehicles)"
+        file: "src/content/vehicles_hub/vehicles_hub.md"
+        fields:
+          - { label: "SEO Title", name: "seoTitle", widget: "string" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "Hero Badge", name: "badge", widget: "string" }
+          - { label: "Hero Title", name: "title", widget: "string" }
+          - { label: "Hero Description", name: "description", widget: "text" }
+
+      - name: "reviews_hub"
+        label: "Reviews Page (/reviews)"
+        file: "src/content/reviews_hub/reviews_hub.md"
+        fields:
+          - { label: "SEO Title", name: "seoTitle", widget: "string" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "Hero Badge", name: "badge", widget: "string" }
+          - { label: "Hero Title", name: "title", widget: "string" }
+          - { label: "Hero Description", name: "description", widget: "text" }
+
+      - name: "blog_hub"
+        label: "Blog Index Page (/blog)"
+        file: "src/content/blog_hub/blog_hub.md"
+        fields:
+          - { label: "SEO Title", name: "seoTitle", widget: "string" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "Hero Badge", name: "badge", widget: "string" }
+          - { label: "Hero Title", name: "title", widget: "string" }
+          - { label: "Hero Description", name: "description", widget: "text" }
+
+      - name: "faqs_hub"
+        label: "FAQs Page (/faqs)"
+        file: "src/content/faqs_hub/faqs_hub.md"
+        fields:
+          - { label: "SEO Title", name: "seoTitle", widget: "string" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "Hero Badge", name: "badge", widget: "string" }
+          - { label: "Hero Title", name: "title", widget: "string" }
+          - { label: "Hero Description", name: "description", widget: "text" }
+          - {
+              label: "Bottom Consultation Badge",
+              name: "ctaBadge",
+              widget: "string",
+            }
+          - {
+              label: "Bottom Consultation Title",
+              name: "ctaTitle",
+              widget: "string",
+            }
+          - {
+              label: "Bottom Consultation Description",
+              name: "ctaDesc",
+              widget: "text",
+            }
+
+      - name: "thank_you"
+        label: "Thank You Page (/thank-you)"
+        file: "src/content/thank_you/thank_you.md"
+        fields:
+          - { label: "SEO Title", name: "seoTitle", widget: "string" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "Page Heading", name: "title", widget: "string" }
+          - { label: "Confirmation Message", name: "message", widget: "text" }
+          - {
+              label: "Return Button Text",
+              name: "buttonText",
+              widget: "string",
+            }
+
+      - name: "catalogue_cta"
+        label: "Catalogue Cross-Selling Consultation Banners"
+        file: "src/content/catalogue_cta/catalogue_cta.md"
+        fields:
+          - {
+              label: "Services Page -> Vehicle Cross-Link Badge",
+              name: "servicesCrossBadge",
+              widget: "string",
+            }
+          - {
+              label: "Services Page -> Vehicle Cross-Link Title",
+              name: "servicesCrossTitle",
+              widget: "string",
+            }
+          - {
+              label: "Services Page -> Vehicle Cross-Link Description",
+              name: "servicesCrossDesc",
+              widget: "text",
+            }
+          - {
+              label: "Services Page -> Consultation Title",
+              name: "servicesInquiryTitle",
+              widget: "string",
+            }
+          - {
+              label: "Services Page -> Consultation Description",
+              name: "servicesInquiryDesc",
+              widget: "text",
+            }
+          - {
+              label: "Vehicles Page -> Service Cross-Link Badge",
+              name: "vehiclesCrossBadge",
+              widget: "string",
+            }
+          - {
+              label: "Vehicles Page -> Service Cross-Link Title",
+              name: "vehiclesCrossTitle",
+              widget: "string",
+            }
+          - {
+              label: "Vehicles Page -> Service Cross-Link Description",
+              name: "vehiclesCrossDesc",
+              widget: "text",
+            }
+          - {
+              label: "Vehicles Page -> Consultation Title",
+              name: "vehiclesInquiryTitle",
+              widget: "string",
+            }
+          - {
+              label: "Vehicles Page -> Consultation Description",
+              name: "vehiclesInquiryDesc",
+              widget: "text",
+            }
+
+  # ----------------------------------------
+  # 3. FOLDER COLLECTIONS
   # ----------------------------------------
   - name: "services"
     label: "Services"

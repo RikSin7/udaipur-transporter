@@ -302,12 +302,15 @@ const passengerCounters = [
               o.value.toLowerCase().includes(targetStr) ||
               o.text.toLowerCase().includes(targetStr),
           );
-          if (match) match.selected = true;
-          else
-            select.insertAdjacentHTML(
-              "beforeend",
-              `<option value="${val}" selected>${val}</option>`,
-            );
+          if (match) {
+            match.selected = true;
+          } else {
+            const newOpt = document.createElement("option");
+            newOpt.value = val;
+            newOpt.textContent = val;
+            newOpt.selected = true;
+            select.appendChild(newOpt);
+          }
         } else {
           el.value = val;
         }
