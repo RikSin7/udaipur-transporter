@@ -371,7 +371,13 @@ collections:
           widget: "string",
           hint: "Max 160 characters for SEO cards",
         }
-      - { label: "Image", name: "image", widget: "image", choose_url: false, required: false }
+      - {
+          label: "Image",
+          name: "image",
+          widget: "image",
+          choose_url: false,
+          required: false,
+        }
       - label: "Service Gallery Images"
         name: "gallery"
         widget: "list"

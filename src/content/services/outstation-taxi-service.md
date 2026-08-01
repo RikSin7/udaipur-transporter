@@ -45,12 +45,16 @@ pricing:
 ---
 
 ### Comfortable Outstation Journeys
+
 Whether you are planning a weekend getaway to Mount Abu, continuing your Rajasthan tour to Jodhpur or Jaisalmer, or travelling inter-state to Ahmedabad, our outstation taxi service provides the comfort and reliability you need for long drives.
 
 ### One-Way vs. Round-Trip
+
 We provide flexible options to suit your itinerary:
-* **One-Way Drops:** Ideal if your tour ends in another city or you are flying out from a different airport. You only pay the point-to-point drop fare.
-* **Round-Trips:** Perfect for weekend getaways, business trips, or pilgrimage tours where you return to Udaipur.
+
+- **One-Way Drops:** Ideal if your tour ends in another city or you are flying out from a different airport. You only pay the point-to-point drop fare.
+- **Round-Trips:** Perfect for weekend getaways, business trips, or pilgrimage tours where you return to Udaipur.
 
 ### En-Route Sightseeing
+
 A major advantage of a private outstation cab is the flexibility to stop and explore. When travelling from Udaipur to Jodhpur, you can easily stop at the magnificent Ranakpur Jain Temple and Kumbhalgarh Fort without rushing. Our drivers are well-versed in these popular tourist circuits.

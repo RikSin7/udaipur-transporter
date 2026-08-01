@@ -38,11 +38,13 @@ suitableVehicles:
   - innova-crysta
 faqs:
   - question: What if my flight is delayed?
-    answer: Share your flight number in the enquiry. We track reasonable delays and
+    answer:
+      Share your flight number in the enquiry. We track reasonable delays and
       plan the pickup accordingly. Long delays beyond included waiting may
       involve a small waiting charge, confirmed with you.
   - question: Where exactly will the driver meet me?
-    answer: Your driver will wait near Exit 1 of the terminal arrivals hall holding
+    answer:
+      Your driver will wait near Exit 1 of the terminal arrivals hall holding
       a placard with your name.
   - question: Can you drop me at a specific hotel inside the old city?
     answer: Yes, our drivers are experienced in navigating narrow old city roads

@@ -107,7 +107,9 @@ const priceDisplay = hasApprovedPrice
       class="bg-brand hover:bg-brand-800 text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group shrink-0"
     >
       <span>{hasApprovedPrice ? "Enquire" : "Ask for Price"}</span>
-      <span class="text-accent group-hover:translate-x-0.5 transition-transform flex items-center">
+      <span
+        class="text-accent group-hover:translate-x-0.5 transition-transform flex items-center"
+      >
         <IconArrowRight class="w-4 h-4" stroke={2} />
       </span>
     </a>
