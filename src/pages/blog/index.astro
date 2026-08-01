@@ -144,21 +144,13 @@ const whatsappUrl = getWhatsAppUrl(
                         </div>
                         {article.data.image && (
                           <div class="shrink-0 w-full lg:w-72 h-48 rounded-xl overflow-hidden bg-surface-alt border border-brand-100">
-                            {typeof article.data.image === "string" ? (
-                              <img
-                                src={article.data.image}
-                                alt={article.data.title}
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              />
-                            ) : (
-                              <Image
-                                src={article.data.image}
-                                alt={article.data.title}
-                                width={400}
-                                height={250}
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              />
-                            )}
+                            <Image
+                              src={article.data.image}
+                              alt={article.data.title}
+                              width={400}
+                              height={250}
+                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
                           </div>
                         )}
                       </div>

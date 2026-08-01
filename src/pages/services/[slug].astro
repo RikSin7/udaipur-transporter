@@ -1,6 +1,5 @@
 ---
 import { getCollection, render } from "astro:content";
-import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/layout/Header.astro";
 import EnquiryForm from "../../components/forms/EnquiryForm.astro";
@@ -45,7 +44,11 @@ const {
 } = entry.data;
 
 const hasPrimaryGalleryImage = gallery.some((item: any) => item?.isPrimary);
-const showInlineImage = image && (!gallery.length || !hasPrimaryGalleryImage);
+
+let heroGallery = [...gallery];
+if (image && !hasPrimaryGalleryImage) {
+  heroGallery.unshift({ url: image, isPrimary: true });
+}
 
 // 3. RENDER MARKDOWN BODY
 const { Content } = await render(entry);
@@ -92,13 +95,8 @@ const reassurances = [
 
   {/* 1. GALLERY HERO */}
   {
-    gallery && gallery.length > 0 ? (
-      <ServiceGalleryHero
-        title={title}
-        category={category}
-        summary={summary}
-        gallery={gallery}
-      />
+    heroGallery && heroGallery.length > 0 ? (
+      <ServiceGalleryHero title={title} gallery={heroGallery} />
     ) : (
       <section class="bg-brand-900 text-white py-12 border-b border-brand-800 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,30 +122,6 @@ const reassurances = [
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative">
         {/* LEFT COLUMN */}
         <div class="lg:col-span-7 space-y-16">
-          {
-            showInlineImage && (
-              <div class="overflow-hidden rounded-2xl border border-brand-100 shadow-sm bg-surface-alt">
-                {typeof image === "string" ? (
-                  <img
-                    src={image}
-                    alt={title}
-                    class="w-full h-auto object-cover max-h-[420px] hover:scale-102 transition-transform duration-500"
-                  />
-                ) : (
-                  <Image
-                    src={image}
-                    alt={title}
-                    width={1000}
-                    height={560}
-                    format="webp"
-                    quality={85}
-                    class="w-full h-auto object-cover max-h-[420px] hover:scale-102 transition-transform duration-500"
-                  />
-                )}
-              </div>
-            )
-          }
-
           {
             whoIsThisFor.length > 0 && (
               <div>

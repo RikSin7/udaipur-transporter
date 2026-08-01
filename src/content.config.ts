@@ -14,14 +14,14 @@ const servicesCollection = defineCollection({
       "Additional"
     ]),
     summary: z.string().max(160, "Keep summary under 160 characters for SEO cards"),
-    image: z.union([image(), z.string()]).optional(),
+    image: image().optional(),
     gallery: z.array(
       z.union([
         z.object({
-          url: z.union([image(), z.string()]),
+          url: image(),
           isPrimary: z.boolean().default(false).optional(),
         }),
-        z.union([image(), z.string()]).transform((val) => ({ url: val, isPrimary: false })),
+        image().transform((val) => ({ url: val, isPrimary: false })),
       ])
     ).optional(),
     sortOrder: z.number().default(10),
@@ -66,7 +66,7 @@ const vehiclesCollection = defineCollection({
     luggage: z.number(),
     seats: z.number().optional(),
     amenities: z.array(z.string()),
-    image: z.union([image(), z.string()]).optional(),
+    image: image().optional(),
     imageNote: z.enum(["Actual Vehicle", "Representative Vehicle"]),
     sortOrder: z.number().default(10),
     published: z.boolean().default(true),
@@ -113,7 +113,7 @@ const blogCollection = defineCollection({
     publishDate: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
     author: z.string().default("Transport Editorial Team"),
     category: z.enum(["Vehicle Guide", "Airport Transfers", "Pricing & Quotes", "Travel Tips"]),
-    image: z.union([image(), z.string()]).optional(),
+    image: image().optional(),
     relatedService: z.string().optional(),
     published: z.boolean().default(true),
     featured: z.boolean().default(false),
@@ -126,7 +126,7 @@ const aboutCollection = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     storyHeading: z.string().default("Our Story"),
-    image: z.union([image(), z.string()]).optional(),
+    image: image().optional(),
     // 1. How We Work Section
     howWeWorkHeading: z.string().default("How we work"),
     howWeWork: z.array(z.object({
@@ -195,7 +195,7 @@ const reviewCollection = defineCollection({
     date: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val), // e.g., "October 2025"
     comment: z.string(),
     verified: z.boolean().default(true),
-    image: z.union([image(), z.string()]).optional(),
+    image: image().optional(),
     featured: z.boolean().default(true),
     sortOrder: z.number().default(10),
   }),

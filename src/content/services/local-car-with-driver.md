@@ -3,13 +3,13 @@ title: "Local Car Rental with Driver in Udaipur"
 category: "Local Travel"
 summary: "Flexible local taxi packages (8 Hrs/80 Km or 12 Hrs/120 Km) for business meetings, shopping, and Udaipur city movement."
 gallery:
-  - url: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=800"
+  - url: "../../assets/images/services/udaipur-transfer.jpg"
     isPrimary: false
-  - url: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800"
+  - url: "../../assets/images/mohit-khatri-ydrocw9okmw-unsplash.jpg"
     isPrimary: true
-  - url: "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?auto=format&fit=crop&q=80&w=800"
+  - url: "../../assets/images/services/udaipur-transfer.jpg"
     isPrimary: false
-  - url: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=800"
+  - url: "../../assets/images/mohit-khatri-ydrocw9okmw-unsplash.jpg"
     isPrimary: false
 sortOrder: 4
 published: true

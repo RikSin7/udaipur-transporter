@@ -61,23 +61,14 @@ const containerClass = [
       <div class="flex items-center gap-3 min-w-0">
         {
           item.image ? (
-            typeof item.image === "string" ? (
-              <img
-                src={item.image}
-                alt={item.author}
-                loading="lazy"
-                class="w-11 h-11 rounded-full object-cover border border-brand-100 shrink-0 shadow-sm bg-surface-alt"
-              />
-            ) : (
-              <Image
-                src={item.image}
-                alt={item.author}
-                width={88}
-                height={88}
-                loading="lazy"
-                class="w-11 h-11 rounded-full object-cover border border-brand-100 shrink-0 shadow-sm bg-surface-alt"
-              />
-            )
+            <Image
+              src={item.image}
+              alt={item.author}
+              width={88}
+              height={88}
+              loading="lazy"
+              class="w-11 h-11 rounded-full object-cover border border-brand-100 shrink-0 shadow-sm bg-surface-alt"
+            />
           ) : (
             <div class="w-11 h-11 rounded-full bg-brand-900 text-accent font-serif font-bold text-base flex items-center justify-center shrink-0 shadow-sm border border-brand-800">
               {item.author ? item.author.charAt(0) : "U"}

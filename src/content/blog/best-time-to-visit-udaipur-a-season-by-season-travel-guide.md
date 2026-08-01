@@ -1,6 +1,6 @@
 ---
 title: "Best Time to Visit Udaipur: A Season-by-Season Travel Guide"
-image: https://images.unsplash.com/photo-1623851293886-e9b3618ae902?q=80&w=2917&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+image: "../../assets/images/mohit-khatri-ydrocw9okmw-unsplash.jpg"
 summary: Discover the best season to visit Udaipur, what to expect throughout
   the year, and which type of transport is most suitable for your trip.
 publishDate: 2026-07-29T15:41:00.000+05:30

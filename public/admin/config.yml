@@ -187,7 +187,7 @@ collections:
               label: "Page Image",
               name: "image",
               widget: "image",
-              choose_url: true,
+              choose_url: false,
               required: false,
               hint: "Optional featured image for the about page",
             }
@@ -371,14 +371,14 @@ collections:
           widget: "string",
           hint: "Max 160 characters for SEO cards",
         }
-      - { label: "Image", name: "image", widget: "image", choose_url: true, required: false }
+      - { label: "Image", name: "image", widget: "image", choose_url: false, required: false }
       - label: "Service Gallery Images"
         name: "gallery"
         widget: "list"
         required: false
         hint: "Add photos for the gallery. Check 'Set as Primary Image' on the photo you want displayed on service cards."
         fields:
-          - { label: "Image", name: "url", widget: "image", choose_url: true }
+          - { label: "Image", name: "url", widget: "image", choose_url: false }
           - {
               label: "Set as Primary Image (Show on Service Cards)",
               name: "isPrimary",
@@ -514,7 +514,7 @@ collections:
           label: "Vehicle Image",
           name: "image",
           widget: "image",
-          choose_url: true,
+          choose_url: false,
           required: false,
           hint: "Main photo or realistic rendering of the vehicle category",
         }
@@ -654,7 +654,7 @@ collections:
           label: "Image",
           name: "image",
           widget: "image",
-          choose_url: true,
+          choose_url: false,
           required: false,
           hint: "Optional customer or trip photograph",
         }
@@ -694,7 +694,7 @@ collections:
           label: "Cover Image",
           name: "image",
           widget: "image",
-          choose_url: true,
+          choose_url: false,
           required: false,
           hint: "Featured image for article headers and card previews",
         }
