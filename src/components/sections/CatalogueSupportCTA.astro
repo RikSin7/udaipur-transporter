@@ -44,6 +44,9 @@ const crossLink = {
 
 // 3. Build Dynamic Inquiry & WhatsApp Configuration (Right Card)
 const inquiry = {
+  badge: isServicesPage
+    ? ctaData?.servicesInquiryBadge || "Direct Expert Advice"
+    : ctaData?.vehiclesInquiryBadge || "Direct Expert Advice",
   title: isServicesPage
     ? ctaData?.servicesInquiryTitle || "Not sure which service?"
     : ctaData?.vehiclesInquiryTitle || "Need help choosing a vehicle?",
@@ -132,7 +135,7 @@ const inquiry = {
             <span
               class="text-[11px] font-semibold uppercase tracking-wider text-accent bg-brand-800 px-3 py-1 rounded-full"
             >
-              Direct Expert Advice
+              {inquiry.badge}
             </span>
           </div>
 
@@ -155,13 +158,13 @@ const inquiry = {
           {/* Action 1: Standard Enquiry Form */}
           <a
             href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}`}
-            class="flex-1 bg-accent hover:bg-accent-hover text-brand-950 font-bold py-2.5 px-4 rounded-lg text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95"
+            class="flex-1 bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-2.5 px-4 rounded-lg text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95"
           >
             <span>Send Enquiry Form</span>
             <IconArrowRight
               size={15}
               stroke={2}
-              class="group-hover:translate-x-1 transition-transform"
+              class="text-white/90 group-hover:translate-x-1 transition-transform"
             />
           </a>
 

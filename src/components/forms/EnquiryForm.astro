@@ -1,6 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import { IconSend, IconMinus, IconPlus } from "@tabler/icons-astro";
+import {
+  IconSend,
+  IconMinus,
+  IconPlus,
+  IconChevronDown,
+} from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
 
 interface Props {
@@ -112,23 +117,32 @@ const passengerCounters = [
           ><span>Required Service</span>
           <span class="font-normal text-[11px]">(Optional)</span></label
         >
-        <select
-          id="service"
-          name="service"
-          class={cn(inputBaseClasses, "font-medium cursor-pointer")}
-        >
-          <option value="General Enquiry">General Enquiry</option>
-          {
-            publishedServices.map((s) => (
-              <option
-                value={s.data.title}
-                selected={defaultService === s.data.title}
-              >
-                {s.data.title}
-              </option>
-            ))
-          }
-        </select>
+        <div class="relative">
+          <select
+            id="service"
+            name="service"
+            class={cn(
+              inputBaseClasses,
+              "appearance-none font-medium cursor-pointer pr-10",
+            )}
+          >
+            <option value="General Enquiry">General Enquiry</option>
+            {
+              publishedServices.map((s) => (
+                <option
+                  value={s.data.title}
+                  selected={defaultService === s.data.title}
+                >
+                  {s.data.title}
+                </option>
+              ))
+            }
+          </select>
+          <IconChevronDown
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-900/50 pointer-events-none"
+            size={18}
+          />
+        </div>
       </div>
       <div class="md:col-span-6">
         <label
@@ -137,23 +151,32 @@ const passengerCounters = [
           ><span>Vehicle Preference</span>
           <span class="font-normal text-[11px]">(Optional)</span></label
         >
-        <select
-          id="vehicle"
-          name="vehicle"
-          class={cn(inputBaseClasses, "font-medium cursor-pointer")}
-        >
-          <option value="General Recommendation">Recommend a Vehicle</option>
-          {
-            publishedVehicles.map((v) => (
-              <option
-                value={v.data.title}
-                selected={defaultVehicle === v.data.title}
-              >
-                {v.data.title} ({v.data.passengers} Max)
-              </option>
-            ))
-          }
-        </select>
+        <div class="relative">
+          <select
+            id="vehicle"
+            name="vehicle"
+            class={cn(
+              inputBaseClasses,
+              "appearance-none font-medium cursor-pointer pr-10",
+            )}
+          >
+            <option value="General Recommendation">Recommend a Vehicle</option>
+            {
+              publishedVehicles.map((v) => (
+                <option
+                  value={v.data.title}
+                  selected={defaultVehicle === v.data.title}
+                >
+                  {v.data.title} ({v.data.passengers} Max)
+                </option>
+              ))
+            }
+          </select>
+          <IconChevronDown
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-900/50 pointer-events-none"
+            size={18}
+          />
+        </div>
       </div>
     </div>
   </div>

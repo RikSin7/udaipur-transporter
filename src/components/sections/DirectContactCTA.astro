@@ -33,7 +33,8 @@ const badge = isFaq
 
 const title = isFaq
   ? ctaData?.faqsTitle || "Speak Directly With Our Udaipur Team"
-  : ctaData?.reviewsTitle || "Still Have Doubts? Speak With Our Travel Consultants";
+  : ctaData?.reviewsTitle ||
+    "Still Have Doubts? Speak With Our Travel Consultants";
 
 const description = isFaq
   ? ctaData?.faqsDesc ||
@@ -81,13 +82,13 @@ const callUrl = getCallUrl(site.phone);
       </a>
       <a
         href="/contact/"
-        class="group bg-brand-800 hover:bg-brand-700 text-white font-bold px-8 py-4 rounded-xl border border-brand-700 shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
+        class="group bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
       >
         <span>Open Enquiry Form</span>
         <IconArrowRight
           size={16}
           stroke={2}
-          class="text-accent group-hover:translate-x-1 transition-transform"
+          class="text-white/90 group-hover:translate-x-1 transition-transform"
         />
       </a>
     </div>

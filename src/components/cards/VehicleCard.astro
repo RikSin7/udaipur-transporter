@@ -99,13 +99,15 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
     {/* Compact Amenities */}
     <div class="flex flex-wrap items-center gap-1.5 pt-1">
       {
-        amenities
-          .slice(0, 3)
-          .map((item) => (
-            <span class="text-[10px] font-medium bg-surface-alt text-typography-muted px-2 py-0.5 rounded border border-border/80 truncate max-w-[130px] flex items-center gap-1">
-              <IconCheck class="w-3 h-3 text-accent shrink-0" stroke={2.5} /> {item}
-            </span>
-          ))
+        amenities.slice(0, 3).map((item) => (
+          <span 
+            class="text-[10px] font-medium bg-surface-alt text-typography-muted px-2 py-0.5 rounded border border-border/80 max-w-[130px] hover:max-w-[250px] transition-[max-width] duration-300 ease-in-out flex items-center gap-1 cursor-default"
+            title={item}
+          >
+            <IconCheck class="w-3 h-3 text-accent shrink-0" stroke={2.5} />
+            <span class="truncate">{item}</span>
+          </span>
+        ))
       }
       {
         amenities.length > 3 && (
@@ -122,19 +124,16 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
 
   {/* 3. Sleek Action Footer */}
   <div
-    class="px-5 py-3.5 bg-surface-alt/40 border-t border-border/70 flex items-center justify-between gap-3"
+    class="px-5 py-3.5 bg-surface-alt/40 border-t border-border/70 flex items-center justify-end gap-3"
   >
-    <span
-      class="text-[11px] font-semibold text-typography-muted uppercase tracking-wider"
-    >
-      Udaipur Fleet
-    </span>
     <a
       href={enquiryUrl}
-      class="bg-brand hover:bg-brand-800 text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group"
+      class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold text-xs uppercase tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-colors shadow-sm active:scale-95 flex items-center gap-1 group"
     >
       <span>Book Now</span>
-      <span class="text-accent group-hover:translate-x-0.5 transition-transform flex items-center">
+      <span
+        class="text-white/90 group-hover:translate-x-0.5 transition-transform flex items-center"
+      >
         <IconArrowRight class="w-4 h-4" stroke={2} />
       </span>
     </a>

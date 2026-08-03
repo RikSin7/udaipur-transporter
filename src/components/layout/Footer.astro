@@ -60,7 +60,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       {
         /* GROUP 1: CONTACT (Span 5) — Phone, WhatsApp, email, service area, response hours */
       }
-      <div class="lg:col-span-5 space-y-5">
+      <div class="lg:col-span-5 space-y-2.5">
         <div>
           <div class="flex items-center gap-3">
             {
@@ -100,13 +100,13 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
           />
           <span>
             <strong class="font-semibold text-white block sm:inline"
-              >Service Area:</strong
+              >Service Area: </strong
             >
             {site.serviceArea}
           </span>
         </p>
 
-        <div class="pt-2 space-y-3 text-sm border-t border-brand-800/80">
+        <div class="pt-2.5 space-y-2.5 text-sm border-t border-brand-800/80">
           {/* Phone Action */}
           <div class="flex items-center gap-2.5">
             <div
@@ -148,7 +148,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
             </div>
             <a
               href={`mailto:${site.email}`}
-              class="text-brand-100/90 hover:text-accent transition-colors break-all text-xs sm:text-sm"
+              class="text-white font-semibold hover:text-accent transition-colors break-all text-xs sm:text-sm"
             >
               {site.email}
             </a>
@@ -156,7 +156,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 
           {
             site.socialLinks && (
-              <div class="pt-3 flex items-center gap-2.5 border-t border-brand-800/60 mt-3">
+              <div class="pt-2.5 flex items-center gap-2.5 border-t border-brand-800/80 mt-2.5">
                 {site.socialLinks.instagram && (
                   <a
                     href={site.socialLinks.instagram}
@@ -208,9 +208,9 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       </div>
 
       {/* GROUP 2: SERVICES (Span 4) — Auto Top 5 + Hub Link */}
-      <div class="lg:col-span-4 space-y-4">
+      <div class="lg:col-span-4">
         <h4
-          class="font-serif text-lg font-semibold text-white border-b border-brand-800 pb-2.5"
+          class="font-serif text-sm font-bold tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-2.5"
         >
           Transport Services
         </h4>
@@ -234,7 +234,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
             )
           }
 
-          <li class="pt-2 border-t border-brand-800/60 mt-3">
+          <li class="pt-2.5 border-t border-brand-800/80 mt-2.5">
             <a
               href="/services/"
               class="group inline-flex items-center gap-1.5 text-accent font-bold text-xs uppercase tracking-wider hover:text-white transition-colors"
@@ -255,11 +255,11 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
         {/* Company */}
         <div>
           <h4
-            class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-3 border-b border-brand-800/80 pb-1.5"
+            class="font-serif text-sm font-bold tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-2.5"
           >
             Company
           </h4>
-          <ul class="space-y-2 text-xs sm:text-sm">
+          <ul class="space-y-2.5 text-xs sm:text-sm">
             <li>
               <a
                 href="/about/"
@@ -287,11 +287,11 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
         {/* Resources */}
         <div>
           <h4
-            class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-3 border-b border-brand-800/80 pb-1.5"
+            class="font-serif text-sm font-bold tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-2.5"
           >
             Resources
           </h4>
-          <ul class="space-y-2 text-xs sm:text-sm">
+          <ul class="space-y-2.5 text-xs sm:text-sm">
             <li>
               <a
                 href="/faqs/"
@@ -317,11 +317,11 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
         {/* Policies */}
         <div>
           <h4
-            class="font-serif text-sm font-bold uppercase tracking-wider text-white mb-3 border-b border-brand-800/80 pb-1.5"
+            class="font-serif text-sm font-bold tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-2.5"
           >
             Policies
           </h4>
-          <ul class="space-y-2 text-xs sm:text-sm">
+          <ul class="space-y-2.5 text-xs sm:text-sm">
             <li>
               <a
                 href="/privacy/"

@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { IconArrowRight, IconBolt } from "@tabler/icons-astro";
+import { IconArrowRight, IconBolt, IconChevronDown } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
 
 // Fetch Published Services to Populate Dropdown Server-Side
@@ -88,18 +88,27 @@ const inputBaseClasses =
         >
           <span>Required Service</span>
         </label>
-        <select
-          id="hero-service"
-          name="service"
-          class={cn(inputBaseClasses, "cursor-pointer font-medium")}
-        >
-          <option value="">General Enquiry</option>
-          {
-            publishedServices.map((s) => (
-              <option value={s.data.title}>{s.data.title}</option>
-            ))
-          }
-        </select>
+        <div class="relative">
+          <select
+            id="hero-service"
+            name="service"
+            class={cn(
+              inputBaseClasses,
+              "appearance-none cursor-pointer font-medium pr-10",
+            )}
+          >
+            <option value="">General Enquiry</option>
+            {
+              publishedServices.map((s) => (
+                <option value={s.data.title}>{s.data.title}</option>
+              ))
+            }
+          </select>
+          <IconChevronDown
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-900/50 pointer-events-none"
+            size={18}
+          />
+        </div>
       </div>
 
       {/* Travel Date - Half width on sm+ */}

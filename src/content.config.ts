@@ -365,11 +365,13 @@ const catalogueCtaCollection = defineCollection({
     servicesCrossBadge: z.string(),
     servicesCrossTitle: z.string(),
     servicesCrossDesc: z.string(),
+    servicesInquiryBadge: z.string(),
     servicesInquiryTitle: z.string(),
     servicesInquiryDesc: z.string(),
     vehiclesCrossBadge: z.string(),
     vehiclesCrossTitle: z.string(),
     vehiclesCrossDesc: z.string(),
+    vehiclesInquiryBadge: z.string(),
     vehiclesInquiryTitle: z.string(),
     vehiclesInquiryDesc: z.string(),
   }),
@@ -384,6 +386,15 @@ const directContactCtaCollection = defineCollection({
     reviewsBadge: z.string(),
     reviewsTitle: z.string(),
     reviewsDesc: z.string(),
+  }),
+});
+
+const blogCtaCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog_cta" }),
+  schema: z.object({
+    badge: z.string(),
+    title: z.string(),
+    description: z.string(),
   }),
 });
 
@@ -407,4 +418,5 @@ export const collections = {
   'thank_you': thankYouCollection,
   'catalogue_cta': catalogueCtaCollection,
   'direct_contact_cta': directContactCtaCollection,
+  'blog_cta': blogCtaCollection,
 };
