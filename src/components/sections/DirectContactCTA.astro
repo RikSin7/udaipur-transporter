@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeader from "../ui/SectionHeader.astro";
+import {
+  IconBrandWhatsapp,
+  IconPhoneCall,
+  IconArrowRight,
+} from "@tabler/icons-astro";
+import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
+
+interface Props {
+  type: "faqs" | "reviews";
+}
+
+const { type }: Props = Astro.props;
+const isFaq = type === "faqs";
+
+// 1. Fetch Business Settings for Phone & WhatsApp
+const settingsEntries = await getCollection("settings");
+const site = settingsEntries[0]?.data || {
+  phone: "+91 70458 36164",
+  whatsapp: "917045836164",
+};
+
+// 2. Fetch Standalone Direct Contact CTA configuration
+const ctaEntries = await getCollection("direct_contact_cta");
+const ctaData = ctaEntries[0]?.data;
+
+// 3. Resolve page-specific badge, title, and description
+const badge = isFaq
+  ? ctaData?.faqsBadge || "Still Have Questions?"
+  : ctaData?.reviewsBadge || "Unsure About Your Transport Plans?";
+
+const title = isFaq
+  ? ctaData?.faqsTitle || "Speak Directly With Our Udaipur Team"
+  : ctaData?.reviewsTitle || "Still Have Doubts? Speak With Our Travel Consultants";
+
+const description = isFaq
+  ? ctaData?.faqsDesc ||
+    "Skip automated call centers. Connect with a local transport coordinator who can review your custom route, calculate toll actuals, and confirm vehicle availability immediately."
+  : ctaData?.reviewsDesc ||
+    "Skip automated booking engines. Discuss your itinerary directly with our experienced Udaipur team for verified rates, custom route advice, and guaranteed driver allocation.";
+
+// 4. Build Action URLs
+const whatsappUrl = getWhatsAppUrl(
+  site.whatsapp,
+  isFaq ? "FAQ Page Inquiry" : "Reviews Page Inquiry",
+  Astro.url.href,
+);
+const callUrl = getCallUrl(site.phone);
+---
+
+<section class="py-12 bg-brand-900 text-white border-t border-brand-800">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <SectionHeader
+      subheading={badge}
+      heading={title}
+      description={description}
+      theme="dark"
+      align="center"
+      underline={false}
+      class="mb-8"
+    />
+
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-sm flex items-center gap-2.5 active:scale-95"
+      >
+        <IconBrandWhatsapp size={20} stroke={2} />
+        <span>Chat on WhatsApp</span>
+      </a>
+      <a
+        href={callUrl}
+        class="bg-surface-card hover:bg-surface text-brand-900 font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2.5 active:scale-95"
+      >
+        <IconPhoneCall size={20} stroke={2} class="text-accent" />
+        <span>Call {site.phone}</span>
+      </a>
+      <a
+        href="/contact/"
+        class="group bg-brand-800 hover:bg-brand-700 text-white font-bold px-8 py-4 rounded-xl border border-brand-700 shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
+      >
+        <span>Open Enquiry Form</span>
+        <IconArrowRight
+          size={16}
+          stroke={2}
+          class="text-accent group-hover:translate-x-1 transition-transform"
+        />
+      </a>
+    </div>
+  </div>
+</section>

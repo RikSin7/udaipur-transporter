@@ -517,21 +517,6 @@ collections:
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
-          - {
-              label: "Bottom Consultation Badge",
-              name: "ctaBadge",
-              widget: "string",
-            }
-          - {
-              label: "Bottom Consultation Title",
-              name: "ctaTitle",
-              widget: "string",
-            }
-          - {
-              label: "Bottom Consultation Description",
-              name: "ctaDesc",
-              widget: "text",
-            }
 
       - name: "thank_you"
         label: "Thank You Page (/thank-you)"
@@ -599,6 +584,41 @@ collections:
           - {
               label: "Vehicles Page -> Consultation Description",
               name: "vehiclesInquiryDesc",
+              widget: "text",
+            }
+
+      - name: "direct_contact_cta"
+        label: "Direct Contact / Assistance Banners (FAQs & Reviews)"
+        file: "src/content/direct_contact_cta/direct_contact_cta.md"
+        fields:
+          - {
+              label: "FAQs Page -> Badge",
+              name: "faqsBadge",
+              widget: "string",
+            }
+          - {
+              label: "FAQs Page -> Title",
+              name: "faqsTitle",
+              widget: "string",
+            }
+          - {
+              label: "FAQs Page -> Description",
+              name: "faqsDesc",
+              widget: "text",
+            }
+          - {
+              label: "Reviews Page -> Badge",
+              name: "reviewsBadge",
+              widget: "string",
+            }
+          - {
+              label: "Reviews Page -> Title",
+              name: "reviewsTitle",
+              widget: "string",
+            }
+          - {
+              label: "Reviews Page -> Description",
+              name: "reviewsDesc",
               widget: "text",
             }
 

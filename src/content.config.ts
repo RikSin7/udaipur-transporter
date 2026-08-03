@@ -342,9 +342,6 @@ const faqsHubCollection = defineCollection({
     badge: z.string(),
     title: z.string(),
     description: z.string(),
-    ctaBadge: z.string(),
-    ctaTitle: z.string(),
-    ctaDesc: z.string(),
   }),
 });
 
@@ -375,6 +372,18 @@ const catalogueCtaCollection = defineCollection({
   }),
 });
 
+const directContactCtaCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/direct_contact_cta" }),
+  schema: z.object({
+    faqsBadge: z.string(),
+    faqsTitle: z.string(),
+    faqsDesc: z.string(),
+    reviewsBadge: z.string(),
+    reviewsTitle: z.string(),
+    reviewsDesc: z.string(),
+  }),
+});
+
 export const collections = {
   'home': homeCollection,
   'services': servicesCollection,
@@ -394,4 +403,5 @@ export const collections = {
   'faqs_hub': faqsHubCollection,
   'thank_you': thankYouCollection,
   'catalogue_cta': catalogueCtaCollection,
+  'direct_contact_cta': directContactCtaCollection,
 };

@@ -4,18 +4,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import {
   IconChevronDown,
   IconArrowRight,
-  IconPhoneCall,
-  IconBrandWhatsapp,
 } from "@tabler/icons-astro";
 import {
-  getWhatsAppUrl,
-  getCallUrl,
   slugify,
   sortPublishedByOrder,
 } from "../utils/helpers";
 import TabBar from "../components/ui/TabBar.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
+import ServiceCard from "../components/cards/ServiceCard.astro";
+import DirectContactCTA from "../components/sections/DirectContactCTA.astro";
 
 // 1. Fetch Singleton Business Settings
 const settingsEntries = await getCollection("settings");
@@ -50,12 +48,6 @@ const groupedFaqs = categories
 const allServices = await getCollection("services");
 const topServices = sortPublishedByOrder(allServices).slice(0, 3);
 
-const callUrl = getCallUrl(site.phone);
-const whatsappUrl = getWhatsAppUrl(
-  site.whatsapp,
-  "FAQ Page Inquiry",
-  Astro.url.href,
-);
 const hubEntries = await getCollection("faqs_hub");
 const hubData = hubEntries[0]?.data;
 ---
@@ -163,27 +155,7 @@ const hubData = hubEntries[0]?.data;
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
         {
           topServices.map((service) => (
-            <a
-              href={`/services/${service.id}/`}
-              class="bg-surface-card border border-brand-100 rounded-xl p-5 shadow-sm hover:shadow-premium hover:border-brand-800 transition-all group flex flex-col justify-between"
-            >
-              <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-accent-dark block mb-1">
-                  {service.data.category}
-                </span>
-                <h3 class="font-serif text-base font-bold text-brand-900 group-hover:text-accent transition-colors mb-2">
-                  {service.data.title}
-                </h3>
-              </div>
-              <div class="mt-4 pt-3 border-t border-brand-100/60 flex items-center justify-between text-xs font-bold text-brand-900 group-hover:text-accent">
-                <span>View Route Details</span>
-                <IconArrowRight
-                  size={14}
-                  stroke={2}
-                  class="group-hover:translate-x-1 transition-transform"
-                />
-              </div>
-            </a>
+            <ServiceCard service={service} />
           ))
         }
       </div>
@@ -205,50 +177,7 @@ const hubData = hubEntries[0]?.data;
   </section>
 
   {/* 5. DIRECT CONTACT CTA BANNER */}
-  <section class="py-12 bg-brand-900 text-white border-t border-brand-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <SectionHeader
-        subheading={hubData?.ctaBadge || "Still Have Questions?"}
-        heading={hubData?.ctaTitle || "Speak Directly With Our Udaipur Team"}
-        description={hubData?.ctaDesc ||
-          "Skip automated call centers. Connect with a local transport coordinator who can review your custom route, calculate toll actuals, and confirm vehicle availability immediately."}
-        theme="dark"
-        align="center"
-        underline={false}
-        class="mb-8"
-      />
-
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-sm flex items-center gap-2.5 active:scale-95"
-        >
-          <IconBrandWhatsapp size={20} stroke={2} />
-          <span>Chat on WhatsApp</span>
-        </a>
-        <a
-          href={callUrl}
-          class="bg-surface-card hover:bg-surface text-brand-900 font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2.5 active:scale-95"
-        >
-          <IconPhoneCall size={20} stroke={2} className="text-accent" />
-          <span>Call {site.phone}</span>
-        </a>
-        <a
-          href="/contact/"
-          class="group bg-brand-800 hover:bg-brand-700 text-white font-bold px-8 py-4 rounded-xl border border-brand-700 shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
-        >
-          <span>Open Enquiry Form</span>
-          <IconArrowRight
-            size={16}
-            stroke={2}
-            class="text-accent group-hover:translate-x-1 transition-transform"
-          />
-        </a>
-      </div>
-    </div>
-  </section>
+  <DirectContactCTA type="faqs" />
 </BaseLayout>
 
 <style>
