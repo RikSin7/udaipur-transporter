@@ -18,11 +18,11 @@ const currentUrl = Astro.url.pathname;
 
 // Fetch Published Collections
 const [allServices, allVehicles] = await Promise.all([
-  getCollection("services").catch(() => []),
-  getCollection("vehicles").catch(() => []),
+  getCollection("services"),
+  getCollection("vehicles"),
 ]);
 const publishedServices = allServices.filter((s) => s.data.published);
-const publishedVehicles = allVehicles.filter((v) => v.data.published !== false);
+const publishedVehicles = allVehicles.filter((v) => v.data.published);
 
 const inputBaseClasses =
   "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";

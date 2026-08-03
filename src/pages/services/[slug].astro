@@ -22,7 +22,7 @@ import ServiceGalleryHero from "../../components/sections/ServiceGalleryHero.ast
 
 // 1. GENERATE STATIC PATHS
 export async function getStaticPaths() {
-  const services = await getCollection("services").catch(() => []);
+  const services = await getCollection("services");
   return services.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -56,9 +56,9 @@ const { Content } = await render(entry);
 
 // 4. FETCH DATA
 const [allVehicles, allServices, settingsEntries] = await Promise.all([
-  getCollection("vehicles").catch(() => []),
-  getCollection("services").catch(() => []),
-  getCollection("settings").catch(() => []),
+  getCollection("vehicles"),
+  getCollection("services"),
+  getCollection("settings"),
 ]);
 
 const matchedVehicles = allVehicles.filter((v) =>

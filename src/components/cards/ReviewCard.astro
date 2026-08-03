@@ -19,19 +19,16 @@ export interface Props {
 const { review, variant = "grid", class: className = "" }: Props = Astro.props;
 const item = review.data;
 const ratingCount = item.rating || 5;
-
-const containerClass = [
-  variant === "carousel"
-    ? "snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-    : "",
-  "bg-surface-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group",
-  className,
-]
-  .filter(Boolean)
-  .join(" ");
 ---
 
-<div class={containerClass}>
+<article
+  class={cn(
+    variant === "carousel" &&
+      "snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]",
+    "bg-surface-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group",
+    className,
+  )}
+>
   <div>
     {/* Star Rating & Quote Icon Header */}
     <div class="flex items-center justify-between mb-6">
@@ -125,4 +122,4 @@ const containerClass = [
       )
     }
   </div>
-</div>
+</article>

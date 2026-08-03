@@ -18,7 +18,7 @@ import {
 } from "@tabler/icons-astro";
 
 // 1. Fetch Singleton Business Settings (phone, email, address, response hours)
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -33,7 +33,7 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch Singleton Contact Page Content from Decap CMS
-const contactEntries = await getCollection("contact").catch(() => []);
+const contactEntries = await getCollection("contact");
 const contactData = contactEntries[0]?.data || {
   title: "Contact Our Udaipur Team",
   subtitle:

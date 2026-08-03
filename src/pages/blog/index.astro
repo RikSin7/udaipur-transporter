@@ -14,7 +14,7 @@ import TabBar from "../../components/ui/TabBar.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -22,7 +22,7 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch and Sort Articles
-const allArticles = await getCollection("blog").catch(() => []);
+const allArticles = await getCollection("blog");
 const publishedArticles = allArticles
   .filter((a) => a.data.published)
   .sort(
@@ -56,7 +56,7 @@ const whatsappUrl = getWhatsAppUrl(
   "Blog / Transport Planning",
   Astro.url.href,
 );
-const hubEntries = await getCollection("blog_hub").catch(() => []);
+const hubEntries = await getCollection("blog_hub");
 const hubData = hubEntries[0]?.data;
 ---
 
@@ -217,7 +217,7 @@ const hubData = hubEntries[0]?.data;
   </section>
 
   {/* 4. CONVERSION BANNER */}
-  <section class="py-12 bg-surface-alt/70 border-t border-brand-100">
+  <section class="py-12 bg-surface-alt border-y border-brand-100">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-3">
         Ready to book your vehicle?

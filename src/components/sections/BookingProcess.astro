@@ -6,7 +6,7 @@ import { IconArrowRight } from "@tabler/icons-astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 
 // 1. Fetch business settings autonomously for phone & WhatsApp routing
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -21,7 +21,7 @@ const whatsappUrl = getWhatsAppUrl(
 );
 
 // 2. Fetch homepage content autonomously with fallback defaults
-const homeEntries = await getCollection("home").catch(() => []);
+const homeEntries = await getCollection("home");
 const homeData = homeEntries[0]?.data || {
   bookingBadge: "How to reach us",
   bookingHeading: "Three easy ways to enquire",

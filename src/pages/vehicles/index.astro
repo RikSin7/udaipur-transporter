@@ -6,15 +6,16 @@ import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.a
 import FAQSection from "../../components/sections/FAQSection.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
 import { IconCar } from "@tabler/icons-astro";
-const settingsEntries = await getCollection("settings").catch(() => []);
+import { sortPublishedByOrder } from "../../utils/helpers";
+
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
 };
 
-const vehicles = (await getCollection("vehicles").catch(() => []))
-  .filter((v) => v.data.published !== false)
-  .sort((a, b) => (a.data.sortOrder ?? 99) - (b.data.sortOrder ?? 99));
-const hubEntries = await getCollection("vehicles_hub").catch(() => []);
+const allVehicles = await getCollection("vehicles");
+const publishedVehicles = sortPublishedByOrder(allVehicles);
+const hubEntries = await getCollection("vehicles_hub");
 const hubData = hubEntries[0]?.data;
 ---
 
@@ -43,9 +44,9 @@ const hubData = hubEntries[0]?.data;
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-20"
     >
       {
-        vehicles.length > 0 ? (
+        publishedVehicles.length > 0 ? (
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {vehicles.map((vehicle) => (
+            {publishedVehicles.map((vehicle) => (
               <VehicleCard vehicle={vehicle} />
             ))}
           </div>

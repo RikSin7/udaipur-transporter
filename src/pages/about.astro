@@ -18,7 +18,7 @@ import {
 import { iconResolver } from "../utils/iconResolver";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -28,7 +28,7 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch Singleton About Page Content
-const aboutEntries = await getCollection("about").catch(() => []);
+const aboutEntries = await getCollection("about");
 const aboutEntry = aboutEntries[0];
 
 if (!aboutEntry) {

@@ -13,7 +13,7 @@ import ReviewCard from "../components/cards/ReviewCard.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -21,7 +21,7 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch All Reviews & Sort Ascending by Order
-const allReviews = await getCollection("reviews").catch(() => []);
+const allReviews = await getCollection("reviews");
 const displayReviews = allReviews.sort(
   (a, b) => a.data.sortOrder - b.data.sortOrder,
 );
@@ -42,7 +42,7 @@ const whatsappUrl = getWhatsAppUrl(
   Astro.url.href,
 );
 
-const hubEntries = await getCollection("reviews_hub").catch(() => []);
+const hubEntries = await getCollection("reviews_hub");
 const hubData = hubEntries[0]?.data;
 ---
 

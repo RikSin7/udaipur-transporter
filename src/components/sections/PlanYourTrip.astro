@@ -5,7 +5,7 @@ import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 
 // 1. Fetch published articles and sort newest to oldest
-const allArticles = await getCollection("blog").catch(() => []);
+const allArticles = await getCollection("blog");
 const publishedArticles = allArticles
   .filter((a) => a.data.published)
   .sort(
@@ -21,7 +21,7 @@ const displayArticles =
     ? featuredArticles.slice(0, 2)
     : publishedArticles.slice(0, 2);
 
-const homeEntries = await getCollection("home").catch(() => []);
+const homeEntries = await getCollection("home");
 const homeData = homeEntries[0]?.data;
 ---
 

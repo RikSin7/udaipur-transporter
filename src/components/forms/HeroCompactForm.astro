@@ -4,7 +4,7 @@ import { IconArrowRight, IconBolt } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
 
 // Fetch Published Services to Populate Dropdown Server-Side
-const allServices = await getCollection("services").catch(() => []);
+const allServices = await getCollection("services");
 const publishedServices = allServices.filter((s) => s.data.published);
 
 const inputBaseClasses =

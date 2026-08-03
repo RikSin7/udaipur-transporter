@@ -17,13 +17,13 @@ const { type }: Props = Astro.props;
 const isServicesPage = type === "services";
 
 // 1. Fetch Singleton Business Settings for WhatsApp Routing
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   whatsapp: "917045836164",
 };
 
-const ctaEntries = await getCollection("catalogue_cta").catch(() => []);
+const ctaEntries = await getCollection("catalogue_cta");
 const ctaData = ctaEntries[0]?.data;
 
 // 2. Build Dynamic Cross-Link Configuration (Left Card)

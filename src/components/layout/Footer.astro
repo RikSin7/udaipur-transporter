@@ -1,6 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
+import {
+  getWhatsAppUrl,
+  getCallUrl,
+  sortPublishedByOrder,
+} from "../../utils/helpers";
 import {
   IconPhoneCall,
   IconBrandWhatsapp,
@@ -14,7 +18,7 @@ import {
 } from "@tabler/icons-astro";
 
 // 1. Fetch Singleton Settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -26,25 +30,12 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Query & Slice Top 5 Published Services by sortOrder
-const allServices = await getCollection("services").catch(() => []);
-const topServices = allServices
-  .filter((s) => s.data.published)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
-  .slice(0, 5);
+const allServices = await getCollection("services");
+const topServices = sortPublishedByOrder(allServices).slice(0, 5);
 
-// 3. Query & Slice Top 5 Published Vehicles by sortOrder
-const allVehicles = await getCollection("vehicles").catch(() => []);
-const topVehicles = allVehicles
-  .filter((v) => v.data.published !== false)
-  .sort((a, b) => (a.data.sortOrder ?? 10) - (b.data.sortOrder ?? 10))
-  .slice(0, 5);
-
-// 4. Check if a published blog exists
-const allBlogs = await getCollection("blog").catch(() => []);
-const publishedBlogs = allBlogs.filter(
-  (blog: any) => blog.data?.published !== false,
-);
-const hasPublishedBlog = publishedBlogs.length > 0;
+// 3. Check if a published blog exists
+const allBlogs = await getCollection("blog");
+const hasPublishedBlog = allBlogs.some((blog) => blog.data?.published);
 
 const currentYear = new Date().getFullYear();
 const callUrl = getCallUrl(site.phone);
@@ -60,9 +51,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
   >
   </div>
 
-  <div
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10"
-  >
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
     <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8"
     >
@@ -151,22 +140,46 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
             site.socialLinks && (
               <div class="pt-3 flex items-center gap-2.5 border-t border-brand-800/60 mt-3">
                 {site.socialLinks.instagram && (
-                  <a href={site.socialLinks.instagram} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="Instagram">
+                  <a
+                    href={site.socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs"
+                    aria-label="Instagram"
+                  >
                     <IconBrandInstagram size={18} stroke={1.8} />
                   </a>
                 )}
                 {site.socialLinks.facebook && (
-                  <a href={site.socialLinks.facebook} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="Facebook">
+                  <a
+                    href={site.socialLinks.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs"
+                    aria-label="Facebook"
+                  >
                     <IconBrandFacebook size={18} stroke={1.8} />
                   </a>
                 )}
                 {site.socialLinks.tripadvisor && (
-                  <a href={site.socialLinks.tripadvisor} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="TripAdvisor">
+                  <a
+                    href={site.socialLinks.tripadvisor}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs"
+                    aria-label="TripAdvisor"
+                  >
                     <IconBrandTripadvisor size={18} stroke={1.8} />
                   </a>
                 )}
                 {site.socialLinks.googleMaps && (
-                  <a href={site.socialLinks.googleMaps} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs" aria-label="Google Maps">
+                  <a
+                    href={site.socialLinks.googleMaps}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-lg bg-brand-800 hover:bg-accent hover:text-brand-900 text-brand-100 flex items-center justify-center transition-all shadow-2xs"
+                    aria-label="Google Maps"
+                  >
                     <IconMapPin size={18} stroke={1.8} />
                   </a>
                 )}
@@ -218,7 +231,6 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
           </li>
         </ul>
       </div>
-
 
       {/* GROUP 4: COMPANY, RESOURCES & POLICIES (Span 3) */}
       <div class="lg:col-span-3 space-y-6">
@@ -318,10 +330,15 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
       <p>
         &copy; {currentYear}
         {" "}
-        {site.companyName}. All rights reserved. {site.footerTagline || "Straightforward Udaipur Transport."}
+        {site.companyName}. All rights reserved. {
+          site.footerTagline || "Straightforward Udaipur Transport."
+        }
       </p>
       <p class="italic text-center sm:text-right">
-        {site.footerDisclaimer || "Prices and service availability subject to owner confirmation."}
+        {
+          site.footerDisclaimer ||
+            "Prices and service availability subject to owner confirmation."
+        }
       </p>
     </div>
   </div>

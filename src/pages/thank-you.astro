@@ -3,12 +3,12 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { IconCheck, IconArrowLeft } from "@tabler/icons-astro";
 
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
 };
 
-const tyEntries = await getCollection("thank_you").catch(() => []);
+const tyEntries = await getCollection("thank_you");
 const tyData = tyEntries[0]?.data;
 ---
 

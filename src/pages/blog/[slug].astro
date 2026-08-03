@@ -18,7 +18,7 @@ import {
 
 // 1. GENERATE STATIC PATHS FOR EVERY ARTICLE
 export async function getStaticPaths() {
-  const articles = await getCollection("blog").catch(() => []);
+  const articles = await getCollection("blog");
   return articles.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -38,7 +38,7 @@ const wordCount = entry.body ? entry.body.trim().split(/\s+/).length : 500;
 const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
 // 5. FETCH RELATED COMMERCIAL SERVICE
-const allServices = await getCollection("services").catch(() => []);
+const allServices = await getCollection("services");
 const matchingService = relatedService
   ? allServices.find(
       (s) => s.id === relatedService || s.data.title === relatedService,
@@ -46,7 +46,7 @@ const matchingService = relatedService
   : null;
 
 // 6. FETCH RELATED ARTICLES
-const allArticles = await getCollection("blog").catch(() => []);
+const allArticles = await getCollection("blog");
 const relatedArticles = allArticles
   .filter((a) => a.id !== entry.id && a.data.published)
   .sort(
@@ -59,7 +59,7 @@ const relatedArticles = allArticles
 const formattedDate = formatDate(publishDate, "long");
 
 // Fetch business settings for direct WhatsApp URLs
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   phone: "+91 70458 36164",
   whatsapp: "917045836164",

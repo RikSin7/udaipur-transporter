@@ -12,7 +12,7 @@ interface Props {
 const { whatsappUrl }: Props = Astro.props;
 
 // 1. Fetch homepage content autonomously from CMS collection with fallback defaults
-const homeEntries = await getCollection("home").catch(() => []);
+const homeEntries = await getCollection("home");
 const homeData = homeEntries[0]?.data || {
   heroBadge: "Private transport from Udaipur",
   heroTitle: "Private cabs, transfers & tours across Udaipur.",

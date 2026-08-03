@@ -113,7 +113,7 @@ const faqsCollection = defineCollection({
       "Vehicles & Drivers",
       "Outstation Routes"
     ]).default("General & Booking"),
-    order: z.number().default(10), // Low numbers (e.g., 1, 2) appear first
+    sortOrder: z.number().default(10),
     published: z.boolean().default(true),
   }),
 });

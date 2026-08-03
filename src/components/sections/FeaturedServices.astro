@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { featuredServices }: Props = Astro.props;
-const homeEntries = await getCollection("home").catch(() => []);
+const homeEntries = await getCollection("home");
 const homeData = homeEntries[0]?.data;
 ---
 

@@ -77,3 +77,26 @@ export function createCleanParam(text: string = ""): string {
         .replace(/%20/g, '+')         // Use '+' instead of '%20' for spaces in URL query strings
         .replace(/\+-+\+/g, '+-+');   // Clean up multiple hyphens with pluses
 }
+
+/**
+ * Filters an array of objects to include only those where `data.published` is not `false`, 
+ * and then sorts them based on `data.sortOrder`. 
+ * 
+ * Items without a `sortOrder` or with `sortOrder` set to `false` are effectively moved to the end.
+ * 
+ * @param items - Array of items to filter and sort
+ * @returns Sorted array of items
+ */
+
+interface SortableItem {
+    data: {
+        published: boolean;
+        sortOrder?: number;
+    };
+};
+
+export function sortPublishedByOrder<T extends SortableItem>(items: T[]): T[] {
+    return items
+        .filter((i) => i.data.published)
+        .sort((a, b) => (a.data.sortOrder ?? Infinity) - (b.data.sortOrder ?? Infinity))
+}

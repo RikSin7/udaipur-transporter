@@ -7,13 +7,18 @@ import {
   IconPhoneCall,
   IconBrandWhatsapp,
 } from "@tabler/icons-astro";
-import { getWhatsAppUrl, getCallUrl, slugify } from "../utils/helpers";
+import {
+  getWhatsAppUrl,
+  getCallUrl,
+  slugify,
+  sortPublishedByOrder,
+} from "../utils/helpers";
 import TabBar from "../components/ui/TabBar.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -21,10 +26,8 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch All Published FAQs & Sort by Order
-const allFaqs = await getCollection("faqs").catch(() => []);
-const publishedFaqs = allFaqs
-  .filter((f) => f.data.published)
-  .sort((a, b) => a.data.order - b.data.order);
+const allFaqs = await getCollection("faqs");
+const publishedFaqs = sortPublishedByOrder(allFaqs);
 
 // 3. Define Approved Categories
 const categories = [
@@ -44,11 +47,8 @@ const groupedFaqs = categories
   .filter((group) => group.faqs.length > 0);
 
 // 5. Fetch Top 3 Services
-const allServices = await getCollection("services").catch(() => []);
-const topServices = allServices
-  .filter((s) => s.data.published)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
-  .slice(0, 3);
+const allServices = await getCollection("services");
+const topServices = sortPublishedByOrder(allServices).slice(0, 3);
 
 const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(
@@ -56,7 +56,7 @@ const whatsappUrl = getWhatsAppUrl(
   "FAQ Page Inquiry",
   Astro.url.href,
 );
-const hubEntries = await getCollection("faqs_hub").catch(() => []);
+const hubEntries = await getCollection("faqs_hub");
 const hubData = hubEntries[0]?.data;
 ---
 

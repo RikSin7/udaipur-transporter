@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
-import { slugify } from "../../utils/helpers";
+import { slugify, sortPublishedByOrder } from "../../utils/helpers";
 import {
   IconPlane,
   IconMapPin,
@@ -17,19 +17,17 @@ import TabBar from "../../components/ui/TabBar.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
 
 // 1. Fetch singleton business settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
 };
 
 // 2. Fetch all published services
-const allServices = await getCollection("services").catch(() => []);
-const publishedServices = allServices
-  .filter((s) => s.data.published)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+const allServices = await getCollection("services");
+const publishedServices = sortPublishedByOrder(allServices);
 
-const hubEntries = await getCollection("services_hub").catch(() => []);
+const hubEntries = await getCollection("services_hub");
 const hubData = hubEntries[0]?.data;
 
 // 3. Define category metadata

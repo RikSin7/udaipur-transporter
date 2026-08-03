@@ -4,7 +4,7 @@ import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { IconBrandWhatsapp, IconPhoneCall } from "@tabler/icons-astro";
 
 // Fetch singleton business settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",

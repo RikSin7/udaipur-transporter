@@ -11,7 +11,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 
 // 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings").catch(() => []);
+const settingsEntries = await getCollection("settings");
 const site = settingsEntries[0]?.data || {
   companyName: "Udaipur Royal Transporter",
   phone: "+91 70458 36164",
@@ -21,7 +21,7 @@ const site = settingsEntries[0]?.data || {
 };
 
 // 2. Fetch Singleton Privacy Data
-const privacyEntries = await getCollection("privacy").catch(() => []);
+const privacyEntries = await getCollection("privacy");
 const privacyEntry = privacyEntries[0];
 
 if (!privacyEntry) {

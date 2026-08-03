@@ -6,13 +6,17 @@ import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 
 // 1. Fetch from 'reviews' collection
-const allReviews = await getCollection("reviews").catch(() => []);
-const displayReviews = allReviews
-  .filter((rev) => rev.data.featured !== false)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
-  .slice(0, 6);
+const allReviews = await getCollection("reviews");
+const featuredReviews = allReviews
+  .filter((rev) => rev.data.featured)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
-const homeEntries = await getCollection("home").catch(() => []);
+const displayReviews =
+  featuredReviews.length > 0
+    ? featuredReviews.slice(0, 6)
+    : allReviews.slice(0, 6);
+
+const homeEntries = await getCollection("home");
 const homeData = homeEntries[0]?.data;
 ---
 

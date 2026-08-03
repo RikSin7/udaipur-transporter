@@ -5,7 +5,7 @@ import { iconResolver } from "../../utils/iconResolver";
 import { IconCheck } from "@tabler/icons-astro";
 
 // 1. Fetch homepage content autonomously with fallback defaults
-const homeEntries = await getCollection("home").catch(() => []);
+const homeEntries = await getCollection("home");
 const homeData = homeEntries[0]?.data || {
   whyChooseUsBadge: "Our Promise",
   whyChooseUsHeading: "Why Travellers Choose Us",
