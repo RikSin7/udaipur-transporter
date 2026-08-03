@@ -76,7 +76,9 @@ const vehiclesCollection = defineCollection({
 
 const settingsCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/settings" }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
+    logo: image().optional(),
+    favicon: z.string().optional(),
     companyName: z.string(),
     phone: z.union([z.string(), z.number()]).transform(val => String(val)),
     whatsapp: z.union([z.string(), z.number()]).transform(val => String(val)),
@@ -86,6 +88,7 @@ const settingsCollection = defineCollection({
     serviceArea: z.string(),
     seoDefaultTitle: z.string(),
     seoDefaultDesc: z.string(),
+    seoDefaultImage: z.string().optional(),
     socialLinks: z.object({
       facebook: z.string().optional(),
       instagram: z.string().optional(),

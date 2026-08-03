@@ -14,14 +14,14 @@ const siteEntry = await getEntry("settings", "site");
 const siteData = siteEntry?.data || {
   companyName: "Udaipur Royal Transporter",
   seoDefaultTitle: "Udaipur Royal Transporter | Private Taxi & Car Rental",
-  seoDefaultDesc:
-    "Private cabs, transfers & tours across Udaipur.",
+  seoDefaultDesc: "Private cabs, transfers & tours across Udaipur.",
+  seoDefaultImage: "/seo-banner.png",
 };
 
 const {
   title = siteData.seoDefaultTitle,
   description = siteData.seoDefaultDesc,
-  image = "/favicon.svg",
+  image = siteData.seoDefaultImage ?? "/seo-banner.png",
   type = "website",
   noindex = false,
 }: Props = Astro.props;

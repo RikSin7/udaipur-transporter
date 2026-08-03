@@ -1,0 +1,14 @@
+<svg width="256" height="231" viewBox="0 0 256 231" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="256" height="231" rx="98" ry="98"
+        fill="#C9A961"/>
+
+  <rect x="8" y="8" width="240" height="215" rx="88" ry="88"
+        fill="#1E3A34"/>
+
+  <circle cx="128" cy="39" r="13" fill="#C9A961"/>
+
+  <text x="128" y="160" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="92" font-weight="400"
+        fill="#C9A961" letter-spacing="1">UR</text>
+</svg>

@@ -45,7 +45,11 @@ const {
       type={type}
       noindex={noindex}
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="icon"
+      href={`${site.data.favicon ?? "/favicon.svg"}?v=2`}
+    />
+
     <meta name="generator" content={Astro.generator} />
     {
       /* 1. NETLIFY IDENTITY RECOVERY REDIRECTION: Redirect invite/recovery tokens directly to Decap CMS admin auth without loading identity widget on public pages */

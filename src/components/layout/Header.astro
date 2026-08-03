@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { IconBrandWhatsapp, IconPhoneCall } from "@tabler/icons-astro";
+import { Image } from "astro:assets";
+import { cn } from "../../utils/cn";
 
 // Fetch singleton business settings
 const settingsEntries = await getCollection("settings");
@@ -45,17 +47,28 @@ const navLinks = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-20">
       {/* 1. Brand Identity */}
-      <a href="/" class="flex flex-col group focus:outline-none">
-        <span
-          class="font-serif text-md sm:text-xl font-bold text-brand-900 group-hover:text-accent-dark transition-colors"
-        >
-          {site.companyName}
-        </span>
-        <span
-          class="text-[9px] sm:text-[10px] text-accent-dark uppercase tracking-[0.2em] font-sans font-medium opacity-90"
-        >
-          Private Taxi & Car Rental
-        </span>
+      <a href="/" class="flex items-center gap-3 group focus:outline-none">
+        {
+          site.logo && (
+            <Image
+              src={site.logo}
+              alt={site.companyName}
+              class="h-10 w-auto object-contain shrink-0"
+            />
+          )
+        }
+        <div class={cn("flex flex-col", site.logo && "hidden md:flex")}>
+          <span
+            class="font-serif text-md sm:text-xl font-bold text-brand-900 group-hover:text-accent-dark transition-colors"
+          >
+            {site.companyName}
+          </span>
+          <span
+            class="text-[9px] sm:text-[10px] text-accent-dark uppercase tracking-[0.2em] font-sans font-medium opacity-90"
+          >
+            Private Taxi & Car Rental
+          </span>
+        </div>
       </a>
 
       {/* 2. Primary Navigation (Desktop) */}

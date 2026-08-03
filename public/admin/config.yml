@@ -292,6 +292,26 @@ collections:
         label: "Site Settings"
         file: "src/content/settings/site.md"
         fields:
+          - {
+              label: "Site Logo",
+              name: "logo",
+              widget: "image",
+              required: false,
+              choose_url: false,
+              hint: "Upload an image (PNG/JPG/WebP) or an SVG file",
+              media_folder: "src/assets",
+              public_folder: "../../assets",
+            }
+          - {
+              label: "Site Favicon",
+              name: "favicon",
+              widget: "image",
+              required: false,
+              choose_url: false,
+              hint: "Upload a favicon (PNG/SVG/ICO)",
+              media_folder: "public",
+              public_folder: "/",
+            }
           - { label: "Company Name", name: "companyName", widget: "string" }
           - { label: "Phone Number", name: "phone", widget: "string" }
           - { label: "WhatsApp Number", name: "whatsapp", widget: "string" }
@@ -312,6 +332,16 @@ collections:
               label: "Default SEO Description",
               name: "seoDefaultDesc",
               widget: "text",
+            }
+          - {
+              label: "Default SEO / Social Share Image",
+              name: "seoDefaultImage",
+              widget: "image",
+              required: false,
+              choose_url: false,
+              hint: "Recommended image size: 1200x630 (JPG/PNG) for WhatsApp, Facebook & X previews.",
+              media_folder: "public",
+              public_folder: "/",
             }
           - label: "Social Media Platform Links"
             name: "socialLinks"
@@ -591,16 +621,8 @@ collections:
         label: "Direct Contact / Assistance Banners (FAQs & Reviews)"
         file: "src/content/direct_contact_cta/direct_contact_cta.md"
         fields:
-          - {
-              label: "FAQs Page -> Badge",
-              name: "faqsBadge",
-              widget: "string",
-            }
-          - {
-              label: "FAQs Page -> Title",
-              name: "faqsTitle",
-              widget: "string",
-            }
+          - { label: "FAQs Page -> Badge", name: "faqsBadge", widget: "string" }
+          - { label: "FAQs Page -> Title", name: "faqsTitle", widget: "string" }
           - {
               label: "FAQs Page -> Description",
               name: "faqsDesc",

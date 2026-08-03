@@ -1,5 +1,7 @@
 ---
 companyName: Udaipur Royal Transporter
+logo: ../../assets/logo.svg
+favicon: /favicon.svg
 phone: +91 70458 36164
 whatsapp: "917045836164"
 email: bookings@udaipurroyaltransporter.com
@@ -8,6 +10,7 @@ operatingHours: 24/7 Support
 serviceArea: Udaipur & All Rajasthan Outstation Routes
 seoDefaultTitle: Udaipur Royal Transporter | Private Taxi & Car Rental
 seoDefaultDesc: Private cabs, transfers & tours across Udaipur.
+seoDefaultImage: /seo-banner.png
 socialLinks:
   facebook: https://facebook.com
   instagram: https://instagram.com
