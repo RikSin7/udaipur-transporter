@@ -104,7 +104,7 @@ const inquiry = {
         </div>
 
         <div
-          class="mt-4 pt-3 border-t border-brand-100/80 flex items-center justify-between text-sm font-bold text-brand-900 group-hover:text-accent transition-colors"
+          class="mt-4 pt-3 border-t border-brand-100/80 flex items-center justify-between text-sm font-bold uppercase text-brand-900 group-hover:text-accent transition-colors"
         >
           <span>View Full Catalogue</span>
           <IconArrowRight
@@ -158,7 +158,7 @@ const inquiry = {
           {/* Action 1: Standard Enquiry Form */}
           <a
             href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}`}
-            class="flex-1 bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95"
+            class="flex-1 bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95 uppercase"
           >
             <span>Send Enquiry Form</span>
             <IconArrowRight
@@ -173,7 +173,7 @@ const inquiry = {
             href={inquiry.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 bg-brand-800 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl border border-brand-700 hover:border-emerald-500 text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+            class="flex-1 bg-brand-800 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl border border-brand-700 hover:border-emerald-500 text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm uppercase"
           >
             <IconBrandWhatsapp size={16} stroke={2} class="text-emerald-400" />
             <span>Chat on WhatsApp</span>

@@ -79,10 +79,8 @@ const relatedServices = allServices
   .slice(0, 3);
 
 // 5. BUSINESS SETTINGS
-const site = settingsEntries[0]?.data || {
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+const site = settingsEntries[0]?.data;
+
 const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(site.whatsapp, title, Astro.url.href);
 const hasPrice = !!pricing?.amount;
@@ -351,7 +349,7 @@ const reassurances = [
 
             <a
               href="#enquiry-section"
-              class="w-full bg-brand-900 hover:bg-brand-800 text-white font-serif font-bold py-4 rounded-xl shadow-md transition-all text-center block active:scale-95 cursor-pointer"
+              class="w-full bg-brand-900 hover:bg-brand-800 text-white font-serif font-bold py-4 rounded-xl shadow-md transition-all text-center block active:scale-95 cursor-pointer uppercase"
               >Send travel request</a
             >
 
@@ -360,7 +358,7 @@ const reassurances = [
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="bg-surface border border-brand-100 hover:border-emerald-600 text-brand-900 hover:text-emerald-600 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-2xs"
+                class="bg-surface border border-brand-100 hover:border-emerald-600 text-brand-900 hover:text-emerald-600 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-2xs uppercase"
               >
                 <IconBrandWhatsapp
                   size={16}
@@ -371,7 +369,7 @@ const reassurances = [
               </a>
               <a
                 href={callUrl}
-                class="bg-surface border border-brand-100 hover:border-accent text-brand-900 hover:text-accent font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-2xs"
+                class="bg-surface border border-brand-100 hover:border-accent text-brand-900 hover:text-accent font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-2xs uppercase"
               >
                 <IconPhoneCall size={16} stroke={2} class="text-accent" />
                 <span>Call Us</span>

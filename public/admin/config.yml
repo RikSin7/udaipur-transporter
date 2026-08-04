@@ -233,12 +233,33 @@ collections:
           - { label: "Story Badge", name: "storyBadge", widget: "string" }
           - { label: "Story Heading", name: "storyHeading", widget: "string" }
           - {
+              label: "Story Enquiry Button Text",
+              name: "storyEnquiryBtnText",
+              widget: "string",
+              required: false,
+              default: "Send Travel Enquiry",
+            }
+          - {
+              label: "Story WhatsApp Button Text",
+              name: "storyWhatsappBtnText",
+              widget: "string",
+              required: false,
+              default: "Chat With Us",
+            }
+          - {
               label: "Page Image",
               name: "image",
               widget: "image",
               choose_url: false,
               required: false,
               hint: "Optional featured image for the about page",
+            }
+          - {
+              label: "How We Work Badge",
+              name: "howWeWorkBadge",
+              widget: "string",
+              required: false,
+              default: "Operational Standards",
             }
           - {
               label: "How We Work Heading",
@@ -280,6 +301,13 @@ collections:
               - { label: "Value", name: "value", widget: "string" }
               - { label: "Label", name: "label", widget: "string" }
           - {
+              label: "Coverage Badge",
+              name: "coverageBadge",
+              widget: "string",
+              required: false,
+              default: "Service Area",
+            }
+          - {
               label: "Coverage Heading",
               name: "coverageHeading",
               widget: "string",
@@ -294,6 +322,57 @@ collections:
               name: "coverageLocations",
               widget: "list",
             }
+          - {
+              label: "Ecosystem Badge",
+              name: "ecosystemBadge",
+              widget: "string",
+              required: false,
+              default: "Next Steps & Resources",
+            }
+          - {
+              label: "Ecosystem Heading",
+              name: "ecosystemHeading",
+              widget: "string",
+              required: false,
+              default: "Explore Our Transport Ecosystem",
+            }
+          - {
+              label: "Ecosystem Description",
+              name: "ecosystemDescription",
+              widget: "text",
+              required: false,
+              default: "Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary.",
+            }
+          - label: "Ecosystem Cards"
+            name: "ecosystemCards"
+            widget: "list"
+            fields:
+              - label: "Icon"
+                name: "icon"
+                widget: "select"
+                options:
+                  [
+                    "IconCar",
+                    "IconShieldCheck",
+                    "IconPhoneCall",
+                    "IconFileCheck",
+                    "IconMapPin",
+                    "IconBrandWhatsapp",
+                    "IconLuggage",
+                    "IconPhoneCalling",
+                    "IconFileText",
+                    "IconCheck",
+                    "IconStar",
+                    "IconCompass",
+                    "IconHelpCircle",
+                    "IconBuildingArch",
+                    "IconClock",
+                    "IconSparkles",
+                  ]
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Link URL", name: "link", widget: "string" }
+              - { label: "Link Text", name: "linkText", widget: "string" }
           - { label: "Body Copy", name: "body", widget: "markdown" }
 
       - name: "settings"
@@ -576,6 +655,41 @@ collections:
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
+          - {
+              label: "Conversion Banner Heading",
+              name: "bannerHeading",
+              widget: "string",
+              required: false,
+              default: "Ready to book your vehicle?",
+            }
+          - {
+              label: "Conversion Banner Description",
+              name: "bannerDesc",
+              widget: "text",
+              required: false,
+              default: "Skip the guesswork. Share your travel dates and passenger count for a straightforward, owner-approved price quote.",
+            }
+          - {
+              label: "Conversion Banner Button Text",
+              name: "bannerButtonText",
+              widget: "string",
+              required: false,
+              default: "View Transport Services",
+            }
+          - {
+              label: "Conversion Banner Button URL",
+              name: "bannerButtonUrl",
+              widget: "string",
+              required: false,
+              default: "/services/",
+            }
+          - {
+              label: "Conversion Banner WhatsApp Button Text",
+              name: "bannerWhatsappText",
+              widget: "string",
+              required: false,
+              default: "Ask a Question on WhatsApp",
+            }
 
       - name: "faqs_hub"
         label: "FAQs Page (/faqs)"

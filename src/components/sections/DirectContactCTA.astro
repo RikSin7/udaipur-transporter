@@ -68,21 +68,21 @@ const callUrl = getCallUrl(site.phone);
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-sm flex items-center gap-2.5 active:scale-95"
+        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md hover:shadow-premium transition-all text-sm flex items-center gap-2.5 active:scale-95 uppercase"
       >
         <IconBrandWhatsapp size={20} stroke={2} />
         <span>Chat on WhatsApp</span>
       </a>
       <a
         href={callUrl}
-        class="bg-surface-card hover:bg-surface text-brand-900 font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2.5 active:scale-95"
+        class="bg-surface-card hover:bg-surface text-brand-900 font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2.5 active:scale-95 uppercase"
       >
         <IconPhoneCall size={20} stroke={2} class="text-accent" />
         <span>Call {site.phone}</span>
       </a>
       <a
         href="/contact/"
-        class="group bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
+        class="group bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95 uppercase"
       >
         <span>Open Enquiry Form</span>
         <IconArrowRight

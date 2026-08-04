@@ -43,13 +43,21 @@ const {
   badge,
   storyBadge,
   storyHeading,
+  storyEnquiryBtnText,
+  storyWhatsappBtnText,
   image,
+  howWeWorkBadge,
   howWeWorkHeading,
   howWeWork = [],
   stats = [],
+  coverageBadge,
   coverageHeading,
   coverageSubtitle,
   coverageLocations = [],
+  ecosystemBadge,
+  ecosystemHeading,
+  ecosystemDescription,
+  ecosystemCards = [],
 } = aboutEntry.data;
 
 // 3. Render Markdown Body Paragraphs (<Content />)
@@ -101,18 +109,18 @@ const whatsappUrl = getWhatsAppUrl(
           <div class="pt-4 flex flex-wrap items-center gap-4">
             <a
               href="/contact/"
-              class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-serif font-bold px-7 py-4 rounded-xl text-sm transition-all shadow-md hover:shadow-premium active:scale-95"
+              class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-serif font-bold px-7 py-4 rounded-xl text-sm transition-all shadow-md hover:shadow-premium active:scale-95 uppercase"
             >
-              Send Travel Enquiry
+              {storyEnquiryBtnText || "Send Travel Enquiry"}
             </a>
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-4 rounded-xl text-sm transition-all shadow-md hover:shadow-premium flex items-center gap-2.5 active:scale-95"
+              class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-4 rounded-xl text-sm transition-all shadow-md hover:shadow-premium flex items-center gap-2.5 active:scale-95 uppercase"
             >
               <IconBrandWhatsapp size={18} stroke={2} />
-              <span>Chat With Us</span>
+              <span>{storyWhatsappBtnText || "Chat With Us"}</span>
             </a>
           </div>
         </div>
@@ -158,7 +166,9 @@ const whatsappUrl = getWhatsAppUrl(
                   class="text-accent shrink-0 mt-0.5"
                 />
                 <div class="leading-snug">
-                  <strong class="text-brand-900 font-semibold">Operating Base:</strong>
+                  <strong class="text-brand-900 font-semibold"
+                    >Operating Base:</strong
+                  >
                   <span class="ml-1">{site.address}</span>
                 </div>
               </div>
@@ -184,7 +194,7 @@ const whatsappUrl = getWhatsAppUrl(
   <section class="py-12 bg-surface-alt/40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionHeader
-        subheading="Operational Standards"
+        subheading={howWeWorkBadge || "Operational Standards"}
         heading={howWeWorkHeading}
         class="mb-12"
       />
@@ -246,6 +256,7 @@ const whatsappUrl = getWhatsAppUrl(
   <section class="py-12 bg-brand-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionHeader
+        subheading={coverageBadge || "Service Area"}
         heading={coverageHeading}
         description={coverageSubtitle}
         theme="dark"
@@ -280,119 +291,45 @@ const whatsappUrl = getWhatsAppUrl(
   <section class="py-12 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionHeader
-        subheading="Next Steps & Resources"
-        heading="Explore Our Transport Ecosystem"
-        description="Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."
+        subheading={ecosystemBadge || "Next Steps & Resources"}
+        heading={ecosystemHeading || "Explore Our Transport Ecosystem"}
+        description={ecosystemDescription || "Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."}
         class="mb-12"
       />
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Card 1: Transport Catalogue */}
-        <a
-          href="/services/"
-          class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
-        >
-          <div>
-            <div
-              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
-            >
-              <IconCar size={24} stroke={2} />
-            </div>
-            <h3
-              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3"
-            >
-              Transport Catalogue
-            </h3>
-            <p
-              class="text-xs sm:text-sm text-typography-muted leading-relaxed mb-8"
-            >
-              Browse our approved service categories, including airport
-              transfers, local car hire with driver, and outstation Rajasthan
-              tours.
-            </p>
-          </div>
-          <div
-            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center justify-between transition-colors duration-300"
-          >
-            <span>View All Services</span>
-            <IconArrowRight
-              size={16}
-              stroke={2}
-              class="group-hover:translate-x-1 transition-transform text-accent"
-            />
-          </div>
-        </a>
-
-        {/* Card 2: Customer Reviews */}
-        <a
-          href="/reviews/"
-          class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
-        >
-          <div>
-            <div
-              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
-            >
-              <IconShieldCheck size={24} stroke={2} />
-            </div>
-            <h3
-              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3"
-            >
-              Customer Reviews
-            </h3>
-            <p
-              class="text-xs sm:text-sm text-typography-muted leading-relaxed mb-8"
-            >
-              Read verified feedback from families, couples, and international
-              tourists who have travelled across Udaipur and Rajasthan with our
-              drivers.
-            </p>
-          </div>
-          <div
-            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center justify-between transition-colors duration-300"
-          >
-            <span>Read Real Feedback</span>
-            <IconArrowRight
-              size={16}
-              stroke={2}
-              class="group-hover:translate-x-1 transition-transform text-accent"
-            />
-          </div>
-        </a>
-
-        {/* Card 3: Contact & Support */}
-        <a
-          href="/contact/"
-          class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
-        >
-          <div>
-            <div
-              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
-            >
-              <IconPhoneCall size={24} stroke={2} />
-            </div>
-            <h3
-              class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3"
-            >
-              Contact & Support
-            </h3>
-            <p
-              class="text-xs sm:text-sm text-typography-muted leading-relaxed mb-8"
-            >
-              Find our phone numbers, WhatsApp details, operating hours, and
-              location information to get in touch with our team immediately.
-            </p>
-          </div>
-          <div
-            class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center justify-between transition-colors duration-300"
-          >
-            <span>Get In Touch</span>
-            <IconArrowRight
-              size={16}
-              stroke={2}
-              class="group-hover:translate-x-1 transition-transform text-accent"
-            />
-          </div>
-        </a>
+        {
+          ecosystemCards.map((card) => {
+            const IconComponent =
+              iconResolver[card.icon] || iconResolver.IconCar;
+            return (
+              <a
+                href={card.link}
+                class="bg-surface-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 group flex flex-col justify-between"
+              >
+                <div>
+                  <div class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0">
+                    <IconComponent size={24} stroke={2} />
+                  </div>
+                  <h3 class="font-serif text-xl sm:text-2xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3">
+                    {card.title}
+                  </h3>
+                  <p class="text-xs sm:text-sm text-typography-muted leading-relaxed mb-8">
+                    {card.desc}
+                  </p>
+                </div>
+                <div class="pt-4 border-t border-brand-100/80 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] flex items-center gap-2 transition-colors duration-300">
+                  <span>{card.linkText}</span>
+                  <IconArrowRight
+                    size={16}
+                    stroke={2}
+                    class="group-hover:translate-x-1 transition-transform text-accent"
+                  />
+                </div>
+              </a>
+            );
+          })
+        }
       </div>
     </div>
   </section>

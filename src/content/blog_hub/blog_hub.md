@@ -4,4 +4,9 @@ seoDesc: "Essential travel guides, route planning tips, vehicle selection advice
 badge: "Travel Insights & Guides"
 title: "Udaipur Transport & Travel Blog"
 description: "Practical advice on booking taxis, choosing vehicle sizes for luggage, understanding outstation tariff rules, and planning road trips across Rajasthan."
+bannerHeading: "Ready to book your vehicle?"
+bannerDesc: "Skip the guesswork. Share your travel dates and passenger count for a straightforward, owner-approved price quote."
+bannerButtonText: "View Transport Services"
+bannerButtonUrl: "/services/"
+bannerWhatsappText: "Ask a Question on WhatsApp"
 ---

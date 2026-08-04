@@ -4,7 +4,10 @@ subtitle: "We believe booking a private taxi in Rajasthan should be simple, tran
 badge: "Our Identity & Approach"
 storyBadge: "Who We Are"
 storyHeading: "Our Story"
+storyEnquiryBtnText: "Send Travel Enquiry"
+storyWhatsappBtnText: "Chat With Us"
 image: "../../assets/images/services/udaipur-transfer.jpg"
+howWeWorkBadge: "Operational Standards"
 howWeWorkHeading: "How we work"
 howWeWork:
   - icon: "IconFileCheck"
@@ -30,6 +33,7 @@ stats:
   - value: "Direct"
     label: "Direct local operator via form, phone & WhatsApp"
 
+coverageBadge: "Service Area"
 coverageHeading: "Where we operate"
 coverageSubtitle: "Based in Udaipur, we serve city pickups and drops, sightseeing, nearby day use, and outstation travel across Rajasthan."
 coverageLocations:
@@ -43,6 +47,26 @@ coverageLocations:
   - "Mount Abu"
   - "Jodhpur"
   - "Jaipur"
+
+ecosystemBadge: "Next Steps & Resources"
+ecosystemHeading: "Explore Our Transport Ecosystem"
+ecosystemDescription: "Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."
+ecosystemCards:
+  - icon: "IconCar"
+    title: "Transport Catalogue"
+    desc: "Browse our approved service categories, including airport transfers, local car hire with driver, and outstation Rajasthan tours."
+    link: "/services/"
+    linkText: "View All Services"
+  - icon: "IconShieldCheck"
+    title: "Customer Reviews"
+    desc: "Read verified feedback from families, couples, and international tourists who have travelled across Udaipur and Rajasthan with our drivers."
+    link: "/reviews/"
+    linkText: "Read Real Feedback"
+  - icon: "IconPhoneCall"
+    title: "Contact & Support"
+    desc: "Find our phone numbers, WhatsApp details, operating hours, and location information to get in touch with our team immediately."
+    link: "/contact/"
+    linkText: "Get In Touch"
 ---
 
 Udaipur Royal Transporter is built on a simple idea: visitors and local travellers should be able to arrange a cab without confusion about the service, vehicle or next step. Our “royal” standard is practical—thoughtful attention, a suitable vehicle and details explained before you decide.

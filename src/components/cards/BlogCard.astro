@@ -24,7 +24,6 @@ const formattedDate = formatDate(publishDate);
     className,
   )}
 >
-
   {/* 1. Image Row */}
   <div
     class="w-full h-44 sm:h-48 bg-brand-900 relative overflow-hidden border-b border-border/80 shrink-0"
@@ -91,11 +90,11 @@ const formattedDate = formatDate(publishDate);
         </time>
       </div>
       <span
-        class="bg-cta hover:bg-cta-hover text-white font-bold text-[11px] sm:text-xs tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-1.5 group/btn shrink-0"
+        class="group/btn inline-flex items-center gap-2 text-xs font-bold tracking-wider text-brand-900 group-hover:text-accent uppercase"
       >
         <span>Read Guide</span>
         <IconArrowRight
-          class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/90 group-hover/btn:translate-x-0.5 transition-transform"
+          class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-900 group-hover:text-accent transition-transform group-hover/btn:translate-x-0.5"
           stroke={2}
         />
       </span>

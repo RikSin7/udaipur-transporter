@@ -8,6 +8,7 @@ import {
   IconArrowRight,
   IconArrowLeft,
   IconBrandWhatsapp,
+  IconCar,
 } from "@tabler/icons-astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
 import TabBar from "../../components/ui/TabBar.astro";
@@ -66,13 +67,11 @@ const hubData = hubEntries[0]?.data;
     "Practical advice, vehicle capacity guides, and local transport tips for planning a seamless private taxi journey across Udaipur and Rajasthan."}
 >
   {/* 1. HERO BANNER */}
-  <section
-    class="bg-brand-900 text-white py-12 relative overflow-hidden"
-  >
+  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
         subheading={hubData?.badge || "Travel Planning Resources"}
-        heading={hubData?.title || "Udaipur travel"}
+        heading={hubData?.title || "Udaipur Transport & Travel Blog"}
         description={hubData?.description ||
           "Honest, useful advice on airport pickups, choosing a vehicle and what a private taxi price really includes."}
       />
@@ -115,9 +114,12 @@ const hubData = hubEntries[0]?.data;
                             <span class="text-[10px] font-bold uppercase tracking-widest text-accent-dark bg-brand-100/40 px-2.5 py-1 rounded-md">
                               {article.data.category}
                             </span>
-                            <span class="text-xs text-typography-muted font-medium ml-2">
+                            <time
+                              datetime={article.data.publishDate}
+                              class="text-xs text-typography-muted font-medium ml-2"
+                            >
                               {formatDate(article.data.publishDate)}
-                            </span>
+                            </time>
                           </div>
                           <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-900 group-hover:text-accent transition-colors mb-3">
                             {article.data.title}
@@ -126,7 +128,7 @@ const hubData = hubEntries[0]?.data;
                             {article.data.summary}
                           </p>
                           <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-900 group-hover:text-accent">
-                            <span>Read guide</span>
+                            <span>Read Guide</span>
                             <IconArrowRight
                               size={16}
                               stroke={2}
@@ -134,15 +136,24 @@ const hubData = hubEntries[0]?.data;
                             />
                           </span>
                         </div>
-                        {article.data.image && (
+                        {article.data.image ? (
                           <div class="shrink-0 w-full lg:w-72 h-48 rounded-xl overflow-hidden bg-surface-alt border border-brand-100">
                             <Image
                               src={article.data.image}
                               alt={article.data.title}
                               width={400}
                               height={250}
+                              format="webp"
+                              quality={85}
                               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
+                          </div>
+                        ) : (
+                          <div class="shrink-0 w-full lg:w-72 h-48 rounded-xl overflow-hidden bg-brand-900 border border-brand-100 flex items-center justify-center p-4 relative">
+                            <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
+                            <div class="relative z-10 p-3 rounded-full bg-brand-800/90 border border-brand-700 text-accent shadow-inner group-hover:scale-105 transition-transform duration-300">
+                              <IconCar class="w-6 h-6 stroke-[1.5]" />
+                            </div>
                           </div>
                         )}
                       </div>
@@ -183,7 +194,7 @@ const hubData = hubEntries[0]?.data;
               <button
                 type="button"
                 id="reset-category-btn"
-                class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-flex items-center justify-center gap-2 shadow-sm active:scale-95 cursor-pointer"
+                class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-flex items-center justify-center gap-2 shadow-sm active:scale-95 cursor-pointer uppercase"
               >
                 <IconArrowLeft
                   size={16}
@@ -206,7 +217,7 @@ const hubData = hubEntries[0]?.data;
             </p>
             <a
               href="/contact/"
-              class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block shadow-sm"
+              class="bg-brand-900 hover:bg-brand-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all inline-block shadow-sm uppercase"
             >
               Send Travel Request
             </a>
@@ -220,18 +231,20 @@ const hubData = hubEntries[0]?.data;
   <section class="py-12 bg-surface-alt">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-3">
-        Ready to book your vehicle?
+        {hubData?.bannerHeading || "Ready to book your vehicle?"}
       </h2>
       <p class="text-sm text-typography-muted mb-8 max-w-xl mx-auto">
-        Skip the guesswork. Share your travel dates and passenger count for a
-        straightforward, owner-approved price quote.
+        {
+          hubData?.bannerDesc ||
+            "Skip the guesswork. Share your travel dates and passenger count for a straightforward, owner-approved price quote."
+        }
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
         <a
-          href="/services/"
-          class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm inline-flex items-center gap-2 active:scale-95"
+          href={hubData?.bannerButtonUrl || "/services/"}
+          class="group bg-brand-900 hover:bg-brand-800 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm inline-flex items-center gap-2 active:scale-95 uppercase"
         >
-          <span>View Transport Services</span>
+          <span>{hubData?.bannerButtonText || "View Transport Services"}</span>
           <IconArrowRight
             size={16}
             stroke={2}
@@ -242,10 +255,12 @@ const hubData = hubEntries[0]?.data;
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95"
+          class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95 uppercase"
         >
           <IconBrandWhatsapp size={18} stroke={2} />
-          <span>Ask a Question on WhatsApp</span>
+          <span
+            >{hubData?.bannerWhatsappText || "Ask a Question on WhatsApp"}</span
+          >
         </a>
       </div>
     </div>

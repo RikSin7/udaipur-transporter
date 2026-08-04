@@ -155,8 +155,11 @@ const aboutCollection = defineCollection({
     badge: z.string().optional(),
     storyBadge: z.string().default("Who We Are"),
     storyHeading: z.string().default("Our Story"),
+    storyEnquiryBtnText: z.string().default("Send Travel Enquiry"),
+    storyWhatsappBtnText: z.string().default("Chat With Us"),
     image: image().optional(),
     // 1. How We Work Section
+    howWeWorkBadge: z.string().default("Operational Standards"),
     howWeWorkHeading: z.string().default("How we work"),
     howWeWork: z.array(z.object({
       icon: z.string(), // e.g., "IconFileCheck", "IconCar", "IconPhoneCall", "IconShieldCheck"
@@ -176,9 +179,44 @@ const aboutCollection = defineCollection({
     ]),
 
     // 3. Where We Operate
+    coverageBadge: z.string().optional(),
     coverageHeading: z.string().default("Where we operate"),
     coverageSubtitle: z.string(),
     coverageLocations: z.array(z.string()),
+
+    // 4. Explore Our Transport Ecosystem
+    ecosystemBadge: z.string().default("Next Steps & Resources"),
+    ecosystemHeading: z.string().default("Explore Our Transport Ecosystem"),
+    ecosystemDescription: z.string().default("Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."),
+    ecosystemCards: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      desc: z.string(),
+      link: z.string(),
+      linkText: z.string(),
+    })).default([
+      {
+        icon: "IconCar",
+        title: "Transport Catalogue",
+        desc: "Browse our approved service categories, including airport transfers, local car hire with driver, and outstation Rajasthan tours.",
+        link: "/services/",
+        linkText: "View All Services",
+      },
+      {
+        icon: "IconShieldCheck",
+        title: "Customer Reviews",
+        desc: "Read verified feedback from families, couples, and international tourists who have travelled across Udaipur and Rajasthan with our drivers.",
+        link: "/reviews/",
+        linkText: "Read Real Feedback",
+      },
+      {
+        icon: "IconPhoneCall",
+        title: "Contact & Support",
+        desc: "Find our phone numbers, WhatsApp details, operating hours, and location information to get in touch with our team immediately.",
+        link: "/contact/",
+        linkText: "Get In Touch",
+      },
+    ]),
   }),
 });
 
@@ -387,6 +425,11 @@ const blogHubCollection = defineCollection({
     badge: z.string(),
     title: z.string(),
     description: z.string(),
+    bannerHeading: z.string().optional(),
+    bannerDesc: z.string().optional(),
+    bannerButtonText: z.string().optional(),
+    bannerButtonUrl: z.string().optional(),
+    bannerWhatsappText: z.string().optional(),
   }),
 });
 
