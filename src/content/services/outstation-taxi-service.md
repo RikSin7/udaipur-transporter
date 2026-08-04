@@ -3,12 +3,21 @@ title: "Outstation Taxi Service from Udaipur"
 category: "Outstation Travel"
 summary: "Reliable round-trip and one-way outstation cabs from Udaipur to Mount Abu, Jodhpur, Jaipur, Ahmedabad, and more."
 gallery: []
+galleryBadge: "The Service, In Pictures"
+galleryTitle: "Outstation Taxis in pictures"
+galleryDescription: "View our highway-ready cabs, spacious luggage capacity, and en-route travel moments across Rajasthan."
+heroBadge: "Outstation Travel"
+heroTitle: "Outstation Taxi Service from Udaipur"
+heroDescription: "Reliable round-trip and one-way outstation cabs from Udaipur to Mount Abu, Jodhpur, Jaipur, Ahmedabad, and more."
 sortOrder: 5
 published: true
+whoIsThisForHeading: "Who this is for"
+whoIsThisForContent: "Perfect for families, groups, and pilgrims looking for comfortable, experienced highway travel across Rajasthan and neighboring states with complete peace of mind."
 whoIsThisFor:
   - Families travelling between cities
   - Tourist circuit travellers
   - Pilgrimage groups
+whatsCoveredNote: "Coverage examples above are explanatory. Share your exact trip stops and destination in the enquiry and we'll confirm the itinerary."
 whatsCovered:
   - title: Door-to-door transfer
     description: Direct pickup from your Udaipur address and drop at your destination hotel or address.
@@ -29,6 +38,8 @@ faqs:
   - question: Do I need to pay driver allowance?
     answer: A standard daily driver allowance is typically required for outstation trips. This will be specified in your quote.
 pricing:
+  prefix: "Starting from"
+  disclaimer: "Sending a request does not confirm a booking. We contact you directly to confirm vehicle availability and final journey details."
   amount: ₹12
   shortLabel: / Km
   unit: Minimum 250 Km/Day, sedan

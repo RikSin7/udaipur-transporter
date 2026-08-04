@@ -223,6 +223,7 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - { label: "Story Badge", name: "storyBadge", widget: "string" }
           - { label: "Story Heading", name: "storyHeading", widget: "string" }
           - {
               label: "Page Image",
@@ -424,6 +425,30 @@ collections:
               name: "directChannelsDesc",
               widget: "text",
             }
+          - label: "Phone Card Details"
+            name: "phoneCard"
+            widget: "object"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Badge Text", name: "badgeText", widget: "string" }
+          - label: "WhatsApp Card Details"
+            name: "whatsappCard"
+            widget: "object"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Badge Text", name: "badgeText", widget: "string" }
+          - label: "Email Card Details"
+            name: "emailCard"
+            widget: "object"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Badge Text", name: "badgeText", widget: "string" }
           - {
               label: "Location Heading",
               name: "locationHeading",
@@ -698,6 +723,27 @@ collections:
           choose_url: false,
           required: false,
         }
+      - {
+          label: "Fallback Hero Badge (When Gallery has 0 images)",
+          name: "heroBadge",
+          widget: "string",
+          required: false,
+          hint: "Defaults to Category if left blank.",
+        }
+      - {
+          label: "Fallback Hero Title (When Gallery has 0 images)",
+          name: "heroTitle",
+          widget: "string",
+          required: false,
+          hint: "Defaults to Title if left blank.",
+        }
+      - {
+          label: "Fallback Hero Description (When Gallery has 0 images)",
+          name: "heroDescription",
+          widget: "text",
+          required: false,
+          hint: "Defaults to Summary if left blank.",
+        }
       - label: "Service Gallery Images"
         name: "gallery"
         widget: "list"
@@ -713,6 +759,27 @@ collections:
               required: false,
             }
       - {
+          label: "Gallery Section Badge",
+          name: "galleryBadge",
+          widget: "string",
+          required: false,
+          default: "The Service, In Pictures",
+        }
+      - {
+          label: "Gallery Section Title",
+          name: "galleryTitle",
+          widget: "string",
+          required: false,
+          hint: "Leave blank to default to '<Service Title> in pictures'",
+        }
+      - {
+          label: "Gallery Section Description",
+          name: "galleryDescription",
+          widget: "text",
+          required: false,
+          default: "See the key moments in this service, from meeting your driver to arriving comfortably at your stay.",
+        }
+      - {
           label: "Sort Order",
           name: "sortOrder",
           widget: "number",
@@ -726,6 +793,19 @@ collections:
         }
 
       # 1. Who This Is For
+      - {
+          label: "Who This Is For (Section Heading)",
+          name: "whoIsThisForHeading",
+          widget: "string",
+          required: false,
+          default: "Who this is for",
+        }
+      - {
+          label: "Who This Is For (Description Text)",
+          name: "whoIsThisForContent",
+          widget: "text",
+          required: false,
+        }
       - {
           label: "Who This Is For (Pills)",
           name: "whoIsThisFor",
@@ -742,6 +822,13 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
+      - {
+          label: "What's Covered Disclaimer / Note",
+          name: "whatsCoveredNote",
+          widget: "text",
+          required: false,
+          hint: "e.g., Coverage examples above are explanatory. Share your exact flight, hotel or route in the enquiry and we'll confirm the plan.",
+        }
 
       # 3. Suitable Vehicles
       - {
@@ -767,6 +854,14 @@ collections:
         widget: "object"
         required: false
         fields:
+          - {
+              label: "Heading / Prefix",
+              name: "prefix",
+              widget: "string",
+              required: false,
+              default: "Starting from",
+              hint: "e.g., Starting from",
+            }
           - {
               label: "Amount",
               name: "amount",
@@ -808,6 +903,13 @@ collections:
               widget: "list",
               required: false,
               hint: "e.g., Monument entry fees",
+            }
+          - {
+              label: "Booking Disclaimer / Notice",
+              name: "disclaimer",
+              widget: "text",
+              required: false,
+              default: "Sending a request does not confirm a trip. We contact you directly to confirm vehicle availability and final details.",
             }
           - {
               label: "Additional Notes",

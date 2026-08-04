@@ -15,13 +15,22 @@ gallery:
     isPrimary: false
   - url: "../../assets/images/services/udaipur-transfer.jpg"
     isPrimary: false
+galleryBadge: "The Service, In Pictures"
+galleryTitle: "Udaipur Airport Transfer in pictures"
+galleryDescription: "See the key moments in this service, from meeting your driver to arriving comfortably at your stay."
+heroBadge: "Transfers"
+heroTitle: "Udaipur Airport Transfer"
+heroDescription: "Reliable, flight-aware airport pickup and drop service from Maharana Pratap (Dabok) Airport to your hotel in Udaipur city."
 sortOrder: 1
 published: true
+whoIsThisForHeading: "Who this is for"
+whoIsThisForContent: "Travellers who want a calm, private arrival or departure without hunting for a cab. Suited to families, couples, solo and international visitors."
 whoIsThisFor:
   - Families & couples
   - Solo travellers
   - International visitors
   - Travellers with luggage
+whatsCoveredNote: "Coverage examples above are explanatory. Share your exact flight, hotel or route in the enquiry and we'll confirm the plan."
 whatsCovered:
   - title: Airport meet & greet
     description: Pickup at Maharana Pratap (Dabok) airport with a name board and
@@ -49,6 +58,8 @@ faqs:
     answer: Yes, our drivers are experienced in navigating narrow old city roads
       around Lake Pichola and Chandpole.
 pricing:
+  prefix: "Starting from"
+  disclaimer: "Sending a request does not confirm a trip. We contact you directly to confirm vehicle availability and final details."
   amount: ₹899
   shortLabel: onwards, per trip
   unit: Airport to city, sedan

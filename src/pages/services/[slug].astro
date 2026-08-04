@@ -37,9 +37,18 @@ const {
   summary,
   image,
   gallery = [],
+  galleryBadge,
+  galleryTitle,
+  galleryDescription,
+  heroBadge,
+  heroTitle,
+  heroDescription,
   pricing,
+  whoIsThisForHeading,
+  whoIsThisForContent,
   whoIsThisFor = [],
   whatsCovered = [],
+  whatsCoveredNote,
   suitableVehicles = [],
   faqs = [],
 } = entry.data;
@@ -47,7 +56,7 @@ const {
 const hasPrimaryGalleryImage = gallery.some((item: any) => item?.isPrimary);
 
 let heroGallery = [...gallery];
-if (image && !hasPrimaryGalleryImage) {
+if (gallery.length > 0 && image && !hasPrimaryGalleryImage) {
   heroGallery.unshift({ url: image, isPrimary: true });
 }
 
@@ -95,14 +104,20 @@ const reassurances = [
   {/* 1. GALLERY HERO */}
   {
     heroGallery && heroGallery.length > 0 ? (
-      <ServiceGalleryHero title={title} gallery={heroGallery} />
+      <ServiceGalleryHero
+        title={title}
+        gallery={heroGallery}
+        badge={galleryBadge}
+        galleryHeading={galleryTitle}
+        description={galleryDescription}
+      />
     ) : (
-      <section class="bg-brand-900 text-white py-12 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <HeroHeader
-            subheading={category}
-            heading={title}
-            description={summary}
+            subheading={heroBadge || category}
+            heading={heroTitle || title}
+            description={heroDescription || summary}
           />
         </div>
       </section>
@@ -110,29 +125,30 @@ const reassurances = [
   }
 
   {/* 2. MAIN CONTENT AREA */}
-  <section class="py-12 bg-surface relative">
+  <section class="py-12 bg-surface-alt/40 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative">
         {/* LEFT COLUMN */}
         <div class="lg:col-span-7 space-y-16">
           {
-            whoIsThisFor.length > 0 && (
+            (whoIsThisFor.length > 0 || whoIsThisForContent) && (
               <div>
                 <h2 class="font-serif text-2xl font-bold text-brand-900 mb-2">
-                  Who this is for
+                  {whoIsThisForHeading || "Who this is for"}
                 </h2>
                 <p class="text-sm text-typography-muted mb-6">
-                  Travellers who want a calm, private arrival or departure
-                  without hunting for a cab. Suited to families, couples, solo
-                  and international visitors.
+                  {whoIsThisForContent ||
+                    "Travellers who want a calm, private arrival or departure without hunting for a cab. Suited to families, couples, solo and international visitors."}
                 </p>
-                <div class="flex flex-wrap gap-2.5">
-                  {whoIsThisFor.map((pill) => (
-                    <span class="bg-surface-card border border-brand-100 text-brand-900 text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl shadow-2xs">
-                      {pill}
-                    </span>
-                  ))}
-                </div>
+                {whoIsThisFor.length > 0 && (
+                  <div class="flex flex-wrap gap-2.5">
+                    {whoIsThisFor.map((pill) => (
+                      <span class="bg-surface-card border border-brand-100 text-brand-900 text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl shadow-2xs">
+                        {pill}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             )
           }
@@ -159,9 +175,8 @@ const reassurances = [
                   ))}
                 </div>
                 <p class="text-[11px] text-typography-muted italic">
-                  Coverage examples above are explanatory. Share your exact
-                  flight, hotel or route in the enquiry and we'll confirm the
-                  plan.
+                  {whatsCoveredNote ||
+                    "Coverage examples above are explanatory. Share your exact flight, hotel or route in the enquiry and we'll confirm the plan."}
                 </p>
               </div>
             )
@@ -226,6 +241,11 @@ const reassurances = [
                     </ul>
                   </div>
                 </div>
+                {pricing.notes && (
+                  <div class="mt-6 pt-6 border-t border-brand-100 text-xs text-typography-muted leading-relaxed">
+                    <p>{pricing.notes}</p>
+                  </div>
+                )}
               </div>
             )
           }
@@ -291,7 +311,7 @@ const reassurances = [
             relatedServices.length > 0 && (
               <div>
                 <h2 class="font-serif text-2xl font-bold text-brand-900 mb-6">
-                  More services
+                  Related services
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 items-stretch">
                   {relatedServices.map((rel) => (
@@ -311,7 +331,7 @@ const reassurances = [
             <div>
               <span
                 class="text-xs font-semibold text-typography-muted uppercase tracking-wider block"
-                >Starting from</span
+                >{pricing?.prefix || "Starting from"}</span
               >
               <div class="flex items-baseline gap-2 mt-1">
                 <span class="font-serif text-4xl font-bold text-brand-900"
@@ -322,8 +342,10 @@ const reassurances = [
               <p
                 class="text-xs text-typography-muted mt-3 leading-normal border-t border-brand-100 pt-3"
               >
-                Sending a request does not confirm a trip. We contact you
-                directly to confirm vehicle availability and final details.
+                {
+                  pricing?.disclaimer ||
+                    "Sending a request does not confirm a trip. We contact you directly to confirm vehicle availability and final details."
+                }
               </p>
             </div>
 
@@ -375,16 +397,12 @@ const reassurances = [
   </section>
 
   {/* 3. ENQUIRY FORM */}
-  <section
-    id="enquiry-section"
-    class="py-12 bg-brand-900 text-white border-t border-brand-800 scroll-mt-12"
-  >
+  <section id="enquiry-section" class="py-12 bg-surface/80 scroll-mt-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionHeader
         subheading="Direct Booking Request"
         heading={`Enquire about ${title}`}
         description="Your service and page context are attached automatically. We'll contact you to confirm details and exact rates."
-        theme="dark"
         class="mb-12"
       />
       <EnquiryForm defaultService={title} priceLabel={priceLabel} />

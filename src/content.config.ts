@@ -24,10 +24,18 @@ const servicesCollection = defineCollection({
         image().transform((val) => ({ url: val, isPrimary: false })),
       ])
     ).optional(),
+    galleryBadge: z.string().optional(),
+    galleryTitle: z.string().optional(),
+    galleryDescription: z.string().optional(),
+    heroBadge: z.string().optional(),
+    heroTitle: z.string().optional(),
+    heroDescription: z.string().optional(),
     sortOrder: z.number().default(10),
     published: z.boolean().default(true),
 
-    // 1. Who This Is For (Text-only pills)
+    // 1. Who This Is For
+    whoIsThisForHeading: z.string().optional(),
+    whoIsThisForContent: z.string().optional(),
     whoIsThisFor: z.array(z.string()).optional(),
 
     // 2. What's Covered (2x2 Grid with Title & Description)
@@ -35,6 +43,7 @@ const servicesCollection = defineCollection({
       title: z.string(),
       description: z.string(),
     })).optional(),
+    whatsCoveredNote: z.string().optional(),
 
     // 3. Suitable Vehicles (Links to vehicle IDs like 'sedan', 'suv', 'tempo-traveller')
     suitableVehicles: z.array(z.string()).optional(),
@@ -47,12 +56,14 @@ const servicesCollection = defineCollection({
 
     // 5. Approved Tariff & Pricing Rules
     pricing: z.object({
+      prefix: z.string().optional(), // e.g., "Starting from"
       amount: z.union([z.string(), z.number()]).transform(val => typeof val === "number" ? `₹${val}` : val).optional(), // e.g., "₹899" or 899
       shortLabel: z.string().optional(), // e.g., "onwards, per trip"
       unit: z.string().optional(), // e.g., "Airport to city, sedan"
       lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val).optional(), // e.g., "Jul 2026"
       inclusions: z.array(z.string()).optional(),
       exclusions: z.array(z.string()).optional(),
+      disclaimer: z.string().optional(), // e.g., "Sending a request does not confirm a trip..."
       notes: z.string().optional(),
     }).optional(),
   }),
@@ -141,6 +152,7 @@ const aboutCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string(),
     subtitle: z.string(),
+    storyBadge: z.string().default("Who We Are"),
     storyHeading: z.string().default("Our Story"),
     image: image().optional(),
     // 1. How We Work Section
@@ -156,10 +168,10 @@ const aboutCollection = defineCollection({
       value: z.union([z.string(), z.number()]).transform(val => String(val)), // e.g., "Udaipur", "6+", "5", "Direct"
       label: z.string(), // e.g., "Home base & primary service area"
     })).default([
-      { value: "Udaipur", label: "Home base & primary service area" },
-      { value: "6+", label: "Service categories offered" },
-      { value: "5", label: "Vehicle categories, sedan to coach" },
-      { value: "Direct", label: "Contact by form, WhatsApp & call" }
+      { value: "Udaipur", label: "Primary home base & central regional operating area" },
+      { value: "6+", label: "Approved private transport service categories offered" },
+      { value: "5", label: "Diverse vehicle categories ranging from sedan to coach" },
+      { value: "Direct", label: "Direct local operator via form, phone & WhatsApp" }
     ]),
 
     // 3. Where We Operate
@@ -176,6 +188,45 @@ const contactCollection = defineCollection({
     subtitle: z.string(),
     directChannelsHeading: z.string(),
     directChannelsDesc: z.string(),
+    phoneCard: z
+      .object({
+        label: z.string(),
+        title: z.string(),
+        desc: z.string(),
+        badgeText: z.string(),
+      })
+      .default({
+        label: "Call Us Directly",
+        title: "+91 70458 36164",
+        desc: "Speak directly with our Udaipur dispatch team for immediate cab bookings and urgent route inquiries.",
+        badgeText: "Available for Immediate Assistance",
+      }),
+    whatsappCard: z
+      .object({
+        label: z.string(),
+        title: z.string(),
+        desc: z.string(),
+        badgeText: z.string(),
+      })
+      .default({
+        label: "WhatsApp Support",
+        title: "Chat With Coordinator",
+        desc: "Send us your itinerary or voice notes. We reply with flat, owner-approved vehicle quotes and pictures.",
+        badgeText: "Pre-filled with website context",
+      }),
+    emailCard: z
+      .object({
+        label: z.string(),
+        title: z.string(),
+        desc: z.string(),
+        badgeText: z.string(),
+      })
+      .default({
+        label: "Email Inquiries",
+        title: "Email Us",
+        desc: "Best suited for detailed multi-day Rajasthan tour itineraries, corporate billing requests, and event transport.",
+        badgeText: "Written tariff quotes & invoices",
+      }),
     locationHeading: z.string(),
     locationSubheading: z.string(),
     locationDesc: z.string(),

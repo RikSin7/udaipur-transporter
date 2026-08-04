@@ -1,7 +1,9 @@
 ---
 title: "Straightforward Private Transport in Udaipur"
 subtitle: "We believe booking a private taxi in Rajasthan should be simple, transparent, and personal. Skip automated call centers and complex pricing algorithms by communicating directly with a trusted local transport provider."
+storyBadge: "Who We Are"
 storyHeading: "Our Story"
+image: "../../assets/images/services/udaipur-transfer.jpg"
 howWeWorkHeading: "How we work"
 howWeWork:
   - icon: "IconFileCheck"
@@ -19,13 +21,13 @@ howWeWork:
 
 stats:
   - value: "Udaipur"
-    label: "Home base & primary service area"
+    label: "Primary home base & central regional operating area"
   - value: "6+"
-    label: "Service categories offered"
+    label: "Approved private transport service categories offered"
   - value: "5"
-    label: "Vehicle categories, sedan to coach"
+    label: "Diverse vehicle categories ranging from sedan to coach"
   - value: "Direct"
-    label: "Contact by form, WhatsApp & call"
+    label: "Direct local operator via form, phone & WhatsApp"
 
 coverageHeading: "Where we operate"
 coverageSubtitle: "Based in Udaipur, we serve city pickups and drops, sightseeing, nearby day use, and outstation travel across Rajasthan."

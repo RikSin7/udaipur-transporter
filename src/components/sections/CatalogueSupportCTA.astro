@@ -71,7 +71,7 @@ const inquiry = {
       {/* LEFT CARD: Dynamic Internal Cross-Link */}
       <a
         href={crossLink.href}
-        class="lg:col-span-5 bg-surface-card border border-brand-100 rounded-xl p-5 sm:p-6 shadow-sm hover:shadow-premium hover:border-brand-800/40 transition-all duration-300 flex flex-col justify-between group"
+        class="lg:col-span-5 bg-surface-card border border-brand-100 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-premium hover:border-brand-800/40 transition-all duration-300 flex flex-col justify-between group"
       >
         <div>
           <div class="flex items-center justify-between gap-2 mb-3">
@@ -117,7 +117,7 @@ const inquiry = {
 
       {/* RIGHT CARD: Dynamic Consultation with Dual Actions */}
       <div
-        class="lg:col-span-7 bg-brand-900 border border-brand-800 rounded-xl p-5 sm:p-6 shadow-premium flex flex-col justify-between text-white relative overflow-hidden"
+        class="lg:col-span-7 bg-brand-900 border border-brand-800 rounded-2xl p-5 sm:p-6 shadow-premium flex flex-col justify-between text-white relative overflow-hidden"
       >
         {/* Subtle Background Accent Grid */}
         <div
@@ -158,7 +158,7 @@ const inquiry = {
           {/* Action 1: Standard Enquiry Form */}
           <a
             href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}`}
-            class="flex-1 bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-2.5 px-4 rounded-lg text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95"
+            class="flex-1 bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95"
           >
             <span>Send Enquiry Form</span>
             <IconArrowRight
@@ -173,7 +173,7 @@ const inquiry = {
             href={inquiry.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 bg-brand-800 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-lg border border-brand-700 hover:border-emerald-500 text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+            class="flex-1 bg-brand-800 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl border border-brand-700 hover:border-emerald-500 text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
           >
             <IconBrandWhatsapp size={16} stroke={2} class="text-emerald-400" />
             <span>Chat on WhatsApp</span>

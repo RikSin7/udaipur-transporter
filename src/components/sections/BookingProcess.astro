@@ -104,7 +104,7 @@ const homeData = homeEntries[0]?.data || {
                 <div class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                   <Icon size={24} stroke={2} />
                 </div>
-                <h3 class="font-serif text-xl font-bold text-typography-main group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3">
+                <h3 class="font-serif text-xl font-bold text-typography-main group-hover:text-accent transition-colors duration-300 mb-3">
                   {method.title}
                 </h3>
                 <p class="text-sm text-typography-muted leading-relaxed mb-6">
@@ -116,7 +116,7 @@ const homeData = homeEntries[0]?.data || {
                   href={finalLink}
                   target={isWhatsApp ? "_blank" : undefined}
                   rel={isWhatsApp ? "noopener noreferrer" : undefined}
-                  class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-900 group-hover:text-brand-800 transition-colors"
+                  class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-900 tracking-wider group-hover:text-accent transition-colors"
                 >
                   <span>{method.ctaText}</span>
                   <span class="group-hover:translate-x-1 transition-transform flex items-center">

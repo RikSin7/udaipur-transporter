@@ -47,7 +47,6 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 <footer
   class="bg-brand-900 text-brand-100 font-sans border-t border-brand-800 relative overflow-hidden"
 >
-  {/* Subtle Background Radial Pattern for Depth */}
   <div
     class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-5 pointer-events-none"
   >
@@ -57,9 +56,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
     <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8"
     >
-      {
-        /* GROUP 1: CONTACT (Span 5) — Phone, WhatsApp, email, service area, response hours */
-      }
+      {/* GROUP 1: CONTACT */}
       <div class="lg:col-span-5 space-y-2.5">
         <div>
           <div class="flex items-center gap-3">
@@ -100,8 +97,8 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
           />
           <span>
             <strong class="font-semibold text-white block sm:inline"
-              >Service Area: </strong
-            >
+              >Service Area:
+            </strong>
             {site.serviceArea}
           </span>
         </p>
@@ -207,7 +204,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
         </div>
       </div>
 
-      {/* GROUP 2: SERVICES (Span 4) — Auto Top 5 + Hub Link */}
+      {/* GROUP 2: SERVICES */}
       <div class="lg:col-span-4">
         <h4
           class="font-serif text-sm font-bold tracking-wider text-white mb-2.5 border-b border-brand-800/80 pb-2.5"
@@ -250,7 +247,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
         </ul>
       </div>
 
-      {/* GROUP 4: COMPANY, RESOURCES & POLICIES (Span 3) */}
+      {/* GROUP 4: COMPANY, RESOURCES & POLICIES */}
       <div class="lg:col-span-3 space-y-6">
         {/* Company */}
         <div>

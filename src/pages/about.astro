@@ -1,8 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getWhatsAppUrl } from "../utils/helpers";
-import { cn } from "../utils/cn";
 import SectionHeader from "../components/ui/SectionHeader.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 import {
@@ -40,7 +40,9 @@ if (!aboutEntry) {
 const {
   title,
   subtitle,
+  storyBadge,
   storyHeading,
+  image,
   howWeWorkHeading,
   howWeWork = [],
   stats = [],
@@ -65,9 +67,7 @@ const whatsappUrl = getWhatsAppUrl(
   description={subtitle}
 >
   {/* 1. HERO BANNER */}
-  <section
-    class="bg-brand-900 text-white py-12 relative overflow-hidden"
-  >
+  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
         subheading="Our Identity & Approach"
@@ -85,11 +85,11 @@ const whatsappUrl = getWhatsAppUrl(
       >
         {/* Left Column: Rendered Markdown Story */}
         <div class="lg:col-span-7 space-y-6">
-          <h2
-            class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 leading-tight tracking-tight"
-          >
-            {storyHeading}
-          </h2>
+          <SectionHeader
+            subheading={storyBadge || "Who We Are"}
+            heading={storyHeading}
+            class="mb-0"
+          />
 
           <div
             class="prose md:prose-lg max-w-none prose-p:text-typography-muted prose-strong:text-brand-900 prose-p:leading-relaxed space-y-4"
@@ -119,55 +119,57 @@ const whatsappUrl = getWhatsAppUrl(
         {/* Right Column: Business Image & Verification Proof */}
         <div class="lg:col-span-5">
           <div
-            class="bg-surface-card border-2 border-brand-100 rounded-2xl p-6 sm:p-8 shadow-premium relative"
+            class="bg-surface-card border-2 border-brand-100 rounded-2xl p-6 sm:p-8 shadow-premium relative group"
           >
-            <div
-              class="aspect-w-16 aspect-h-12 bg-brand-900 rounded-xl overflow-hidden mb-6 flex items-center justify-center p-8 text-center text-white border border-brand-800"
-            >
-              <div>
-                <div
-                  class="w-12 h-12 rounded-full bg-brand-800 border border-brand-700 text-accent flex items-center justify-center mx-auto mb-3 shadow-inner"
-                >
-                  <IconBuildingArch size={24} stroke={1.5} />
+            {
+              image ? (
+                <div class="w-full aspect-[4/3] rounded-lg overflow-hidden mb-6 border border-brand-100 shadow-sm bg-surface-alt">
+                  <Image
+                    src={image}
+                    alt={title || site.companyName}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <span class="font-serif text-lg font-bold block text-white"
-                  >{site.companyName}</span
-                >
-                <span class="text-xs text-brand-100/70 block mt-0.5"
-                  >Udaipur, Rajasthan, India</span
-                >
-              </div>
-            </div>
+              ) : (
+                <div class="w-full aspect-[4/3] bg-brand-900 rounded-lg overflow-hidden mb-6 flex items-center justify-center p-8 text-center text-white border border-brand-800">
+                  <div>
+                    <div class="w-12 h-12 rounded-full bg-brand-800 border border-brand-700 text-accent flex items-center justify-center mx-auto mb-3 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                      <IconBuildingArch size={24} stroke={1.5} />
+                    </div>
+                    <span class="font-serif text-lg font-bold block text-white">
+                      {site.companyName}
+                    </span>
+                    <span class="text-xs text-brand-100/70 block mt-0.5">
+                      {site.address}
+                    </span>
+                  </div>
+                </div>
+              )
+            }
 
             <div
-              class="space-y-3.5 border-t border-brand-100 pt-6 text-xs text-typography-muted"
+              class="space-y-2.5 border-t border-brand-100 pt-5 text-sm text-typography-muted"
             >
-              <div class="flex items-start gap-3">
+              <div class="flex items-start gap-2.5">
                 <IconMapPin
-                  size={18}
+                  size={16}
                   stroke={2}
                   class="text-accent shrink-0 mt-0.5"
                 />
-                <div>
-                  <strong class="text-brand-900 block font-semibold text-sm"
-                    >Operating Base:</strong
-                  >
-                  <span>Udaipur City, Rajasthan 313001</span>
+                <div class="leading-snug">
+                  <strong class="text-brand-900 font-semibold">Operating Base:</strong>
+                  <span class="ml-1">{site.address}</span>
                 </div>
               </div>
-              <div class="flex items-start gap-3">
+              <div class="flex items-start gap-2.5">
                 <IconClock
-                  size={18}
+                  size={16}
                   stroke={2}
                   class="text-accent shrink-0 mt-0.5"
                 />
-                <div>
-                  <strong class="text-brand-900 block font-semibold text-sm"
-                    >Communication Hours:</strong
-                  >
-                  <span
-                    >7 Days a Week — Quick Response via WhatsApp & Phone</span
-                  >
+                <div class="leading-snug">
+                  <strong class="text-brand-900 font-semibold">Hours:</strong>
+                  <span class="ml-1">{site.operatingHours}</span>
                 </div>
               </div>
             </div>
@@ -199,7 +201,7 @@ const whatsappUrl = getWhatsAppUrl(
                   <div class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0">
                     <IconComponent size={24} stroke={2} />
                   </div>
-                  <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300 mb-3">
+                  <h3 class="font-serif text-lg sm:text-xl font-bold text-brand-900 group-hover:text-accent-dark transition-colors duration-300 mb-3">
                     {card.title}
                   </h3>
                   <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
@@ -218,23 +220,18 @@ const whatsappUrl = getWhatsAppUrl(
   <section class="py-12 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
-        class="bg-surface-alt border border-brand-100/80 rounded-3xl p-8 sm:p-12 shadow-sm"
+        class="bg-surface-alt border border-brand-100/80 rounded-2xl p-8 sm:p-12 shadow-sm"
       >
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-brand-100/80"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6"
         >
           {
-            stats.map((stat, idx) => (
-              <div
-                class={cn(
-                  "text-center flex flex-col justify-center",
-                  idx > 0 && "pt-6 sm:pt-0 sm:pl-8",
-                )}
-              >
-                <span class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight block mb-1">
+            stats.map((stat) => (
+              <div class="text-center flex flex-col items-center justify-start">
+                <span class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-900 tracking-tight block mb-2">
                   {stat.value}
                 </span>
-                <span class="text-xs sm:text-sm text-typography-muted font-medium leading-snug">
+                <span class="text-xs sm:text-sm text-typography-muted font-medium leading-snug max-w-[240px] w-full h-10 line-clamp-2 text-balance">
                   {stat.label}
                 </span>
               </div>
@@ -244,12 +241,10 @@ const whatsappUrl = getWhatsAppUrl(
       </div>
     </div>
   </section>
-
   {/* 5. WHERE WE OPERATE */}
   <section class="py-12 bg-brand-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionHeader
-        subheading="Regional Reach"
         heading={coverageHeading}
         description={coverageSubtitle}
         theme="dark"
