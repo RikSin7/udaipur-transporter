@@ -152,6 +152,7 @@ const aboutCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string(),
     subtitle: z.string(),
+    badge: z.string().optional(),
     storyBadge: z.string().default("Who We Are"),
     storyHeading: z.string().default("Our Story"),
     image: image().optional(),
@@ -187,6 +188,7 @@ const contactCollection = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     directChannelsHeading: z.string(),
+    directChannelsSubheading: z.string().optional(),
     directChannelsDesc: z.string(),
     phoneCard: z
       .object({

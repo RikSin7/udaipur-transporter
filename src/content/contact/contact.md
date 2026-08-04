@@ -2,7 +2,8 @@
 title: "Contact Our Udaipur Team"
 subtitle: "Skip automated call centers. Connect directly with the transport coordinators who allocate your vehicle and schedule your driver. We are ready to answer your questions and provide straightforward tariffs."
 directChannelsHeading: "Direct Contact Channels"
-directChannelsDesc: "Choose your preferred method of communication. For immediate airport pickups or urgent travel queries, calling or sending a WhatsApp message is the fastest option."
+directChannelsSubheading: "Direct Connect"
+directChannelsDesc: "Choose your preferred method of communication. For immediate airport pickups or urgent travel queries, calling or sending a WhatsApp message is the fastest option. We do not rely on third-party call centers or automated chat bots."
 phoneCard:
   label: "Call Us Directly"
   title: "+91 70458 36164"

@@ -39,9 +39,10 @@ const contactData = contactEntries[0]?.data || {
   title: "Contact Our Udaipur Team",
   subtitle:
     "Skip automated call centers and algorithmic reing. Connect directly with the local transport coordinators who manage our Udaipur garage and allocate your vehicle.",
-  directChannelsHeading: "Direct Communication Channels",
+  directChannelsHeading: "Direct Contact Channels",
+  directChannelsSubheading: "Direct Connect",
   directChannelsDesc:
-    "Choose your preferred method to speak with our local team.",
+    "Choose your preferred method of communication. For immediate airport pickups or urgent travel queries, calling or sending a WhatsApp message is the fastest option. We do not rely on third-party call centers or automated chat bots.",
   phoneCard: {
     label: "Call Us Directly",
     title: "+91 70458 36164",
@@ -93,17 +94,11 @@ const whatsappUrl = getWhatsAppUrl(
   {/* 2. ASYMMETRIC DIRECT CHANNELS & OPERATIONAL METRICS */}
   <section class="py-12 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-      <div class="max-w-3xl">
-        <h2
-          class="font-serif text-2xl sm:text-3xl font-bold text-brand-900 mb-2 tracking-tight"
-        >
-          {contactData.directChannelsHeading}
-        </h2>
-        <p class="text-sm sm:text-base text-typography-muted">
-          {contactData.directChannelsDesc} We do not rely on third-party call centers
-          or automated chat bots.
-        </p>
-      </div>
+      <SectionHeader
+        subheading={contactData.directChannelsSubheading || "Direct Connect"}
+        heading={contactData.directChannelsHeading}
+        description={contactData.directChannelsDesc}
+      />
 
       {/* 3-Column Direct Action Cards */}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">

@@ -1,6 +1,7 @@
 ---
 title: "Straightforward Private Transport in Udaipur"
 subtitle: "We believe booking a private taxi in Rajasthan should be simple, transparent, and personal. Skip automated call centers and complex pricing algorithms by communicating directly with a trusted local transport provider."
+badge: "Our Identity & Approach"
 storyBadge: "Who We Are"
 storyHeading: "Our Story"
 image: "../../assets/images/services/udaipur-transfer.jpg"

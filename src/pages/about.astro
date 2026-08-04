@@ -40,6 +40,7 @@ if (!aboutEntry) {
 const {
   title,
   subtitle,
+  badge,
   storyBadge,
   storyHeading,
   image,
@@ -70,7 +71,7 @@ const whatsappUrl = getWhatsAppUrl(
   <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading="Our Identity & Approach"
+        subheading={badge || "Our Identity & Approach"}
         heading={title}
         description={subtitle}
       />

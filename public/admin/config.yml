@@ -223,6 +223,13 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - {
+              label: "Hero Badge",
+              name: "badge",
+              widget: "string",
+              required: false,
+              default: "Our Identity & Approach",
+            }
           - { label: "Story Badge", name: "storyBadge", widget: "string" }
           - { label: "Story Heading", name: "storyHeading", widget: "string" }
           - {
@@ -419,6 +426,13 @@ collections:
               label: "Direct Channels Heading",
               name: "directChannelsHeading",
               widget: "string",
+            }
+          - {
+              label: "Direct Channels Subheading (Badge)",
+              name: "directChannelsSubheading",
+              widget: "string",
+              required: false,
+              default: "Direct Connect",
             }
           - {
               label: "Direct Channels Description",
