@@ -25,9 +25,7 @@ const hubData = hubEntries[0]?.data;
     "Browse our fleet of private taxis, sedans, SUVs, and tempo travellers for comfortable travel in Udaipur and Rajasthan."}
 >
   {/* 1. HERO BANNER */}
-  <section
-    class="bg-brand-900 text-white py-12 relative overflow-hidden"
-  >
+  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
         subheading={hubData?.badge || "Premium Vehicle Fleet"}
@@ -40,9 +38,7 @@ const hubData = hubEntries[0]?.data;
 
   {/* 2. VEHICLE LISTINGS */}
   <section class="py-12 bg-surface">
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
-    >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {
         publishedVehicles.length > 0 ? (
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

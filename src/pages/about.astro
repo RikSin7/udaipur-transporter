@@ -6,9 +6,6 @@ import { getWhatsAppUrl } from "../utils/helpers";
 import SectionHeader from "../components/ui/SectionHeader.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 import {
-  IconCar,
-  IconPhoneCall,
-  IconShieldCheck,
   IconMapPin,
   IconArrowRight,
   IconBrandWhatsapp,
@@ -293,7 +290,8 @@ const whatsappUrl = getWhatsAppUrl(
       <SectionHeader
         subheading={ecosystemBadge || "Next Steps & Resources"}
         heading={ecosystemHeading || "Explore Our Transport Ecosystem"}
-        description={ecosystemDescription || "Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."}
+        description={ecosystemDescription ||
+          "Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary."}
         class="mb-12"
       />
 

@@ -96,9 +96,7 @@ const groupedServices = categoryOrder
     "Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."}
 >
   {/* 1. HERO BANNER */}
-  <section
-    class="bg-brand-900 text-white py-12 relative overflow-hidden"
-  >
+  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
         subheading={hubData?.badge || "Our Services"}
@@ -123,9 +121,7 @@ const groupedServices = categoryOrder
 
   {/* 3. CATEGORISED SERVICE LISTINGS */}
   <section class="py-12 bg-surface">
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
-    >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {
         groupedServices.length > 0 ? (
           groupedServices.map((group) => {
