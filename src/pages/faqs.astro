@@ -60,7 +60,7 @@ const hubData = hubEntries[0]?.data;
 >
   {/* 1. HERO BANNER */}
   <section
-    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 relative overflow-hidden"
   >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
@@ -87,7 +87,7 @@ const hubData = hubEntries[0]?.data;
   {/* 3. CATEGORIZED ACCORDION CONTENT */}
   <section id="faq-wrapper" class="py-12 bg-surface">
     <div
-      class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20"
+      class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
     >
       {
         groupedFaqs.map((group, groupIndex) => (
@@ -141,7 +141,7 @@ const hubData = hubEntries[0]?.data;
   </section>
 
   {/* 4. RELATED SERVICES & TRANSPORT LINKS */}
-  <section class="py-12 bg-surface-alt/40 border-t border-brand-100">
+  <section class="py-12 bg-surface-alt/40">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionHeader
         subheading="Explore Transport Options"
@@ -149,7 +149,7 @@ const hubData = hubEntries[0]?.data;
         description="Review vehicle capacities and transparent fare structures across our most requested travel routes."
         align="center"
         underline={false}
-        class="mb-10"
+        class="mb-8"
       />
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">

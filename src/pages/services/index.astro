@@ -97,7 +97,7 @@ const groupedServices = categoryOrder
 >
   {/* 1. HERO BANNER */}
   <section
-    class="bg-brand-900 text-white py-12 border-b border-brand-800 relative overflow-hidden"
+    class="bg-brand-900 text-white py-12 relative overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
@@ -122,9 +122,9 @@ const groupedServices = categoryOrder
   />
 
   {/* 3. CATEGORISED SERVICE LISTINGS */}
-  <section class="pt-16 pb-16 lg:pt-20 lg:pb-24 bg-surface">
+  <section class="py-12 bg-surface">
     <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 lg:space-y-24"
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
     >
       {
         groupedServices.length > 0 ? (
@@ -133,9 +133,9 @@ const groupedServices = categoryOrder
             return (
               <div
                 id={group.slug}
-                class="scroll-mt-32 border-b border-brand-100/80 pb-16 last:border-b-0 last:pb-0"
+                class="scroll-mt-32 border-b border-brand-100/80 pb-12 last:border-b-0 last:pb-0"
               >
-                <div class="mb-10">
+                <div class="mb-6">
                   <div class="flex items-center gap-3.5 mb-1">
                     <div class="w-10 h-10 rounded-xl bg-brand-900 text-accent flex items-center justify-center shrink-0 shadow-sm">
                       <IconComponent size={20} stroke={2} />
@@ -185,7 +185,7 @@ const groupedServices = categoryOrder
   <FAQSection />
 
   {/* 6. DISCLAIMER */}
-  <section class="py-12 bg-surface-alt/50 border-t border-brand-100/80">
+  <section class="py-12 bg-surface-alt/50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
         {
