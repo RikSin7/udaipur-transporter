@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { IconChevronDown, IconArrowRight } from "@tabler/icons-astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
@@ -9,8 +9,9 @@ import { sortPublishedByOrder } from "../../utils/helpers";
 const allFaqs = await getCollection("faqs");
 const publishedFaqs = sortPublishedByOrder(allFaqs).slice(0, 5);
 
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data;
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+const homeData = homeEntry.data;
 ---
 
 <section class="py-12 bg-surface-alt/50 relative">

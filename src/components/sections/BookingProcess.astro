@@ -1,17 +1,14 @@
 ---
-import { getCollection } from "astro:content";
+import { getEntry } from "astro:content";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { iconResolver } from "../../utils/iconResolver";
 import { IconArrowRight } from "@tabler/icons-astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 
-// 1. Fetch business settings autonomously for phone & WhatsApp routing
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+// 1. Fetch business settings
+const siteEntry = await getEntry("settings", "site");
+if (!siteEntry) throw new Error("Missing site.md");
+const site = siteEntry.data;
 
 const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(
@@ -20,58 +17,10 @@ const whatsappUrl = getWhatsAppUrl(
   Astro.url.href,
 );
 
-// 2. Fetch homepage content autonomously with fallback defaults
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data || {
-  bookingBadge: "How to reach us",
-  bookingHeading: "Three easy ways to enquire",
-  contactMethods: [
-    {
-      icon: "IconFileText",
-      title: "Send an enquiry",
-      desc: "Share your travel plan in a short form. It reaches us by email and we reply to arrange it.",
-      ctaText: "Open form",
-      ctaLink: "/contact/",
-    },
-    {
-      icon: "IconBrandWhatsapp",
-      title: "Message on WhatsApp",
-      desc: "Chat with us directly with your dates, pickup and requirement for a quick response.",
-      ctaText: "Chat now",
-      ctaLink: "#whatsapp",
-    },
-    {
-      icon: "IconPhoneCall",
-      title: "Call us",
-      desc: "Prefer to talk? Call during our response hours and we will help you plan your trip.",
-      ctaText: "Call now",
-      ctaLink: "#call",
-    },
-  ],
-  workflowHeading: "What happens after you send a request",
-  workflowSteps: [
-    {
-      stepNumber: "1",
-      title: "You send a request",
-      desc: "By form, WhatsApp or call, with your service, date and requirement.",
-    },
-    {
-      stepNumber: "2",
-      title: "We receive it",
-      desc: "Your enquiry is emailed to us with your page and service context.",
-    },
-    {
-      stepNumber: "3",
-      title: "We contact you",
-      desc: "We confirm vehicle, price and details directly with you.",
-    },
-    {
-      stepNumber: "4",
-      title: "Trip is arranged",
-      desc: "Once you agree, we finalise the trip. This site does not auto-confirm.",
-    },
-  ],
-};
+// 2. Fetch homepage content
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+const homeData = homeEntry.data;
 ---
 
 <section class="py-12 bg-surface">
@@ -101,7 +50,7 @@ const homeData = homeEntries[0]?.data || {
           return (
             <div class="bg-surface-card border border-border rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md hover:border-brand-900 transition-all duration-300 flex flex-col justify-between group">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-surface-alt text-brand-900 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                   <Icon size={24} stroke={2} />
                 </div>
                 <h3 class="font-serif text-xl font-bold text-typography-main group-hover:text-accent transition-colors duration-300 mb-3">
@@ -147,21 +96,21 @@ const homeData = homeEntries[0]?.data || {
       >
         {/* Connecting Line (Desktop Only) */}
         <div
-          class="hidden lg:block absolute top-[1.5rem] left-[12.5%] right-[12.5%] h-[1px] bg-brand-800/80 z-0"
+          class="hidden lg:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-brand-800/80 z-0"
         >
         </div>
 
         {
           homeData.workflowSteps.map((step: any) => (
             <div class="relative z-10 flex flex-col items-center text-center group cursor-default">
-              {/* Minimal Step Badge */}
-              <div class="w-12 h-12 rounded-full bg-brand-950 border border-brand-800 text-[var(--color-accent,#BFA06A)] flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-brand-900 shadow-sm relative z-10">
+              {/* Step Badge */}
+              <div class="w-12 h-12 rounded-full bg-brand-950 border border-brand-800 text-accent flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-brand-900 shadow-sm relative z-10">
                 <span class="font-serif font-bold text-lg">
                   {step.stepNumber}
                 </span>
               </div>
 
-              {/* Clean Content Area */}
+              {/* Content Area */}
               <div class="px-2">
                 <h4 class="font-serif text-base sm:text-lg font-bold text-white mb-2">
                   {step.title}

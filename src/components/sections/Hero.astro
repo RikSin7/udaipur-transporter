@@ -1,9 +1,9 @@
 ---
-import { getCollection } from "astro:content";
 import { IconBrandWhatsapp, IconQuote } from "@tabler/icons-astro";
 import { iconResolver } from "../../utils/iconResolver";
 import HeroCompactForm from "../forms/HeroCompactForm.astro";
 import HeroHeader from "../ui/HeroHeader.astro";
+import { getEntry } from "astro:content";
 
 interface Props {
   whatsappUrl: string;
@@ -11,20 +11,11 @@ interface Props {
 
 const { whatsappUrl }: Props = Astro.props;
 
-// 1. Fetch homepage content autonomously from CMS collection with fallback defaults
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data || {
-  heroBadge: "Private transport from Udaipur",
-  heroTitle: "Private cabs, transfers & tours across Udaipur.",
-  heroSubtitle:
-    "Choose a service, pick a suitable vehicle, and reach us directly by form, WhatsApp or call. We reply to arrange your trip.",
-  heroFeatures: [
-    { icon: "IconCar", text: "Private cabs, SUVs & tempo travellers" },
-    { icon: "IconMapPin", text: "Local Udaipur operator, direct contact" },
-    { icon: "IconPhoneCall", text: "WhatsApp & Call support" },
-    { icon: "IconShieldCheck", text: "Clear service info before you decide" },
-  ],
-};
+// 1. Fetch homepage content
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+
+const homeData = homeEntry.data;
 ---
 
 <section class="bg-brand-950 text-white relative flex flex-col justify-between">
@@ -43,9 +34,10 @@ const homeData = homeEntries[0]?.data || {
         <div class="flex flex-wrap items-center gap-4">
           <a
             href="#enquiry-section"
-            class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-7 py-3.5 rounded-xl shadow-md transition-all text-sm tracking-wider flex items-center gap-2 active:scale-95 uppercase"
+            class="bg-cta hover:bg-cta-hover text-white font-bold px-7 py-3.5 rounded-xl shadow-md transition-all text-sm tracking-wider flex items-center gap-2 active:scale-95 uppercase"
           >
-            <IconQuote class="w-5 h-5" stroke={2} /> Request Travel Quote
+            <IconQuote class="w-5 h-5" stroke={2} />
+            <span>{homeData.heroCtaText}</span>
           </a>
           <a
             href={whatsappUrl}
@@ -58,7 +50,7 @@ const homeData = homeEntries[0]?.data || {
               class="w-5 h-5 text-success group-hover:text-white transition-all duration-300"
               stroke={2}
             />
-            <span>WhatsApp Us</span>
+            <span>{homeData.heroWhatsappText}</span>
           </a>
         </div>
       </div>

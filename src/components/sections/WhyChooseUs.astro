@@ -1,41 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import SectionHeader from "../ui/SectionHeader.astro";
 import { iconResolver } from "../../utils/iconResolver";
 import { IconCheck } from "@tabler/icons-astro";
+import { getEntry } from "astro:content";
 
-// 1. Fetch homepage content autonomously with fallback defaults
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data || {
-  whyChooseUsBadge: "Our Promise",
-  whyChooseUsHeading: "Why Travellers Choose Us",
-  whyChooseUsItems: [
-    {
-      icon: "IconFileDescription",
-      title: "Clear service information",
-      desc: "Each service explains what it covers, suitable vehicles and, where approved, a price with its terms.",
-      badgeText: "No hidden rate rules",
-    },
-    {
-      icon: "IconLuggage",
-      title: "Right vehicle for the trip",
-      desc: "Recommended passengers reflect comfortable seating after luggage, not just a seat count.",
-      badgeText: "Realistic bag limits",
-    },
-    {
-      icon: "IconPhoneCalling",
-      title: "Direct local contact",
-      desc: "Reach a real Udaipur operator by form, WhatsApp or phone — no call centre.",
-      badgeText: "Speak with transport team",
-    },
-    {
-      icon: "IconShieldCheck",
-      title: "Honest, owner-approved facts",
-      desc: "We publish only confirmed services, vehicles and prices. No invented claims.",
-      badgeText: "Zero marketing fluff",
-    },
-  ],
-};
+// 1. Fetch homepage content
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+
+const homeData = homeEntry.data;
 ---
 
 <section class="py-12 bg-surface-alt/50">

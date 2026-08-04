@@ -1,5 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getEntry, type CollectionEntry } from "astro:content";
 import ServiceCard from "../cards/ServiceCard.astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
@@ -9,17 +9,20 @@ interface Props {
 }
 
 const { featuredServices }: Props = Astro.props;
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data;
+
+// 1. Fetch homepage content
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+
+const homeData = homeEntry.data;
 ---
 
 <section class="py-12 bg-surface">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionHeader
-      subheading={homeData?.servicesSection?.badge || "Featured Services"}
-      heading={homeData?.servicesSection?.heading || "What We Drive for You"}
-      description={homeData?.servicesSection?.description ||
-        "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."}
+      subheading={homeData.servicesSection.badge}
+      heading={homeData.servicesSection.heading}
+      description={homeData.servicesSection.description}
       viewAllHref="/services/"
       viewAllText="View All Services"
     />
@@ -32,7 +35,7 @@ const homeData = homeEntries[0]?.data;
           ))}
         </div>
       ) : (
-        <div class="bg-surface-alt border border-border rounded-[var(--radius-card,18px)] p-12 text-center text-typography-muted max-w-xl mx-auto">
+        <div class="bg-surface-alt border border-border rounded-(--radius-card,18px) p-12 text-center text-typography-muted max-w-xl mx-auto">
           <p class="italic">
             No services published yet. Add markdown files to{" "}
             <code>src/content/services/</code> to populate this section.

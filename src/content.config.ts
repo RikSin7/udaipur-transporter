@@ -315,6 +315,8 @@ const homeCollection = defineCollection({
     heroBadge: z.string().default("Private transport from Udaipur"),
     heroTitle: z.string(),
     heroSubtitle: z.string(),
+    heroCtaText: z.string().default("Request Travel Quote"),
+    heroWhatsappText: z.string().default("WhatsApp Us"),
     heroFeatures: z.array(z.object({
       icon: z.string(),
       text: z.string(),
@@ -355,17 +357,17 @@ const homeCollection = defineCollection({
       badge: z.string().default("Featured Services"),
       heading: z.string().default("What We Drive for You"),
       description: z.string().default("Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."),
-    }).optional(),
+    }),
     vehiclesSection: z.object({
       badge: z.string().default("Vehicles"),
       heading: z.string().default("Featured Fleet"),
       description: z.string().default("Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."),
-    }).optional(),
+    }),
     blogSection: z.object({
       badge: z.string().default("Practical Travel Advice"),
       heading: z.string().default("Plan Your Trip"),
       description: z.string().default("Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."),
-    }).optional(),
+    }),
     reviewsSection: z.object({
       badge: z.string().default("What Travellers Say"),
       heading: z.string().default("Customer Reviews"),

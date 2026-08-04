@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import BlogCard from "../cards/BlogCard.astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
@@ -21,18 +21,18 @@ const displayArticles =
     ? featuredArticles.slice(0, 2)
     : publishedArticles.slice(0, 2);
 
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data;
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+const homeData = homeEntry.data;
 ---
 
 <section class="py-12 bg-surface relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Section Header */}
     <SectionHeader
-      subheading={homeData?.blogSection?.badge || "Practical Travel Advice"}
-      heading={homeData?.blogSection?.heading || "Plan Your Trip"}
-      description={homeData?.blogSection?.description ||
-        "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."}
+      subheading={homeData.blogSection.badge}
+      heading={homeData.blogSection.heading}
+      description={homeData.blogSection.description}
       viewAllHref="/blog/"
       viewAllText="View All Transport Guides"
     />

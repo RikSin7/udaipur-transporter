@@ -30,9 +30,9 @@ const publishedServices = allServices.filter((s) => s.data.published);
 const publishedVehicles = allVehicles.filter((v) => v.data.published);
 
 const inputBaseClasses =
-  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";
+  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";
 
-// Array map to prevent HTML repetition for counters
+// Array map
 const passengerCounters = [
   {
     id: "adults",
@@ -240,7 +240,7 @@ const passengerCounters = [
               <span>{c.label}</span>{" "}
               {c.sub && <span class="font-normal text-[10px]">{c.sub}</span>}
             </label>
-            <div class="relative flex items-center h-[52px] bg-surface rounded-xl border border-brand-100 focus-within:ring-2 focus-within:ring-[var(--color-cta,#AD5C1F)] transition-all overflow-hidden">
+            <div class="relative flex items-center h-13 bg-surface rounded-xl border border-brand-100 focus-within:ring-2 focus-within:ring-cta transition-all overflow-hidden">
               <button
                 type="button"
                 class="qty-minus w-12 h-full flex justify-center items-center hover:bg-brand-50"
@@ -291,7 +291,7 @@ const passengerCounters = [
       <input
         type="checkbox"
         required
-        class="mt-0.5 rounded border-brand-100 shrink-0 text-[var(--color-cta,#AD5C1F)] focus:ring-[var(--color-cta,#AD5C1F)]"
+        class="mt-0.5 rounded border-brand-100 shrink-0 text-cta focus:ring-cta"
       />
       <span
         >I agree to be contacted via Phone, Email, or WhatsApp. This is an
@@ -300,7 +300,7 @@ const passengerCounters = [
     </label>
     <button
       type="submit"
-      class="group w-full sm:w-auto bg-[var(--color-cta,#AD5C1F)] text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-3 uppercase"
+      class="group w-full sm:w-auto bg-cta text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-3 uppercase"
     >
       <span>Submit Travel Enquiry</span>
       <IconSend size={20} class="transition-transform group-hover:scale-120" />

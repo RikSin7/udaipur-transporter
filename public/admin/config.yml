@@ -24,6 +24,18 @@ collections:
             }
           - { label: "Hero Title", name: "heroTitle", widget: "string" }
           - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
+          - {
+              label: "Hero CTA Button Text",
+              name: "heroCtaText",
+              widget: "string",
+              default: "Request Travel Quote",
+            }
+          - {
+              label: "Hero WhatsApp Button Text",
+              name: "heroWhatsappText",
+              widget: "string",
+              default: "WhatsApp Us",
+            }
           - label: "Hero Bottom Features"
             name: "heroFeatures"
             widget: "list"
@@ -179,7 +191,7 @@ collections:
           - label: "Homepage Section Headers"
             name: "servicesSection"
             widget: "object"
-            required: false
+            required: true
             fields:
               - { label: "Badge", name: "badge", widget: "string" }
               - { label: "Heading", name: "heading", widget: "string" }
@@ -187,7 +199,7 @@ collections:
           - name: "vehiclesSection"
             label: "Vehicles Section Header"
             widget: "object"
-            required: false
+            required: true
             fields:
               - { label: "Badge", name: "badge", widget: "string" }
               - { label: "Heading", name: "heading", widget: "string" }
@@ -195,7 +207,7 @@ collections:
           - name: "blogSection"
             label: "Blog / Trip Plan Section Header"
             widget: "object"
-            required: false
+            required: true
             fields:
               - { label: "Badge", name: "badge", widget: "string" }
               - { label: "Heading", name: "heading", widget: "string" }

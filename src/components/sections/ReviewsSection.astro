@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import ReviewCard from "../cards/ReviewCard.astro";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-astro";
 import ViewAllButton from "../ui/ViewAllButton.astro";
@@ -16,8 +16,10 @@ const displayReviews =
     ? featuredReviews.slice(0, 6)
     : allReviews.slice(0, 6);
 
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data;
+// Fetch from 'home' collection
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md");
+const homeData = homeEntry.data;
 ---
 
 <section class="py-12 bg-surface-alt/50 relative overflow-hidden">

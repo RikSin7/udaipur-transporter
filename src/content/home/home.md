@@ -3,6 +3,8 @@
 heroBadge: "Private transport from Udaipur"
 heroTitle: "Private cabs, transfers & tours across Udaipur."
 heroSubtitle: "Choose a service, pick a suitable vehicle, and reach us directly by form, WhatsApp or call. We reply to arrange your trip."
+heroCtaText: "Request Travel Quote"
+heroWhatsappText: "WhatsApp Us"
 heroFeatures:
   - icon: "IconCar"
     text: "Private cabs, SUVs & tempo travellers"
