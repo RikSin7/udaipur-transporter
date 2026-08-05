@@ -645,15 +645,23 @@ collections:
             min: 5
             max: 5
             add_to_top: false
+            allow_add: false
+            allow_delete: false
             label_singleton: "Category"
             fields:
               - {
-                  label: "Category Name (Read-Only)",
+                  label: "Category Name (Fixed)",
                   name: "name",
-                  widget: "string",
-                  disabled: true,
-                  readonly: true,
-                  hint: "Fixed category name. This is read-only because service pages rely on these exact hardcoded options.",
+                  widget: "select",
+                  options:
+                    [
+                      "Transfers",
+                      "Local Travel",
+                      "Outstation Travel",
+                      "Group and Event Travel",
+                      "Additional",
+                    ],
+                  hint: "Select the matching category.",
                 }
               - { label: "Category Subtitle", name: "subtitle", widget: "text" }
               - {
