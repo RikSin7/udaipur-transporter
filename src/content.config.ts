@@ -6,13 +6,7 @@ const servicesCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/services" }),
   schema: ({ image }) => z.object({
     title: z.string(),
-    category: z.enum([
-      "Transfers",
-      "Local Travel",
-      "Outstation Travel",
-      "Group and Event Travel",
-      "Additional"
-    ]),
+    category: z.string(),
     summary: z.string().max(160, "Keep summary under 160 characters for SEO cards"),
     image: image().optional(),
     gallery: z.array(
@@ -390,9 +384,10 @@ const servicesHubCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     disclaimerText: z.string(),
-    categoryDescriptions: z.array(z.object({
-      category: z.string(),
+    categories: z.array(z.object({
+      name: z.string(),
       subtitle: z.string(),
+      icon: z.string().default("IconCar"),
     })),
   }),
 });

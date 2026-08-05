@@ -43,6 +43,9 @@ import {
   IconSettings,
   IconArrowRight,
   IconSparkles,
+  IconPlus,
+  IconBriefcase,
+  IconCalendarEvent,
 } from "@tabler/icons-astro";
 
 export const iconResolver: Record<string, any> = {
@@ -97,4 +100,7 @@ export const iconResolver: Record<string, any> = {
   IconSettings,
   IconArrowRight,
   IconSparkles,
+  IconPlus,
+  IconBriefcase,
+  IconCalendarEvent,
 };

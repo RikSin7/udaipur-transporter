@@ -627,15 +627,49 @@ collections:
               name: "disclaimerText",
               widget: "text",
             }
-          - label: "Category Subtitles"
-            name: "categoryDescriptions"
+          - label: "Service Categories Configuration"
+            name: "categories"
             widget: "list"
+            min: 5
+            max: 5
+            add_to_top: false
+            label_singleton: "Category"
             fields:
-              - { label: "Category Name", name: "category", widget: "string" }
               - {
-                  label: "Description / Subtitle",
-                  name: "subtitle",
-                  widget: "text",
+                  label: "Category Name (Read-Only)",
+                  name: "name",
+                  widget: "string",
+                  disabled: true,
+                  readonly: true,
+                  hint: "Fixed category name. This is read-only because service pages rely on these exact hardcoded options.",
+                }
+              - { label: "Category Subtitle", name: "subtitle", widget: "text" }
+              - {
+                  label: "Category Icon",
+                  name: "icon",
+                  widget: "select",
+                  options:
+                    [
+                      "IconPlane",
+                      "IconMapPin",
+                      "IconCompass",
+                      "IconUsers",
+                      "IconPlus",
+                      "IconCar",
+                      "IconBus",
+                      "IconRoad",
+                      "IconMap",
+                      "IconNavigation",
+                      "IconTrain",
+                      "IconShieldCheck",
+                      "IconAward",
+                      "IconPhoneCall",
+                      "IconBrandWhatsapp",
+                      "IconSparkles",
+                      "IconBriefcase",
+                      "IconCalendarEvent",
+                    ],
+                  default: "IconCar",
                 }
 
       - name: "vehicles_hub"

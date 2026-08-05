@@ -3,112 +3,57 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import { slugify, sortPublishedByOrder } from "../../utils/helpers";
-import {
-  IconPlane,
-  IconMapPin,
-  IconCompass,
-  IconUsers,
-  IconPlus,
-  IconCar,
-} from "@tabler/icons-astro";
+import { IconCar } from "@tabler/icons-astro";
+import { iconResolver } from "../../utils/iconResolver";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
 import TabBar from "../../components/ui/TabBar.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
+import { getEntry } from "astro:content";
 
-// 1. Fetch singleton business settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-};
+// 1. Fetch site settings
+const settingsEntries = await getEntry("settings", "site");
+if (!settingsEntries) throw new Error("site.md not found");
+const site = settingsEntries.data;
 
 // 2. Fetch all published services
 const allServices = await getCollection("services");
 const publishedServices = sortPublishedByOrder(allServices);
 
-const hubEntries = await getCollection("services_hub");
-const hubData = hubEntries[0]?.data;
+const hubEntries = await getEntry("services_hub", "services_hub");
+if (!hubEntries) throw new Error("services_hub.md not found");
+const hubData = hubEntries.data;
 
-// 3. Define category metadata
-const categoryMetadata: Record<string, { subtitle: string; icon: any }> = {
-  Transfers: {
-    subtitle:
-      "Airport, railway and point-to-point private transfers across Udaipur.",
-    icon: IconPlane,
-  },
-  "Local Travel": {
-    subtitle:
-      "Flexible hourly car rentals and full-day old city sightseeing itineraries.",
-    icon: IconMapPin,
-  },
-  "Outstation Travel": {
-    subtitle:
-      "Multi-day highway road trips and one-way taxi drops across Rajasthan.",
-    icon: IconCompass,
-  },
-  "Group and Event Travel": {
-    subtitle:
-      "Spacious tempo travellers and coordinated fleet logistics for weddings and groups.",
-    icon: IconUsers,
-  },
-  Additional: {
-    subtitle:
-      "Custom logistical solutions and specialized corporate transport requests.",
-    icon: IconPlus,
-  },
-};
-
-const categoryOrder = [
-  "Transfers",
-  "Local Travel",
-  "Outstation Travel",
-  "Group and Event Travel",
-  "Additional",
-] as const;
-
-// 4. Group services by category
-const groupedServices = categoryOrder
-  .map((category) => {
-    const cmsSub = hubData?.categoryDescriptions?.find(
-      (c: any) => c.category === category,
-    )?.subtitle;
-    const defaultMeta = categoryMetadata[category] || {
-      subtitle: "Private transportation services.",
-      icon: IconCar,
-    };
+// 3. Group services dynamically by categories defined in the CMS
+const groupedServices = (hubData.categories || [])
+  .map((cat) => {
+    const IconComponent = iconResolver[cat.icon] || IconCar;
     return {
-      category,
-      slug: slugify(category),
+      category: cat.name,
+      slug: slugify(cat.name),
       metadata: {
-        ...defaultMeta,
-        subtitle: cmsSub || defaultMeta.subtitle,
+        icon: IconComponent,
+        subtitle: cat.subtitle,
       },
-      services: publishedServices.filter((s) => s.data.category === category),
+      services: publishedServices.filter((s) => s.data.category === cat.name),
     };
   })
   .filter((group) => group.services.length > 0);
 ---
 
-<BaseLayout
-  title={hubData?.seoTitle || `Our Transport Services | ${site.companyName}`}
-  description={hubData?.seoDesc ||
-    "Explore owner-approved private transport services in Udaipur. Transparent airport transfers, flexible local car rentals with driver, and outstation Rajasthan taxis."}
->
+<BaseLayout title={hubData.seoTitle} description={hubData.seoDesc}>
   {/* 1. HERO BANNER */}
   <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading={hubData?.badge || "Our Services"}
-        heading={hubData?.title ||
-          "Private transport for every kind of Udaipur trip"}
-        description={hubData?.description ||
-          "Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price."}
+        subheading={hubData.badge}
+        heading={hubData.title}
+        description={hubData.description}
       />
     </div>
   </section>
 
-  {/* 2. FLOATING TAB BAR NAVIGATION (Refactored to State-Driven CSS) */}
+  {/* 2. TAB BAR */}
   <TabBar
     mode="anchor"
     tabClass="service-tab-btn"
@@ -184,10 +129,7 @@ const groupedServices = categoryOrder
   <section class="py-12 bg-surface-alt/50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-xs sm:text-sm text-typography-muted leading-relaxed">
-        {
-          hubData?.disclaimerText ||
-            "Each service above is available in and around Udaipur, from airport and railway transfers to sightseeing, nearby day use and outstation travel across Rajasthan. Coverage and example trips are described within each service page as guidance, not as separate booking pages. Where a price is confirmed it is shown with its terms; otherwise please ask us for a quote."
-        }
+        {hubData.disclaimerText}
       </p>
     </div>
   </section>
