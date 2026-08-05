@@ -2,10 +2,11 @@
 import { getCollection } from "astro:content";
 import { IconArrowRight, IconBolt, IconChevronDown } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
+import { sortPublishedByOrder } from "../../utils/helpers";
 
-// Fetch Published Services to Populate Dropdown Server-Side
+// Fetch Published Services & Sort by Order to Populate Dropdown Server-Side
 const allServices = await getCollection("services");
-const publishedServices = allServices.filter((s) => s.data.published);
+const publishedServices = sortPublishedByOrder(allServices);
 
 const inputBaseClasses =
   "w-full px-3.5 py-3 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all font-medium text-brand-900";

@@ -13,13 +13,14 @@ const site = settingsEntry.data;
 const termsEntry = await getEntry("terms", "terms");
 if (!termsEntry) throw new Error("Missing terms.md file");
 
-const { title, subtitle, lastUpdated } = termsEntry.data;
+const { title, subtitle, lastUpdated, seoTitle, seoDesc, badge } =
+  termsEntry.data;
 const { Content } = await render(termsEntry);
 ---
 
 <BaseLayout
-  title={`${title} | ${site.companyName}`}
-  description={subtitle}
+  title={seoTitle || `${title} | ${site.companyName}`}
+  description={seoDesc || subtitle}
   currentTitle={title}
 >
   {/* 1. HERO BANNER WITH LUXURY DEPTH */}
@@ -32,7 +33,7 @@ const { Content } = await render(termsEntry);
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading="Operational Policy"
+        subheading={badge || "Operational Policy"}
         heading={title}
         description={subtitle}
         align="center"

@@ -73,8 +73,8 @@ const [allVehicles, allServices, settingsEntries] = await Promise.all([
   getCollection("settings"),
 ]);
 
-const matchedVehicles = allVehicles.filter((v) =>
-  suitableVehicles.includes(v.id),
+const matchedVehicles = allVehicles.filter(
+  (v) => v.data.published && suitableVehicles.includes(v.id),
 );
 const relatedServices = allServices
   .filter((s) => s.data.published && s.id !== entry.id)
@@ -224,40 +224,44 @@ const reassurances = [
                   </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs sm:text-sm">
-                  <div>
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 block mb-3">
-                      Included
-                    </span>
-                    <ul class="space-y-2.5 text-typography-muted">
-                      {pricing.inclusions?.map((inc) => (
-                        <li class="flex items-start gap-2">
-                          <IconCheck
-                            size={16}
-                            stroke={2.5}
-                            class="text-emerald-600 shrink-0 mt-0.5"
-                          />
-                          <span>{inc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-red-600 block mb-3">
-                      Not Included
-                    </span>
-                    <ul class="space-y-2.5 text-typography-muted">
-                      {pricing.exclusions?.map((exc) => (
-                        <li class="flex items-start gap-2">
-                          <IconX
-                            size={16}
-                            stroke={2.5}
-                            class="text-red-500 shrink-0 mt-0.5"
-                          />
-                          <span>{exc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {pricing.inclusions && pricing.inclusions.length > 0 && (
+                    <div>
+                      <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 block mb-3">
+                        Included
+                      </span>
+                      <ul class="space-y-2.5 text-typography-muted">
+                        {pricing.inclusions.map((inc) => (
+                          <li class="flex items-start gap-2">
+                            <IconCheck
+                              size={16}
+                              stroke={2.5}
+                              class="text-emerald-600 shrink-0 mt-0.5"
+                            />
+                            <span>{inc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {pricing.exclusions && pricing.exclusions.length > 0 && (
+                    <div>
+                      <span class="text-[11px] font-bold uppercase tracking-wider text-red-600 block mb-3">
+                        Not Included
+                      </span>
+                      <ul class="space-y-2.5 text-typography-muted">
+                        {pricing.exclusions.map((exc) => (
+                          <li class="flex items-start gap-2">
+                            <IconX
+                              size={16}
+                              stroke={2.5}
+                              class="text-red-500 shrink-0 mt-0.5"
+                            />
+                            <span>{exc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
                 {pricing.notes && (
                   <div class="mt-6 pt-6 border-t border-brand-100 text-xs text-typography-muted leading-relaxed">

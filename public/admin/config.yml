@@ -249,6 +249,7 @@ collections:
               name: "seoDesc",
               widget: "text",
               required: false,
+              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
             }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
@@ -538,6 +539,26 @@ collections:
         label: "Contact Page"
         file: "src/content/contact/contact.md"
         fields:
+          - {
+              label: "SEO Title",
+              name: "seoTitle",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              required: false,
+              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+            }
+          - {
+              label: "Hero Badge",
+              name: "badge",
+              widget: "string",
+              required: false,
+              default: "Direct Local Communication",
+            }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
           - {
@@ -562,7 +583,12 @@ collections:
             widget: "object"
             fields:
               - { label: "Label", name: "label", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
+              - {
+                  label: "Title",
+                  name: "title",
+                  widget: "string",
+                  hint: "Tip: If exhibiting a phone number here, ensure it matches your phone number in Site Settings (site.md).",
+                }
               - { label: "Description", name: "desc", widget: "text" }
               - { label: "Badge Text", name: "badgeText", widget: "string" }
           - label: "WhatsApp Card Details"
@@ -600,6 +626,8 @@ collections:
               label: "Google Maps Embed URL",
               name: "googleMapsUrl",
               widget: "string",
+              required: false,
+              hint: "Optional. If left empty, defaults to Google Maps link defined in Site Settings.",
             }
           - {
               label: "Body Copy",
@@ -612,12 +640,33 @@ collections:
         label: "Privacy Policy"
         file: "src/content/privacy/privacy.md"
         fields:
+          - {
+              label: "SEO Title",
+              name: "seoTitle",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              required: false,
+              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+            }
+          - {
+              label: "Hero Badge",
+              name: "badge",
+              widget: "string",
+              required: false,
+              default: "Legal & Data Protection",
+            }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
           - {
               label: "Last Updated Date",
               name: "lastUpdated",
               widget: "string",
+              hint: "e.g., '21 July 2026' or 'October 2026'",
             }
           - { label: "Policy Content", name: "body", widget: "markdown" }
 
@@ -625,12 +674,33 @@ collections:
         label: "Terms of Service"
         file: "src/content/terms/terms.md"
         fields:
+          - {
+              label: "SEO Title",
+              name: "seoTitle",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              required: false,
+              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+            }
+          - {
+              label: "Hero Badge",
+              name: "badge",
+              widget: "string",
+              required: false,
+              default: "Operational Policy",
+            }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
           - {
               label: "Last Updated Date",
               name: "lastUpdated",
               widget: "string",
+              hint: "e.g., '21 July 2026' or 'October 2026'",
             }
           - { label: "Terms Content", name: "body", widget: "markdown" }
 
@@ -1323,6 +1393,12 @@ collections:
           widget: "boolean",
           default: true,
           hint: "If true, displays on the home page testimonial section",
+        }
+      - {
+          label: "Published",
+          name: "published",
+          widget: "boolean",
+          default: true,
         }
       - {
           label: "Sort Order",

@@ -9,6 +9,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ReviewCard from "../components/cards/ReviewCard.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 import DirectContactCTA from "../components/sections/DirectContactCTA.astro";
+import { sortPublishedByOrder } from "../utils/helpers";
 
 // 1. Fetch Singleton Settings
 const settingsEntry = await getEntry("settings", "site");
@@ -17,9 +18,7 @@ const site = settingsEntry.data;
 
 // 2. Fetch All Reviews & Sort Ascending by Order
 const allReviews = await getCollection("reviews");
-const displayReviews = allReviews.sort(
-  (a, b) => a.data.sortOrder - b.data.sortOrder,
-);
+const displayReviews = sortPublishedByOrder(allReviews);
 
 // 3. Calculate Dynamic Aggregate Metrics
 const totalReviews = displayReviews.length;

@@ -219,6 +219,12 @@ const aboutCollection = defineCollection({
 const contactCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/contact" }),
   schema: z.object({
+    seoTitle: z.string().optional(),
+    seoDesc: z
+      .string()
+      .max(160, "Keep SEO description under 160 characters")
+      .optional(),
+    badge: z.string().optional(),
     title: z.string(),
     subtitle: z.string(),
     directChannelsHeading: z.string(),
@@ -266,13 +272,16 @@ const contactCollection = defineCollection({
     locationHeading: z.string(),
     locationSubheading: z.string(),
     locationDesc: z.string(),
-    googleMapsUrl: z.string(),
+    googleMapsUrl: z.string().optional(),
   }),
 });
 
 const privacyCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/privacy" }),
   schema: z.object({
+    seoTitle: z.string().optional(),
+    seoDesc: z.string().max(160, "Keep SEO description under 160 characters").optional(),
+    badge: z.string().optional(),
     title: z.string(),
     subtitle: z.string(),
     lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
@@ -282,6 +291,9 @@ const privacyCollection = defineCollection({
 const termsCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/terms" }),
   schema: z.object({
+    seoTitle: z.string().optional(),
+    seoDesc: z.string().max(160, "Keep SEO description under 160 characters").optional(),
+    badge: z.string().optional(),
     title: z.string(),
     subtitle: z.string(),
     lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
@@ -300,6 +312,7 @@ const reviewCollection = defineCollection({
     verified: z.boolean().default(true),
     image: image().optional(),
     featured: z.boolean().default(true),
+    published: z.boolean().default(true),
     sortOrder: z.number().default(10),
   }),
 });

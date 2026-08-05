@@ -7,6 +7,7 @@ import {
   IconChevronDown,
 } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
+import { sortPublishedByOrder } from "../../utils/helpers";
 
 interface Props {
   defaultService?: string;
@@ -21,13 +22,13 @@ const {
 }: Props = Astro.props;
 const currentUrl = Astro.url.pathname;
 
-// Fetch Published Collections
+// Fetch Published Collections & Sort by Order
 const [allServices, allVehicles] = await Promise.all([
   getCollection("services"),
   getCollection("vehicles"),
 ]);
-const publishedServices = allServices.filter((s) => s.data.published);
-const publishedVehicles = allVehicles.filter((v) => v.data.published);
+const publishedServices = sortPublishedByOrder(allServices);
+const publishedVehicles = sortPublishedByOrder(allVehicles);
 
 const inputBaseClasses =
   "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";

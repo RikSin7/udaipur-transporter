@@ -19,13 +19,14 @@ const site = settingsEntry.data;
 const privacyEntry = await getEntry("privacy", "privacy");
 if (!privacyEntry) throw new Error("Missing privacy.md file");
 
-const { title, subtitle, lastUpdated } = privacyEntry.data;
+const { title, subtitle, lastUpdated, seoTitle, seoDesc, badge } =
+  privacyEntry.data;
 const { Content } = await render(privacyEntry);
 ---
 
 <BaseLayout
-  title={`${title} | ${site.companyName}`}
-  description={subtitle}
+  title={seoTitle || `${title} | ${site.companyName}`}
+  description={seoDesc || subtitle}
   currentTitle={title}
 >
   {/* 1. HERO BANNER */}
@@ -38,7 +39,7 @@ const { Content } = await render(privacyEntry);
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading="Legal & Data Protection"
+        subheading={badge || "Legal & Data Protection"}
         heading={title}
         description={subtitle}
         align="center"
