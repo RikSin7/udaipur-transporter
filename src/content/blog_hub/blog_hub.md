@@ -9,4 +9,7 @@ bannerDesc: "Skip the guesswork. Share your travel dates and passenger count for
 bannerButtonText: "View Transport Services"
 bannerButtonUrl: "/services/"
 bannerWhatsappText: "Ask a Question on WhatsApp"
+articleCtaBadge: "Direct Expert Advice"
+articleCtaTitle: "Plan your vehicle route with our local team."
+articleCtaDesc: "We provide owner-approved quotes without automated call centers or booking fees."
 ---

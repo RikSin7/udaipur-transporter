@@ -11,12 +11,7 @@ import TabBar from "../../components/ui/TabBar.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
 import { getEntry } from "astro:content";
 
-// 1. Fetch site settings
-const settingsEntries = await getEntry("settings", "site");
-if (!settingsEntries) throw new Error("site.md not found");
-const site = settingsEntries.data;
-
-// 2. Fetch all published services
+// 1. Fetch all published services
 const allServices = await getCollection("services");
 const publishedServices = sortPublishedByOrder(allServices);
 
@@ -24,7 +19,7 @@ const hubEntries = await getEntry("services_hub", "services_hub");
 if (!hubEntries) throw new Error("services_hub.md not found");
 const hubData = hubEntries.data;
 
-// 3. Group services dynamically by categories defined in the CMS
+// 2. Group services dynamically by categories defined in the CMS
 const groupedServices = (hubData.categories || [])
   .map((cat) => {
     const IconComponent = iconResolver[cat.icon] || IconCar;
@@ -41,7 +36,10 @@ const groupedServices = (hubData.categories || [])
   .filter((group) => group.services.length > 0);
 ---
 
-<BaseLayout title={hubData.seoTitle} description={hubData.seoDesc}>
+<BaseLayout
+  title={hubData.seoTitle || hubData.title}
+  description={hubData.seoDesc || hubData.description}
+>
   {/* 1. HERO BANNER */}
   <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

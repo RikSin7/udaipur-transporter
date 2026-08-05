@@ -4,14 +4,13 @@ import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
 import { IconBrandWhatsapp, IconPhoneCall } from "@tabler/icons-astro";
 import { Image } from "astro:assets";
 import { cn } from "../../utils/cn";
+import { getEntry } from "astro:content";
 
-// Fetch singleton business settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+// Fetch site settings
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+
+const site = settingsEntry.data;
 
 const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(site.whatsapp);
@@ -82,7 +81,7 @@ const navLinks = [
               class="group relative text-typography-main hover:text-accent-dark transition-colors py-2"
             >
               {link.label}
-              <span class="absolute bottom-0 left-0 w-full h-[2px] bg-accent-dark scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out rounded-full" />
+              <span class="absolute bottom-0 left-0 w-full h-0.5 bg-accent-dark scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out rounded-full" />
             </a>
           ))
         }
@@ -106,12 +105,12 @@ const navLinks = [
           class="text-emerald-700 bg-surface-card border border-brand-100 rounded-xl p-2.5 hover:border-emerald-700 transition-all shadow-sm hover:shadow-md flex items-center justify-center"
           aria-label="Chat on WhatsApp"
         >
-          <IconBrandWhatsapp class="w-5 h-5 text-[#2F7A55]" stroke={2} />
+          <IconBrandWhatsapp class="w-5 h-5 text-success" stroke={2} />
         </a>
 
         <a
           href="/contact/?action=enquiry#enquiry-form-section"
-          class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-5 py-2.5 rounded-xl text-xs tracking-wider transition-all shadow-sm active:scale-95 uppercase"
+          class="bg-cta hover:bg-cta-hover text-white font-bold px-5 py-2.5 rounded-xl text-xs tracking-wider transition-all shadow-sm active:scale-95 uppercase"
         >
           Send Enquiry
         </a>
@@ -132,14 +131,14 @@ const navLinks = [
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="bg-surface-card border border-border-dark p-2.5 rounded-xl text-[#2F7A55] hover:border-[#2F7A55] transition-colors"
+          class="bg-surface-card border border-border-dark p-2.5 rounded-xl text-success hover:border-success transition-colors"
           title="WhatsApp"
         >
-          <IconBrandWhatsapp class="w-4 h-4 text-[#2F7A55]" stroke={2} />
+          <IconBrandWhatsapp class="w-4 h-4 text-success" stroke={2} />
         </a>
         <a
           href="/contact/?action=enquiry#enquiry-form-section"
-          class="bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition-colors"
+          class="bg-cta hover:bg-cta-hover text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition-colors"
         >
           Enquire
         </a>
@@ -156,7 +155,7 @@ const navLinks = [
         </a>
         <a
           href="/contact/?action=enquiry#enquiry-form-section"
-          class="bg-[var(--color-cta,#AD5C1F)] text-white text-xs font-bold px-3.5 py-2 rounded-xl tracking-wider uppercase shadow-sm active:scale-95 transition-colors md:hidden"
+          class="bg-cta text-white text-xs font-bold px-3.5 py-2 rounded-xl tracking-wider uppercase shadow-sm active:scale-95 transition-colors md:hidden"
         >
           Enquire
         </a>
@@ -220,7 +219,7 @@ const navLinks = [
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="py-2.5 bg-[#2F7A55] hover:bg-emerald-700 rounded-xl text-sm font-semibold text-white transition-colors flex items-center justify-center gap-1.5 shadow-sm uppercase"
+        class="py-2.5 bg-success hover:bg-emerald-700 rounded-xl text-sm font-semibold text-white transition-colors flex items-center justify-center gap-1.5 shadow-sm uppercase"
       >
         <IconBrandWhatsapp class="w-4 h-4 text-white" stroke={2} /> WhatsApp
       </a>

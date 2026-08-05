@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import EnquiryForm from "../components/forms/EnquiryForm.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
@@ -17,56 +16,19 @@ import {
   IconArrowRight,
   IconFileText,
 } from "@tabler/icons-astro";
+import { getEntry } from "astro:content";
 
-// 1. Fetch Singleton Business Settings (phone, email, address, response hours)
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-  email: "bookings@udaipurtransporter.com",
-  address:
-    "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
-  operatingHours:
-    "Typical Response Time: Under 15 Minutes (7 Days a Week, 8:00 AM – 9:00 PM)",
-  serviceArea:
-    "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes",
-};
+// 1. Fetch Settings
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+
+const site = settingsEntry.data;
 
 // 2. Fetch Singleton Contact Page Content from Decap CMS
-const contactEntries = await getCollection("contact");
-const contactData = contactEntries[0]?.data || {
-  title: "Contact Our Udaipur Team",
-  subtitle:
-    "Skip automated call centers and algorithmic reing. Connect directly with the local transport coordinators who manage our Udaipur garage and allocate your vehicle.",
-  directChannelsHeading: "Direct Contact Channels",
-  directChannelsSubheading: "Direct Connect",
-  directChannelsDesc:
-    "Choose your preferred method of communication. For immediate airport pickups or urgent travel queries, calling or sending a WhatsApp message is the fastest option. We do not rely on third-party call centers or automated chat bots.",
-  phoneCard: {
-    label: "Call Us Directly",
-    title: "+91 70458 36164",
-    desc: "Speak directly with our Udaipur dispatch team for immediate cab bookings and urgent route inquiries.",
-    badgeText: "Available for Immediate Assistance",
-  },
-  whatsappCard: {
-    label: "WhatsApp Support",
-    title: "Chat With Coordinator",
-    desc: "Send us your itinerary or voice notes. We reply with flat, owner-approved vehicle quotes and pictures.",
-    badgeText: "Pre-filled with website context",
-  },
-  emailCard: {
-    label: "Email Inquiries",
-    title: "Email Us",
-    desc: "Best suited for detailed multi-day Rajasthan tour itineraries, corporate billing requests, and event transport.",
-    badgeText: "Written tariff quotes & invoices",
-  },
-  locationHeading: "Operating Garage & Base",
-  locationSubheading: "Central Udaipur Location",
-  locationDesc:
-    "Our central dispatch garage near the old city allows our drivers to reach lakeside hotels and railway stations rapidly.",
-  googleMapsUrl: "https://maps.google.com/?q=Udaipur+City+Palace",
-};
+const contactEntry = await getEntry("contact", "contact");
+if (!contactEntry) throw new Error("Missing contact.md file");
+
+const contactData = contactEntry.data;
 
 const callUrl = getCallUrl(site.phone);
 const whatsappUrl = getWhatsAppUrl(
@@ -109,7 +71,7 @@ const whatsappUrl = getWhatsAppUrl(
         >
           <div>
             <div
-              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
+              class="w-12 h-12 rounded-xl bg-surface-alt text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
             >
               <IconPhoneCall size={24} stroke={2} />
             </div>
@@ -146,7 +108,7 @@ const whatsappUrl = getWhatsAppUrl(
         >
           <div>
             <div
-              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
+              class="w-12 h-12 rounded-xl bg-surface-alt text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
             >
               <IconBrandWhatsapp size={24} stroke={2} />
             </div>
@@ -183,7 +145,7 @@ const whatsappUrl = getWhatsAppUrl(
         >
           <div>
             <div
-              class="w-12 h-12 rounded-xl bg-[var(--color-surface-alt,#E9EFEA)] text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
+              class="w-12 h-12 rounded-xl bg-surface-alt text-brand-900 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-sm shrink-0"
             >
               <IconMail size={24} stroke={2} />
             </div>
@@ -273,7 +235,7 @@ const whatsappUrl = getWhatsAppUrl(
   >
     {/* Subtle Gold Dotted Background Pattern */}
     <div
-      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"
+      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] bg-size-[24px_24px] opacity-10 pointer-events-none"
     >
     </div>
 

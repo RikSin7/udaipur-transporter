@@ -144,6 +144,8 @@ const blogCollection = defineCollection({
 const aboutCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/about" }),
   schema: ({ image }) => z.object({
+    seoTitle: z.string().optional(),
+    seoDesc: z.string().max(160, "Keep SEO description under 160 characters").optional(),
     title: z.string(),
     subtitle: z.string(),
     badge: z.string().optional(),
@@ -427,6 +429,9 @@ const blogHubCollection = defineCollection({
     bannerButtonText: z.string().optional(),
     bannerButtonUrl: z.string().optional(),
     bannerWhatsappText: z.string().optional(),
+    articleCtaBadge: z.string().optional(),
+    articleCtaTitle: z.string().optional(),
+    articleCtaDesc: z.string().optional(),
   }),
 });
 
@@ -482,14 +487,6 @@ const directContactCtaCollection = defineCollection({
   }),
 });
 
-const blogCtaCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog_cta" }),
-  schema: z.object({
-    badge: z.string(),
-    title: z.string(),
-    description: z.string(),
-  }),
-});
 
 export const collections = {
   'home': homeCollection,
@@ -511,5 +508,4 @@ export const collections = {
   'thank_you': thankYouCollection,
   'catalogue_cta': catalogueCtaCollection,
   'direct_contact_cta': directContactCtaCollection,
-  'blog_cta': blogCtaCollection,
 };

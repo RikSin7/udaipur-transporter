@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
@@ -59,25 +59,23 @@ const relatedArticles = allArticles
 const formattedDate = formatDate(publishDate, "long");
 
 // Fetch business settings for direct WhatsApp URLs
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-  companyName: "Udaipur Royal Transporter",
-};
+const settingsEntries = await getEntry("settings", "site");
+if (!settingsEntries) throw new Error("Missing site.md file");
+const site = settingsEntries.data;
 const whatsappUrl = getWhatsAppUrl(
   site.whatsapp,
   `Article Inquiry: ${title}`,
   Astro.url.href,
 );
 
-// Fetch Blog Details Page CTA Banner configuration
-const blogCtaEntries = await getCollection("blog_cta");
-const blogCta = blogCtaEntries[0]?.data || {
-  badge: "Direct Expert Advice",
-  title: "Plan your vehicle route with our local team.",
-  description:
-    "We provide owner-approved quotes without automated call centers or booking fees.",
+// Fetch Blog Details Page CTA Banner configuration from blog_hub
+const blogHubEntry = await getEntry("blog_hub", "blog_hub");
+if (!blogHubEntry) throw new Error("Missing blog_hub.md file");
+
+const blogCta = {
+  badge: blogHubEntry.data.articleCtaBadge,
+  title: blogHubEntry.data.articleCtaTitle,
+  description: blogHubEntry.data.articleCtaDesc,
 };
 ---
 
@@ -121,7 +119,7 @@ const blogCta = blogCtaEntries[0]?.data || {
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Markdown Content & Inline Banner */}
         <div class="lg:col-span-8 space-y-12">
-          {/* NEW: Article Cover Image Banner */}
+          {/* Article Cover Image Banner */}
           {
             image && (
               <div class="rounded-2xl overflow-hidden border border-brand-100 shadow-sm bg-surface-alt">
@@ -132,7 +130,7 @@ const blogCta = blogCtaEntries[0]?.data || {
                   height={500}
                   format="webp"
                   quality={85}
-                  class="w-full h-auto object-cover max-h-[440px]"
+                  class="w-full h-auto object-cover max-h-110"
                 />
               </div>
             )
@@ -149,9 +147,7 @@ const blogCta = blogCtaEntries[0]?.data || {
             </div>
           </div>
 
-          {
-            /* Inline Conversion Banner (Shown only when Recommended Service exists) */
-          }
+          {/* Banner (Shown only when Recommended Service exists) */}
           {
             matchingService && (
               <div class="bg-brand-900 text-white p-6 sm:p-8 rounded-2xl shadow-premium flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 border border-brand-800">

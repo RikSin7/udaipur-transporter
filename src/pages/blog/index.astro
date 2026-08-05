@@ -13,14 +13,12 @@ import {
 import FAQSection from "../../components/sections/FAQSection.astro";
 import TabBar from "../../components/ui/TabBar.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
+import { getEntry } from "astro:content";
 
-// 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+// 1. Fetch site settings
+const settingsEntries = await getEntry("settings", "site");
+if (!settingsEntries) throw new Error("Missing site.md file");
+const site = settingsEntries.data;
 
 // 2. Fetch and Sort Articles
 const allArticles = await getCollection("blog");
@@ -57,28 +55,28 @@ const whatsappUrl = getWhatsAppUrl(
   "Blog / Transport Planning",
   Astro.url.href,
 );
-const hubEntries = await getCollection("blog_hub");
-const hubData = hubEntries[0]?.data;
+const hubEntries = await getEntry("blog_hub", "blog_hub");
+if (!hubEntries) throw new Error("Missing blog_hub.md file");
+const hubData = hubEntries.data;
 ---
 
 <BaseLayout
-  title={hubData?.seoTitle || `Transport Planning Guides | ${site.companyName}`}
-  description={hubData?.seoDesc ||
-    "Practical advice, vehicle capacity guides, and local transport tips for planning a seamless private taxi journey across Udaipur and Rajasthan."}
+  title={hubData.seoTitle || `Transport Planning Guides | ${site.companyName}`}
+  description={hubData.seoDesc ||
+    "Best travel guides for planning your trip to Udaipur and Rajasthan. Outstation taxi fares, vehicle selection, and local travel tips."}
 >
   {/* 1. HERO BANNER */}
   <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading={hubData?.badge || "Travel Planning Resources"}
-        heading={hubData?.title || "Udaipur Transport & Travel Blog"}
-        description={hubData?.description ||
-          "Honest, useful advice on airport pickups, choosing a vehicle and what a private taxi price really includes."}
+        subheading={hubData.badge}
+        heading={hubData.title}
+        description={hubData.description}
       />
     </div>
   </section>
 
-  {/* 2. FLOATING CATEGORY TAB BAR */}
+  {/* 2. TAB BAR */}
   <TabBar
     mode="filter"
     tabClass="blog-filter-btn"
@@ -150,7 +148,7 @@ const hubData = hubEntries[0]?.data;
                           </div>
                         ) : (
                           <div class="shrink-0 w-full lg:w-72 h-48 rounded-xl overflow-hidden bg-brand-900 border border-brand-100 flex items-center justify-center p-4 relative">
-                            <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
+                            <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] bg-size-[16px_16px] opacity-15" />
                             <div class="relative z-10 p-3 rounded-full bg-brand-800/90 border border-brand-700 text-accent shadow-inner group-hover:scale-105 transition-transform duration-300">
                               <IconCar class="w-6 h-6 stroke-[1.5]" />
                             </div>

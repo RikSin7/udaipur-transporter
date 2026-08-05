@@ -20,7 +20,7 @@ const formattedDate = formatDate(publishDate);
   href={`/blog/${article.id}/`}
   aria-label={`Read guide: ${title}`}
   class={cn(
-    "bg-surface-card border border-border rounded-[var(--radius-card,18px)] overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group cursor-pointer focus:outline-none",
+    "bg-surface-card border border-border rounded-(--radius-card,18px) overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group cursor-pointer focus:outline-none",
     className,
   )}
 >
@@ -50,7 +50,7 @@ const formattedDate = formatDate(publishDate);
         />
       ) : (
         <div class="w-full h-full flex items-center justify-center p-4 relative">
-          <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
+          <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] bg-size-[16px_16px] opacity-15" />
           <div class="relative z-10 p-3 rounded-full bg-brand-800/90 border border-brand-700 text-accent shadow-inner group-hover:scale-105 transition-transform duration-300">
             <IconCar class="w-6 h-6 stroke-[1.5]" />
           </div>

@@ -21,6 +21,10 @@ const site = settingsEntries[0]?.data || {
   phone: "+91 70458 36164",
   whatsapp: "917045836164",
   serviceArea: "Udaipur & All Rajasthan Outstation Routes",
+  seoDefaultTitle:
+    "Udaipur Royal Transporter | Private Taxi & Car Rental in Udaipur",
+  seoDefaultDesc:
+    "Straightforward Private cabs, transfers & tours across Udaipur.",
 };
 
 // Fetch homepage content
@@ -43,8 +47,10 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
 ---
 
 <BaseLayout
-  title={`${site.companyName} | Private Taxi & Car Rental in Udaipur`}
-  description="Straightforward Private cabs, transfers & tours across Udaipur."
+  title={site.seoDefaultTitle ||
+    `${site.companyName} | Private Taxi & Car Rental in Udaipur`}
+  description={site.seoDefaultDesc ||
+    "Straightforward Private cabs, transfers & tours across Udaipur."}
 >
   {/* 1. HERO SECTION */}
   <Hero whatsappUrl={whatsappUrl} />

@@ -7,6 +7,7 @@ import {
   IconArrowRight,
 } from "@tabler/icons-astro";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
+import { getEntry } from "astro:content";
 
 interface Props {
   type: "faqs" | "reviews";
@@ -16,15 +17,15 @@ const { type }: Props = Astro.props;
 const isFaq = type === "faqs";
 
 // 1. Fetch Business Settings for Phone & WhatsApp
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+
+const site = settingsEntry.data;
 
 // 2. Fetch Standalone Direct Contact CTA configuration
-const ctaEntries = await getCollection("direct_contact_cta");
-const ctaData = ctaEntries[0]?.data;
+const ctaEntry = await getEntry("direct_contact_cta", "direct_contact_cta");
+if (!ctaEntry) throw new Error("Missing direct_contact_cta.md file");
+const ctaData = ctaEntry.data;
 
 // 3. Resolve page-specific badge, title, and description
 const badge = isFaq
@@ -82,7 +83,7 @@ const callUrl = getCallUrl(site.phone);
       </a>
       <a
         href="/contact/"
-        class="group bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95 uppercase"
+        class="group bg-cta hover:bg-cta-hover text-white font-bold px-8 py-4 rounded-xl shadow-md transition-all text-sm flex items-center gap-2 active:scale-95 uppercase"
       >
         <span>Open Enquiry Form</span>
         <IconArrowRight

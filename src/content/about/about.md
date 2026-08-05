@@ -1,4 +1,6 @@
 ---
+seoTitle: "About Our Service | Udaipur Royal Transporter"
+seoDesc: "Learn about Udaipur Royal Transporter — transparent, straightforward private taxi hiring and outstation travel across Rajasthan with local operators."
 title: "Straightforward Private Transport in Udaipur"
 subtitle: "We believe booking a private taxi in Rajasthan should be simple, transparent, and personal. Skip automated call centers and complex pricing algorithms by communicating directly with a trusted local transport provider."
 badge: "Our Identity & Approach"

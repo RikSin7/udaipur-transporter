@@ -233,6 +233,18 @@ collections:
         label: "About Page"
         file: "src/content/about/about.md"
         fields:
+          - {
+              label: "SEO Title",
+              name: "seoTitle",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              required: false,
+            }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
           - {
@@ -736,6 +748,27 @@ collections:
               required: false,
               default: "Ask a Question on WhatsApp",
             }
+          - {
+              label: "Article Page CTA Badge",
+              name: "articleCtaBadge",
+              widget: "string",
+              required: false,
+              default: "Direct Expert Advice",
+            }
+          - {
+              label: "Article Page CTA Title",
+              name: "articleCtaTitle",
+              widget: "string",
+              required: false,
+              default: "Plan your vehicle route with our local team.",
+            }
+          - {
+              label: "Article Page CTA Description",
+              name: "articleCtaDesc",
+              widget: "text",
+              required: false,
+              default: "We provide owner-approved quotes without automated call centers or booking fees.",
+            }
 
       - name: "faqs_hub"
         label: "FAQs Page (/faqs)"
@@ -852,14 +885,6 @@ collections:
               name: "reviewsDesc",
               widget: "text",
             }
-
-      - name: "blog_cta"
-        label: "Blog Details Page Consultation Banner"
-        file: "src/content/blog_cta/blog_cta.md"
-        fields:
-          - { label: "Banner Badge", name: "badge", widget: "string" }
-          - { label: "Banner Title", name: "title", widget: "string" }
-          - { label: "Banner Description", name: "description", widget: "text" }
 
   # ----------------------------------------
   # 3. FOLDER COLLECTIONS

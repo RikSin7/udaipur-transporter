@@ -16,15 +16,23 @@ interface Props {
 }
 
 const { vehicle }: Props = Astro.props;
-const { title, passengers, luggage, amenities, imageNote, summary, image } =
-  vehicle.data;
+const {
+  title,
+  passengers,
+  seats,
+  luggage,
+  amenities,
+  imageNote,
+  summary,
+  image,
+} = vehicle.data;
 
 const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
 ---
 
 <a
   href={enquiryUrl}
-  class="bg-surface-card border border-border rounded-[var(--radius-card,18px)] overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group cursor-pointer focus:outline-none"
+  class="bg-surface-card border border-border rounded-(--radius-card,18px) overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group cursor-pointer focus:outline-none"
 >
   {/* 1. Image Row */}
   <div
@@ -49,7 +57,7 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
         />
       ) : (
         <div class="w-full h-full flex items-center justify-center p-4 relative">
-          <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
+          <div class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] bg-size-[16px_16px] opacity-15" />
           <div class="relative z-10 p-3 rounded-full bg-brand-800/90 border border-brand-700 text-accent shadow-inner group-hover:scale-105 transition-transform duration-300">
             <IconCar class="w-6 h-6 stroke-[1.5]" />
           </div>
@@ -80,7 +88,7 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
         {
           amenities.slice(0, 3).map((item) => (
             <span
-              class="text-[10px] font-medium bg-surface-alt text-typography-muted px-2 py-0.5 rounded border border-border/80 max-w-[130px] hover:max-w-[250px] transition-[max-width] duration-300 ease-in-out flex items-center gap-1"
+              class="text-[10px] font-medium bg-surface-alt text-typography-muted px-2 py-0.5 rounded border border-border/80 max-w-32.5 hover:max-w-62.5 transition-[max-width] duration-300 ease-in-out flex items-center gap-1"
               title={item}
             >
               <IconCheck class="w-3 h-3 text-accent shrink-0" stroke={2.5} />
@@ -111,7 +119,7 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
         >
           <span class="flex items-center gap-1">
             <IconUsers class="w-3.5 h-3.5 text-accent shrink-0" stroke={2} />
-            {passengers} Seats
+            {passengers} Pax{seats ? ` (${seats} Seats)` : ""}
           </span>
           <span class="text-accent/40">|</span>
           <span class="flex items-center gap-1">
@@ -121,7 +129,7 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
         </span>
       </div>
       <span
-        class="bg-cta hover:bg-cta-hover text-white font-bold text-[11px] sm:text-xs tracking-wider py-2 px-4 rounded-[var(--radius-button,12px)] transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-1.5 group/btn shrink-0 uppercase"
+        class="bg-cta hover:bg-cta-hover text-white font-bold text-[11px] sm:text-xs tracking-wider py-2 px-4 rounded-(--radius-button,12px) transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-1.5 group/btn shrink-0 uppercase"
       >
         <span>Book Now</span>
         <IconArrowRight

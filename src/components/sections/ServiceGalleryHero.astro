@@ -114,10 +114,10 @@ const getItemClass = (total: number, index: number) => {
       {/* Immersive Fullscreen Modal */}
       <div
         id="custom-gallery-modal"
-        class="fixed inset-0 z-[100] hidden flex-col bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+        class="fixed inset-0 z-100 hidden flex-col bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0"
       >
         {/* Top Controls */}
-        <div class="absolute top-0 left-0 w-full p-4 sm:p-6 flex justify-end items-center z-[110] pointer-events-none">
+        <div class="absolute top-0 left-0 w-full p-4 sm:p-6 flex justify-end items-center z-110 pointer-events-none">
           <button
             id="close-modal"
             class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xl pointer-events-auto ml-auto hover:scale-110 active:scale-95"
@@ -127,7 +127,7 @@ const getItemClass = (total: number, index: number) => {
         </div>
 
         {/* Main Image Container */}
-        <div class="absolute inset-0 w-full h-full p-2 sm:p-6 flex items-center justify-center z-[100] pointer-events-none">
+        <div class="absolute inset-0 w-full h-full p-2 sm:p-6 flex items-center justify-center z-100 pointer-events-none">
           <img
             id="modal-image"
             src=""
@@ -137,7 +137,7 @@ const getItemClass = (total: number, index: number) => {
         </div>
 
         {/* Title & Subtitle (Bottom Anchored) */}
-        <div class="absolute bottom-6 left-0 w-full text-center px-4 z-[110] pointer-events-none">
+        <div class="absolute bottom-6 left-0 w-full text-center px-4 z-110 pointer-events-none">
           <div class="max-w-3xl mx-auto drop-shadow-lg">
             <h3
               id="modal-title"
@@ -153,13 +153,13 @@ const getItemClass = (total: number, index: number) => {
         {/* Navigation Arrows */}
         <button
           id="prev-btn"
-          class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer z-[110] shadow-xl hover:scale-110 active:scale-95"
+          class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer z-110 shadow-xl hover:scale-110 active:scale-95"
         >
           <IconChevronLeft size={28} stroke={2} />
         </button>
         <button
           id="next-btn"
-          class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer z-[110] shadow-xl hover:scale-110 active:scale-95"
+          class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer z-110 shadow-xl hover:scale-110 active:scale-95"
         >
           <IconChevronRight size={28} stroke={2} />
         </button>

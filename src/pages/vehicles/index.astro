@@ -7,31 +7,27 @@ import FAQSection from "../../components/sections/FAQSection.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
 import { IconCar } from "@tabler/icons-astro";
 import { sortPublishedByOrder } from "../../utils/helpers";
-
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-};
+import { getEntry } from "astro:content";
 
 const allVehicles = await getCollection("vehicles");
 const publishedVehicles = sortPublishedByOrder(allVehicles);
-const hubEntries = await getCollection("vehicles_hub");
-const hubData = hubEntries[0]?.data;
+
+const hubEntries = await getEntry("vehicles_hub", "vehicles_hub");
+if (!hubEntries) throw new Error("vehicles_hub.md not found");
+const hubData = hubEntries.data;
 ---
 
 <BaseLayout
-  title={hubData?.seoTitle || `Our Fleet | ${site.companyName}`}
-  description={hubData?.seoDesc ||
-    "Browse our fleet of private taxis, sedans, SUVs, and tempo travellers for comfortable travel in Udaipur and Rajasthan."}
+  title={hubData.seoTitle || hubData.title}
+  description={hubData.seoDesc || hubData.description}
 >
   {/* 1. HERO BANNER */}
   <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <HeroHeader
-        subheading={hubData?.badge || "Premium Vehicle Fleet"}
-        heading={hubData?.title || "Our Fleet"}
-        description={hubData?.description ||
-          "Choose from our wide range of well-maintained vehicles for your transportation needs in and around Udaipur. From comfortable sedans to spacious Tempo Travellers, we have the perfect vehicle for your group size and luggage requirements."}
+        subheading={hubData.badge}
+        heading={hubData.title}
+        description={hubData.description}
       />
     </div>
   </section>
