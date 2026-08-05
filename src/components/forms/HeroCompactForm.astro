@@ -17,7 +17,7 @@ const inputBaseClasses =
   {/* Form Header */}
   <div class="border-b border-brand-100 pb-4 mb-5">
     <span
-      class="text-[11px] font-bold uppercase tracking-widest text-[var(--color-cta,#AD5C1F)] block mb-1"
+      class="text-[11px] font-bold uppercase tracking-widest text-cta block mb-1"
     >
       Instant Booking Estimate
     </span>
@@ -31,9 +31,17 @@ const inputBaseClasses =
     </p>
   </div>
 
-  <form id="hero-compact-form" action="/contact" method="GET" class="space-y-4">
-    <input type="hidden" name="enquiry" value="true" />
+  <form
+    name="hero-quick-enquiry"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    action="/thank-you/"
+    class="space-y-4"
+  >
+    <input type="hidden" name="form-name" value="hero-quick-enquiry" />
     <input type="hidden" name="source" value="hero-compact" />
+    <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name - Half width on sm+ */}
@@ -84,7 +92,7 @@ const inputBaseClasses =
       <div>
         <label
           for="hero-service"
-          class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
+          class="text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5 flex items-center justify-between"
         >
           <span>Required Service</span>
         </label>
@@ -136,12 +144,13 @@ const inputBaseClasses =
           for="hero-pickup"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Pickup Location
+          Pickup Location <span class="text-red-500">*</span>
         </label>
         <input
           type="text"
           id="hero-pickup"
           name="pickup"
+          required
           placeholder="Airport"
           class={cn(
             inputBaseClasses,
@@ -156,12 +165,13 @@ const inputBaseClasses =
           for="hero-drop"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
         >
-          Drop Location
+          Drop Location <span class="text-red-500">*</span>
         </label>
         <input
           type="text"
           id="hero-drop"
           name="drop"
+          required
           placeholder="Hotel"
           class={cn(
             inputBaseClasses,
@@ -174,10 +184,10 @@ const inputBaseClasses =
     <div class="pt-2">
       <button
         type="submit"
-        aria-label="Continue to fill the travel enquiry form with pre-filled details"
-        class="group w-full bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-serif font-bold py-3.5 px-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-sm tracking-wide flex items-center justify-center gap-2 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-cta,#AD5C1F)] focus-visible:ring-offset-2 focus-visible:ring-offset-surface uppercase"
+        aria-label="Submit quick travel enquiry for an instant quote"
+        class="group w-full bg-cta hover:bg-cta-hover text-white font-serif font-bold py-3.5 px-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-sm tracking-wide flex items-center justify-center gap-2 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-offset-2 focus-visible:ring-offset-surface uppercase"
       >
-        <span>Continue to Get Quote</span>
+        <span>Get Your Quote</span>
         <IconArrowRight
           size={18}
           stroke={2}
@@ -188,39 +198,8 @@ const inputBaseClasses =
         class="text-[11px] text-center text-typography-muted mt-2.5 font-medium flex items-center justify-center gap-1.5"
       >
         <IconBolt size={14} stroke={2} class="text-amber-500 shrink-0" />
-        <span>Redirects to our full form with your details pre-filled.</span>
+        <span>Direct local enquiry. We will contact you promptly.</span>
       </p>
     </div>
   </form>
 </div>
-
-<script>
-  function initHeroCompactForm() {
-    const form = document.getElementById(
-      "hero-compact-form",
-    ) as HTMLFormElement | null;
-    if (!form || form.dataset.initialized === "true") return;
-    form.dataset.initialized = "true";
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const params = new URLSearchParams();
-
-      formData.forEach((value, key) => {
-        if (typeof value === "string" && value.trim() !== "") {
-          params.append(key, value.trim());
-        }
-      });
-
-      // Navigate to contact page with URL params and hash to auto-scroll directly to the enquiry form section
-      window.location.href = `/contact?${params.toString()}#enquiry-form-section`;
-    });
-  }
-
-  // Execute immediately when browser loads HTML
-  initHeroCompactForm();
-
-  // Execute on Astro View Transition SPA navigation
-  document.addEventListener("astro:page-load", initHeroCompactForm);
-</script>

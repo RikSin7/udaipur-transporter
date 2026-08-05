@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getEntry, render } from "astro:content";
 import {
   IconBuildingArch,
   IconMail,
@@ -10,25 +10,14 @@ import {
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 
-// 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  email: "bookings@udaipurtransporter.com",
-  address:
-    "12, City Palace Road, near Jagdish Temple, Udaipur, Rajasthan 313001",
-};
+// 1. Fetch Singleton Settings
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const site = settingsEntry.data;
 
 // 2. Fetch Singleton Privacy Data
-const privacyEntries = await getCollection("privacy");
-const privacyEntry = privacyEntries[0];
-
-if (!privacyEntry) {
-  throw new Error(
-    "Missing src/content/privacy/privacy.md file. Please create it to render the Privacy Policy.",
-  );
-}
+const privacyEntry = await getEntry("privacy", "privacy");
+if (!privacyEntry) throw new Error("Missing privacy.md file");
 
 const { title, subtitle, lastUpdated } = privacyEntry.data;
 const { Content } = await render(privacyEntry);
@@ -43,7 +32,7 @@ const { Content } = await render(privacyEntry);
   <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
     {/* Subtle Background */}
     <div
-      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"
+      class="absolute inset-0 bg-[radial-gradient(#BFA06A_1px,transparent_1px)] bg-size-[24px_24px] opacity-10 pointer-events-none"
     >
     </div>
 
@@ -99,7 +88,7 @@ const { Content } = await render(privacyEntry);
 
         {/* Dynamic Data Protection Contact Box */}
         <div
-          class="mt-14 pt-8 border-t-2 border-brand-100 bg-surface-alt/60 p-6 sm:p-8 rounded-xl border border-brand-100/80 shadow-2xs"
+          class="mt-14 pt-8 border-t-2 bg-surface-alt/60 p-6 sm:p-8 rounded-xl border border-brand-100/80 shadow-2xs"
         >
           <div class="flex items-center gap-2 mb-2">
             <IconShieldCheck

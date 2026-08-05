@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import {
   IconStarFilled,
   IconShieldCheck,
@@ -10,13 +10,10 @@ import ReviewCard from "../components/cards/ReviewCard.astro";
 import HeroHeader from "../components/ui/HeroHeader.astro";
 import DirectContactCTA from "../components/sections/DirectContactCTA.astro";
 
-// 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+// 1. Fetch Singleton Settings
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const site = settingsEntry.data;
 
 // 2. Fetch All Reviews & Sort Ascending by Order
 const allReviews = await getCollection("reviews");
@@ -34,8 +31,9 @@ const averageRating =
       ).toFixed(1)
     : "5.0";
 
-const hubEntries = await getCollection("reviews_hub");
-const hubData = hubEntries[0]?.data;
+const hubEntry = await getEntry("reviews_hub", "reviews_hub");
+if (!hubEntry) throw new Error("Missing reviews_hub.md file");
+const hubData = hubEntry.data;
 ---
 
 <BaseLayout

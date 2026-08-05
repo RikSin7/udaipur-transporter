@@ -165,6 +165,11 @@ collections:
           - label: "Workflow Steps"
             name: "workflowSteps"
             widget: "list"
+            min: 4
+            max: 4
+            add_to_top: false
+            allow_add: false
+            allow_delete: false
             fields:
               - { label: "Step Number", name: "stepNumber", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
@@ -293,6 +298,11 @@ collections:
           - label: "How We Work Items"
             name: "howWeWork"
             widget: "list"
+            min: 4
+            max: 4
+            add_to_top: false
+            allow_add: false
+            allow_delete: false
             fields:
               - label: "Icon"
                 name: "icon"
@@ -321,6 +331,11 @@ collections:
           - label: "Stats"
             name: "stats"
             widget: "list"
+            min: 4
+            max: 4
+            add_to_top: false
+            allow_add: false
+            allow_delete: false
             fields:
               - { label: "Value", name: "value", widget: "string" }
               - { label: "Label", name: "label", widget: "string" }
@@ -803,7 +818,7 @@ collections:
             }
 
       - name: "catalogue_cta"
-        label: "Catalogue Cross-Selling Consultation Banners"
+        label: "Catalogue Cross-Selling Consultation Banners (Services & Vehicles)"
         file: "src/content/catalogue_cta/catalogue_cta.md"
         fields:
           - {

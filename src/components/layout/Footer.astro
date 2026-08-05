@@ -18,18 +18,12 @@ import {
 } from "@tabler/icons-astro";
 import { Image } from "astro:assets";
 import { cn } from "../../utils/cn";
+import { getEntry } from "astro:content";
 
 // 1. Fetch Singleton Settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-  email: "bookings@udaipurtransporter.com",
-  operatingHours: "Typical Response Time: Under 15 Minutes",
-  serviceArea:
-    "Udaipur City, Maharana Pratap Airport (Dabok), & All Rajasthan Outstation Routes",
-};
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const site = settingsEntry.data;
 
 // 2. Query & Slice Top 5 Published Services by sortOrder
 const allServices = await getCollection("services");

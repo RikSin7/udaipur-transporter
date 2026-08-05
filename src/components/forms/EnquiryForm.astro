@@ -55,7 +55,7 @@ const passengerCounters = [
     label: "Luggage Bags",
     sub: "(Large Suitcases)",
     min: 0,
-    val: 0,
+    val: 1,
     span: "col-span-2 md:col-span-4",
   },
 ];
@@ -227,7 +227,7 @@ const passengerCounters = [
     </div>
   </div>
 
-  {/* Section 4: Passengers (Refactored to map) */}
+  {/* Section 4: Passengers */}
   <div class="space-y-4 pt-2">
     <div class="grid grid-cols-2 md:grid-cols-12 gap-5 pt-3">
       {
@@ -310,31 +310,28 @@ const passengerCounters = [
 
 <script>
   function initFormLogic() {
-    // 1. Auto-fill Logic
+    // 1. Auto-fill Logic (Restricted to service and vehicle parameters)
     const params = new URLSearchParams(window.location.search);
     for (const [key, val] of params.entries()) {
+      if (key !== "service" && key !== "vehicle") continue;
       const el = document.getElementById(key) as
         HTMLInputElement | HTMLSelectElement | null;
-      if (el) {
-        if (el.tagName === "SELECT") {
-          const select = el as HTMLSelectElement;
-          const targetStr = val.toLowerCase();
-          const match = Array.from(select.options).find(
-            (o) =>
-              o.value.toLowerCase().includes(targetStr) ||
-              o.text.toLowerCase().includes(targetStr),
-          );
-          if (match) {
-            match.selected = true;
-          } else {
-            const newOpt = document.createElement("option");
-            newOpt.value = val;
-            newOpt.textContent = val;
-            newOpt.selected = true;
-            select.appendChild(newOpt);
-          }
+      if (el && el.tagName === "SELECT") {
+        const select = el as HTMLSelectElement;
+        const targetStr = val.toLowerCase();
+        const match = Array.from(select.options).find(
+          (o) =>
+            o.value.toLowerCase().includes(targetStr) ||
+            o.text.toLowerCase().includes(targetStr),
+        );
+        if (match) {
+          match.selected = true;
         } else {
-          el.value = val;
+          const newOpt = document.createElement("option");
+          newOpt.value = val;
+          newOpt.textContent = val;
+          newOpt.selected = true;
+          select.appendChild(newOpt);
         }
       }
     }

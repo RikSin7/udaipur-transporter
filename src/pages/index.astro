@@ -6,7 +6,7 @@ import FeaturedServices from "../components/sections/FeaturedServices.astro";
 import FeaturedVehicles from "../components/sections/FeaturedVehicles.astro";
 import BookingProcess from "../components/sections/BookingProcess.astro";
 import EnquiryForm from "../components/forms/EnquiryForm.astro";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { getWhatsAppUrl } from "../utils/helpers";
 import ReviewsSection from "../components/sections/ReviewsSection.astro";
 import PlanYourTrip from "../components/sections/PlanYourTrip.astro";
@@ -15,26 +15,14 @@ import SectionHeader from "../components/ui/SectionHeader.astro";
 import { sortPublishedByOrder } from "../utils/helpers";
 
 // Fetch site settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-  serviceArea: "Udaipur & All Rajasthan Outstation Routes",
-  seoDefaultTitle:
-    "Udaipur Royal Transporter | Private Taxi & Car Rental in Udaipur",
-  seoDefaultDesc:
-    "Straightforward Private cabs, transfers & tours across Udaipur.",
-};
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const site = settingsEntry.data;
 
 // Fetch homepage content
-const homeEntries = await getCollection("home");
-const homeData = homeEntries[0]?.data || {
-  enquiryBadge: "Direct Local Booking",
-  enquiryTitle: "Request Your Transport Quote",
-  enquiryDesc:
-    "Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability.",
-};
+const homeEntry = await getEntry("home", "home");
+if (!homeEntry) throw new Error("Missing home.md file");
+const homeData = homeEntry.data;
 
 // Fetch and sort services & vehicles
 const allServices = await getCollection("services");

@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import {
   IconCar,
   IconCompass,
@@ -8,6 +7,7 @@ import {
   IconBrandWhatsapp,
 } from "@tabler/icons-astro";
 import { getWhatsAppUrl, createCleanParam } from "../../utils/helpers";
+import { getEntry } from "astro:content";
 
 interface Props {
   type: "services" | "vehicles";
@@ -16,15 +16,14 @@ interface Props {
 const { type }: Props = Astro.props;
 const isServicesPage = type === "services";
 
-// 1. Fetch Singleton Business Settings for WhatsApp Routing
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  whatsapp: "917045836164",
-};
+// 1. Fetch Singleton Settings
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const site = settingsEntry.data;
 
-const ctaEntries = await getCollection("catalogue_cta");
-const ctaData = ctaEntries[0]?.data;
+const ctaEntry = await getEntry("catalogue_cta", "catalogue_cta");
+if (!ctaEntry) throw new Error("Missing catalogue_cta.md file");
+const ctaData = ctaEntry.data;
 
 // 2. Build Dynamic Cross-Link Configuration (Left Card)
 const crossLink = {
@@ -115,7 +114,7 @@ const inquiry = {
         </div>
       </a>
 
-      {/* RIGHT CARD: Dynamic Consultation with Dual Actions */}
+      {/* RIGHT CARD: Dynamic Consultation */}
       <div
         class="lg:col-span-7 bg-brand-900 border border-brand-800 rounded-2xl p-5 sm:p-6 shadow-premium flex flex-col justify-between text-white relative overflow-hidden"
       >
@@ -158,7 +157,7 @@ const inquiry = {
           {/* Action 1: Standard Enquiry Form */}
           <a
             href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}`}
-            class="flex-1 bg-[var(--color-cta,#AD5C1F)] hover:bg-[var(--color-cta-hover,#8E4416)] text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95 uppercase"
+            class="flex-1 bg-cta hover:bg-cta-hover text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95 uppercase"
           >
             <span>Send Enquiry Form</span>
             <IconArrowRight

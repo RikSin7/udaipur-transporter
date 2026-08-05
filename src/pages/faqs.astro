@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { IconChevronDown, IconArrowRight } from "@tabler/icons-astro";
 import { slugify, sortPublishedByOrder } from "../utils/helpers";
@@ -9,13 +9,10 @@ import HeroHeader from "../components/ui/HeroHeader.astro";
 import ServiceCard from "../components/cards/ServiceCard.astro";
 import DirectContactCTA from "../components/sections/DirectContactCTA.astro";
 
-// 1. Fetch Singleton Business Settings
-const settingsEntries = await getCollection("settings");
-const site = settingsEntries[0]?.data || {
-  companyName: "Udaipur Royal Transporter",
-  phone: "+91 70458 36164",
-  whatsapp: "917045836164",
-};
+// 1. Fetch Singleton Settings
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const site = settingsEntry.data;
 
 // 2. Fetch All Published FAQs & Sort by Order
 const allFaqs = await getCollection("faqs");
@@ -42,8 +39,9 @@ const groupedFaqs = categories
 const allServices = await getCollection("services");
 const topServices = sortPublishedByOrder(allServices).slice(0, 3);
 
-const hubEntries = await getCollection("faqs_hub");
-const hubData = hubEntries[0]?.data;
+const hubEntry = await getEntry("faqs_hub", "faqs_hub");
+if (!hubEntry) throw new Error("Missing faqs_hub.md file");
+const hubData = hubEntry.data;
 ---
 
 <BaseLayout

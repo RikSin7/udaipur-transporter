@@ -84,7 +84,7 @@ const schemaData = {
   !isHome && (
     <nav aria-label="Breadcrumb" class="font-sans transition-all duration-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center">
-        <ol class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <ol class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {/* Home Root Link */}
           <li class="inline-flex items-center shrink-0">
             <a
@@ -111,14 +111,14 @@ const schemaData = {
                 {isLast || !item.href ? (
                   <span
                     aria-current="page"
-                    class="text-brand-900 font-semibold opacity-95 tracking-normal truncate max-w-[200px] sm:max-w-[320px] md:max-w-none select-none"
+                    class="text-brand-900 font-semibold opacity-95 tracking-normal truncate max-w-50 sm:max-w-[320px] md:max-w-none select-none"
                   >
                     {item.label}
                   </span>
                 ) : (
                   <a
                     href={item.href}
-                    class="text-typography-muted opacity-75 hover:opacity-100 hover:text-accent focus:text-accent font-medium transition-all duration-200 focus:outline-none truncate max-w-[150px] sm:max-w-[240px] md:max-w-none"
+                    class="text-typography-muted opacity-75 hover:opacity-100 hover:text-accent focus:text-accent font-medium transition-all duration-200 focus:outline-none truncate max-w-37.5 sm:max-w-60 md:max-w-none"
                   >
                     {item.label}
                   </a>

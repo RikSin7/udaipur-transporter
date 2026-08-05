@@ -32,7 +32,7 @@ const ratingCount = item.rating || 5;
   <div>
     {/* Star Rating & Quote Icon Header */}
     <div class="flex items-center justify-between mb-6">
-      <div class="flex items-center gap-1 text-[var(--color-accent,#D7B56D)]">
+      <div class="flex items-center gap-1 text-accent">
         {[...Array(ratingCount)].map(() => <IconStarFilled size={16} />)}
       </div>
       <div class="text-brand-300 group-hover:text-brand-900 transition-colors">
@@ -75,7 +75,7 @@ const ratingCount = item.rating || 5;
 
         <div class="min-w-0">
           <h3
-            class="font-serif font-bold text-accent-dark text-base leading-snug truncate group-hover:text-[var(--color-accent-dark,#8D671D)] transition-colors duration-300"
+            class="font-serif font-bold text-accent-dark text-base leading-snug truncate group-hover:text-accent-dark transition-colors duration-300"
           >
             {item.author}
           </h3>
