@@ -24,10 +24,12 @@ import ServiceGalleryHero from "../../components/sections/ServiceGalleryHero.ast
 // 1. GENERATE STATIC PATHS
 export async function getStaticPaths() {
   const services = await getCollection("services");
-  return services.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }));
+  return services
+    .filter((entry) => entry.data.published)
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
 }
 
 // 2. FETCH CURRENT SERVICE PROPS

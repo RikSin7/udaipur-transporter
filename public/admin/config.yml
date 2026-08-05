@@ -1053,13 +1053,16 @@ collections:
         }
 
       # 3. Suitable Vehicles
-      - {
-          label: "Suitable Vehicles (Vehicle IDs/Slugs)",
-          name: "suitableVehicles",
-          widget: "list",
-          required: false,
-          hint: "Enter vehicle file slugs like 'sedan', 'suv', or 'tempo-traveller'",
-        }
+      - label: "Suitable Vehicles"
+        name: "suitableVehicles"
+        widget: "relation"
+        collection: "vehicles"
+        search_fields: ["title", "summary"]
+        value_field: "{{slug}}"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+        hint: "Select one or more vehicles from the dropdown to display as suitable options for this service."
 
       # 4. Service-Specific FAQs
       - label: "Service FAQs"
@@ -1373,13 +1376,15 @@ collections:
               "Travel Tips",
             ],
         }
-      - {
-          label: "Related Service (Slug)",
-          name: "relatedService",
-          widget: "string",
-          required: false,
-          hint: "Enter the file slug of a service (e.g., 'udaipur-airport-transfer') to cross-link it at the end of this blog post!",
-        }
+      - label: "Related Service"
+        name: "relatedService"
+        widget: "relation"
+        collection: "services"
+        search_fields: ["title", "category"]
+        value_field: "{{slug}}"
+        display_fields: ["title"]
+        required: false
+        hint: "Select a service from the dropdown to cross-link it at the end of this blog post!"
       - {
           label: "Published",
           name: "published",

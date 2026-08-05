@@ -19,10 +19,12 @@ import {
 // 1. GENERATE STATIC PATHS FOR EVERY ARTICLE
 export async function getStaticPaths() {
   const articles = await getCollection("blog");
-  return articles.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }));
+  return articles
+    .filter((entry) => entry.data.published)
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
 }
 
 // 2. EXTRACT ARTICLE DATA
