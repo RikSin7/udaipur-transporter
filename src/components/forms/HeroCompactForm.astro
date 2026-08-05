@@ -9,7 +9,7 @@ const allServices = await getCollection("services");
 const publishedServices = sortPublishedByOrder(allServices);
 
 const inputBaseClasses =
-  "w-full px-3.5 py-3 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all font-medium text-brand-900";
+  "w-full min-w-0 max-w-full block box-border px-3.5 py-3 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all font-medium text-brand-900";
 ---
 
 <div
@@ -121,7 +121,7 @@ const inputBaseClasses =
       </div>
 
       {/* Travel Date - Half width on sm+ */}
-      <div>
+      <div class="min-w-0">
         <label
           for="hero-travelDate"
           class="block text-xs font-bold uppercase tracking-wider text-brand-900 mb-1.5"
@@ -132,8 +132,7 @@ const inputBaseClasses =
           type="date"
           id="hero-travelDate"
           name="travelDate"
-          min={new Date().toISOString().split("T")[0]}
-          class={cn(inputBaseClasses, "text-brand-900")}
+          class={cn(inputBaseClasses, "text-brand-900 appearance-none min-w-0 max-w-full block")}
         />
       </div>
     </div>
@@ -204,3 +203,17 @@ const inputBaseClasses =
     </div>
   </form>
 </div>
+
+<script>
+  function initHeroForm() {
+    const dateInput = document.getElementById(
+      "hero-travelDate",
+    ) as HTMLInputElement;
+    if (dateInput) {
+      dateInput.min = new Date().toISOString().split("T")[0];
+    }
+  }
+
+  initHeroForm();
+  document.addEventListener("astro:page-load", initHeroForm);
+</script>

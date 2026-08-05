@@ -33,7 +33,9 @@ const ratingCount = item.rating || 5;
     {/* Star Rating & Quote Icon Header */}
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-1 text-accent">
-        {[...Array(ratingCount)].map(() => <IconStarFilled size={16} />)}
+        {[...Array(Math.max(1, Math.min(5, Math.floor(ratingCount))))].map(
+          () => <IconStarFilled size={16} />,
+        )}
       </div>
       <div class="text-brand-300 group-hover:text-brand-900 transition-colors">
         <IconQuote size={28} stroke={1.5} />

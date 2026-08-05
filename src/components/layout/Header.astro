@@ -164,6 +164,7 @@ const navLinks = [
           type="button"
           class="text-brand-900 p-2 rounded-xl bg-surface-card border border-border-dark hover:border-brand-900 focus:outline-none transition-colors"
           aria-label="Toggle Navigation Menu"
+          aria-expanded="false"
         >
           <svg
             class="w-6 h-6"
@@ -238,7 +239,8 @@ const navLinks = [
     btn.dataset.init = "true";
 
     btn.addEventListener("click", () => {
-      menu?.classList.toggle("hidden");
+      const isClosed = menu?.classList.toggle("hidden");
+      btn.setAttribute("aria-expanded", String(!isClosed));
       openIcon?.classList.toggle("hidden");
       closeIcon?.classList.toggle("hidden");
     });

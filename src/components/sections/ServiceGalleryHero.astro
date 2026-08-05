@@ -139,6 +139,10 @@ const getItemClass = (total: number, index: number) => {
         {/* Title & Subtitle (Bottom Anchored) */}
         <div class="absolute bottom-6 left-0 w-full text-center px-4 z-110 pointer-events-none">
           <div class="max-w-3xl mx-auto drop-shadow-lg">
+            <span
+              id="modal-counter"
+              class="text-white/70 text-[11px] font-bold tracking-widest uppercase block mb-1 transition-opacity duration-300 empty:hidden pointer-events-auto"
+            />
             <h3
               id="modal-title"
               class="text-white font-serif text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-widest mb-1 transition-opacity duration-300 empty:hidden pointer-events-auto"

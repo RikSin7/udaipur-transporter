@@ -31,7 +31,7 @@ const publishedServices = sortPublishedByOrder(allServices);
 const publishedVehicles = sortPublishedByOrder(allVehicles);
 
 const inputBaseClasses =
-  "w-full px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";
+  "w-full min-w-0 max-w-full block box-border px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";
 
 // Array map
 const passengerCounters = [
@@ -185,7 +185,7 @@ const passengerCounters = [
   {/* Section 3: Schedule */}
   <div class="space-y-4 pt-2">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-      <div class="md:col-span-4">
+      <div class="md:col-span-4 min-w-0">
         <label for="pickup" class="block text-xs font-bold uppercase mb-1.5"
           >Pickup Location <span class="text-red-500">*</span></label
         >
@@ -198,7 +198,7 @@ const passengerCounters = [
           class={inputBaseClasses}
         />
       </div>
-      <div class="md:col-span-4">
+      <div class="md:col-span-4 min-w-0">
         <label for="drop" class="block text-xs font-bold uppercase mb-1.5"
           >Drop Location <span class="text-red-500">*</span></label
         >
@@ -211,7 +211,7 @@ const passengerCounters = [
           class={inputBaseClasses}
         />
       </div>
-      <div class="md:col-span-4">
+      <div class="md:col-span-4 min-w-0">
         <label
           for="travelDate"
           class="flex justify-between text-xs font-bold uppercase mb-1.5"
@@ -222,7 +222,10 @@ const passengerCounters = [
           type="date"
           id="travelDate"
           name="travelDate"
-          class={inputBaseClasses}
+          class={cn(
+            inputBaseClasses,
+            "min-w-0 max-w-full block appearance-none",
+          )}
         />
       </div>
     </div>
@@ -311,6 +314,14 @@ const passengerCounters = [
 
 <script>
   function initFormLogic() {
+    // Set dynamic minimum date for travelDate input
+    const dateInput = document.getElementById(
+      "travelDate",
+    ) as HTMLInputElement | null;
+    if (dateInput) {
+      dateInput.min = new Date().toISOString().split("T")[0];
+    }
+
     // 1. Auto-fill Logic (Restricted to service and vehicle parameters)
     const params = new URLSearchParams(window.location.search);
     for (const [key, val] of params.entries()) {

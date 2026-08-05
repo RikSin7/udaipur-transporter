@@ -133,7 +133,7 @@ const blogCollection = defineCollection({
     summary: z.string().max(160, "Summary used for card preview and SEO description"),
     publishDate: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
     author: z.string().default("Transport Editorial Team"),
-    category: z.enum(["Vehicle Guide", "Airport Transfers", "Pricing & Quotes", "Travel Tips"]),
+    category: z.enum(["Vehicle Guide", "Airport Transfers", "Pricing & Quotes", "Travel Tips"]).default("Travel Tips"),
     image: image().optional(),
     relatedService: z.string().optional(),
     published: z.boolean().default(true),
@@ -306,7 +306,7 @@ const reviewCollection = defineCollection({
     author: z.string(),
     location: z.string().default("Verified Traveller"),
     service: z.string(), // e.g., "Airport Pickup & 2-Day Sightseeing"
-    rating: z.number().min(1).max(5).default(5),
+    rating: z.number().int().min(1).max(5).default(5),
     date: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val), // e.g., "October 2025"
     comment: z.string(),
     verified: z.boolean().default(true),
