@@ -1,13 +1,13 @@
 # Udaipur Royal Transporter
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://udaipurtransporter.netlify.app)
-[![Built with Astro](https://img.shields.io/badge/Built_with-Astro_5-FF5D01?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
-[![Styled with Tailwind CSS](https://img.shields.io/badge/Styled_with-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Built with Astro](https://img.shields.io/badge/Built_with-Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
+[![Styled with Tailwind CSS v4](https://img.shields.io/badge/Styled_with-Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![CMS powered by Decap](https://img.shields.io/badge/Content-Decap_CMS-F92672?style=for-the-badge&logo=decap-cms&logoColor=white)](https://decapcms.org/)
 
-**Udaipur Royal Transporter** is a reliable web application engineered for private car hires, dependable airport transfers (Maharana Pratap Airport / Dabok), local sightseeing packages, and outstation taxi routes across Rajasthan. 
+**Udaipur Royal Transporter** is a modern, high-performance web application engineered for premium private car hires, dependable airport transfers (Maharana Pratap Airport / Dabok), local sightseeing travel packages, and outstation taxi routes across Rajasthan. 
 
-Built for performance, aesthetics, and easy content editing, the platform features a Champagne Gold luxury design system, static HTML compilation via Astro 5, and complete editorial control powered by **Decap CMS**.
+Built for instantaneous load times, rich visual aesthetics, and effortless editorial control, the platform features a Champagne Gold luxury design system, static compilation via modern **Astro**, **Tailwind CSS v4**, and complete headless content management powered by **Decap CMS**.
 
 ---
 
@@ -20,32 +20,37 @@ Built for performance, aesthetics, and easy content editing, the platform featur
 
 ## ✨ Highlights & Architecture
 
-### 1. 100% Headless Content Management (Decap CMS)
-Every piece of user-facing content is architected into **Astro Content Collections (`src/content/`)** and configured for **Decap CMS (`/admin/config.yml`)**:
-- **Singleton Pages**: Home Page (Hero, Why Choose Us, Booking Process, Enquiry Banner), About Us, Contact, Privacy Policy, Terms of Service, and Global Site Settings.
-- **Folder Collections**: Services, Vehicle Fleet & Capacities, Passenger Reviews, FAQs, and Transport Blog Guides.
-- Editors can manage titles, rates, itinerary breakdowns, FAQs, verification ratings, and image assets without writing a single line of code.
+### 1. 100% Headless Content Layer & Hub Architecture
+Every piece of user-facing content is strictly typed via Astro's Content Layer API (**`src/content.config.ts`**) and configured for **Decap CMS (`/admin/config.yml`)**:
+- **Singleton & Hub Collections**: Primary pages (Home, About Us, Contact, Privacy Policy, Terms of Service, Thank You), global site settings, dynamic call-to-action banners (`catalogue_cta`, `direct_contact_cta`), and Hub pages for section landing experiences (`services_hub`, `vehicles_hub`, `blog_hub`, `reviews_hub`, `faqs_hub`).
+- **Folder Collections**: Categorised Services, Vehicle Fleet & Capacities, Verified Passenger Reviews, FAQs, and Transport Planning Blog Guides.
+- Editors can manage titles, rates, luggage capacities, itineraries, FAQs, ratings, and imagery entirely through the admin dashboard without modifying source code.
 
-### 2. Dynamic Icon Resolver Architecture
-Instead of hardcoding iconography across Astro components, the application utilizes a centralized **[iconResolver.ts](./src/utils/iconResolver.ts)** dictionary. Editors can select Tabler Icons via simple visual dropdowns in Decap CMS, and components resolve them dynamically with zero client-side JavaScript overhead or bundle bloat.
+### 2. Modern UI & Navigation Ecosystem
+- **Interactive Tab Bar Navigation**: Features a sticky, floating `TabBar` component equipped with automatic item-count badges. It functions both as an anchor scroll navigator for categorised services and FAQs, as well as an instant client-side filter for blog guides.
+- **Graceful Fallbacks & Empty States**: Uniform, cleanly styled fallback UI components across carousels, vehicle grids, and service listings when content is unpublished or being updated.
+- **Tailwind CSS v4 & Utility Scaling**: Uses modern Tailwind CSS v4 paired with custom vanilla tokens in `global.css` and safe className merging via `clsx` and `tailwind-merge` (`cn.ts`).
 
-### 3. Automated WhatsApp & Telephone Routing
-Built with conversion optimization in mind, the platform uses intelligent contact utilities (`getWhatsAppUrl` & `createCleanParam`):
-- Clicking any vehicle or service enquiry button automatically constructs a pre-populated WhatsApp message contextualized with the exact vehicle category, itinerary, or page URL.
-- One-click phone calling integration for mobile travellers.
+### 3. Dynamic Icon Resolver Architecture
+Instead of hardcoding iconography across components, the application utilizes a centralized **`iconResolver.ts`** mapping dictionary. Content editors select Tabler Icons (`@tabler/icons-astro`) via visual dropdowns in Decap CMS, which are resolved dynamically at build time with zero client-side JavaScript bundle bloat.
 
-### 4. High-Performance Static Generation & SEO
-- **Zero JS by Default**: Built on Astro's island architecture, delivering instantaneous page load speeds and top Core Web Vitals scores.
-- **Image Pipeline**: Automatic optimization of all CMS-uploaded assets from `src/assets/images` to responsive WebP formats at build time.
-- **SEO & Social Metadata**: Customizable SEO meta tags, title prefixes, and descriptive summaries for every service route and travel guide.
+### 4. Automated WhatsApp & Direct Telephone Routing
+Built specifically for conversion optimization, the platform uses intelligent contact routing utilities (`getWhatsAppUrl` & `createCleanParam`):
+- Clicking any vehicle or service enquiry button dynamically compiles a pre-populated WhatsApp message contextualized with the exact vehicle category, itinerary breakdown, or referencing page URL.
+- Instantaneous one-click phone calling and email triggering for mobile travelers.
+
+### 5. High-Performance Static Generation & SEO
+- **Zero JS by Default**: Built on Astro's Island architecture, delivering lightning-fast page loading speeds and top Core Web Vitals performance.
+- **Automated Image & Typography Pipeline**: Automatic optimization of CMS-uploaded media assets to modern compressed formats, complemented by self-hosted variable font packages (`@fontsource/manrope`, `@fontsource/plus-jakarta-sans`) for zero layout shifts.
+- **SEO & Sitemap Ready**: Comprehensive dynamic metadata generation, custom social preview descriptions for every route/guide, and automated sitemap generation (`@astrojs/sitemap`).
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Core Framework:** [Astro 5.x](https://astro.build) (Static Site Generator)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com) + Vanilla Custom Design Tokens
-- **Icons:** [Tabler Icons for Astro](https://github.com/tabler/tabler-icons) (`@tabler/icons-astro`)
+- **Core Framework:** [Astro](https://astro.build) (Static Site Generator & Content Layer)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com) + Custom Luxury Design Tokens + `clsx` / `tailwind-merge`
+- **Typography & Icons:** [Fontsource](https://fontsource.org/) (Manrope & Plus Jakarta Sans) + [Tabler Icons for Astro](https://github.com/tabler/tabler-icons) (`@tabler/icons-astro`)
 - **CMS:** [Decap CMS](https://decapcms.org) configured with Netlify Identity & Git Gateway
 - **Hosting & CI/CD:** [Netlify](https://netlify.com)
 
@@ -56,27 +61,30 @@ Built with conversion optimization in mind, the platform uses intelligent contac
 ```text
 ├── public/
 │   ├── admin/
-│   │   ├── config.yml        # Complete Decap CMS editorial mapping
+│   │   ├── config.yml        # Complete Decap CMS schema & editorial mapping
 │   │   └── index.html        # Decap CMS SPA wrapper
 │   └── favicon.svg
 ├── src/
 │   ├── assets/
-│   │   └── images/           # CMS media storage directory
+│   │   └── images/           # CMS media asset directory
 │   ├── components/
 │   │   ├── cards/            # Reusable Service, Vehicle, Blog & Review cards
-│   │   ├── forms/            # Interactive Enquiry Form
-│   │   ├── layout/           # Header, Footer, SEO wrapper
-│   │   └── sections/         # Hero, WhyChooseUs, BookingProcess, Featured grids
-│   ├── content/              # Managed Markdown & YAML files (Services, Vehicles, etc.)
+│   │   ├── forms/            # Interactive booking & general enquiry forms
+│   │   ├── layout/           # Header, Footer, and base layout scaffolding
+│   │   ├── sections/         # Hero grids, WhyChooseUs, Reviews Carousel, CTAs, FAQs
+│   │   └── ui/               # Reusable atomic UI elements (TabBar, SectionHeader, HeroHeader, ViewAllButton)
+│   ├── content/              # Managed Markdown & YAML files (Hub singletons & collections)
 │   ├── layouts/
-│   │   └── BaseLayout.astro  # Primary page template
-│   ├── pages/                # File-based routing (/services, /vehicles, /blog, etc.)
+│   │   └── BaseLayout.astro  # Primary page wrapping template with SEO tags
+│   ├── pages/                # File-based routing (/services, /vehicles, /reviews, /blog, etc.)
 │   ├── styles/
-│   │   └── global.css        # Luxury design variables & utility overrides
+│   │   └── global.css        # Tailwind imports & luxury design variables
 │   └── utils/
-│       ├── helpers.ts        # URL sanitization & WhatsApp deep links
-│       └── iconResolver.ts   # CMS String-to-JSX dynamic icon mapper
-├── astro.config.mjs          # Astro config & Tailwind integration
+│       ├── cn.ts             # Tailwind class merging utility (clsx + tailwind-merge)
+│       ├── helpers.ts        # URL sanitization, date formatting & WhatsApp deep linking
+│       └── iconResolver.ts   # CMS string-to-JSX dynamic Tabler icon mapper
+├── src/content.config.ts     # Astro Content Layer collection definitions & Zod validation
+├── astro.config.mjs          # Astro config & Vite plugins (@tailwindcss/vite, sitemap)
 └── package.json
 ```
 
@@ -84,7 +92,7 @@ Built with conversion optimization in mind, the platform uses intelligent contac
 
 ## 🚀 Local Development Setup
 
-Follow these simple steps to set up and run the codebase on your local machine:
+Follow these steps to set up and run the codebase on your machine:
 
 ### 1. Clone the Repository
 ```bash
@@ -93,7 +101,7 @@ cd udaipur-transporter
 ```
 
 ### 2. Install Dependencies
-Make sure you have Node.js (v18+ recommended) installed, then run:
+Ensure you have Node.js (**v22.12.0 or higher** recommended as per engine specifications), then run:
 ```bash
 npm install
 ```
@@ -102,18 +110,18 @@ npm install
 ```bash
 npm run dev
 ```
-Open [http://localhost:4321](http://localhost:4321) in your browser to view the application in real time.
+Open [http://localhost:4321](http://localhost:4321) in your browser to inspect and interact with the site in real time.
 
 ---
 
 ## 📦 Building for Production
 
-To build the optimized static bundle for Netlify or any static hosting provider:
+To compile the optimized static bundle for Netlify or any static hosting provider:
 
 ```bash
 npm run build
 ```
-This generates the ready-to-deploy static HTML, CSS, and compressed WebP images inside the `/dist` directory. You can preview your production build locally by running:
+This generates the deployment-ready static HTML, stylesheet bundles, and compressed WebP assets inside the `/dist` directory. You can locally preview the production build by running:
 
 ```bash
 npm run preview
@@ -122,10 +130,11 @@ npm run preview
 ---
 
 ## 🔐 CMS & Admin Deployment Notes
-This site uses **Git Gateway** on Netlify to authenticate content editors. When hosting on Netlify, ensure:
-1. **Identity** is enabled in your Netlify Site Settings.
-2. **Git Gateway** under Identity Services is activated and authenticated with your GitHub repository.
-3. Content editors visit **`/admin/`** on your live URL to log in and manage site content directly.
+
+This site leverages **Git Gateway** on Netlify to authenticate editorial team members. When hosting on Netlify:
+1. Enable **Identity** under your Netlify Site Settings.
+2. Activate **Git Gateway** under Identity Services and authorize access to the GitHub repository.
+3. Content editors visit **`/admin/`** on the live domain to authenticate and administer site content directly from their browser.
 
 ---
 

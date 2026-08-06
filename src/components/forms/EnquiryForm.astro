@@ -40,6 +40,7 @@ const passengerCounters = [
     label: "Adults",
     sub: "",
     min: 1,
+    max: 50,
     val: 2,
     span: "col-span-1 md:col-span-4",
   },
@@ -48,6 +49,7 @@ const passengerCounters = [
     label: "Children",
     sub: "(Under 12)",
     min: 0,
+    max: 50,
     val: 0,
     span: "col-span-1 md:col-span-4",
   },
@@ -56,6 +58,7 @@ const passengerCounters = [
     label: "Luggage Bags",
     sub: "(Large Suitcases)",
     min: 0,
+    max: 50,
     val: 1,
     span: "col-span-2 md:col-span-4",
   },
@@ -88,6 +91,10 @@ const passengerCounters = [
           id="name"
           name="name"
           required
+          minlength="2"
+          maxlength="60"
+          autocomplete="name"
+          autocapitalize="words"
           placeholder="Hrithik Roshan"
           class={inputBaseClasses}
         />
@@ -100,6 +107,12 @@ const passengerCounters = [
           type="tel"
           id="phone"
           name="phone"
+          inputmode="tel"
+          autocomplete="tel"
+          minlength="10"
+          maxlength="15"
+          pattern="[\+\-0-9\s\(\)]{10,15}"
+          title="Please enter a valid phone number"
           required
           placeholder="+91 70458 36164"
           class={inputBaseClasses}
@@ -194,6 +207,9 @@ const passengerCounters = [
           id="pickup"
           name="pickup"
           required
+          minlength="2"
+          maxlength="100"
+          autocomplete="off"
           placeholder="Airport"
           class={inputBaseClasses}
         />
@@ -207,6 +223,9 @@ const passengerCounters = [
           id="drop"
           name="drop"
           required
+          minlength="2"
+          maxlength="100"
+          autocomplete="off"
           placeholder="Hotel"
           class={inputBaseClasses}
         />
@@ -255,9 +274,12 @@ const passengerCounters = [
               </button>
               <input
                 type="number"
+                inputmode="numeric"
                 id={c.id}
                 name={c.id}
                 min={c.min}
+                max={c.max}
+                required
                 value={c.val}
                 class="flex-1 w-full text-center outline-none bg-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-medium"
               />
@@ -284,6 +306,7 @@ const passengerCounters = [
       id="message"
       name="message"
       rows="3"
+      maxlength="500"
       placeholder="Any special requests or requirements..."
       class={inputBaseClasses}></textarea>
   </div>
@@ -311,6 +334,20 @@ const passengerCounters = [
     </button>
   </div>
 </form>
+
+<style>
+  /* Native browser validation styles triggered only after user interaction */
+  input:user-invalid,
+  select:user-invalid,
+  textarea:user-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+  }
+  input:user-valid:not(:focus):not([type="date"]):not([type="number"]),
+  select:user-valid:not(:focus) {
+    border-color: #10b981 !important;
+  }
+</style>
 
 <script>
   function initFormLogic() {

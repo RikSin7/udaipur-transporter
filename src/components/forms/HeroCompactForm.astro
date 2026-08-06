@@ -58,6 +58,10 @@ const inputBaseClasses =
           id="hero-name"
           name="name"
           required
+          minlength="2"
+          maxlength="60"
+          autocomplete="name"
+          autocapitalize="words"
           placeholder="Hrithik Roshan"
           class={cn(
             inputBaseClasses,
@@ -78,7 +82,13 @@ const inputBaseClasses =
           type="tel"
           id="hero-phone"
           name="phone"
+          inputmode="tel"
+          autocomplete="tel"
           required
+          minlength="10"
+          maxlength="15"
+          pattern="[\+\-0-9\s\(\)]{10,15}"
+          title="Please enter a valid phone number"
           placeholder="+91 70458 36164"
           class={cn(
             inputBaseClasses,
@@ -132,7 +142,10 @@ const inputBaseClasses =
           type="date"
           id="hero-travelDate"
           name="travelDate"
-          class={cn(inputBaseClasses, "text-brand-900 appearance-none min-w-0 max-w-full block")}
+          class={cn(
+            inputBaseClasses,
+            "text-brand-900 appearance-none min-w-0 max-w-full block",
+          )}
         />
       </div>
     </div>
@@ -151,6 +164,9 @@ const inputBaseClasses =
           id="hero-pickup"
           name="pickup"
           required
+          minlength="2"
+          maxlength="100"
+          autocomplete="off"
           placeholder="Airport"
           class={cn(
             inputBaseClasses,
@@ -172,6 +188,9 @@ const inputBaseClasses =
           id="hero-drop"
           name="drop"
           required
+          minlength="2"
+          maxlength="100"
+          autocomplete="off"
           placeholder="Hotel"
           class={cn(
             inputBaseClasses,
@@ -203,6 +222,18 @@ const inputBaseClasses =
     </div>
   </form>
 </div>
+
+<style>
+  /* Native browser validation styles triggered only after user interaction */
+  input:user-invalid,
+  select:user-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+  }
+  input:user-valid:not(:focus):not([type="date"]):not([type="number"]) {
+    border-color: #10b981 !important;
+  }
+</style>
 
 <script>
   function initHeroForm() {

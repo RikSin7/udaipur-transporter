@@ -83,6 +83,10 @@ const hubData = hubEntries.data;
     tabs={categories.map((cat) => ({
       label: cat,
       category: cat,
+      badge:
+        cat === "All"
+          ? publishedArticles.length
+          : publishedArticles.filter((a) => a.data.category === cat).length,
     }))}
   />
 
