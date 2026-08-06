@@ -1,7 +1,7 @@
 /**
  * Generates a pre-filled WhatsApp URL with page context
  */
-export function getWhatsAppUrl(phone: string, serviceName?: string, pageUrl?: string): string {
+export function getWhatsAppUrl(phone: string, serviceName?: string): string {
     const cleanPhone = phone.replace(/\D/g, '');
 
     let message = "Hello! I am planning a trip and would love some help booking private transport in Udaipur. Could you please share some details and quotes with me?";

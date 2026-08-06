@@ -55,11 +55,7 @@ const {
 const { Content } = await render(aboutEntry);
 
 // 4. Decap CMS String-to-JSX Icon Resolver
-const whatsappUrl = getWhatsAppUrl(
-  site.whatsapp,
-  "About Us / General Enquiry",
-  Astro.url.href,
-);
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, "About Us / General Enquiry");
 ---
 
 <BaseLayout

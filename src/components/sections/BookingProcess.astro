@@ -11,11 +11,7 @@ if (!siteEntry) throw new Error("Missing site.md");
 const site = siteEntry.data;
 
 const callUrl = getCallUrl(site.phone);
-const whatsappUrl = getWhatsAppUrl(
-  site.whatsapp,
-  "Homepage Direct Enquiry",
-  Astro.url.href,
-);
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, "Homepage Direct Enquiry");
 
 // 2. Fetch homepage content
 const homeEntry = await getEntry("home", "home");

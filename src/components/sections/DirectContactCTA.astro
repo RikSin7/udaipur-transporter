@@ -46,7 +46,6 @@ const description = isFaq
 const whatsappUrl = getWhatsAppUrl(
   site.whatsapp,
   isFaq ? "FAQ Page Inquiry" : "Reviews Page Inquiry",
-  Astro.url.href,
 );
 const callUrl = getCallUrl(site.phone);
 ---

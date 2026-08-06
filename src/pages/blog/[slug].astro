@@ -64,11 +64,7 @@ const formattedDate = formatDate(publishDate, "long");
 const settingsEntries = await getEntry("settings", "site");
 if (!settingsEntries) throw new Error("Missing site.md file");
 const site = settingsEntries.data;
-const whatsappUrl = getWhatsAppUrl(
-  site.whatsapp,
-  `Article Inquiry: ${title}`,
-  Astro.url.href,
-);
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, `Article Inquiry: ${title}`);
 
 // Fetch Blog Details Page CTA Banner configuration from blog_hub
 const blogHubEntry = await getEntry("blog_hub", "blog_hub");
@@ -81,11 +77,7 @@ const blogCta = {
 };
 ---
 
-<BaseLayout
-  title={`${title} | ${site.companyName}`}
-  description={summary}
-  currentTitle={title}
->
+<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
   {/* 1. ARTICLE HERO HEADER */}
   <section class="bg-brand-900 text-white py-12 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

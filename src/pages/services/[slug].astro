@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import EnquiryForm from "../../components/forms/EnquiryForm.astro";
@@ -56,7 +56,9 @@ const {
   faqs = [],
 } = entry.data;
 
-const hasPrimaryGalleryImage = gallery.some((item: any) => item?.isPrimary);
+const hasPrimaryGalleryImage = gallery.some(
+  (item: { isPrimary?: boolean }) => item?.isPrimary,
+);
 
 let heroGallery = [...gallery];
 if (gallery.length > 0 && image && !hasPrimaryGalleryImage) {
@@ -67,10 +69,10 @@ if (gallery.length > 0 && image && !hasPrimaryGalleryImage) {
 const { Content } = await render(entry);
 
 // 4. FETCH DATA
-const [allVehicles, allServices, settingsEntries] = await Promise.all([
+const [allVehicles, allServices, settingsEntry] = await Promise.all([
   getCollection("vehicles"),
   getCollection("services"),
-  getCollection("settings"),
+  getEntry("settings", "site"),
 ]);
 
 const matchedVehicles = allVehicles.filter(
@@ -81,11 +83,12 @@ const relatedServices = allServices
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
   .slice(0, 3);
 
-// 5. BUSINESS SETTINGS
-const site = settingsEntries[0]?.data;
+const site = settingsEntry?.data;
+
+if (!site) throw new Error("Missing settings/site.md");
 
 const callUrl = getCallUrl(site.phone);
-const whatsappUrl = getWhatsAppUrl(site.whatsapp, title, Astro.url.href);
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, title);
 const hasPrice = !!pricing?.amount;
 const priceLabel = pricing?.shortLabel || "Ask for Price";
 
@@ -97,11 +100,7 @@ const reassurances = [
 ];
 ---
 
-<BaseLayout
-  title={`${title} | ${site.companyName}`}
-  description={summary}
-  currentTitle={title}
->
+<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
   {/* 1. GALLERY HERO */}
   {
     heroGallery && heroGallery.length > 0 ? (

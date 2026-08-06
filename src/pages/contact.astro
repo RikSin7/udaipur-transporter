@@ -31,11 +31,7 @@ if (!contactEntry) throw new Error("Missing contact.md file");
 const contactData = contactEntry.data;
 
 const callUrl = getCallUrl(site.phone);
-const whatsappUrl = getWhatsAppUrl(
-  site.whatsapp,
-  "General Contact Inquiry",
-  Astro.url.href,
-);
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, "General Contact Inquiry");
 ---
 
 <BaseLayout

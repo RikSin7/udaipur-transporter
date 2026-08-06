@@ -50,11 +50,7 @@ const categories = [
   "Pricing & Quotes",
   "Travel Tips",
 ];
-const whatsappUrl = getWhatsAppUrl(
-  site.whatsapp,
-  "Blog / Transport Planning",
-  Astro.url.href,
-);
+const whatsappUrl = getWhatsAppUrl(site.whatsapp, "Blog / Transport Planning");
 const hubEntries = await getEntry("blog_hub", "blog_hub");
 if (!hubEntries) throw new Error("Missing blog_hub.md file");
 const hubData = hubEntries.data;

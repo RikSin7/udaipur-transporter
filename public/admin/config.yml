@@ -266,7 +266,8 @@ collections:
               name: "seoDesc",
               widget: "text",
               required: false,
-              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+              hint: "Max 160 characters",
             }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Subtitle", name: "subtitle", widget: "text" }
@@ -572,7 +573,8 @@ collections:
               name: "seoDesc",
               widget: "text",
               required: false,
-              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+              hint: "Max 160 characters,
             }
           - {
               label: "Hero Badge",
@@ -671,7 +673,8 @@ collections:
               name: "seoDesc",
               widget: "text",
               required: false,
-              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+              hint: "Max 160 characters,
             }
           - {
               label: "Hero Badge",
@@ -704,7 +707,8 @@ collections:
               name: "seoDesc",
               widget: "text",
               required: false,
-              hint: "Max 160 characters for SEO optimization (exceeding 160 characters causes build validation to fail).",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+              hint: "Max 160 characters,
             }
           - {
               label: "Hero Badge",
@@ -741,7 +745,7 @@ collections:
               hint: "Optional background image for the hero banner section",
             }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -816,7 +820,7 @@ collections:
               hint: "Optional background image for the hero banner section",
             }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -844,7 +848,7 @@ collections:
         file: "src/content/reviews_hub/reviews_hub.md"
         fields:
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -862,7 +866,7 @@ collections:
               hint: "Optional background image for the hero banner section",
             }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -923,7 +927,7 @@ collections:
         file: "src/content/faqs_hub/faqs_hub.md"
         fields:
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -933,7 +937,7 @@ collections:
         file: "src/content/thank_you/thank_you.md"
         fields:
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text" }
+          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
           - { label: "Page Heading", name: "title", widget: "string" }
           - { label: "Confirmation Message", name: "message", widget: "text" }
           - {
@@ -1097,7 +1101,8 @@ collections:
           label: "Summary",
           name: "summary",
           widget: "string",
-          hint: "Max 160 characters for SEO cards",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+              hint: "Max 160 characters,
         }
       - {
           label: "Image",
@@ -1116,7 +1121,7 @@ collections:
           label: "Fallback Hero Title (When Gallery has 0 images)",
           name: "heroTitle",
           widget: "string",
-          hint: "Defaults to Title if left blank.",
+          hint: "This field is required. Provide a descriptive title.",
         }
       - {
           label: "Fallback Hero Description (When Gallery has 0 images)",
@@ -1148,7 +1153,7 @@ collections:
           label: "Gallery Section Title",
           name: "galleryTitle",
           widget: "string",
-          hint: "Leave blank to default to '<Service Title> in pictures'",
+          hint: "This field is required. Provide a descriptive title.",
         }
       - {
           label: "Gallery Section Description",
@@ -1386,6 +1391,7 @@ collections:
           label: "Question",
           name: "question",
           widget: "string",
+          pattern: ["^.{0,120}$", "Maximum 120 characters allowed"],
           hint: "Keep under 120 characters for clean display on mobile accordions",
         }
       - { label: "Answer", name: "answer", widget: "text" }
@@ -1500,6 +1506,7 @@ collections:
           label: "Title",
           name: "title",
           widget: "string",
+          pattern: ["^.{0,100}$", "Maximum 100 characters allowed"],
           hint: "Max 100 characters for optimal SEO",
         }
       - {
@@ -1514,6 +1521,7 @@ collections:
           label: "Summary",
           name: "summary",
           widget: "text",
+          pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
           hint: "Keep under 160 characters. Displayed on article preview cards and Google search results",
         }
       - { label: "Publish Date", name: "publishDate", widget: "datetime" }
