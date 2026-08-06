@@ -33,16 +33,40 @@ const inputBaseClasses =
   </div>
 
   <form
-    name="hero-quick-enquiry"
+    name="quick-travel-enquiry"
     method="POST"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
-    action="/thank-you/"
+    action="https://api.web3forms.com/submit"
     class="space-y-4"
   >
-    <input type="hidden" name="form-name" value="hero-quick-enquiry" />
-    <input type="hidden" name="source" value="hero-compact" />
-    <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+    <input
+      type="hidden"
+      name="access_key"
+      value="faf3cf87-86e1-4a4e-9271-3ca98642f58d"
+    />
+    <input
+      type="hidden"
+      name="subject"
+      value="New Quick Travel Quote Request | Udaipur Transporter"
+    />
+    <input
+      type="hidden"
+      name="from_name"
+      value="Udaipur Royal Transporter Web Form"
+    />
+    <input
+      type="hidden"
+      name="redirect"
+      class="web3-redirect"
+      value="https://udaipurtransporter.netlify.app/thank-you/"
+    />
+    <input
+      type="checkbox"
+      name="botcheck"
+      class="hidden"
+      style="display: none;"
+    />
+    <input type="hidden" name="form-name" value="quick-travel-enquiry" />
+    <input type="hidden" name="source" value="compact-form" />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name - Half width on sm+ */}
@@ -243,6 +267,11 @@ const inputBaseClasses =
     if (dateInput) {
       dateInput.min = new Date().toISOString().split("T")[0];
     }
+    document.querySelectorAll(".web3-redirect").forEach((el) => {
+      if (el instanceof HTMLInputElement) {
+        el.value = window.location.origin + "/thank-you/";
+      }
+    });
   }
 
   initHeroForm();

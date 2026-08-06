@@ -68,16 +68,40 @@ const passengerCounters = [
 <form
   name="travel-enquiry"
   method="POST"
-  data-netlify="true"
-  netlify-honeypot="bot-field"
-  action="/thank-you/"
+  action="https://api.web3forms.com/submit"
   class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-premium space-y-8 text-brand-900"
 >
   {/* Hidden Config */}
+  <input
+    type="hidden"
+    name="access_key"
+    value="faf3cf87-86e1-4a4e-9271-3ca98642f58d"
+  />
+  <input
+    type="hidden"
+    name="subject"
+    value="New Detailed Travel Enquiry | Udaipur Transporter"
+  />
+  <input
+    type="hidden"
+    name="from_name"
+    value="Udaipur Royal Transporter Web Form"
+  />
+  <input
+    type="hidden"
+    name="redirect"
+    class="web3-redirect"
+    value="https://udaipurtransporter.netlify.app/thank-you/"
+  />
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hidden"
+    style="display: none;"
+  />
   <input type="hidden" name="form-name" value="travel-enquiry" />
   <input type="hidden" name="sourcePage" value={currentUrl} />
   <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
-  <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
 
   {/* Section 1: Contact */}
   <div class="space-y-4">
@@ -400,6 +424,13 @@ const passengerCounters = [
         }, 150);
       }
     }
+
+    // 3. Update Web3Forms redirect URL to match current origin dynamically
+    document.querySelectorAll(".web3-redirect").forEach((el) => {
+      if (el instanceof HTMLInputElement) {
+        el.value = window.location.origin + "/thank-you/";
+      }
+    });
   }
 
   // Init Triggers
