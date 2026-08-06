@@ -7,6 +7,7 @@ import {
   IconPhoto,
 } from "@tabler/icons-astro";
 import SectionHeader from "../ui/SectionHeader.astro";
+import Breadcrumbs from "../layout/Breadcrumbs.astro";
 
 interface Props {
   title: string;
@@ -76,6 +77,7 @@ const getItemClass = (total: number, index: number) => {
   galleryData.length > 0 && (
     <section class="pt-12 pb-8 bg-brand-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumbs currentTitle={displayHeading} class="mb-6 sm:mb-8" />
         <SectionHeader
           subheading={badge}
           heading={displayHeading}

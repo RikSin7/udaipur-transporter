@@ -10,9 +10,14 @@ export interface BreadcrumbItem {
 interface Props {
   items?: BreadcrumbItem[];
   currentTitle?: string;
+  class?: string;
 }
 
-const { items: overrideItems, currentTitle }: Props = Astro.props;
+const {
+  items: overrideItems,
+  currentTitle,
+  class: className = "",
+}: Props = Astro.props;
 
 const pathname = Astro.url.pathname;
 const isHome =
@@ -84,18 +89,18 @@ const schemaData = {
   !isHome && (
     <nav
       aria-label="Breadcrumb"
-      class="font-sans transition-all duration-200 print:hidden"
+      class={`font-sans transition-all duration-200 print:hidden ${className}`}
     >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center">
-        <ol class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+      <div class="flex items-center w-full">
+        <ol class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full">
           {/* Home Root Link */}
           <li class="inline-flex items-center shrink-0">
             <a
               href="/"
-              class="text-typography-muted opacity-75 hover:opacity-100 hover:text-accent focus:text-accent flex items-center gap-1.5 font-medium transition-all duration-200 focus:outline-none group"
+              class="text-white/70 hover:text-white focus:text-white flex items-center gap-1.5 font-medium transition-all duration-200 focus:outline-none group"
               title="Return to Homepage"
             >
-              <IconHome class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-typography-muted opacity-60 group-hover:text-accent group-hover:opacity-100 shrink-0 transition-all duration-200" />
+              <IconHome class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/60 group-hover:text-white group-focus:text-white shrink-0 transition-all duration-200" />
               <span>Home</span>
             </a>
           </li>
@@ -105,23 +110,20 @@ const schemaData = {
             const isLast = index === breadcrumbs.length - 1;
             return (
               <li class="inline-flex items-center shrink-0 space-x-1.5 sm:space-x-2">
-                <span
-                  class="text-typography-muted opacity-35 shrink-0"
-                  aria-hidden="true"
-                >
+                <span class="text-white/40 shrink-0" aria-hidden="true">
                   <IconChevronRight class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </span>
                 {isLast || !item.href ? (
                   <span
                     aria-current="page"
-                    class="text-brand-900 font-semibold opacity-95 tracking-normal truncate max-w-50 sm:max-w-[320px] md:max-w-none select-none"
+                    class="text-white opacity-95 font-medium tracking-normal truncate max-w-50 sm:max-w-[320px] md:max-w-none select-none"
                   >
                     {item.label}
                   </span>
                 ) : (
                   <a
                     href={item.href}
-                    class="text-typography-muted opacity-75 hover:opacity-100 hover:text-accent focus:text-accent font-medium transition-all duration-200 focus:outline-none truncate max-w-37.5 sm:max-w-60 md:max-w-none"
+                    class="text-white/70 hover:text-white focus:text-white font-medium transition-all duration-200 focus:outline-none truncate max-w-37.5 sm:max-w-60 md:max-w-none"
                   >
                     {item.label}
                   </a>

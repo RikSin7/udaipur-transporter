@@ -1,12 +1,12 @@
 ---
 import { cn } from "../../utils/cn";
+import Breadcrumbs from "../layout/Breadcrumbs.astro";
 
 interface Props {
   heading: string;
   subheading?: string;
   description?: string;
   align?: "left" | "center";
-  theme?: "dark" | "light";
   class?: string;
 }
 
@@ -15,12 +15,10 @@ const {
   subheading,
   description,
   align = "left",
-  theme = "dark",
   class: className = "",
 }: Props = Astro.props;
 
 const isCenter = align === "center";
-const isDark = theme === "dark";
 
 const wrapperClasses = cn(
   isCenter ? "text-center max-w-4xl mx-auto" : "text-left max-w-3xl",
@@ -29,26 +27,28 @@ const wrapperClasses = cn(
 
 const badgeClasses = cn(
   "inline-block px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-4 sm:mb-6 shadow-sm border",
-  isDark
-    ? "bg-brand-800 text-accent border-brand-700/80"
-    : "bg-brand-100 text-accent-dark border-brand-200/80",
+  "bg-brand-800 text-accent border-brand-700/80",
 );
 
 const headingClasses = cn(
   "font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]",
-  isDark ? "text-white" : "text-brand-900",
+  "text-white",
   (description || Astro.slots.has("default")) && "mb-4 sm:mb-6",
 );
 
 const descriptionClasses = cn(
   "text-lg sm:text-xl font-normal leading-relaxed",
-  isDark ? "text-brand-100/90" : "text-typography-muted",
+  "text-brand-100/90",
   isCenter ? "mx-auto max-w-2xl" : "max-w-2xl",
   Astro.slots.has("default") && "mb-6",
 );
 ---
 
 <div class={wrapperClasses}>
+  <Breadcrumbs
+    currentTitle={heading}
+    class={cn("mb-6 sm:mb-8", isCenter && "justify-center")}
+  />
   {subheading && <span class={badgeClasses}>{subheading}</span>}
 
   <h1 class={headingClasses}>

@@ -9,6 +9,7 @@ storyHeading: "Our Story"
 storyEnquiryBtnText: "Send Travel Enquiry"
 storyWhatsappBtnText: "Chat With Us"
 image: "../../assets/images/services/udaipur-transfer.jpg"
+heroImage: "../../assets/images/about/passion.jpg"
 howWeWorkBadge: "Operational Standards"
 howWeWorkHeading: "How we work"
 howWeWork:

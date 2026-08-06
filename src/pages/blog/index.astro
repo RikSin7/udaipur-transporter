@@ -12,7 +12,7 @@ import {
 } from "@tabler/icons-astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
 import TabBar from "../../components/ui/TabBar.astro";
-import HeroHeader from "../../components/ui/HeroHeader.astro";
+import PageHeroSection from "../../components/sections/PageHeroSection.astro";
 import { getEntry } from "astro:content";
 
 // 1. Fetch site settings
@@ -66,15 +66,12 @@ const hubData = hubEntries.data;
     "Best travel guides for planning your trip to Udaipur and Rajasthan. Outstation taxi fares, vehicle selection, and local travel tips."}
 >
   {/* 1. HERO BANNER */}
-  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <HeroHeader
-        subheading={hubData.badge}
-        heading={hubData.title}
-        description={hubData.description}
-      />
-    </div>
-  </section>
+  <PageHeroSection
+    subheading={hubData.badge}
+    heading={hubData.title}
+    description={hubData.description}
+    heroImage={hubData.heroImage}
+  />
 
   {/* 2. TAB BAR */}
   <TabBar

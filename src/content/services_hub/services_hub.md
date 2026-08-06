@@ -4,6 +4,7 @@ seoDesc: "Explore owner-approved private transport services in Udaipur. Transpar
 badge: "Our Services"
 title: "Private transport for every kind of Udaipur trip"
 description: "Transfers, local travel, outstation and group transport. Open a service to see what it covers, suitable vehicles and, where approved, its price."
+heroImage: "../../assets/images/services/udaipur-transfer.jpg"
 disclaimerText: "Each service above is available in and around Udaipur, from airport and railway transfers to sightseeing, nearby day use and outstation travel across Rajasthan. Coverage and example trips are described within each service page as guidance, not as separate booking pages. Where a price is confirmed it is shown with its terms; otherwise please ask us for a quote."
 categories:
   - name: "Transfers"

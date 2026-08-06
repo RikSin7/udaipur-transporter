@@ -154,6 +154,7 @@ const aboutCollection = defineCollection({
     storyEnquiryBtnText: z.string().default("Send Travel Enquiry"),
     storyWhatsappBtnText: z.string().default("Chat With Us"),
     image: image().optional(),
+    heroImage: image().optional(),
     // 1. How We Work Section
     howWeWorkBadge: z.string().default("Operational Standards"),
     howWeWorkHeading: z.string().default("How we work"),
@@ -218,7 +219,8 @@ const aboutCollection = defineCollection({
 
 const contactCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/contact" }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
+    heroImage: image().optional(),
     seoTitle: z.string().optional(),
     seoDesc: z
       .string()
@@ -402,7 +404,8 @@ const homeCollection = defineCollection({
 
 const servicesHubCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/services_hub" }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
+    heroImage: image().optional(),
     seoTitle: z.string(),
     seoDesc: z.string(),
     badge: z.string(),
@@ -419,7 +422,8 @@ const servicesHubCollection = defineCollection({
 
 const vehiclesHubCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/vehicles_hub" }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
+    heroImage: image().optional(),
     seoTitle: z.string(),
     seoDesc: z.string(),
     badge: z.string(),
@@ -444,7 +448,8 @@ const reviewsHubCollection = defineCollection({
 
 const blogHubCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog_hub" }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
+    heroImage: image().optional(),
     seoTitle: z.string(),
     seoDesc: z.string(),
     badge: z.string(),

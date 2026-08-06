@@ -12,4 +12,5 @@ bannerWhatsappText: "Ask a Question on WhatsApp"
 articleCtaBadge: "Direct Expert Advice"
 articleCtaTitle: "Plan your vehicle route with our local team."
 articleCtaDesc: "We provide owner-approved quotes without automated call centers or booking fees."
+heroImage: "../../assets/images/blog/map.jpg"
 ---

@@ -4,7 +4,7 @@ import VehicleCard from "../../components/cards/VehicleCard.astro";
 import { getCollection } from "astro:content";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
-import HeroHeader from "../../components/ui/HeroHeader.astro";
+import PageHeroSection from "../../components/sections/PageHeroSection.astro";
 import SectionHeader from "../../components/ui/SectionHeader.astro";
 import { IconCar } from "@tabler/icons-astro";
 import { sortPublishedByOrder } from "../../utils/helpers";
@@ -23,15 +23,12 @@ const hubData = hubEntries.data;
   description={hubData.seoDesc || hubData.description}
 >
   {/* 1. HERO BANNER */}
-  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <HeroHeader
-        subheading={hubData.badge}
-        heading={hubData.title}
-        description={hubData.description}
-      />
-    </div>
-  </section>
+  <PageHeroSection
+    subheading={hubData.badge}
+    heading={hubData.title}
+    description={hubData.description}
+    heroImage={hubData.heroImage}
+  />
 
   {/* 2. VEHICLE LISTINGS */}
   <section class="py-12 bg-surface">

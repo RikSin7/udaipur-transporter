@@ -248,6 +248,14 @@ collections:
         file: "src/content/about/about.md"
         fields:
           - {
+              label: "Hero Image",
+              name: "heroImage",
+              widget: "image",
+              choose_url: false,
+              required: false,
+              hint: "Optional background image for the hero banner section",
+            }
+          - {
               label: "SEO Title",
               name: "seoTitle",
               widget: "string",
@@ -546,6 +554,14 @@ collections:
         file: "src/content/contact/contact.md"
         fields:
           - {
+              label: "Hero Image",
+              name: "heroImage",
+              widget: "image",
+              choose_url: false,
+              required: false,
+              hint: "Optional background image for the hero banner section",
+            }
+          - {
               label: "SEO Title",
               name: "seoTitle",
               widget: "string",
@@ -716,6 +732,14 @@ collections:
         label: "Services Catalogue Page (/services)"
         file: "src/content/services_hub/services_hub.md"
         fields:
+          - {
+              label: "Hero Image",
+              name: "heroImage",
+              widget: "image",
+              choose_url: false,
+              required: false,
+              hint: "Optional background image for the hero banner section",
+            }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
           - { label: "SEO Description", name: "seoDesc", widget: "text" }
           - { label: "Hero Badge", name: "badge", widget: "string" }
@@ -783,6 +807,14 @@ collections:
         label: "Vehicles Fleet Page (/vehicles)"
         file: "src/content/vehicles_hub/vehicles_hub.md"
         fields:
+          - {
+              label: "Hero Image",
+              name: "heroImage",
+              widget: "image",
+              choose_url: false,
+              required: false,
+              hint: "Optional background image for the hero banner section",
+            }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
           - { label: "SEO Description", name: "seoDesc", widget: "text" }
           - { label: "Hero Badge", name: "badge", widget: "string" }
@@ -821,6 +853,14 @@ collections:
         label: "Blog Index Page (/blog)"
         file: "src/content/blog_hub/blog_hub.md"
         fields:
+          - {
+              label: "Hero Image",
+              name: "heroImage",
+              widget: "image",
+              choose_url: false,
+              required: false,
+              hint: "Optional background image for the hero banner section",
+            }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
           - { label: "SEO Description", name: "seoDesc", widget: "text" }
           - { label: "Hero Badge", name: "badge", widget: "string" }

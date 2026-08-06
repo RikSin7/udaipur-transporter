@@ -1,0 +1,56 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import HeroHeader from "../ui/HeroHeader.astro";
+import { cn } from "../../utils/cn";
+
+interface Props {
+  heading: string;
+  subheading?: string;
+  description?: string;
+  heroImage?: ImageMetadata;
+  class?: string;
+}
+
+const {
+  heading,
+  subheading,
+  description,
+  heroImage,
+  class: className = "",
+}: Props = Astro.props;
+---
+
+<section
+  class={cn(
+    "bg-brand-950 text-white relative overflow-hidden",
+    heroImage ? "py-14 sm:py-16 lg:py-20" : "py-12",
+    className,
+  )}
+>
+  {
+    heroImage && (
+      <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute inset-y-0 right-0 w-full sm:w-4/5 lg:w-3/4 h-full">
+          <Image
+            src={heroImage}
+            alt={heading}
+            class="w-full h-full object-cover object-[75%_center] sm:object-center opacity-80"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-linear-to-r from-brand-950 via-brand-950/60 sm:via-40% via-60% to-transparent" />
+        </div>
+      </div>
+    )
+  }
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <HeroHeader
+      subheading={subheading}
+      heading={heading}
+      description={description}
+    >
+      <slot />
+    </HeroHeader>
+  </div>
+</section>

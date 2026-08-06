@@ -3,9 +3,6 @@ import "../styles/global.css";
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
 import SEO from "../components/layout/SEO.astro";
-import Breadcrumbs, {
-  type BreadcrumbItem,
-} from "../components/layout/Breadcrumbs.astro";
 import { getEntry } from "astro:content";
 
 interface Props {
@@ -14,7 +11,6 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   noindex?: boolean;
-  breadcrumbs?: BreadcrumbItem[];
   currentTitle?: string;
 }
 
@@ -28,7 +24,6 @@ const {
   image,
   type,
   noindex,
-  breadcrumbs,
   currentTitle,
 }: Props = Astro.props;
 ---
@@ -63,7 +58,6 @@ const {
     <Header />
 
     <main class="grow pb-16 md:pb-0">
-      <Breadcrumbs items={breadcrumbs} currentTitle={currentTitle} />
       <slot />
     </main>
 

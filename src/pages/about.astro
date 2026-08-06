@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getWhatsAppUrl } from "../utils/helpers";
 import SectionHeader from "../components/ui/SectionHeader.astro";
-import HeroHeader from "../components/ui/HeroHeader.astro";
+import PageHeroSection from "../components/sections/PageHeroSection.astro";
 import {
   IconMapPin,
   IconArrowRight,
@@ -36,6 +36,7 @@ const {
   storyEnquiryBtnText,
   storyWhatsappBtnText,
   image,
+  heroImage,
   howWeWorkBadge,
   howWeWorkHeading,
   howWeWork = [],
@@ -66,11 +67,12 @@ const whatsappUrl = getWhatsAppUrl(
   description={seoDesc || subtitle}
 >
   {/* 1. HERO BANNER */}
-  <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <HeroHeader subheading={badge} heading={title} description={subtitle} />
-    </div>
-  </section>
+  <PageHeroSection
+    subheading={badge}
+    heading={title}
+    description={subtitle}
+    heroImage={heroImage}
+  />
 
   {/* 2. OUR STORY & SERVICE APPROACH */}
   <section class="py-12 bg-surface">
