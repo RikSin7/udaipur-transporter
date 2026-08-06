@@ -36,11 +36,11 @@ const { Content } = await render(termsEntry);
         subheading={badge || "Operational Policy"}
         heading={title}
         description={subtitle}
-        align="center"
+        align="left"
       >
         {/* Metadata Bar with Print Action */}
         <div
-          class="flex flex-wrap items-center justify-center gap-6 text-xs text-brand-100/70 border-t border-brand-800/80 pt-6 max-w-md mx-auto"
+          class="flex flex-wrap items-center gap-6 text-xs text-brand-100/70 border-t border-brand-800/80 pt-6"
         >
           <div>
             <span
@@ -49,11 +49,11 @@ const { Content } = await render(termsEntry);
             >
             <span class="font-medium text-white">{lastUpdated}</span>
           </div>
-          <div class="h-6 w-px bg-brand-800"></div>
+          <div class="h-6 w-px bg-brand-800 print:hidden"></div>
           <button
             type="button"
             id="print-terms-btn"
-            class="inline-flex items-center gap-1.5 font-semibold text-brand-100 hover:text-accent transition-colors cursor-pointer group py-1 uppercase"
+            class="inline-flex items-center gap-1.5 font-semibold text-brand-100 hover:text-accent transition-colors cursor-pointer group py-1 uppercase print:hidden"
           >
             <IconPrinter
               size={16}

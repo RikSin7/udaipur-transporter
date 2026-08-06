@@ -1,5 +1,6 @@
 ---
 title: "Contact Our Udaipur Team"
+badge: "Direct Local Communication"
 subtitle: "Skip automated call centers. Connect directly with the transport coordinators who allocate your vehicle and schedule your driver. We are ready to answer your questions and provide straightforward tariffs."
 directChannelsHeading: "Direct Contact Channels"
 directChannelsSubheading: "Direct Connect"

@@ -39,6 +39,9 @@ collections:
           - label: "Hero Bottom Features"
             name: "heroFeatures"
             widget: "list"
+            allow_add: false
+            min: 4
+            max: 4
             fields:
               - label: "Icon"
                 name: "icon"
@@ -79,6 +82,9 @@ collections:
           - label: "Why Choose Us Points"
             name: "whyChooseUsItems"
             widget: "list"
+            allow_add: false
+            min: 4
+            max: 4
             fields:
               - label: "Icon"
                 name: "icon"
@@ -108,8 +114,25 @@ collections:
                   label: "Bottom Badge Text",
                   name: "badgeText",
                   widget: "string",
-                  required: false,
                 }
+
+          - label: "Services Section Header"
+            name: "servicesSection"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+          - name: "vehiclesSection"
+            label: "Vehicles Section Header"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
 
           - {
               label: "Booking Process Badge",
@@ -175,6 +198,33 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "desc", widget: "text" }
 
+          - name: "reviewsSection"
+            label: "Reviews Section Header"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+          - name: "blogSection"
+            label: "Blog / Trip Plan Section Header"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+          - name: "faqSection"
+            label: "FAQ Section Header"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Badge", name: "badge", widget: "string" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
           - {
               label: "Bottom Enquiry Badge",
               name: "enquiryBadge",
@@ -192,47 +242,6 @@ collections:
               name: "enquiryDesc",
               widget: "text",
             }
-
-          - label: "Homepage Section Headers"
-            name: "servicesSection"
-            widget: "object"
-            required: true
-            fields:
-              - { label: "Badge", name: "badge", widget: "string" }
-              - { label: "Heading", name: "heading", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-          - name: "vehiclesSection"
-            label: "Vehicles Section Header"
-            widget: "object"
-            required: true
-            fields:
-              - { label: "Badge", name: "badge", widget: "string" }
-              - { label: "Heading", name: "heading", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-          - name: "blogSection"
-            label: "Blog / Trip Plan Section Header"
-            widget: "object"
-            required: true
-            fields:
-              - { label: "Badge", name: "badge", widget: "string" }
-              - { label: "Heading", name: "heading", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-          - name: "reviewsSection"
-            label: "Reviews Section Header"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Badge", name: "badge", widget: "string" }
-              - { label: "Heading", name: "heading", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-          - name: "faqSection"
-            label: "FAQ Section Header"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Badge", name: "badge", widget: "string" }
-              - { label: "Heading", name: "heading", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
 
       - name: "about"
         label: "About Page"
@@ -257,7 +266,6 @@ collections:
               label: "Hero Badge",
               name: "badge",
               widget: "string",
-              required: false,
               default: "Our Identity & Approach",
             }
           - { label: "Story Badge", name: "storyBadge", widget: "string" }
@@ -288,7 +296,6 @@ collections:
               label: "How We Work Badge",
               name: "howWeWorkBadge",
               widget: "string",
-              required: false,
               default: "Operational Standards",
             }
           - {
@@ -344,7 +351,6 @@ collections:
               label: "Coverage Badge",
               name: "coverageBadge",
               widget: "string",
-              required: false,
               default: "Service Area",
             }
           - {
@@ -366,26 +372,26 @@ collections:
               label: "Ecosystem Badge",
               name: "ecosystemBadge",
               widget: "string",
-              required: false,
               default: "Next Steps & Resources",
             }
           - {
               label: "Ecosystem Heading",
               name: "ecosystemHeading",
               widget: "string",
-              required: false,
               default: "Explore Our Transport Ecosystem",
             }
           - {
               label: "Ecosystem Description",
               name: "ecosystemDescription",
               widget: "text",
-              required: false,
               default: "Verify our customer feedback, review available transport packages, or reach out directly to plan your Udaipur itinerary.",
             }
           - label: "Ecosystem Cards"
             name: "ecosystemCards"
             widget: "list"
+            allow_add: false
+            min: 3
+            max: 3
             fields:
               - label: "Icon"
                 name: "icon"
@@ -556,7 +562,6 @@ collections:
               label: "Hero Badge",
               name: "badge",
               widget: "string",
-              required: false,
               default: "Direct Local Communication",
             }
           - { label: "Title", name: "title", widget: "string" }
@@ -570,7 +575,6 @@ collections:
               label: "Direct Channels Subheading (Badge)",
               name: "directChannelsSubheading",
               widget: "string",
-              required: false,
               default: "Direct Connect",
             }
           - {
@@ -657,7 +661,6 @@ collections:
               label: "Hero Badge",
               name: "badge",
               widget: "string",
-              required: false,
               default: "Legal & Data Protection",
             }
           - { label: "Title", name: "title", widget: "string" }
@@ -691,7 +694,6 @@ collections:
               label: "Hero Badge",
               name: "badge",
               widget: "string",
-              required: false,
               default: "Operational Policy",
             }
           - { label: "Title", name: "title", widget: "string" }
@@ -786,6 +788,24 @@ collections:
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
+          - {
+              label: "Fleet List Section Badge",
+              name: "listBadge",
+              widget: "string",
+              default: "Explore By Capacity",
+            }
+          - {
+              label: "Fleet List Section Title",
+              name: "listTitle",
+              widget: "string",
+              default: "Select Your Vehicle",
+            }
+          - {
+              label: "Fleet List Section Description",
+              name: "listDescription",
+              widget: "text",
+              default: "Compare passenger seat counts, exact luggage allowances, and on-board amenities below. All vehicles arrive air-conditioned, impeccably cleaned, and driven by experienced Rajasthan route chauffeurs.",
+            }
 
       - name: "reviews_hub"
         label: "Reviews Page (/reviews)"
@@ -810,14 +830,12 @@ collections:
               label: "Conversion Banner Heading",
               name: "bannerHeading",
               widget: "string",
-              required: false,
               default: "Ready to book your vehicle?",
             }
           - {
               label: "Conversion Banner Description",
               name: "bannerDesc",
               widget: "text",
-              required: false,
               default: "Skip the guesswork. Share your travel dates and passenger count for a straightforward, owner-approved price quote.",
             }
           - {
@@ -845,21 +863,18 @@ collections:
               label: "Article Page CTA Badge",
               name: "articleCtaBadge",
               widget: "string",
-              required: false,
               default: "Direct Expert Advice",
             }
           - {
               label: "Article Page CTA Title",
               name: "articleCtaTitle",
               widget: "string",
-              required: false,
               default: "Plan your vehicle route with our local team.",
             }
           - {
               label: "Article Page CTA Description",
               name: "articleCtaDesc",
               widget: "text",
-              required: false,
               default: "We provide owner-approved quotes without automated call centers or booking fees.",
             }
 
@@ -892,6 +907,24 @@ collections:
         file: "src/content/catalogue_cta/catalogue_cta.md"
         fields:
           - {
+              label: "Services Page -> Section Header Badge",
+              name: "servicesHeaderBadge",
+              widget: "string",
+              default: "Next Steps & Support",
+            }
+          - {
+              label: "Services Page -> Section Header Title",
+              name: "servicesHeaderTitle",
+              widget: "string",
+              default: "Explore Fleet & Get Expert Guidance",
+            }
+          - {
+              label: "Services Page -> Section Header Description",
+              name: "servicesHeaderDesc",
+              widget: "text",
+              default: "Need assistance mapping your itinerary or comparing vehicle capacities? Connect directly with our local coordinators.",
+            }
+          - {
               label: "Services Page -> Vehicle Cross-Link Badge",
               name: "servicesCrossBadge",
               widget: "string",
@@ -920,6 +953,24 @@ collections:
               label: "Services Page -> Consultation Description",
               name: "servicesInquiryDesc",
               widget: "text",
+            }
+          - {
+              label: "Vehicles Page -> Section Header Badge",
+              name: "vehiclesHeaderBadge",
+              widget: "string",
+              default: "Next Steps & Support",
+            }
+          - {
+              label: "Vehicles Page -> Section Header Title",
+              name: "vehiclesHeaderTitle",
+              widget: "string",
+              default: "Explore Services & Get Expert Guidance",
+            }
+          - {
+              label: "Vehicles Page -> Section Header Description",
+              name: "vehiclesHeaderDesc",
+              widget: "text",
+              default: "Unsure about vehicle selection or planning outstation travel routes? Connect directly with our local coordinators.",
             }
           - {
               label: "Vehicles Page -> Service Cross-Link Badge",
@@ -1019,21 +1070,18 @@ collections:
           label: "Fallback Hero Badge (When Gallery has 0 images)",
           name: "heroBadge",
           widget: "string",
-          required: false,
           hint: "Defaults to Category if left blank.",
         }
       - {
           label: "Fallback Hero Title (When Gallery has 0 images)",
           name: "heroTitle",
           widget: "string",
-          required: false,
           hint: "Defaults to Title if left blank.",
         }
       - {
           label: "Fallback Hero Description (When Gallery has 0 images)",
           name: "heroDescription",
           widget: "text",
-          required: false,
           hint: "Defaults to Summary if left blank.",
         }
       - label: "Service Gallery Images"
@@ -1054,21 +1102,18 @@ collections:
           label: "Gallery Section Badge",
           name: "galleryBadge",
           widget: "string",
-          required: false,
           default: "The Service, In Pictures",
         }
       - {
           label: "Gallery Section Title",
           name: "galleryTitle",
           widget: "string",
-          required: false,
           hint: "Leave blank to default to '<Service Title> in pictures'",
         }
       - {
           label: "Gallery Section Description",
           name: "galleryDescription",
           widget: "text",
-          required: false,
           default: "See the key moments in this service, from meeting your driver to arriving comfortably at your stay.",
         }
       - {
@@ -1089,14 +1134,12 @@ collections:
           label: "Who This Is For (Section Heading)",
           name: "whoIsThisForHeading",
           widget: "string",
-          required: false,
           default: "Who this is for",
         }
       - {
           label: "Who This Is For (Description Text)",
           name: "whoIsThisForContent",
           widget: "text",
-          required: false,
         }
       - {
           label: "Who This Is For (Pills)",

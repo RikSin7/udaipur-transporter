@@ -1,5 +1,6 @@
 ---
 title: "Terms and Conditions of Service"
+badge: "Operational Policy"
 subtitle: "By using our website and submitting travel inquiries, you agree to these operational terms governing pricing validity, vehicle allocation, and booking responsibilities."
 lastUpdated: "21 July 2026"
 ---

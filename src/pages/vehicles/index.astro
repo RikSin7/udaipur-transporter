@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import CatalogueSupportCTA from "../../components/sections/CatalogueSupportCTA.astro";
 import FAQSection from "../../components/sections/FAQSection.astro";
 import HeroHeader from "../../components/ui/HeroHeader.astro";
+import SectionHeader from "../../components/ui/SectionHeader.astro";
 import { IconCar } from "@tabler/icons-astro";
 import { sortPublishedByOrder } from "../../utils/helpers";
 import { getEntry } from "astro:content";
@@ -34,7 +35,13 @@ const hubData = hubEntries.data;
 
   {/* 2. VEHICLE LISTINGS */}
   <section class="py-12 bg-surface">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeader
+        subheading={hubData.listBadge || "Explore By Capacity"}
+        heading={hubData.listTitle || "Select Your Vehicle"}
+        description={hubData.listDescription ||
+          "Compare passenger seat counts, exact luggage allowances, and on-board amenities below. All vehicles arrive air-conditioned, impeccably cleaned, and driven by experienced Rajasthan route chauffeurs."}
+      />
       {
         publishedVehicles.length > 0 ? (
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

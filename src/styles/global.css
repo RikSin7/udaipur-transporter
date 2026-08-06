@@ -70,3 +70,50 @@
 button {
   cursor: pointer;
 }
+
+/* Print and PDF Export Optimizations */
+@media print {
+  header,
+  footer,
+  nav[aria-label="Breadcrumb"],
+  #print-policy-btn,
+  #print-terms-btn {
+    display: none !important;
+  }
+
+  body,
+  main {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  section {
+    background: transparent !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* Invert dark banner backgrounds and white text for readable printing on paper for privacy and terms */
+  .bg-brand-900 {
+    background-color: transparent !important;
+    border-bottom: 1px solid #DED8CC !important;
+  }
+
+  .text-white,
+  .text-brand-100,
+  .text-brand-100\/70,
+  .text-brand-100\/80,
+  .text-brand-100\/90 {
+    color: #1E2A28 !important;
+  }
+
+  /* Simplify UI containers for clean paper layout */
+  .bg-surface,
+  .bg-surface-card,
+  .bg-surface-alt\/60 {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}

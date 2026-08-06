@@ -8,6 +8,7 @@ import {
 } from "@tabler/icons-astro";
 import { getWhatsAppUrl, createCleanParam } from "../../utils/helpers";
 import { getEntry } from "astro:content";
+import SectionHeader from "../ui/SectionHeader.astro";
 
 interface Props {
   type: "services" | "vehicles";
@@ -64,8 +65,22 @@ const inquiry = {
 };
 ---
 
-<section class="py-12 bg-surface">
+<section class="py-12 bg-surface-alt">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeader
+      subheading={isServicesPage
+        ? ctaData?.servicesHeaderBadge || "Next Steps & Support"
+        : ctaData?.vehiclesHeaderBadge || "Next Steps & Support"}
+      heading={isServicesPage
+        ? ctaData?.servicesHeaderTitle || "Explore Fleet & Get Expert Guidance"
+        : ctaData?.vehiclesHeaderTitle ||
+          "Explore Services & Get Expert Guidance"}
+      description={isServicesPage
+        ? ctaData?.servicesHeaderDesc ||
+          "Need assistance mapping your itinerary or comparing vehicle capacities? Connect directly with our local coordinators."
+        : ctaData?.vehiclesHeaderDesc ||
+          "Unsure about vehicle selection or planning outstation travel routes? Connect directly with our local coordinators."}
+    />
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
       {/* LEFT CARD: Dynamic Internal Cross-Link */}
       <a

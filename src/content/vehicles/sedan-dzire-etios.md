@@ -12,6 +12,7 @@ amenities:
     "Clean Leatherette Seats",
   ]
 imageNote: "Representative Vehicle"
+image: "../../assets/images/vehicles/hyundai.jpg"
 sortOrder: 1
 published: true
 summary: "Our most popular category for solo travellers, couples, and small families carrying standard luggage. Highly agile in Udaipur's narrow old city streets."

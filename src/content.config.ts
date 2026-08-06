@@ -18,18 +18,18 @@ const servicesCollection = defineCollection({
         image().transform((val) => ({ url: val, isPrimary: false })),
       ])
     ).optional(),
-    galleryBadge: z.string().optional(),
-    galleryTitle: z.string().optional(),
-    galleryDescription: z.string().optional(),
-    heroBadge: z.string().optional(),
-    heroTitle: z.string().optional(),
-    heroDescription: z.string().optional(),
+    galleryBadge: z.string(),
+    galleryTitle: z.string(),
+    galleryDescription: z.string(),
+    heroBadge: z.string(),
+    heroTitle: z.string(),
+    heroDescription: z.string(),
     sortOrder: z.number().default(10),
     published: z.boolean().default(true),
 
     // 1. Who This Is For
-    whoIsThisForHeading: z.string().optional(),
-    whoIsThisForContent: z.string().optional(),
+    whoIsThisForHeading: z.string(),
+    whoIsThisForContent: z.string(),
     whoIsThisFor: z.array(z.string()).optional(),
 
     // 2. What's Covered (2x2 Grid with Title & Description)
@@ -148,7 +148,7 @@ const aboutCollection = defineCollection({
     seoDesc: z.string().max(160, "Keep SEO description under 160 characters").optional(),
     title: z.string(),
     subtitle: z.string(),
-    badge: z.string().optional(),
+    badge: z.string(),
     storyBadge: z.string().default("Who We Are"),
     storyHeading: z.string().default("Our Story"),
     storyEnquiryBtnText: z.string().default("Send Travel Enquiry"),
@@ -175,7 +175,7 @@ const aboutCollection = defineCollection({
     ]),
 
     // 3. Where We Operate
-    coverageBadge: z.string().optional(),
+    coverageBadge: z.string(),
     coverageHeading: z.string().default("Where we operate"),
     coverageSubtitle: z.string(),
     coverageLocations: z.array(z.string()),
@@ -224,11 +224,11 @@ const contactCollection = defineCollection({
       .string()
       .max(160, "Keep SEO description under 160 characters")
       .optional(),
-    badge: z.string().optional(),
+    badge: z.string(),
     title: z.string(),
     subtitle: z.string(),
     directChannelsHeading: z.string(),
-    directChannelsSubheading: z.string().optional(),
+    directChannelsSubheading: z.string(),
     directChannelsDesc: z.string(),
     phoneCard: z
       .object({
@@ -281,7 +281,7 @@ const privacyCollection = defineCollection({
   schema: z.object({
     seoTitle: z.string().optional(),
     seoDesc: z.string().max(160, "Keep SEO description under 160 characters").optional(),
-    badge: z.string().optional(),
+    badge: z.string(),
     title: z.string(),
     subtitle: z.string(),
     lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
@@ -293,7 +293,7 @@ const termsCollection = defineCollection({
   schema: z.object({
     seoTitle: z.string().optional(),
     seoDesc: z.string().max(160, "Keep SEO description under 160 characters").optional(),
-    badge: z.string().optional(),
+    badge: z.string(),
     title: z.string(),
     subtitle: z.string(),
     lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
@@ -338,10 +338,24 @@ const homeCollection = defineCollection({
       icon: z.string(),
       title: z.string(),
       desc: z.string(),
-      badgeText: z.string().optional(),
+      badgeText: z.string(),
     })).optional().default([]),
 
-    // 3. Booking Process Section
+    // 3. Featured Services Section Header
+    servicesSection: z.object({
+      badge: z.string().default("Featured Services"),
+      heading: z.string().default("What We Drive for You"),
+      description: z.string().default("Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."),
+    }),
+
+    // 4. Featured Fleet Section Header
+    vehiclesSection: z.object({
+      badge: z.string().default("Vehicles"),
+      heading: z.string().default("Featured Fleet"),
+      description: z.string().default("Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."),
+    }),
+
+    // 5. Booking Process Section
     bookingBadge: z.string().default("How to reach us"),
     bookingHeading: z.string().default("Three easy ways to enquire"),
     contactMethods: z.array(z.object({
@@ -358,35 +372,31 @@ const homeCollection = defineCollection({
       desc: z.string(),
     })).optional().default([]),
 
-    // 4. Final Enquiry Section
-    enquiryBadge: z.string().default("Direct Local Booking"),
-    enquiryTitle: z.string().default("Request Your Transport Quote"),
-    enquiryDesc: z.string().default("Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."),
-    servicesSection: z.object({
-      badge: z.string().default("Featured Services"),
-      heading: z.string().default("What We Drive for You"),
-      description: z.string().default("Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."),
+    // 6. Customer Reviews Section Header
+    reviewsSection: z.object({
+      badge: z.string().default("What Travellers Say"),
+      heading: z.string().default("Customer Reviews"),
+      description: z.string().default("Read genuine feedback from families, couples, and international travellers who hired private cabs and drivers with Udaipur Royal Transporter."),
     }),
-    vehiclesSection: z.object({
-      badge: z.string().default("Vehicles"),
-      heading: z.string().default("Featured Fleet"),
-      description: z.string().default("Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."),
-    }),
+
+    // 7. Plan Your Trip (Blog) Section Header
     blogSection: z.object({
       badge: z.string().default("Practical Travel Advice"),
       heading: z.string().default("Plan Your Trip"),
       description: z.string().default("Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."),
     }),
-    reviewsSection: z.object({
-      badge: z.string().default("What Travellers Say"),
-      heading: z.string().default("Customer Reviews"),
-      description: z.string().default("Read genuine feedback from families, couples, and international travellers who hired private cabs and drivers with Udaipur Royal Transporter."),
-    }).optional(),
+
+    // 8. FAQ Section Header
     faqSection: z.object({
       badge: z.string().default("Operational Transparency"),
       heading: z.string().default("Frequently Asked Questions"),
       description: z.string().default("Everything you need to know about our owner-approved pricing, driver selection, and local travel policies."),
-    }).optional(),
+    }),
+
+    // 9. Final Enquiry Section
+    enquiryBadge: z.string().default("Direct Local Booking"),
+    enquiryTitle: z.string().default("Request Your Transport Quote"),
+    enquiryDesc: z.string().default("Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."),
   }),
 });
 
@@ -415,6 +425,9 @@ const vehiclesHubCollection = defineCollection({
     badge: z.string(),
     title: z.string(),
     description: z.string(),
+    listBadge: z.string().default("Explore By Capacity"),
+    listTitle: z.string().default("Select Your Vehicle"),
+    listDescription: z.string().default("Compare passenger seat counts, exact luggage allowances, and on-board amenities below. All vehicles arrive air-conditioned, impeccably cleaned, and driven by experienced Rajasthan route chauffeurs."),
   }),
 });
 
@@ -437,14 +450,14 @@ const blogHubCollection = defineCollection({
     badge: z.string(),
     title: z.string(),
     description: z.string(),
-    bannerHeading: z.string().optional(),
-    bannerDesc: z.string().optional(),
+    bannerHeading: z.string(),
+    bannerDesc: z.string(),
     bannerButtonText: z.string().optional(),
     bannerButtonUrl: z.string().optional(),
     bannerWhatsappText: z.string().optional(),
-    articleCtaBadge: z.string().optional(),
-    articleCtaTitle: z.string().optional(),
-    articleCtaDesc: z.string().optional(),
+    articleCtaBadge: z.string(),
+    articleCtaTitle: z.string(),
+    articleCtaDesc: z.string(),
   }),
 });
 
@@ -473,12 +486,18 @@ const thankYouCollection = defineCollection({
 const catalogueCtaCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/catalogue_cta" }),
   schema: z.object({
+    servicesHeaderBadge: z.string().default("Next Steps & Support"),
+    servicesHeaderTitle: z.string().default("Explore Fleet & Get Expert Guidance"),
+    servicesHeaderDesc: z.string().default("Need assistance mapping your itinerary or comparing vehicle capacities? Connect directly with our local coordinators."),
     servicesCrossBadge: z.string(),
     servicesCrossTitle: z.string(),
     servicesCrossDesc: z.string(),
     servicesInquiryBadge: z.string(),
     servicesInquiryTitle: z.string(),
     servicesInquiryDesc: z.string(),
+    vehiclesHeaderBadge: z.string().default("Next Steps & Support"),
+    vehiclesHeaderTitle: z.string().default("Explore Services & Get Expert Guidance"),
+    vehiclesHeaderDesc: z.string().default("Unsure about vehicle selection or planning outstation travel routes? Connect directly with our local coordinators."),
     vehiclesCrossBadge: z.string(),
     vehiclesCrossTitle: z.string(),
     vehiclesCrossDesc: z.string(),

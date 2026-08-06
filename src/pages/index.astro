@@ -40,41 +40,30 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp);
   description={site.seoDefaultDesc ||
     "Straightforward Private cabs, transfers & tours across Udaipur."}
 >
-  {/* 1. HERO SECTION */}
   <Hero whatsappUrl={whatsappUrl} />
 
-  {/* 2. WHY CHOOSE US (NEW POSITIONING SECTION) */}
   <WhyChooseUs />
 
-  {/* 3. FEATURED SERVICES */}
   <FeaturedServices featuredServices={featuredServices} />
 
-  {/* 4. VEHICLE FLEET & CAPACITY GUIDANCE */}
   <FeaturedVehicles featuredVehicles={featuredVehicles} />
 
-  {/* 5. HOW TO CONTACT & BOOKING PROCESS */}
   <BookingProcess />
 
-  {/* 6. REVIEWS SECTION */}
   <ReviewsSection />
 
-  {/* 7. PLAN YOUR TRIP  */}
   <PlanYourTrip />
 
-  {/* 8. FREQUENTLY ASKED QUESTIONS */}
   <FAQSection />
 
-  {/* 9. FINAL ENQUIRY FORM */}
   <section id="enquiry-section" class="py-12 bg-surface/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Section Heading */}
       <SectionHeader
         subheading={homeData.enquiryBadge}
         heading={homeData.enquiryTitle}
         description={homeData.enquiryDesc}
         class="mb-12"
       />
-
       <EnquiryForm />
     </div>
   </section>

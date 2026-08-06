@@ -1,4 +1,7 @@
 ---
+servicesHeaderBadge: "Next Steps & Support"
+servicesHeaderTitle: "Explore Fleet & Get Expert Guidance"
+servicesHeaderDesc: "Need assistance mapping your itinerary or comparing vehicle capacities? Connect directly with our local coordinators."
 servicesCrossBadge: "Fleet Inventory"
 servicesCrossTitle: "Compare our vehicles"
 servicesCrossDesc: "Seats, luggage guidance and amenities for each car and Tempo Traveller category."
@@ -6,6 +9,9 @@ servicesInquiryBadge: "Direct Expert Advice"
 servicesInquiryTitle: "Not sure which service?"
 servicesInquiryDesc: "Send us your travel itinerary — we'll suggest the right service package and reply directly."
 
+vehiclesHeaderBadge: "Next Steps & Support"
+vehiclesHeaderTitle: "Explore Services & Get Expert Guidance"
+vehiclesHeaderDesc: "Unsure about vehicle selection or planning outstation travel routes? Connect directly with our local coordinators."
 vehiclesCrossBadge: "Service Routes"
 vehiclesCrossTitle: "Explore transport services"
 vehiclesCrossDesc: "Transparent airport transfers, local Udaipur sightseeing, and multi-day outstation packages."

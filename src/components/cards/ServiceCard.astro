@@ -86,7 +86,7 @@ const priceDisplay = hasApprovedPrice
     >
       {
         hasApprovedPrice && (
-          <div class="flex items-center">
+          <div class="flex items-center mr-auto">
             <span class="text-[11px] sm:text-xs font-bold px-2 py-1 rounded-md border bg-accent-light/30 border-accent/40 text-accent-dark font-sans tracking-wide shadow-sm leading-snug">
               {priceDisplay}
             </span>
@@ -95,7 +95,7 @@ const priceDisplay = hasApprovedPrice
       }
       <a
         href={`/contact/?service=${createCleanParam(title)}`}
-        class="bg-cta hover:bg-cta-hover text-white font-bold text-[11px] sm:text-xs tracking-wider py-2 px-4 rounded-(--radius-button,12px) transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-1.5 group/btn shrink-0 relative z-20 mr-auto uppercase"
+        class="bg-cta hover:bg-cta-hover text-white font-bold text-[11px] sm:text-xs tracking-wider py-2 px-4 rounded-(--radius-button,12px) transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-1.5 group/btn shrink-0 relative z-20 uppercase"
       >
         <span>{hasApprovedPrice ? "Enquire" : "Ask for Price"}</span>
         <IconArrowRight

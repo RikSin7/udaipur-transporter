@@ -36,7 +36,19 @@ whyChooseUsItems:
     desc: "We publish only confirmed services, vehicles and prices. No invented claims."
     badgeText: "Zero marketing fluff"
 
-# 3. Booking Process Section
+# 3. Featured Services Section Header
+servicesSection:
+  badge: "Featured Services"
+  heading: "What We Drive for You"
+  description: "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."
+
+# 4. Featured Fleet Section Header
+vehiclesSection:
+  badge: "Vehicles"
+  heading: "Featured Fleet"
+  description: "Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."
+
+# 5. Booking Process Section
 bookingBadge: "How to reach us"
 bookingHeading: "Three easy ways to enquire"
 contactMethods:
@@ -70,30 +82,26 @@ workflowSteps:
     title: "Trip is arranged"
     desc: "Once you agree, we finalise the trip. This site does not auto-confirm."
 
-# 4. Final Enquiry Section
-enquiryBadge: "Direct Local Booking"
-enquiryTitle: "Request Your Transport Quote"
-enquiryDesc: "Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."
-
-# 5. Homepage & Overview Component Headers
-servicesSection:
-  badge: "Featured Services"
-  heading: "What We Drive for You"
-  description: "Choose from owner-approved transport categories. We offer transparent pricing structures and reliable driver allocation for every journey."
-vehiclesSection:
-  badge: "Vehicles"
-  heading: "Featured Fleet"
-  description: "Explore well-maintained cabs and tempo travellers. Every listing features realistic luggage guidance and verified amenities."
-blogSection:
-  badge: "Practical Travel Advice"
-  heading: "Plan Your Trip"
-  description: "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."
+# 6. Customer Reviews Section Header
 reviewsSection:
   badge: "What Travellers Say"
   heading: "Customer Reviews"
   description: "Read genuine feedback from families, couples, and international travellers who hired private cabs and drivers with Udaipur Royal Transporter."
+
+# 7. Plan Your Trip (Blog) Section Header
+blogSection:
+  badge: "Practical Travel Advice"
+  heading: "Plan Your Trip"
+  description: "Logistical advice on selecting vehicle capacities, navigating airport pickup protocols, and understanding transparent outstation taxi pricing."
+
+# 8. FAQ Section Header
 faqSection:
   badge: "Operational Transparency"
   heading: "Frequently Asked Questions"
   description: "Everything you need to know about our owner-approved pricing, driver selection, and local travel policies."
+
+# 9. Final Enquiry Section
+enquiryBadge: "Direct Local Booking"
+enquiryTitle: "Request Your Transport Quote"
+enquiryDesc: "Share your itinerary details below. Our Udaipur team will review your route and contact you directly with an owner-approved rate and vehicle availability."
 ---
