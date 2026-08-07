@@ -100,3 +100,33 @@ export function sortPublishedByOrder<T extends SortableItem>(items: T[]): T[] {
         .filter((i) => i.data.published)
         .sort((a, b) => (a.data.sortOrder ?? Infinity) - (b.data.sortOrder ?? Infinity))
 }
+
+/**
+ * Formats a currency amount to Indian number format with ₹ symbol.
+ * Example: 1999 -> ₹1,999
+ */
+export function formatCurrencyAmount(val: string | number): string {
+    if (val === null || val === undefined) return "";
+    let strVal = String(val).trim();
+
+    // Match optional rupee symbol followed by a number (with optional commas/decimals)
+    const regex = /(?:₹\s*)?(\d+(?:,\d+)*(?:\.\d+)?)/g;
+
+    let hasFormatted = false;
+    let result = strVal.replace(regex, (match, p1) => {
+        hasFormatted = true;
+        const cleanNum = p1.replace(/,/g, '');
+        const num = parseFloat(cleanNum);
+        if (isNaN(num)) return match;
+
+        const formattedNum = new Intl.NumberFormat('en-IN', {
+            maximumFractionDigits: 2,
+        }).format(num);
+
+        return `₹${formattedNum}`;
+    });
+
+    if (!hasFormatted) return strVal;
+
+    return result;
+}

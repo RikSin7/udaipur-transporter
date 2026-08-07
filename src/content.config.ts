@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { formatCurrencyAmount } from './utils/helpers';
 
 const servicesCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/services" }),
@@ -51,7 +52,7 @@ const servicesCollection = defineCollection({
     // 5. Approved Tariff & Pricing Rules
     pricing: z.object({
       prefix: z.string().optional(), // e.g., "Starting from"
-      amount: z.union([z.string(), z.number()]).transform(val => typeof val === "number" ? `₹${val}` : val),
+      amount: z.union([z.string(), z.number()]).transform(formatCurrencyAmount),
       shortLabel: z.string(), // e.g., "onwards, per trip"
       unit: z.string(), // e.g., "Airport to city, sedan"
       lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
