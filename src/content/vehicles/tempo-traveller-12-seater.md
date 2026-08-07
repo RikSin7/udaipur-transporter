@@ -12,7 +12,6 @@ amenities:
     "PA Sound System",
     "Curtains for Privacy",
   ]
-imageNote: "Actual Vehicle"
 sortOrder: 3
 published: true
 summary: "The definitive choice for joint families, wedding guest movement, and corporate sightseeing groups requiring ample legroom and heavy luggage capacity."

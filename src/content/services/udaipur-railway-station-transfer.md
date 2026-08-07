@@ -3,8 +3,7 @@ title: Udaipur Railway Station Transfer
 category: Transfers
 summary: Hassle-free private cab transfer from Udaipur City Railway Station
   (UDZ) directly to your resort, hotel, or heritage homestay.
-image: ../../assets/images/services/udaipur.jpg
-gallery: []
+image: ../../assets/images/services/railway.jpg
 galleryBadge: "The Service, In Pictures"
 galleryTitle: "Udaipur Railway Station Transfer in pictures"
 galleryDescription: "Explore key moments of our seamless station pickup and drop services across Udaipur city and lakeside properties."

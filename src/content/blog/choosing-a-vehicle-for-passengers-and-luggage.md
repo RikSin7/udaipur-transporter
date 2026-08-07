@@ -1,6 +1,6 @@
 ---
 title: Choosing the Right Vehicle for Passengers and Luggage in Rajasthan
-image: ../../assets/images/mohit-khatri-ydrocw9okmw-unsplash.jpg
+image: "../../assets/images/blog/car-choose.jpg"
 summary: A practical guide to avoiding cramped legroom and overloaded car boots
   on long outstation highway drives from Udaipur.
 publishDate: 2026-07-21

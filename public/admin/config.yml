@@ -574,7 +574,7 @@ collections:
               widget: "text",
               required: false,
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters,
+              hint: "Max 160 characters"
             }
           - {
               label: "Hero Badge",
@@ -674,7 +674,7 @@ collections:
               widget: "text",
               required: false,
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters,
+              hint: "Max 160 characters"
             }
           - {
               label: "Hero Badge",
@@ -708,7 +708,7 @@ collections:
               widget: "text",
               required: false,
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters,
+              hint: "Max 160 characters"
             }
           - {
               label: "Hero Badge",
@@ -1102,7 +1102,7 @@ collections:
           name: "summary",
           widget: "string",
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters,
+              hint: "Max 160 characters"
         }
       - {
           label: "Image",
@@ -1116,6 +1116,7 @@ collections:
           name: "heroBadge",
           widget: "string",
           hint: "Defaults to Category if left blank.",
+          required: false,
         }
       - {
           label: "Fallback Hero Title (When Gallery has 0 images)",
@@ -1128,6 +1129,7 @@ collections:
           name: "heroDescription",
           widget: "text",
           hint: "Defaults to Summary if left blank.",
+          required: false,
         }
       - label: "Service Gallery Images"
         name: "gallery"
@@ -1185,6 +1187,7 @@ collections:
           label: "Who This Is For (Description Text)",
           name: "whoIsThisForContent",
           widget: "text",
+          required: false,
         }
       - {
           label: "Who This Is For (Pills)",
@@ -1333,6 +1336,7 @@ collections:
           label: "Image Note",
           name: "imageNote",
           widget: "select",
+          required: false,
           options: ["Actual Vehicle", "Representative Vehicle"],
           hint: "Clarifies to guests whether the image is the exact cab or a model representative",
         }

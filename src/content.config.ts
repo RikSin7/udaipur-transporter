@@ -21,15 +21,15 @@ const servicesCollection = defineCollection({
     galleryBadge: z.string(),
     galleryTitle: z.string(),
     galleryDescription: z.string(),
-    heroBadge: z.string(),
+    heroBadge: z.string().optional(),
     heroTitle: z.string(),
-    heroDescription: z.string(),
+    heroDescription: z.string().optional(),
     sortOrder: z.number().default(10),
     published: z.boolean().default(true),
 
     // 1. Who This Is For
-    whoIsThisForHeading: z.string(),
-    whoIsThisForContent: z.string(),
+    whoIsThisForHeading: z.string().optional(),
+    whoIsThisForContent: z.string().optional(),
     whoIsThisFor: z.array(z.string()).optional(),
 
     // 2. What's Covered (2x2 Grid with Title & Description)
@@ -72,7 +72,7 @@ const vehiclesCollection = defineCollection({
     seats: z.number().optional(),
     amenities: z.array(z.string()),
     image: image().optional(),
-    imageNote: z.enum(["Actual Vehicle", "Representative Vehicle"]),
+    imageNote: z.enum(["Actual Vehicle", "Representative Vehicle"]).optional(),
     sortOrder: z.number().default(10),
     published: z.boolean().default(true),
     summary: z.string(),

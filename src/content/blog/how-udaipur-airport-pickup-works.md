@@ -4,7 +4,7 @@ summary: "A complete walkthrough of arriving at Maharana Pratap Airport (Dabok),
 publishDate: "2026-07-25"
 author: "Udaipur Royal Dispatch Team"
 category: "Airport Transfers"
-image: "../../assets/images/services/udaipur-transfer.jpg"
+image: "../../assets/images/blog/airport-pickup.jpg"
 relatedService: "udaipur-airport-transfer"
 published: true
 featured: true

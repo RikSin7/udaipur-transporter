@@ -1,6 +1,6 @@
 ---
 title: What is Actually Included in a Private Taxi Price in Rajasthan?
-image: "../../assets/images/services/udaipur-transfer.jpg"
+image: "../../assets/images/blog/private-taxi.jpg"
 summary: "Understand the math behind outstation taxi tariffs: fuel, driver
   allowances, toll taxes, monument parking fees, and border rules."
 publishDate: 2026-07-18
