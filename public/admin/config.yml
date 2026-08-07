@@ -574,7 +574,7 @@ collections:
               widget: "text",
               required: false,
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters"
+              hint: "Max 160 characters",
             }
           - {
               label: "Hero Badge",
@@ -674,7 +674,7 @@ collections:
               widget: "text",
               required: false,
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters"
+              hint: "Max 160 characters",
             }
           - {
               label: "Hero Badge",
@@ -708,7 +708,7 @@ collections:
               widget: "text",
               required: false,
               pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters"
+              hint: "Max 160 characters",
             }
           - {
               label: "Hero Badge",
@@ -745,7 +745,12 @@ collections:
               hint: "Optional background image for the hero banner section",
             }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+            }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -820,7 +825,12 @@ collections:
               hint: "Optional background image for the hero banner section",
             }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+            }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -848,7 +858,12 @@ collections:
         file: "src/content/reviews_hub/reviews_hub.md"
         fields:
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+            }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -866,7 +881,12 @@ collections:
               hint: "Optional background image for the hero banner section",
             }
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+            }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -927,7 +947,12 @@ collections:
         file: "src/content/faqs_hub/faqs_hub.md"
         fields:
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+            }
           - { label: "Hero Badge", name: "badge", widget: "string" }
           - { label: "Hero Title", name: "title", widget: "string" }
           - { label: "Hero Description", name: "description", widget: "text" }
@@ -937,7 +962,12 @@ collections:
         file: "src/content/thank_you/thank_you.md"
         fields:
           - { label: "SEO Title", name: "seoTitle", widget: "string" }
-          - { label: "SEO Description", name: "seoDesc", widget: "text", pattern: ["^.{0,160}$", "Maximum 160 characters allowed"] }
+          - {
+              label: "SEO Description",
+              name: "seoDesc",
+              widget: "text",
+              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+            }
           - { label: "Page Heading", name: "title", widget: "string" }
           - { label: "Confirmation Message", name: "message", widget: "text" }
           - {
@@ -1101,8 +1131,8 @@ collections:
           label: "Summary",
           name: "summary",
           widget: "string",
-              pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
-              hint: "Max 160 characters"
+          pattern: ["^.{0,160}$", "Maximum 160 characters allowed"],
+          hint: "Max 160 characters",
         }
       - {
           label: "Image",
@@ -1187,13 +1217,11 @@ collections:
           label: "Who This Is For (Description Text)",
           name: "whoIsThisForContent",
           widget: "text",
-          required: false,
         }
       - {
           label: "Who This Is For (Pills)",
           name: "whoIsThisFor",
           widget: "list",
-          required: false,
           hint: "Add short tags like 'Families & couples' or 'Solo travellers'",
         }
 
@@ -1201,7 +1229,6 @@ collections:
       - label: "What's Covered (Grid Items)"
         name: "whatsCovered"
         widget: "list"
-        required: false
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
@@ -1209,7 +1236,6 @@ collections:
           label: "What's Covered Disclaimer / Note",
           name: "whatsCoveredNote",
           widget: "text",
-          required: false,
           hint: "e.g., Coverage examples above are explanatory. Share your exact flight, hotel or route in the enquiry and we'll confirm the plan.",
         }
 
@@ -1238,13 +1264,11 @@ collections:
       - label: "Pricing & Tariff Details"
         name: "pricing"
         widget: "object"
-        required: false
         fields:
           - {
               label: "Heading / Prefix",
               name: "prefix",
               widget: "string",
-              required: false,
               default: "Starting from",
               hint: "e.g., Starting from",
             }
@@ -1252,49 +1276,42 @@ collections:
               label: "Amount",
               name: "amount",
               widget: "string",
-              required: false,
               hint: "e.g., ₹899",
             }
           - {
               label: "Short Label",
               name: "shortLabel",
               widget: "string",
-              required: false,
               hint: "e.g., onwards, per trip",
             }
           - {
               label: "Unit Description",
               name: "unit",
               widget: "string",
-              required: false,
               hint: "e.g., Airport to city, sedan",
             }
           - {
               label: "Last Updated Date",
               name: "lastUpdated",
               widget: "string",
-              required: false,
               hint: "e.g., Jul 2026",
             }
           - {
               label: "Inclusions",
               name: "inclusions",
               widget: "list",
-              required: false,
               hint: "e.g., Toll taxes, Parking fees",
             }
           - {
               label: "Exclusions",
               name: "exclusions",
               widget: "list",
-              required: false,
               hint: "e.g., Monument entry fees",
             }
           - {
               label: "Booking Disclaimer / Notice",
               name: "disclaimer",
               widget: "text",
-              required: false,
               default: "Sending a request does not confirm a trip. We contact you directly to confirm vehicle availability and final details.",
             }
           - {

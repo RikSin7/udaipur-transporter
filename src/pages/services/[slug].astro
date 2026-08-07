@@ -1,10 +1,8 @@
 ---
 import { getCollection, getEntry, render } from "astro:content";
-import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import EnquiryForm from "../../components/forms/EnquiryForm.astro";
 import SectionHeader from "../../components/ui/SectionHeader.astro";
-import HeroHeader from "../../components/ui/HeroHeader.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import VehicleCard from "../../components/cards/VehicleCard.astro";
 import { getWhatsAppUrl, getCallUrl } from "../../utils/helpers";
@@ -20,6 +18,7 @@ import {
 } from "@tabler/icons-astro";
 
 import ServiceGalleryHero from "../../components/sections/ServiceGalleryHero.astro";
+import PageHeroSection from "../../components/sections/PageHeroSection.astro";
 
 // 1. GENERATE STATIC PATHS
 export async function getStaticPaths() {
@@ -112,15 +111,12 @@ const reassurances = [
         description={galleryDescription}
       />
     ) : (
-      <section class="bg-brand-900 text-white py-12 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <HeroHeader
-            subheading={heroBadge || category}
-            heading={heroTitle || title}
-            description={heroDescription || summary}
-          />
-        </div>
-      </section>
+      <PageHeroSection
+        subheading={heroBadge || category}
+        heading={heroTitle || title}
+        description={heroDescription || summary}
+        heroImage={image}
+      />
     )
   }
 
@@ -130,23 +126,6 @@ const reassurances = [
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative">
         {/* LEFT COLUMN */}
         <div class="lg:col-span-7 space-y-16">
-          {/* Fallback Cover Image when Gallery is empty */}
-          {
-            heroGallery.length === 0 && image && (
-              <div class="rounded-2xl overflow-hidden border border-brand-100 shadow-sm bg-surface-alt group">
-                <Image
-                  src={image}
-                  alt={title}
-                  width={900}
-                  height={500}
-                  format="webp"
-                  quality={85}
-                  class="w-full h-auto object-cover max-h-110 group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            )
-          }
-
           {
             (whoIsThisFor.length > 0 || whoIsThisForContent) && (
               <div>

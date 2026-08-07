@@ -1,10 +1,9 @@
 ---
 import { getCollection, getEntry, render } from "astro:content";
-import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ServiceCard from "../../components/cards/ServiceCard.astro";
 import BlogCard from "../../components/cards/BlogCard.astro";
-import HeroHeader from "../../components/ui/HeroHeader.astro";
+import PageHeroSection from "../../components/sections/PageHeroSection.astro";
 import { getWhatsAppUrl, formatDate } from "../../utils/helpers";
 import {
   IconClock,
@@ -79,33 +78,32 @@ const blogCta = {
 
 <BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
   {/* 1. ARTICLE HERO HEADER */}
-  <section class="bg-brand-900 text-white py-12 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <HeroHeader subheading={category} heading={title} description={summary}>
-        {/* Author, Date & Reading Time Metadata */}
-        <div
-          class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-brand-100/80 border-t border-brand-800/80 pt-6"
-        >
-          <div class="flex items-center gap-1.5">
-            <IconUser size={16} stroke={2} class="text-accent shrink-0" />
-            <span class="font-medium">{author}</span>
-          </div>
-          <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
-          <div class="flex items-center gap-1.5">
-            <IconCalendar size={16} stroke={2} class="text-accent shrink-0" />
-            <time datetime={publishDate} class="font-medium"
-              >{formattedDate}</time
-            >
-          </div>
-          <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
-          <div class="flex items-center gap-1.5">
-            <IconClock size={16} stroke={2} class="text-accent shrink-0" />
-            <span class="font-medium">{readingTime} min read</span>
-          </div>
-        </div>
-      </HeroHeader>
+  <PageHeroSection
+    subheading={category}
+    heading={title}
+    description={summary}
+    heroImage={image}
+  >
+    {/* Author, Date & Reading Time Metadata */}
+    <div
+      class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-brand-100/80 border-t border-brand-800/80 pt-6"
+    >
+      <div class="flex items-center gap-1.5">
+        <IconUser size={16} stroke={2} class="text-accent shrink-0" />
+        <span class="font-medium">{author}</span>
+      </div>
+      <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
+      <div class="flex items-center gap-1.5">
+        <IconCalendar size={16} stroke={2} class="text-accent shrink-0" />
+        <time datetime={publishDate} class="font-medium">{formattedDate}</time>
+      </div>
+      <div class="hidden sm:block h-4 w-px bg-brand-800"></div>
+      <div class="flex items-center gap-1.5">
+        <IconClock size={16} stroke={2} class="text-accent shrink-0" />
+        <span class="font-medium">{readingTime} min read</span>
+      </div>
     </div>
-  </section>
+  </PageHeroSection>
 
   {/* 2. ARTICLE BODY & SIDEBAR FUNNEL */}
   <section class="py-12 bg-surface">
@@ -113,23 +111,6 @@ const blogCta = {
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Markdown Content & Inline Banner */}
         <div class="lg:col-span-8 space-y-12">
-          {/* Article Cover Image Banner */}
-          {
-            image && (
-              <div class="rounded-2xl overflow-hidden border border-brand-100 shadow-sm bg-surface-alt">
-                <Image
-                  src={image}
-                  alt={title}
-                  width={900}
-                  height={500}
-                  format="webp"
-                  quality={85}
-                  class="w-full h-auto object-cover max-h-110"
-                />
-              </div>
-            )
-          }
-
           {/* Renders prose from markdown file */}
           <div
             class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-sm"

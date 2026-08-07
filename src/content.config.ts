@@ -28,16 +28,16 @@ const servicesCollection = defineCollection({
     published: z.boolean().default(true),
 
     // 1. Who This Is For
-    whoIsThisForHeading: z.string().optional(),
-    whoIsThisForContent: z.string().optional(),
-    whoIsThisFor: z.array(z.string()).optional(),
+    whoIsThisForHeading: z.string(),
+    whoIsThisForContent: z.string(),
+    whoIsThisFor: z.array(z.string()),
 
     // 2. What's Covered (2x2 Grid with Title & Description)
     whatsCovered: z.array(z.object({
       title: z.string(),
       description: z.string(),
-    })).optional(),
-    whatsCoveredNote: z.string().optional(),
+    })),
+    whatsCoveredNote: z.string(),
 
     // 3. Suitable Vehicles (Links to vehicle IDs like 'sedan', 'suv', 'tempo-traveller')
     suitableVehicles: z.array(z.string()).optional(),
@@ -51,15 +51,15 @@ const servicesCollection = defineCollection({
     // 5. Approved Tariff & Pricing Rules
     pricing: z.object({
       prefix: z.string().optional(), // e.g., "Starting from"
-      amount: z.union([z.string(), z.number()]).transform(val => typeof val === "number" ? `₹${val}` : val).optional(), // e.g., "₹899" or 899
-      shortLabel: z.string().optional(), // e.g., "onwards, per trip"
-      unit: z.string().optional(), // e.g., "Airport to city, sedan"
-      lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val).optional(), // e.g., "Jul 2026"
-      inclusions: z.array(z.string()).optional(),
-      exclusions: z.array(z.string()).optional(),
-      disclaimer: z.string().optional(), // e.g., "Sending a request does not confirm a trip..."
+      amount: z.union([z.string(), z.number()]).transform(val => typeof val === "number" ? `₹${val}` : val),
+      shortLabel: z.string(), // e.g., "onwards, per trip"
+      unit: z.string(), // e.g., "Airport to city, sedan"
+      lastUpdated: z.union([z.string(), z.date()]).transform((val) => val instanceof Date ? val.toISOString().slice(0, 10) : val),
+      inclusions: z.array(z.string()),
+      exclusions: z.array(z.string()),
+      disclaimer: z.string(), // e.g., "Sending a request does not confirm a trip..."
       notes: z.string().optional(),
-    }).optional(),
+    }),
   }),
 });
 
