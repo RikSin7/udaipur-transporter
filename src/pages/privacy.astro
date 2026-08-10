@@ -177,12 +177,14 @@ const { Content } = await render(privacyEntry);
 <script>
   function initPrintPolicy() {
     const printBtn = document.getElementById("print-policy-btn");
-    if (printBtn) {
+    if (printBtn && printBtn.dataset.init !== "true") {
+      printBtn.dataset.init = "true";
       printBtn.addEventListener("click", () => {
         window.print();
       });
     }
   }
 
+  initPrintPolicy();
   document.addEventListener("astro:page-load", initPrintPolicy);
 </script>

@@ -117,7 +117,8 @@ const homeData = homeEntry.data;
       "next-review-btn",
     ) as HTMLButtonElement | null;
 
-    if (!track || !prevBtn || !nextBtn) return;
+    if (!track || !prevBtn || !nextBtn || track.dataset.init === "true") return;
+    track.dataset.init = "true";
 
     const getScrollStep = () => {
       const firstCard = track.firstElementChild as HTMLElement;
@@ -145,5 +146,6 @@ const homeData = homeEntry.data;
     updateButtonStates();
   }
 
+  initReviewsCarousel();
   document.addEventListener("astro:page-load", initReviewsCarousel);
 </script>

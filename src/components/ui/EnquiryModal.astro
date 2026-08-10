@@ -32,11 +32,11 @@ const passengerCounters = [
   aria-labelledby="modal-title"
 >
   <div
-    class="bg-surface-card border border-brand-100/80 rounded-2xl shadow-2xl text-brand-900 relative overflow-hidden flex flex-col max-h-[90vh]"
+    class="bg-surface-card border border-brand-100/80 rounded-2xl shadow-2xl text-brand-900 relative overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh] w-full"
   >
     {/* Header */}
     <div
-      class="px-5 sm:px-6 py-4 sm:py-5 border-b border-brand-100 flex items-center justify-between sticky top-0 bg-surface-card z-20"
+      class="px-5 sm:px-6 py-4 sm:py-5 border-b border-brand-100 flex items-center justify-between bg-surface-card z-20 shrink-0"
     >
       <div>
         <h3
@@ -63,7 +63,9 @@ const passengerCounters = [
     </div>
 
     {/* Scrollable Form Body */}
-    <div class="px-5 pt-5 sm:px-6 sm:pt-6 overflow-y-auto overflow-x-hidden">
+    <div
+      class="px-5 pt-5 sm:px-6 sm:pt-6 overflow-y-auto overflow-x-hidden flex-1 min-h-0"
+    >
       <form
         name="modal-travel-enquiry"
         method="POST"
@@ -327,7 +329,8 @@ const passengerCounters = [
 <script>
   function initModalLogic() {
     const modal = document.getElementById("enquiry-modal") as HTMLDialogElement;
-    if (!modal) return; // Exit if modal isn't on this page
+    if (!modal || modal.dataset.init === "true") return; // Exit if modal isn't on this page or already initialized
+    modal.dataset.init = "true";
 
     // 1. Setup Defaults
     const dateInput = document.getElementById(
@@ -424,6 +427,7 @@ const passengerCounters = [
     }
   }
 
+  initModalLogic();
   document.addEventListener("astro:page-load", () => {
     initModalLogic();
   });

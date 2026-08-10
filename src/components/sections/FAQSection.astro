@@ -138,5 +138,6 @@ const homeData = homeEntry.data;
       .forEach((item) => toggleFaq(item as HTMLElement, true));
   }
 
+  initFaqAccordion();
   document.addEventListener("astro:page-load", initFaqAccordion);
 </script>

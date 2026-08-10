@@ -117,6 +117,7 @@ const getItemClass = (total: number, index: number) => {
       <div
         id="custom-gallery-modal"
         class="fixed inset-0 z-100 hidden flex-col bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+        data-gallery={JSON.stringify(galleryData)}
       >
         {/* Top Controls */}
         <div class="absolute top-0 left-0 w-full p-4 sm:p-6 flex justify-end items-center z-110 pointer-events-none">
@@ -174,11 +175,6 @@ const getItemClass = (total: number, index: number) => {
   )
 }
 
-{/* Serialized JSON data for Client Script */}
-<script is:inline define:vars={{ galleryData }}>
-  window.serviceGalleryData = galleryData;
-</script>
-
 <script>
   function initGalleryModal() {
     const triggers = document.querySelectorAll(".gallery-trigger");
@@ -194,11 +190,15 @@ const getItemClass = (total: number, index: number) => {
     const modalSubtitle = document.getElementById("modal-subtitle");
     const modalCounter = document.getElementById("modal-counter");
 
-    // @ts-ignore
-    const data = window.serviceGalleryData || [];
-    let currentIndex = 0;
+    if (!modal || modal.dataset.init === "true") return;
 
-    if (!modal || modal.dataset.init === "true" || data.length === 0) return;
+    const rawData = modal.getAttribute("data-gallery");
+    if (!rawData) return;
+
+    const data = JSON.parse(rawData);
+    if (data.length === 0) return;
+
+    let currentIndex = 0;
     modal.dataset.init = "true";
 
     // Hide arrows completely if there's only 1 image to prevent broken looping
@@ -293,5 +293,6 @@ const getItemClass = (total: number, index: number) => {
     );
   }
 
+  initGalleryModal();
   document.addEventListener("astro:page-load", initGalleryModal);
 </script>

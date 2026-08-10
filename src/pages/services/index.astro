@@ -146,6 +146,9 @@ const groupedServices = (hubData.categories || [])
 <script>
   function initServiceScrollspy() {
     const tabs = document.querySelectorAll(".service-tab-btn");
+    if (tabs.length === 0 || (tabs[0] as HTMLElement).dataset.init === "true") return;
+    (tabs[0] as HTMLElement).dataset.init = "true";
+
     let isClickScrolling = false;
     let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -190,5 +193,6 @@ const groupedServices = (hubData.categories || [])
     });
   }
 
+  initServiceScrollspy();
   document.addEventListener("astro:page-load", initServiceScrollspy);
 </script>

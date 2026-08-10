@@ -280,6 +280,9 @@ const hubData = hubEntries.data;
 <script>
   function initBlogFilter() {
     const filterBtns = document.querySelectorAll(".blog-filter-btn");
+    if (filterBtns.length === 0 || (filterBtns[0] as HTMLElement).dataset.init === "true") return;
+    (filterBtns[0] as HTMLElement).dataset.init = "true";
+
     const items = document.querySelectorAll(".blog-item-wrapper");
     const featuredStack = document.getElementById("featured-articles-stack");
     const blogGrid = document.getElementById("blog-grid");
@@ -332,5 +335,6 @@ const hubData = hubEntries.data;
     });
   }
 
+  initBlogFilter();
   document.addEventListener("astro:page-load", initBlogFilter);
 </script>
