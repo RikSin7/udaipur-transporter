@@ -51,6 +51,11 @@ Built specifically for conversion optimization, the platform uses intelligent co
 - **Automated Image & Typography Pipeline**: Automatic optimization of CMS-uploaded media assets to modern compressed formats, complemented by self-hosted variable font packages (`@fontsource/manrope`, `@fontsource/plus-jakarta-sans`) for zero layout shifts.
 - **SEO & Sitemap Ready**: Comprehensive dynamic metadata generation, custom social preview descriptions for every route/guide, and automated sitemap generation (`@astrojs/sitemap`).
 
+### 6. Seamless SPA-like Navigation (View Transitions)
+
+- **Instantaneous Page Swaps**: The application utilizes Astro's `ClientRouter` combined with custom CSS animations to provide a buttery smooth, single-page application (SPA) feel. Pages are fetched in the background and instantly swapped without full browser reloads.
+- **Smart Script Lifecycle**: All interactive client-side components (carousels, modals, scrollspies) are engineered using `astro:page-load` hooks and intelligent initialization guards. This guarantees perfectly preserved state and prevents duplicate event listeners across soft navigations.
+
 ---
 
 ## 🛠️ Tech Stack
