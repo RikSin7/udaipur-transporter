@@ -107,7 +107,7 @@ button {
     color: #1E2A28 !important;
   }
 
-  /* Simplify UI containers for clean paper layout */
+  /* UI containers */
   .bg-surface,
   .bg-surface-card,
   .bg-surface-alt\/60 {
@@ -116,4 +116,14 @@ button {
     box-shadow: none !important;
     padding: 0 !important;
   }
+}
+
+/* ─── View Transitions ─── */
+::view-transition-old(root) {
+  animation: none;
+  display: none;
+}
+
+::view-transition-new(root) {
+  animation: none;
 }

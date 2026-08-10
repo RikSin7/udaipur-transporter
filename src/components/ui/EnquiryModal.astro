@@ -430,13 +430,10 @@ const passengerCounters = [
     }
   }
 
-  // Setup on initial load
-  initModalLogic();
-  document.addEventListener("click", handleGlobalModalOpen);
-  document.addEventListener("keydown", handleGlobalModalOpen);
-
-  // Fallback for View Transitions
   document.addEventListener("astro:page-load", () => {
     initModalLogic();
   });
+
+  document.addEventListener("click", handleGlobalModalOpen);
+  document.addEventListener("keydown", handleGlobalModalOpen);
 </script>

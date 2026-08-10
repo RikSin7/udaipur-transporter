@@ -59,11 +59,7 @@ const inputBaseClasses =
       class="web3-redirect"
       value="https://udaipurtransporter.netlify.app/thank-you/"
     />
-    <input
-      type="checkbox"
-      name="botcheck"
-      class="hidden"
-    />
+    <input type="checkbox" name="botcheck" class="hidden" />
     <input type="hidden" name="form-name" value="quick-travel-enquiry" />
     <input type="hidden" name="source" value="compact-form" />
 
@@ -273,6 +269,5 @@ const inputBaseClasses =
     });
   }
 
-  initHeroForm();
   document.addEventListener("astro:page-load", initHeroForm);
 </script>

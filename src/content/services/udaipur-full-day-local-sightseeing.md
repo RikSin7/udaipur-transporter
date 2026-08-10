@@ -29,7 +29,8 @@ whatsCovered:
     description: A standard full-day package covering all major city limits,
       offering plenty of time to visit 4-5 major attractions.
   - title: Custom Itinerary
-    description: You decide where to go. Visit City Palace, Sajjangarh, Saheliyon Ki
+    description:
+      You decide where to go. Visit City Palace, Sajjangarh, Saheliyon Ki
       Bari, or local markets at your own pace.
 whatsCoveredNote: This is a flexible package. You control the itinerary and can
   consult with your driver on the day of the trip to optimize your route.
@@ -41,7 +42,8 @@ faqs:
       driver). Entry tickets, boat rides, and official tourist guides must be
       hired directly at the monuments.
   - question: What happens if we exceed 8 hours or 80 kilometers?
-    answer: Any usage beyond the included 8 hours or 80 km is billed at a standard
+    answer:
+      Any usage beyond the included 8 hours or 80 km is billed at a standard
       per-kilometer and per-hour extra charge, which will be clearly stated in
       your final quote.
 pricing:

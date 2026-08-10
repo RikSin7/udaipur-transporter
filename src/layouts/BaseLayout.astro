@@ -5,6 +5,7 @@ import Header from "../components/layout/Header.astro";
 import SEO from "../components/layout/SEO.astro";
 import EnquiryModal from "../components/ui/EnquiryModal.astro";
 import { getEntry } from "astro:content";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -40,6 +41,7 @@ const {
       noindex={noindex}
     />
     <link rel="icon" href={`${site.data.favicon ?? "/favicon.svg"}?v=2`} />
+    <ClientRouter />
 
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
