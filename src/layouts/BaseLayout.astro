@@ -13,6 +13,7 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   noindex?: boolean;
+  publishDate?: Date | string;
 }
 
 const site = await getEntry("settings", "site");
@@ -25,6 +26,7 @@ const {
   image,
   type,
   noindex,
+  publishDate,
 }: Props = Astro.props;
 ---
 
@@ -39,6 +41,7 @@ const {
       image={image}
       type={type}
       noindex={noindex}
+      publishDate={publishDate}
     />
     <link rel="icon" href={`${site.data.favicon ?? "/favicon.svg"}?v=2`} />
     <ClientRouter />

@@ -7,35 +7,108 @@ export interface Props {
   image?: string;
   type?: "website" | "article";
   noindex?: boolean;
+  publishDate?: Date | string;
 }
 
-// Fetch singleton site settings for fallback defaults
+// Fetch singleton site settings
 const siteEntry = await getEntry("settings", "site");
-const siteData = siteEntry?.data || {
-  companyName: "Udaipur Royal Transporter",
-  seoDefaultTitle: "Udaipur Royal Transporter | Private Taxi & Car Rental",
-  seoDefaultDesc: "Private cabs, transfers & tours across Udaipur.",
-  seoDefaultImage: "/seo-banner.png",
-};
+if (!siteEntry) throw new Error("Missing site.md file");
+
+const siteData = siteEntry.data;
 
 const {
   title = siteData.seoDefaultTitle,
   description = siteData.seoDefaultDesc,
-  image = siteData.seoDefaultImage ?? "/seo-banner.png",
+  image: rawImage,
   type = "website",
   noindex = false,
+  publishDate,
 }: Props = Astro.props;
 
+const image = rawImage || siteData.seoDefaultImage || "/seo-banner.png";
 const origin = Astro.site ? Astro.site.toString() : Astro.url.origin;
 const canonicalURL = new URL(Astro.url.pathname, origin).toString();
 const imageURL = new URL(image, origin).toString();
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: siteData.companyName,
+  image: imageURL,
+  url: origin,
+  telephone: siteData.phone,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteData.address,
+    addressLocality: "Udaipur",
+    addressRegion: "Rajasthan",
+    addressCountry: "IN",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 24.5854,
+    longitude: 73.7125,
+  },
+  areaServed: [
+    {
+      "@type": "State",
+      name: "Rajasthan",
+    },
+    {
+      "@type": "City",
+      name: "Udaipur",
+    },
+  ],
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURL,
+  },
+  headline: title,
+  description: description,
+  image: imageURL,
+  author: {
+    "@type": "Organization",
+    name: siteData.companyName,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: siteData.companyName,
+    logo: {
+      "@type": "ImageObject",
+      url: new URL(siteData.favicon ?? "/favicon.svg", origin).toString(),
+    },
+  },
+  datePublished: publishDate
+    ? new Date(publishDate).toISOString()
+    : new Date().toISOString(),
+};
+
+const schema = type === "article" ? articleSchema : localBusinessSchema;
 ---
+
+{/* Schema.org JSON-LD */}
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(schema)}
+/>
 
 {/* Standard SEO & Canonical URL */}
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{/* Regional Targeting for Udaipur/Rajasthan */}
+<meta name="geo.region" content="IN-RJ" />
+<meta name="geo.placename" content="Udaipur" />
+<meta name="geo.position" content="24.5854;73.7125" />
+<meta name="ICBM" content="24.5854, 73.7125" />
 
 {/* Open Graph / Facebook / LinkedIn */}
 <meta property="og:type" content={type} />
@@ -44,6 +117,7 @@ const imageURL = new URL(image, origin).toString();
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={siteData.companyName} />
 <meta property="og:image" content={imageURL} />
+<meta property="og:locale" content="en_IN" />
 
 {/* Twitter Card */}
 <meta name="twitter:card" content="summary_large_image" />

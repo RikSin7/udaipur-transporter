@@ -76,7 +76,13 @@ const blogCta = {
 };
 ---
 
-<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
+<BaseLayout
+  title={`${title} | ${site.companyName}`}
+  description={summary}
+  type="article"
+  publishDate={publishDate}
+  image={image?.src}
+>
   {/* 1. ARTICLE HERO HEADER */}
   <PageHeroSection
     subheading={category}
