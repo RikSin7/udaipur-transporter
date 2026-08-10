@@ -9,7 +9,6 @@ import {
   IconCheck,
   IconArrowRight,
 } from "@tabler/icons-astro";
-import { createCleanParam } from "../../utils/helpers";
 
 interface Props {
   vehicle: CollectionEntry<"vehicles">;
@@ -26,13 +25,14 @@ const {
   summary,
   image,
 } = vehicle.data;
-
-const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
 ---
 
-<a
-  href={enquiryUrl}
-  class="bg-surface-card border border-border rounded-(--radius-card,18px) overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group cursor-pointer focus:outline-none"
+<div
+  role="button"
+  tabindex="0"
+  data-enquiry-modal="open"
+  data-enquiry-item={title}
+  class="bg-surface-card border border-border rounded-(--radius-card,18px) overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cta text-left"
 >
   {/* 1. Image Row */}
   <div
@@ -139,4 +139,4 @@ const enquiryUrl = `/contact/?vehicle=${createCleanParam(title)}`;
       </span>
     </div>
   </div>
-</a>
+</div>

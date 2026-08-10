@@ -168,9 +168,8 @@ const inquiry = {
         <div
           class="mt-5 pt-4 border-t border-brand-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 relative z-10"
         >
-          {/* Action 1: Standard Enquiry Form */}
           <a
-            href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}`}
+            href={`/contact/?${isServicesPage ? `service=${createCleanParam("Service Catalogue Consultation")}` : `vehicle=${createCleanParam("Vehicle Capacity Consultation")}`}#enquiry-form-section`}
             class="flex-1 bg-cta hover:bg-cta-hover text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center transition-all shadow-sm flex items-center justify-center gap-1.5 group active:scale-95 uppercase"
           >
             <span>Send Enquiry Form</span>

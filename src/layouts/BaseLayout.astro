@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
 import SEO from "../components/layout/SEO.astro";
+import EnquiryModal from "../components/ui/EnquiryModal.astro";
 import { getEntry } from "astro:content";
 
 interface Props {
@@ -41,9 +42,6 @@ const {
     <link rel="icon" href={`${site.data.favicon ?? "/favicon.svg"}?v=2`} />
 
     <meta name="generator" content={Astro.generator} />
-    {
-      /* 1. NETLIFY IDENTITY RECOVERY REDIRECTION: Redirect invite/recovery tokens directly to Decap CMS admin auth without loading identity widget on public pages */
-    }
     <script is:inline>
       if (window.location.hash.includes("_token=")) {
         window.location.href = "/admin/" + window.location.hash;
@@ -60,5 +58,6 @@ const {
     </main>
 
     <Footer />
+    <EnquiryModal />
   </body>
 </html>
