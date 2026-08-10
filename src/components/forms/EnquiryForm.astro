@@ -285,7 +285,7 @@ const passengerCounters = [
           name="travelDate"
           class={cn(
             inputBaseClasses,
-            "min-w-0 max-w-full block appearance-none",
+            "min-w-0 max-w-full block appearance-none date-min-today",
           )}
         />
       </div>
@@ -371,7 +371,7 @@ const passengerCounters = [
       type="submit"
       class="group w-full sm:w-auto bg-cta text-white font-serif font-bold px-10 py-4 rounded-xl shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-3 uppercase"
     >
-      <span>Submit Travel Enquiry</span>
+      <span>Send Travel Enquiry</span>
       <IconSend size={20} class="transition-transform group-hover:scale-120" />
     </button>
   </div>
@@ -393,14 +393,6 @@ const passengerCounters = [
 
 <script>
   function initFormLogic() {
-    // Set dynamic minimum date for travelDate input
-    const dateInput = document.getElementById(
-      "travelDate",
-    ) as HTMLInputElement | null;
-    if (dateInput) {
-      dateInput.min = new Date().toISOString().split("T")[0];
-    }
-
     // 1. Smart Scrolling
     const params = new URLSearchParams(window.location.search);
     if (params.toString() || window.location.hash.includes("enquiry")) {
@@ -417,13 +409,6 @@ const passengerCounters = [
         }, 150);
       }
     }
-
-    // 3. Update Web3Forms redirect URL to match current origin dynamically
-    document.querySelectorAll(".web3-redirect").forEach((el) => {
-      if (el instanceof HTMLInputElement) {
-        el.value = window.location.origin + "/thank-you/";
-      }
-    });
   }
 
   // Init Triggers

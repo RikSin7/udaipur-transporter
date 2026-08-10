@@ -182,7 +182,7 @@ const passengerCounters = [
               name="travelDate"
               class={cn(
                 inputBaseClasses,
-                "text-brand-900 appearance-none min-w-0 max-w-full block",
+                "text-brand-900 appearance-none min-w-0 max-w-full block date-min-today",
               )}
             />
           </div>
@@ -331,21 +331,6 @@ const passengerCounters = [
     const modal = document.getElementById("enquiry-modal") as HTMLDialogElement;
     if (!modal || modal.dataset.init === "true") return; // Exit if modal isn't on this page or already initialized
     modal.dataset.init = "true";
-
-    // 1. Setup Defaults
-    const dateInput = document.getElementById(
-      "modal-travelDate",
-    ) as HTMLInputElement;
-
-    if (dateInput) {
-      dateInput.min = new Date().toISOString().split("T")[0];
-    }
-
-    document.querySelectorAll("#enquiry-modal .web3-redirect").forEach((el) => {
-      if (el instanceof HTMLInputElement) {
-        el.value = window.location.origin + "/thank-you/";
-      }
-    });
 
     // 2. Isolate Counter Logic (Attach ONLY to the modal)
     modal.addEventListener("click", (e) => {

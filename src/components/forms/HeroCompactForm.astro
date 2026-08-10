@@ -163,7 +163,7 @@ const inputBaseClasses =
           name="travelDate"
           class={cn(
             inputBaseClasses,
-            "text-brand-900 appearance-none min-w-0 max-w-full block",
+            "text-brand-900 appearance-none min-w-0 max-w-full block date-min-today",
           )}
         />
       </div>
@@ -255,20 +255,5 @@ const inputBaseClasses =
 </style>
 
 <script>
-  function initHeroForm() {
-    const dateInput = document.getElementById(
-      "hero-travelDate",
-    ) as HTMLInputElement;
-    if (dateInput) {
-      dateInput.min = new Date().toISOString().split("T")[0];
-    }
-    document.querySelectorAll(".web3-redirect").forEach((el) => {
-      if (el instanceof HTMLInputElement) {
-        el.value = window.location.origin + "/thank-you/";
-      }
-    });
-  }
-
-  initHeroForm();
-  document.addEventListener("astro:page-load", initHeroForm);
+  // Hero form specific logic can go here if needed in the future
 </script>

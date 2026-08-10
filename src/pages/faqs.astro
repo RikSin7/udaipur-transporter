@@ -74,7 +74,7 @@ const hubData = hubEntry.data;
   />
 
   {/* 3. CATEGORIZED ACCORDION CONTENT */}
-  <section id="faq-wrapper" class="py-12 bg-surface">
+  <section id="faq-wrapper" class="py-12 bg-surface faq-group">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {
         groupedFaqs.map((group, groupIndex) => (
@@ -220,48 +220,6 @@ const hubData = hubEntry.data;
         if (target) observer.observe(target);
       }
     });
-
-    // --- 2. Global Event Delegation Accordion ---
-    const wrapper = document.getElementById("faq-wrapper");
-    if (!wrapper) return;
-
-    const toggleFaq = (item: HTMLElement, open: boolean) => {
-      item.setAttribute("data-open", String(open));
-      const trigger = item.querySelector(".faq-trigger");
-      const content = item.querySelector(".faq-content") as HTMLElement;
-      const icon = item.querySelector(".faq-icon") as HTMLElement;
-
-      if (trigger) trigger.setAttribute("aria-expanded", String(open));
-      if (content) {
-        content.style.maxHeight = open ? `${content.scrollHeight}px` : "0px";
-        content.style.opacity = open ? "1" : "0";
-      }
-      if (icon) icon.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
-    };
-
-    wrapper.addEventListener("click", (e) => {
-      const trigger = (e.target as HTMLElement).closest(".faq-trigger");
-      if (!trigger) return;
-
-      const currentItem = trigger.closest(".faq-item") as HTMLElement;
-      const isOpen = currentItem.getAttribute("data-open") === "true";
-
-      // Close all currently open FAQs globally
-      wrapper
-        .querySelectorAll('.faq-item[data-open="true"]')
-        .forEach((openItem) => {
-          if (openItem !== currentItem)
-            toggleFaq(openItem as HTMLElement, false);
-        });
-
-      // Toggle clicked item
-      toggleFaq(currentItem, !isOpen);
-    });
-
-    // Mount initial heights
-    wrapper
-      .querySelectorAll('.faq-item[data-open="true"]')
-      .forEach((item) => toggleFaq(item as HTMLElement, true));
   }
 
   // Execute and register for SPA transitions

@@ -262,7 +262,7 @@ const reassurances = [
                 <h2 class="font-serif text-2xl font-bold text-brand-900 mb-6">
                   Service FAQs
                 </h2>
-                <div class="space-y-4" id="service-faq-group">
+                <div class="space-y-4 faq-group" id="service-faq-group">
                   {faqs.map((faq, idx) => (
                     <div
                       class="faq-item bg-surface-card border border-border hover:border-brand-900 rounded-2xl transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
@@ -411,49 +411,5 @@ const reassurances = [
 </BaseLayout>
 
 <script>
-  function initServiceFaq() {
-    const group = document.getElementById("service-faq-group");
-    if (!group || group.dataset.init === "true") return;
-    group.dataset.init = "true";
-
-    // Reusable toggle helper
-    const toggleFaq = (item: HTMLElement, open: boolean) => {
-      item.setAttribute("data-open", String(open));
-      const content = item.querySelector(".faq-content") as HTMLElement;
-      const icon = item.querySelector(".faq-icon") as HTMLElement;
-      if (content) {
-        content.style.maxHeight = open ? `${content.scrollHeight}px` : "0px";
-        content.style.opacity = open ? "1" : "0";
-      }
-      if (icon) icon.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
-    };
-
-    // Event Delegation: One listener handles all clicks
-    group.addEventListener("click", (e) => {
-      const trigger = (e.target as HTMLElement).closest(".faq-trigger");
-      if (!trigger) return;
-
-      const currentItem = trigger.closest(".faq-item") as HTMLElement;
-      const isCurrentlyOpen = currentItem.getAttribute("data-open") === "true";
-
-      // Close all other open items
-      group
-        .querySelectorAll('.faq-item[data-open="true"]')
-        .forEach((openItem) => {
-          if (openItem !== currentItem)
-            toggleFaq(openItem as HTMLElement, false);
-        });
-
-      // Toggle the clicked item
-      toggleFaq(currentItem, !isCurrentlyOpen);
-    });
-
-    // Initialize items that are open by default (e.g. index 0)
-    group
-      .querySelectorAll('.faq-item[data-open="true"]')
-      .forEach((item) => toggleFaq(item as HTMLElement, true));
-  }
-
-  initServiceFaq();
-  document.addEventListener("astro:page-load", initServiceFaq);
+  // Page-specific logic can go here in the future
 </script>
