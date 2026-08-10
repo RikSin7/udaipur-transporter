@@ -94,6 +94,7 @@ const hubData = hubEntries.data;
                 {displayFeatured.map((article) => (
                   <div
                     data-article-category={article.data.category}
+                    data-featured="true"
                     class="blog-item-wrapper"
                   >
                     <a
@@ -165,6 +166,7 @@ const hubData = hubEntries.data;
               {standardArticles.map((article) => (
                 <div
                   data-article-category={article.data.category}
+                  data-featured="false"
                   class="blog-item-wrapper flex"
                 >
                   <BlogCard article={article} class="w-full" />
@@ -314,10 +316,13 @@ const hubData = hubEntries.data;
             selectedCategory === "All" ||
             item.getAttribute("data-article-category") === selectedCategory;
           (item as HTMLElement).style.display = isMatch ? "" : "none";
-          if (isMatch)
-            featuredStack?.contains(item)
-              ? visibleFeatured++
-              : visibleStandard++;
+          if (isMatch) {
+            if (item.getAttribute("data-featured") === "true") {
+              visibleFeatured++;
+            } else {
+              visibleStandard++;
+            }
+          }
         });
 
         if (featuredStack)

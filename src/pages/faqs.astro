@@ -176,6 +176,10 @@ const hubData = hubEntry.data;
   function initFAQPage() {
     // --- 1. Tab Bar Scrollspy ---
     const tabs = document.querySelectorAll(".faq-tab-btn");
+    if (tabs.length === 0 || (tabs[0] as HTMLElement).dataset.init === "true")
+      return;
+    (tabs[0] as HTMLElement).dataset.init = "true";
+
     let isClickScrolling = false;
     let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -219,8 +223,7 @@ const hubData = hubEntry.data;
 
     // --- 2. Global Event Delegation Accordion ---
     const wrapper = document.getElementById("faq-wrapper");
-    if (!wrapper || wrapper.dataset.init === "true") return;
-    wrapper.dataset.init = "true";
+    if (!wrapper) return;
 
     const toggleFaq = (item: HTMLElement, open: boolean) => {
       item.setAttribute("data-open", String(open));

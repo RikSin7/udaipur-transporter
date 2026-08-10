@@ -300,8 +300,8 @@ const passengerCounters = [
           >
             <span>Submit Request</span>
             <IconSend
-              size={18}
-              class="transition-transform group-hover:translate-x-1"
+              size={20}
+              class="transition-transform group-hover:scale-120"
             />
           </button>
         </div>
@@ -390,18 +390,17 @@ const passengerCounters = [
     });
   }
 
-  // 6. Handle Global Modal Triggers Safely
+  // 6. Handle Global Modal Triggers
   function handleGlobalModalOpen(e: Event) {
+    if (e.type === "keydown") {
+      const kbEvent = e as KeyboardEvent;
+      if (kbEvent.key !== "Enter" && kbEvent.key !== " ") return;
+    }
+
     const target = e.target as HTMLElement;
     const trigger = target.closest('[data-enquiry-modal="open"]');
 
     if (trigger) {
-      // If triggered by keyboard, only activate on Enter or Space
-      if (e.type === "keydown") {
-        const kbEvent = e as KeyboardEvent;
-        if (kbEvent.key !== "Enter" && kbEvent.key !== " ") return;
-      }
-
       e.preventDefault();
       const modal = document.getElementById(
         "enquiry-modal",
