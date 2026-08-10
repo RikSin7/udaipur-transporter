@@ -18,7 +18,7 @@ const servicesCollection = defineCollection({
         }),
         image().transform((val) => ({ url: val, isPrimary: false })),
       ])
-    ).optional(),
+    ).default([]),
     galleryBadge: z.string(),
     galleryTitle: z.string(),
     galleryDescription: z.string(),
