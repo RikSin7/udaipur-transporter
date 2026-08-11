@@ -8,7 +8,7 @@ const inputBaseClasses =
 const passengerCounters = [
   {
     id: "modal-adults",
-    name: "adults",
+    name: "Adults",
     label: "Adults",
     min: 1,
     max: 50,
@@ -16,13 +16,20 @@ const passengerCounters = [
   },
   {
     id: "modal-children",
-    name: "children",
+    name: "Children",
     label: "Children",
     min: 0,
     max: 50,
     val: 0,
   },
-  { id: "modal-bags", name: "bags", label: "Bags", min: 0, max: 50, val: 1 },
+  {
+    id: "modal-bags",
+    name: "Luggage Bags",
+    label: "Bags",
+    min: 0,
+    max: 50,
+    val: 1,
+  },
 ];
 ---
 
@@ -97,7 +104,13 @@ const passengerCounters = [
         />
         <input type="checkbox" name="botcheck" class="hidden" />
         <input type="hidden" name="form-name" value="modal-travel-enquiry" />
-        <input type="hidden" name="source" value="enquiry-modal" />
+        <input type="hidden" name="Form Source" value="Enquiry Modal" />
+        <input
+          type="hidden"
+          name="Page Name"
+          class="page-title-hidden"
+          value=""
+        />
 
         {/* Enquiry Item (Readonly) */}
         <div>
@@ -118,7 +131,7 @@ const passengerCounters = [
           <input
             type="hidden"
             id="modal-enquiry-item-hidden"
-            name="enquiry_for"
+            name="Enquiry For"
             value=""
           />
         </div>
@@ -134,7 +147,7 @@ const passengerCounters = [
             <input
               type="text"
               id="modal-name"
-              name="name"
+              name="Full Name"
               required
               minlength="2"
               maxlength="60"
@@ -156,7 +169,7 @@ const passengerCounters = [
             <input
               type="tel"
               id="modal-phone"
-              name="phone"
+              name="Mobile Number"
               required
               minlength="10"
               maxlength="15"
@@ -181,7 +194,7 @@ const passengerCounters = [
             <input
               type="date"
               id="modal-travelDate"
-              name="travelDate"
+              name="Travel Date"
               class={cn(
                 inputBaseClasses,
                 "text-brand-900 appearance-none min-w-0 max-w-full block date-min-today",
@@ -201,7 +214,7 @@ const passengerCounters = [
             <input
               type="text"
               id="modal-pickup"
-              name="pickup"
+              name="Pickup Location"
               required
               placeholder="Airport"
               class={cn(
@@ -220,7 +233,7 @@ const passengerCounters = [
             <input
               type="text"
               id="modal-drop"
-              name="drop"
+              name="Drop Location"
               required
               placeholder="Hotel"
               class={cn(
@@ -283,7 +296,7 @@ const passengerCounters = [
           </label>
           <textarea
             id="modal-message"
-            name="message"
+            name="Additional Message"
             rows="2"
             maxlength="500"
             placeholder="Any special requests..."
@@ -330,6 +343,24 @@ const passengerCounters = [
 
 <script>
   function initModalLogic() {
+    // Set Page URL
+    document.querySelectorAll(".page-title-hidden").forEach((el) => {
+      let pageName = window.location.href;
+      if (window.location.pathname === '/') {
+        pageName = 'Home Page';
+      }
+      (el as HTMLInputElement).value = pageName;
+    });
+
+    // Set today's date if empty
+    const today = new Date().toISOString().split("T")[0];
+    const travelDate = document.getElementById(
+      "modal-travelDate",
+    ) as HTMLInputElement;
+    if (travelDate && !travelDate.value) {
+      travelDate.value = today;
+    }
+
     const modal = document.getElementById("enquiry-modal") as HTMLDialogElement;
     if (!modal || modal.dataset.init === "true") return; // Exit if modal isn't on this page or already initialized
     modal.dataset.init = "true";

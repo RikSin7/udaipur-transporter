@@ -37,6 +37,7 @@ const inputBaseClasses =
 const passengerCounters = [
   {
     id: "adults",
+    name: "Adults",
     label: "Adults",
     sub: "",
     min: 1,
@@ -46,6 +47,7 @@ const passengerCounters = [
   },
   {
     id: "children",
+    name: "Children",
     label: "Children",
     sub: "(Under 12)",
     min: 0,
@@ -55,6 +57,7 @@ const passengerCounters = [
   },
   {
     id: "bags",
+    name: "Luggage Bags",
     label: "Luggage Bags",
     sub: "(Large Suitcases)",
     min: 0,
@@ -102,8 +105,13 @@ const passengerCounters = [
     style="display: none;"
   />
   <input type="hidden" name="form-name" value="travel-enquiry" />
-  <input type="hidden" name="sourcePage" value={currentUrl} />
-  <input type="hidden" id="priceLabel" name="priceLabel" value={priceLabel} />
+  <input type="hidden" name="Page Name" class="page-title-hidden" value="" />
+  <input
+    type="hidden"
+    id="priceLabel"
+    name="Estimated Price"
+    value={priceLabel}
+  />
 
   {/* Section 1: Contact */}
   <div class="space-y-4">
@@ -115,7 +123,7 @@ const passengerCounters = [
         <input
           type="text"
           id="name"
-          name="name"
+          name="Full Name"
           required
           minlength="2"
           maxlength="60"
@@ -132,7 +140,7 @@ const passengerCounters = [
         <input
           type="tel"
           id="phone"
-          name="phone"
+          name="Mobile Number"
           inputmode="tel"
           autocomplete="tel"
           minlength="10"
@@ -160,7 +168,7 @@ const passengerCounters = [
         <div class="relative">
           <select
             id="service"
-            name={defaultService ? "_service_display" : "service"}
+            name="Service Required"
             class={cn(
               inputBaseClasses,
               "appearance-none font-medium pr-10",
@@ -184,7 +192,11 @@ const passengerCounters = [
           </select>
           {
             defaultService && (
-              <input type="hidden" name="service" value={defaultService} />
+              <input
+                type="hidden"
+                name="Service Required"
+                value={defaultService}
+              />
             )
           }
           <IconChevronDown
@@ -203,7 +215,7 @@ const passengerCounters = [
         <div class="relative">
           <select
             id="vehicle"
-            name={defaultVehicle ? "_vehicle_display" : "vehicle"}
+            name="Vehicle Preference"
             class={cn(
               inputBaseClasses,
               "appearance-none font-medium pr-10",
@@ -227,7 +239,11 @@ const passengerCounters = [
           </select>
           {
             defaultVehicle && (
-              <input type="hidden" name="vehicle" value={defaultVehicle} />
+              <input
+                type="hidden"
+                name="Vehicle Preference"
+                value={defaultVehicle}
+              />
             )
           }
           <IconChevronDown
@@ -249,7 +265,7 @@ const passengerCounters = [
         <input
           type="text"
           id="pickup"
-          name="pickup"
+          name="Pickup Location"
           required
           minlength="2"
           maxlength="100"
@@ -265,7 +281,7 @@ const passengerCounters = [
         <input
           type="text"
           id="drop"
-          name="drop"
+          name="Drop Location"
           required
           minlength="2"
           maxlength="100"
@@ -284,7 +300,7 @@ const passengerCounters = [
         <input
           type="date"
           id="travelDate"
-          name="travelDate"
+          name="Travel Date"
           class={cn(
             inputBaseClasses,
             "min-w-0 max-w-full block appearance-none date-min-today",
@@ -320,7 +336,7 @@ const passengerCounters = [
                 type="number"
                 inputmode="numeric"
                 id={c.id}
-                name={c.id}
+                name={c.name}
                 min={c.min}
                 max={c.max}
                 required
@@ -348,7 +364,7 @@ const passengerCounters = [
     >
     <textarea
       id="message"
-      name="message"
+      name="Additional Message"
       rows="3"
       maxlength="500"
       placeholder="Any special requests or requirements..."
@@ -395,6 +411,24 @@ const passengerCounters = [
 
 <script>
   function initFormLogic() {
+    // Set Page URL
+    document.querySelectorAll(".page-title-hidden").forEach((el) => {
+      let pageName = window.location.href;
+      if (window.location.pathname === '/') {
+        pageName = 'Home Page';
+      }
+      (el as HTMLInputElement).value = pageName;
+    });
+
+    // Set today's date if empty
+    const today = new Date().toISOString().split("T")[0];
+    const travelDate = document.getElementById(
+      "travelDate",
+    ) as HTMLInputElement;
+    if (travelDate && !travelDate.value) {
+      travelDate.value = today;
+    }
+
     // 1. Smart Scrolling
     const params = new URLSearchParams(window.location.search);
     if (params.toString() || window.location.hash.includes("enquiry")) {

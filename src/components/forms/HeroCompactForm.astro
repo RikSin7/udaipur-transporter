@@ -63,7 +63,8 @@ const inputBaseClasses =
     />
     <input type="checkbox" name="botcheck" class="hidden" />
     <input type="hidden" name="form-name" value="quick-travel-enquiry" />
-    <input type="hidden" name="source" value="compact-form" />
+    <input type="hidden" name="Form Source" value="Compact Form" />
+    <input type="hidden" name="Page Name" class="page-title-hidden" value="" />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name - Half width on sm+ */}
@@ -77,7 +78,7 @@ const inputBaseClasses =
         <input
           type="text"
           id="hero-name"
-          name="name"
+          name="Full Name"
           required
           minlength="2"
           maxlength="60"
@@ -102,7 +103,7 @@ const inputBaseClasses =
         <input
           type="tel"
           id="hero-phone"
-          name="phone"
+          name="Mobile Number"
           inputmode="tel"
           autocomplete="tel"
           required
@@ -131,7 +132,7 @@ const inputBaseClasses =
         <div class="relative">
           <select
             id="hero-service"
-            name="service"
+            name="Service Required"
             class={cn(
               inputBaseClasses,
               "appearance-none cursor-pointer font-medium pr-10",
@@ -162,7 +163,7 @@ const inputBaseClasses =
         <input
           type="date"
           id="hero-travelDate"
-          name="travelDate"
+          name="Travel Date"
           class={cn(
             inputBaseClasses,
             "text-brand-900 appearance-none min-w-0 max-w-full block date-min-today",
@@ -183,7 +184,7 @@ const inputBaseClasses =
         <input
           type="text"
           id="hero-pickup"
-          name="pickup"
+          name="Pickup Location"
           required
           minlength="2"
           maxlength="100"
@@ -207,7 +208,7 @@ const inputBaseClasses =
         <input
           type="text"
           id="hero-drop"
-          name="drop"
+          name="Drop Location"
           required
           minlength="2"
           maxlength="100"
@@ -257,5 +258,26 @@ const inputBaseClasses =
 </style>
 
 <script>
-  // Hero form specific logic can go here if needed in the future
+  function initHeroForm() {
+    // Set Page URL
+    document.querySelectorAll(".page-title-hidden").forEach((el) => {
+      let pageName = window.location.href;
+      if (window.location.pathname === '/') {
+        pageName = 'Home Page';
+      }
+      (el as HTMLInputElement).value = pageName;
+    });
+
+    // Set today's date if empty
+    const today = new Date().toISOString().split("T")[0];
+    const travelDate = document.getElementById(
+      "hero-travelDate",
+    ) as HTMLInputElement;
+    if (travelDate && !travelDate.value) {
+      travelDate.value = today;
+    }
+  }
+
+  initHeroForm();
+  document.addEventListener("astro:page-load", initHeroForm);
 </script>
