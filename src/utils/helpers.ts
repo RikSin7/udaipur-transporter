@@ -10,6 +10,7 @@ export function getWhatsAppUrl(phone: string, serviceName?: string): string {
         const lowerName = serviceName.toLowerCase();
         const isGeneric =
             lowerName.includes('about') ||
+            lowerName.includes('homepage') ||
             lowerName.includes('contact') ||
             lowerName.includes('general') ||
             lowerName.includes('faq') ||
