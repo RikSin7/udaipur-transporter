@@ -18,12 +18,14 @@ const site = settingsEntry.data;
 const allFaqs = await getCollection("faqs");
 const publishedFaqs = sortPublishedByOrder(allFaqs);
 
-// 3. Define Approved Categories
+// 3. Categories
 const categories = [
   "General & Booking",
-  "Pricing & Tariffs",
-  "Vehicles & Drivers",
-  "Outstation Routes",
+  ...new Set(
+    publishedFaqs
+      .map((f) => f.data.category)
+      .filter((c) => c !== "General & Booking"),
+  ),
 ];
 
 // 4. Group FAQs by Category

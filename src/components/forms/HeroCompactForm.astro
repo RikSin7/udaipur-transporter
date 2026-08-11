@@ -57,7 +57,9 @@ const inputBaseClasses =
       type="hidden"
       name="redirect"
       class="web3-redirect"
-      value="https://udaipurtransporter.netlify.app/thank-you/"
+      value={Astro.site
+        ? new URL("/thank-you/", Astro.site).toString()
+        : "https://udaipurtransporter.netlify.app/thank-you/"}
     />
     <input type="checkbox" name="botcheck" class="hidden" />
     <input type="hidden" name="form-name" value="quick-travel-enquiry" />

@@ -45,10 +45,7 @@ const standardArticles = publishedArticles.filter(
 // 4. Define Category Filters
 const categories = [
   "All",
-  "Vehicle Guide",
-  "Airport Transfers",
-  "Pricing & Quotes",
-  "Travel Tips",
+  ...new Set(publishedArticles.map((a) => a.data.category)),
 ];
 const whatsappUrl = getWhatsAppUrl(site.whatsapp, "Blog / Transport Planning");
 const hubEntries = await getEntry("blog_hub", "blog_hub");
@@ -282,7 +279,11 @@ const hubData = hubEntries.data;
 <script>
   function initBlogFilter() {
     const filterBtns = document.querySelectorAll(".blog-filter-btn");
-    if (filterBtns.length === 0 || (filterBtns[0] as HTMLElement).dataset.init === "true") return;
+    if (
+      filterBtns.length === 0 ||
+      (filterBtns[0] as HTMLElement).dataset.init === "true"
+    )
+      return;
     (filterBtns[0] as HTMLElement).dataset.init = "true";
 
     const items = document.querySelectorAll(".blog-item-wrapper");

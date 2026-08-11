@@ -63,4 +63,5 @@ function initGlobalUI() {
 }
 
 // Register for Astro View Transitions (ClientRouter)
+initGlobalUI();
 document.addEventListener("astro:page-load", initGlobalUI);
