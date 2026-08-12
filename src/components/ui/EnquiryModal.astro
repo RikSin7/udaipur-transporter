@@ -18,6 +18,8 @@ const servicePrices = publishedServices.reduce(
   {} as Record<string, string>,
 );
 
+const serviceTitles = publishedServices.map((s) => s.data.title);
+
 const inputBaseClasses =
   "w-full min-w-0 max-w-full block box-border px-3.5 py-3 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all font-medium text-brand-900";
 
@@ -95,6 +97,7 @@ const passengerCounters = [
         action="https://api.web3forms.com/submit"
         class="space-y-4"
         data-service-prices={JSON.stringify(servicePrices)}
+        data-service-titles={JSON.stringify(serviceTitles)}
       >
         <input
           type="hidden"
@@ -468,14 +471,26 @@ const passengerCounters = [
       if (form) {
         const pricesData = form.getAttribute("data-service-prices");
         const servicePrices = pricesData ? JSON.parse(pricesData) : {};
+        const titlesData = form.getAttribute("data-service-titles");
+        const allServiceTitles = titlesData ? JSON.parse(titlesData) : [];
         const priceInput = document.getElementById(
           "modal-priceLabel",
         ) as HTMLInputElement;
+
         if (priceInput) {
-          if (servicePrices[itemTitle]) {
-            priceInput.value = servicePrices[itemTitle];
+          if (itemTitle === "General Enquiry") {
+            priceInput.value = "";
+            priceInput.disabled = true;
+          } else if (allServiceTitles.includes(itemTitle)) {
+            // It is a service
             priceInput.disabled = false;
+            if (servicePrices[itemTitle]) {
+              priceInput.value = servicePrices[itemTitle];
+            } else {
+              priceInput.value = "N/A";
+            }
           } else {
+            // It is a vehicle (or fallback)
             priceInput.value = "";
             priceInput.disabled = true;
           }
