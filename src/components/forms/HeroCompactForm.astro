@@ -8,6 +8,17 @@ import { sortPublishedByOrder } from "../../utils/helpers";
 const allServices = await getCollection("services");
 const publishedServices = sortPublishedByOrder(allServices);
 
+const servicePrices = publishedServices.reduce(
+  (acc, s) => {
+    if (s.data.pricing?.amount) {
+      acc[s.data.title] =
+        `${s.data.pricing.amount} ${s.data.pricing.shortLabel || ""}`.trim();
+    }
+    return acc;
+  },
+  {} as Record<string, string>,
+);
+
 const inputBaseClasses =
   "w-full min-w-0 max-w-full block box-border px-3.5 py-3 rounded-xl border border-brand-100 focus:ring-2 focus:ring-[var(--color-cta,#AD5C1F)] focus:border-[var(--color-cta,#AD5C1F)] outline-none text-sm bg-surface transition-all font-medium text-brand-900";
 ---
@@ -37,6 +48,7 @@ const inputBaseClasses =
     method="POST"
     action="https://api.web3forms.com/submit"
     class="space-y-4"
+    data-service-prices={JSON.stringify(servicePrices)}
   >
     <input
       type="hidden"
@@ -65,6 +77,13 @@ const inputBaseClasses =
     <input type="hidden" name="form-name" value="quick-travel-enquiry" />
     <input type="hidden" name="Form Source" value="Compact Form" />
     <input type="hidden" name="Page Name" class="page-title-hidden" value="" />
+    <input
+      type="hidden"
+      id="hero-priceLabel"
+      name="Estimated Price"
+      value=""
+      disabled
+    />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Name - Half width on sm+ */}
@@ -138,7 +157,7 @@ const inputBaseClasses =
               "appearance-none cursor-pointer font-medium pr-10",
             )}
           >
-            <option value="">General Enquiry</option>
+            <option value="General Enquiry">General Enquiry</option>
             {
               publishedServices.map((s) => (
                 <option value={s.data.title}>{s.data.title}</option>
@@ -262,8 +281,8 @@ const inputBaseClasses =
     // Set Page URL
     document.querySelectorAll(".page-title-hidden").forEach((el) => {
       let pageName = window.location.href;
-      if (window.location.pathname === '/') {
-        pageName = 'Home Page';
+      if (window.location.pathname === "/") {
+        pageName = "Home Page";
       }
       (el as HTMLInputElement).value = pageName;
     });
@@ -275,6 +294,40 @@ const inputBaseClasses =
     ) as HTMLInputElement;
     if (travelDate && !travelDate.value) {
       travelDate.value = today;
+    }
+
+    // Dynamic Estimated Price
+    const form = document.querySelector('form[name="quick-travel-enquiry"]');
+    if (form) {
+      const pricesData = form.getAttribute("data-service-prices");
+      const servicePrices = pricesData ? JSON.parse(pricesData) : {};
+      const serviceSelect = document.getElementById(
+        "hero-service",
+      ) as HTMLSelectElement;
+      const priceInput = document.getElementById(
+        "hero-priceLabel",
+      ) as HTMLInputElement;
+
+      const updatePrice = () => {
+        if (!serviceSelect || !priceInput) return;
+        const selected = serviceSelect.value;
+        if (selected === "General Enquiry" || selected === "") {
+          priceInput.value = "";
+          priceInput.disabled = true;
+        } else {
+          priceInput.disabled = false;
+          if (servicePrices[selected]) {
+            priceInput.value = servicePrices[selected];
+          } else {
+            priceInput.value = "N/A";
+          }
+        }
+      };
+
+      if (serviceSelect) {
+        serviceSelect.addEventListener("change", updatePrice);
+        updatePrice(); // Initial run
+      }
     }
   }
 

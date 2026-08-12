@@ -12,15 +12,9 @@ import { sortPublishedByOrder } from "../../utils/helpers";
 interface Props {
   defaultService?: string;
   defaultVehicle?: string;
-  priceLabel?: string;
 }
 
-const {
-  defaultService = "",
-  defaultVehicle = "",
-  priceLabel = "",
-}: Props = Astro.props;
-const currentUrl = Astro.url.pathname;
+const { defaultService = "", defaultVehicle = "" }: Props = Astro.props;
 
 // Fetch Published Collections & Sort by Order
 const [allServices, allVehicles] = await Promise.all([
@@ -29,6 +23,17 @@ const [allServices, allVehicles] = await Promise.all([
 ]);
 const publishedServices = sortPublishedByOrder(allServices);
 const publishedVehicles = sortPublishedByOrder(allVehicles);
+
+const servicePrices = publishedServices.reduce(
+  (acc, s) => {
+    if (s.data.pricing?.amount) {
+      acc[s.data.title] =
+        `${s.data.pricing.amount} ${s.data.pricing.shortLabel || ""}`.trim();
+    }
+    return acc;
+  },
+  {} as Record<string, string>,
+);
 
 const inputBaseClasses =
   "w-full min-w-0 max-w-full block box-border px-4 py-3.5 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all placeholder:text-shadow-typography-muted";
@@ -73,6 +78,7 @@ const passengerCounters = [
   method="POST"
   action="https://api.web3forms.com/submit"
   class="bg-surface-card border border-brand-100 rounded-2xl p-6 sm:p-10 shadow-premium space-y-8 text-brand-900"
+  data-service-prices={JSON.stringify(servicePrices)}
 >
   {/* Hidden Config */}
   <input
@@ -110,7 +116,8 @@ const passengerCounters = [
     type="hidden"
     id="priceLabel"
     name="Estimated Price"
-    value={priceLabel}
+    value=""
+    disabled
   />
 
   {/* Section 1: Contact */}
@@ -414,8 +421,8 @@ const passengerCounters = [
     // Set Page URL
     document.querySelectorAll(".page-title-hidden").forEach((el) => {
       let pageName = window.location.href;
-      if (window.location.pathname === '/') {
-        pageName = 'Home Page';
+      if (window.location.pathname === "/") {
+        pageName = "Home Page";
       }
       (el as HTMLInputElement).value = pageName;
     });
@@ -443,6 +450,40 @@ const passengerCounters = [
           ) as HTMLInputElement;
           if (firstEmpty) firstEmpty.focus({ preventScroll: true });
         }, 150);
+      }
+    }
+
+    // 2. Dynamic Estimated Price
+    const form = document.querySelector('form[name="travel-enquiry"]');
+    if (form) {
+      const pricesData = form.getAttribute("data-service-prices");
+      const servicePrices = pricesData ? JSON.parse(pricesData) : {};
+      const serviceSelect = document.getElementById(
+        "service",
+      ) as HTMLSelectElement;
+      const priceInput = document.getElementById(
+        "priceLabel",
+      ) as HTMLInputElement;
+
+      const updatePrice = () => {
+        if (!serviceSelect || !priceInput) return;
+        const selected = serviceSelect.value;
+        if (selected === "General Enquiry" || selected === "") {
+          priceInput.value = "";
+          priceInput.disabled = true;
+        } else {
+          priceInput.disabled = false;
+          if (servicePrices[selected]) {
+            priceInput.value = servicePrices[selected];
+          } else {
+            priceInput.value = "N/A";
+          }
+        }
+      };
+
+      if (serviceSelect) {
+        serviceSelect.addEventListener("change", updatePrice);
+        updatePrice(); // Initial run
       }
     }
   }

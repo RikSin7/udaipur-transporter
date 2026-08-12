@@ -1,6 +1,22 @@
 ---
+import { getCollection } from "astro:content";
+import { sortPublishedByOrder } from "../../utils/helpers";
 import { IconSend, IconMinus, IconPlus, IconX } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
+
+const allServices = await getCollection("services");
+const publishedServices = sortPublishedByOrder(allServices);
+
+const servicePrices = publishedServices.reduce(
+  (acc, s) => {
+    if (s.data.pricing?.amount) {
+      acc[s.data.title] =
+        `${s.data.pricing.amount} ${s.data.pricing.shortLabel || ""}`.trim();
+    }
+    return acc;
+  },
+  {} as Record<string, string>,
+);
 
 const inputBaseClasses =
   "w-full min-w-0 max-w-full block box-border px-3.5 py-3 rounded-xl border border-brand-100 focus:ring-2 focus:ring-cta focus:border-cta outline-none text-sm bg-surface transition-all font-medium text-brand-900";
@@ -78,6 +94,7 @@ const passengerCounters = [
         method="POST"
         action="https://api.web3forms.com/submit"
         class="space-y-4"
+        data-service-prices={JSON.stringify(servicePrices)}
       >
         <input
           type="hidden"
@@ -110,6 +127,13 @@ const passengerCounters = [
           name="Page Name"
           class="page-title-hidden"
           value=""
+        />
+        <input
+          type="hidden"
+          id="modal-priceLabel"
+          name="Estimated Price"
+          value=""
+          disabled
         />
 
         {/* Enquiry Item (Readonly) */}
@@ -346,8 +370,8 @@ const passengerCounters = [
     // Set Page URL
     document.querySelectorAll(".page-title-hidden").forEach((el) => {
       let pageName = window.location.href;
-      if (window.location.pathname === '/') {
-        pageName = 'Home Page';
+      if (window.location.pathname === "/") {
+        pageName = "Home Page";
       }
       (el as HTMLInputElement).value = pageName;
     });
@@ -437,6 +461,25 @@ const passengerCounters = [
       if (displayInput && hiddenInput) {
         displayInput.value = itemTitle;
         hiddenInput.value = itemTitle;
+      }
+
+      // Dynamic Estimated Price
+      const form = modal.querySelector("form");
+      if (form) {
+        const pricesData = form.getAttribute("data-service-prices");
+        const servicePrices = pricesData ? JSON.parse(pricesData) : {};
+        const priceInput = document.getElementById(
+          "modal-priceLabel",
+        ) as HTMLInputElement;
+        if (priceInput) {
+          if (servicePrices[itemTitle]) {
+            priceInput.value = servicePrices[itemTitle];
+            priceInput.disabled = false;
+          } else {
+            priceInput.value = "";
+            priceInput.disabled = true;
+          }
+        }
       }
 
       modal.showModal();
