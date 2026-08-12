@@ -1,8 +1,12 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { IconArrowRight, IconBolt, IconChevronDown } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
 import { sortPublishedByOrder } from "../../utils/helpers";
+
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const web3formsAccessKey = settingsEntry.data.web3formsAccessKey || "";
 
 // Fetch Published Services & Sort by Order to Populate Dropdown Server-Side
 const allServices = await getCollection("services");
@@ -50,11 +54,7 @@ const inputBaseClasses =
     class="space-y-4"
     data-service-prices={JSON.stringify(servicePrices)}
   >
-    <input
-      type="hidden"
-      name="access_key"
-      value="faf3cf87-86e1-4a4e-9271-3ca98642f58d"
-    />
+    <input type="hidden" name="access_key" value={web3formsAccessKey} />
     <input
       type="hidden"
       name="subject"

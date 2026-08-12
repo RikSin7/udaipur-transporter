@@ -1,11 +1,15 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { sortPublishedByOrder } from "../../utils/helpers";
 import { IconSend, IconMinus, IconPlus, IconX } from "@tabler/icons-astro";
 import { cn } from "../../utils/cn";
 
 const allServices = await getCollection("services");
 const publishedServices = sortPublishedByOrder(allServices);
+
+const settingsEntry = await getEntry("settings", "site");
+if (!settingsEntry) throw new Error("Missing site.md file");
+const web3formsAccessKey = settingsEntry.data.web3formsAccessKey || "";
 
 const servicePrices = publishedServices.reduce(
   (acc, s) => {
@@ -99,11 +103,7 @@ const passengerCounters = [
         data-service-prices={JSON.stringify(servicePrices)}
         data-service-titles={JSON.stringify(serviceTitles)}
       >
-        <input
-          type="hidden"
-          name="access_key"
-          value="faf3cf87-86e1-4a4e-9271-3ca98642f58d"
-        />
+        <input type="hidden" name="access_key" value={web3formsAccessKey} />
         <input
           type="hidden"
           name="subject"

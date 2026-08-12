@@ -108,6 +108,7 @@ const settingsCollection = defineCollection({
       text: z.string().optional(),
       link: z.string().optional(),
     }).optional(),
+    web3formsAccessKey: z.string().optional(),
   }),
 });
 

@@ -109,8 +109,8 @@ Follow these steps to set up and run the codebase on your machine:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/RikSin7/udaipur-transporter.git
-cd udaipur-transporter
+git clone https://github.com/craftsys/tsp-www.git
+cd tsp-www
 ```
 
 ### 2. Install Dependencies
