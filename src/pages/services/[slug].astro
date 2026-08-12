@@ -99,7 +99,11 @@ const reassurances = [
 ];
 ---
 
-<BaseLayout title={`${title} | ${site.companyName}`} description={summary}>
+<BaseLayout
+  title={`${title} | ${site.companyName}`}
+  description={summary}
+  image={image?.src}
+>
   {/* 1. GALLERY HERO */}
   {
     heroGallery && heroGallery.length > 0 ? (

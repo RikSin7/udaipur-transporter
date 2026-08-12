@@ -37,6 +37,7 @@ const whatsappUrl = getWhatsAppUrl(site.whatsapp, "General Contact Inquiry");
 <BaseLayout
   title={contactData.seoTitle || `${contactData.title} | ${site.companyName}`}
   description={contactData.seoDesc || contactData.subtitle}
+  image={contactData.heroImage?.src}
 >
   {/* 1. HERO BANNER */}
   <PageHeroSection

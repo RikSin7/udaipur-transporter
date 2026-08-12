@@ -39,6 +39,7 @@ const groupedServices = (hubData.categories || [])
 <BaseLayout
   title={hubData.seoTitle || hubData.title}
   description={hubData.seoDesc || hubData.description}
+  image={hubData.heroImage?.src}
 >
   {/* 1. HERO BANNER */}
   <PageHeroSection
@@ -146,7 +147,8 @@ const groupedServices = (hubData.categories || [])
 <script>
   function initServiceScrollspy() {
     const tabs = document.querySelectorAll(".service-tab-btn");
-    if (tabs.length === 0 || (tabs[0] as HTMLElement).dataset.init === "true") return;
+    if (tabs.length === 0 || (tabs[0] as HTMLElement).dataset.init === "true")
+      return;
     (tabs[0] as HTMLElement).dataset.init = "true";
 
     let isClickScrolling = false;

@@ -21,6 +21,7 @@ const hubData = hubEntries.data;
 <BaseLayout
   title={hubData.seoTitle || hubData.title}
   description={hubData.seoDesc || hubData.description}
+  image={hubData.heroImage?.src}
 >
   {/* 1. HERO BANNER */}
   <PageHeroSection
