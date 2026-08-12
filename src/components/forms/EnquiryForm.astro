@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import {
   IconSend,
   IconMinus,
@@ -17,12 +17,15 @@ interface Props {
 const { defaultService = "", defaultVehicle = "" }: Props = Astro.props;
 
 // Fetch Published Collections & Sort by Order
-const [allServices, allVehicles] = await Promise.all([
+const [allServices, allVehicles, settingsEntry] = await Promise.all([
   getCollection("services"),
   getCollection("vehicles"),
+  getEntry("settings", "site"),
 ]);
 const publishedServices = sortPublishedByOrder(allServices);
 const publishedVehicles = sortPublishedByOrder(allVehicles);
+if (!settingsEntry) throw new Error("Missing site.md file");
+const web3formsAccessKey = settingsEntry.data.web3formsAccessKey || "";
 
 const servicePrices = publishedServices.reduce(
   (acc, s) => {
@@ -81,11 +84,7 @@ const passengerCounters = [
   data-service-prices={JSON.stringify(servicePrices)}
 >
   {/* Hidden Config */}
-  <input
-    type="hidden"
-    name="access_key"
-    value="faf3cf87-86e1-4a4e-9271-3ca98642f58d"
-  />
+  <input type="hidden" name="access_key" value={web3formsAccessKey} />
   <input
     type="hidden"
     name="subject"
